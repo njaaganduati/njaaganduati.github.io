@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducing the S.I.N.S. Framework™ | RETACH Digital</title>
+<meta name="description" content="A practical approach to cybersecurity built on four pillars: Systems, Infrastructure, Network, and Security. The thinking behind the S.I.N.S. Framework™ from RETACH Digital.">
+<meta name="author" content="RETACH Digital Ltd">
+<meta property="og:title" content="Introducing the S.I.N.S. Framework™">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://retach.tech/insights/sins-framework-introduction">
+<link rel="canonical" href="https://retach.tech/insights/sins-framework-introduction">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root { --green: #2a7a52; --dark: #1a1a1a; --red: #9b2335; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; }
+  a { color: var(--green); }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.05em; text-decoration: none; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--green); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--green); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.6rem; }
+  .callout { background: #e8f4ee; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1e5236; font-size: 0.95rem; }
+  .sins-pillars { margin: 2.5rem 0; }
+  .sins-pillar { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem; background: #fff; border: 1px solid var(--border); }
+  .sins-pillar-letter { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 3rem; font-weight: 700; color: var(--green); line-height: 1; min-width: 48px; }
+  .sins-pillar-content h3 { font-size: 1.15rem; font-weight: 600; margin: 0 0 0.4rem; }
+  .sins-pillar-content .pillar-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--green); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; display: block; }
+  .sins-pillar-content p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+  .sins-pillar-content ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+  .sins-pillar-content ul li { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .pattern-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.92rem; }
+  .pattern-table th { background: var(--dark); color: #fff; padding: 0.75rem 1rem; text-align: left; font-weight: 600; font-size: 0.85rem; }
+  .pattern-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .pattern-table tr:nth-child(even) td { background: #f3f2ef; }
+  .bad { color: var(--red); font-weight: 600; }
+  .good { color: var(--green); font-weight: 600; }
+  blockquote { border-left: 4px solid var(--green); padding: 1rem 1.5rem; margin: 2rem 0; background: #fff; border-radius: 0 8px 8px 0; }
+  blockquote p { margin: 0; font-style: italic; font-size: 1.05rem; color: #444; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } .sins-pillar { flex-direction: column; gap: 0.75rem; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">RETACH<span>.</span></a>
+  <div class="nav-links">
+    <a href="/#about">About</a>
+    <a href="/#framework">Framework</a>
+    <a href="/#services">Services</a>
+    <a href="/#blog">Insights</a>
+    <a href="/#contact">Contact</a>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Framework</span>
+    <h1>Introducing the S.I.N.S. Framework™</h1>
+    <div class="article-meta">
+      <span><strong>Published:</strong> March 2025</span>
+      <span><strong>Read time:</strong> 5 min</span>
+      <span><strong>Author:</strong> RETACH Digital Ltd</span>
+    </div>
+  </div>
+</div>
+<div class="article-body">
+<p>Most cybersecurity frameworks are designed by and for large organisations. They assume dedicated security teams, mature governance structures, and budgets that can sustain multi-year transformation programmes. For the majority of African SMEs and SACCOs, these frameworks are largely inaccessible as a practical guide to action.</p>
+<p>The S.I.N.S. Framework™ was designed to address a specific problem: how do you build genuinely effective security controls in an organisation that doesn't have a CISO, can't afford a full-time security team, and needs to make progress this quarter rather than this decade? The answer is structure — not more complexity.</p>
+<h2>Why most cybersecurity programmes fail</h2>
+<table class="pattern-table">
+<thead><tr><th>Common approach</th><th>Why it fails</th><th>S.I.N.S. alternative</th></tr></thead>
+<tbody>
+<tr><td><span class="bad">Buy a security tool</span></td><td>Tools without governance produce alerts, not outcomes. A SIEM nobody monitors is decoration.</td><td><span class="good">Systems layer first</span> — establish control before adding detection.</td></tr>
+<tr><td><span class="bad">Hire a consultant for a report</span></td><td>A gap report sitting in a drawer changes nothing. Execution is the hard part.</td><td><span class="good">Assessment + implementation</span> — gaps only matter when they get fixed.</td></tr>
+<tr><td><span class="bad">Focus on compliance only</span></td><td>Compliance is a minimum standard, not a security programme. A compliant organisation can still be breached.</td><td><span class="good">Security drives compliance</span> as a natural outcome.</td></tr>
+<tr><td><span class="bad">Start with the perimeter</span></td><td>Securing the network edge while endpoints are unmanaged and identities are ungoverned is backwards.</td><td><span class="good">Systems → Infrastructure → Network → Security</span> — inside out.</td></tr>
+</tbody>
+</table>
+<h2>The four pillars</h2>
+<div class="sins-pillars">
+  <div class="sins-pillar">
+    <div class="sins-pillar-letter">S</div>
+    <div class="sins-pillar-content">
+      <span class="pillar-label">Layer 1 — Foundation</span>
+      <h3>Systems</h3>
+      <p>The Systems layer addresses the foundational question: do you know what you have, and is it under control? Before any other security investment makes sense, you need a maintained inventory and managed endpoints.</p>
+      <ul><li>Asset inventory and lifecycle management</li><li>Identity and access management</li><li>Endpoint configuration standards</li><li>Enterprise system hardening — M365, SharePoint, ERP</li><li>Patch management</li></ul>
+    </div>
+  </div>
+  <div class="sins-pillar">
+    <div class="sins-pillar-letter">I</div>
+    <div class="sins-pillar-content">
+      <span class="pillar-label">Layer 2 — Operational</span>
+      <h3>Infrastructure</h3>
+      <p>The Infrastructure layer secures the platforms on which your business runs. The central concern is resilience: can you continue operating when something goes wrong?</p>
+      <ul><li>Server hardening and configuration baseline</li><li>Backup architecture and tested recovery</li><li>Cloud security posture management</li><li>Virtualisation security (VMware, Hyper-V)</li><li>Disaster recovery design</li></ul>
+    </div>
+  </div>
+  <div class="sins-pillar">
+    <div class="sins-pillar-letter">N</div>
+    <div class="sins-pillar-content">
+      <span class="pillar-label">Layer 3 — Connectivity</span>
+      <h3>Network</h3>
+      <p>The Network layer addresses how data moves. With Systems and Infrastructure established, you can now make informed decisions about what network access is legitimate and where monitoring should be deployed.</p>
+      <ul><li>Firewall policy design and rule review</li><li>Network segmentation and VLAN architecture</li><li>Secure remote access — VPN and Zero Trust</li><li>Physical security — CCTV, PoE, access control</li><li>Network access control (NAC)</li></ul>
+    </div>
+  </div>
+  <div class="sins-pillar">
+    <div class="sins-pillar-letter">S</div>
+    <div class="sins-pillar-content">
+      <span class="pillar-label">Layer 4 — Governance</span>
+      <h3>Security</h3>
+      <p>The Security layer governs, measures, and sustains the controls in the first three layers. Controls without governance degrade. This layer addresses the human and process dimensions.</p>
+      <ul><li>Security policy framework</li><li>Risk assessment and risk register</li><li>Incident detection, response, and post-incident review</li><li>Compliance programme — DPA, ISO 27001, SASRA</li><li>Security awareness and culture</li></ul>
+    </div>
+  </div>
+</div>
+<h2>Why the sequence matters</h2>
+<p>The order — Systems, Infrastructure, Network, Security — reflects the logical dependency between layers. You cannot meaningfully secure your network if you don't know what devices are legitimately connected (a Systems problem). You cannot govern security risks without knowing what infrastructure you have (an Infrastructure problem).</p>
+<blockquote><p>The S.I.N.S. Framework does not tell you to secure the perimeter first. It tells you to secure the inside first — because in most organisations, that is where the most critical vulnerabilities actually are.</p></blockquote>
+<h2>How it maps to existing frameworks</h2>
+<p>The S.I.N.S. Framework™ is not a replacement for ISO 27001, the NIST Cybersecurity Framework, or CIS Controls. It is an implementation alignment layer that makes the requirements of these larger frameworks actionable for organisations without dedicated security expertise. The four pillars map naturally to ISO 27001 Annex A control domains, SASRA regulatory requirements, and Kenya DPA governance obligations.</p>
+<h2>What engagement looks like in practice</h2>
+<p>Every RETACH engagement begins with a S.I.N.S. Health Scan — a structured assessment across all four layers that produces a working gap register with prioritised remediation actions, mapped to the relevant pillar, with indicative effort and cost for each.</p>
+<div class="callout"><p><strong>The key principle:</strong> every phase of work ends with something that is implemented and working — not a recommendation. The S.I.N.S. Framework™ exists to close the gap between knowing what needs to be done and having it done.</p></div>
+<div class="cta-block">
+  <h3>See where your organisation stands</h3>
+  <p>The S.I.N.S. Health Scan gives you a clear baseline across all four pillars — starting at KES 32,500.</p>
+  <a href="/#contact" class="cta-btn">Start with a Health Scan →</a>
+</div>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+</body>
+</html>
