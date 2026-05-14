@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenya's Data Protection Act: What Your Business Must Do Now | RETACH Digital</title>
+<meta name="description" content="The Kenya DPA has teeth. Organisations that treat it as bureaucratic box-ticking are accumulating real liability. A practical compliance guide from RETACH Digital.">
+<meta name="author" content="RETACH Digital Ltd">
+<meta property="og:title" content="Kenya's Data Protection Act: What Your Business Must Do Now">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://retach.tech/insights/kenya-dpa-compliance-guide">
+<link rel="canonical" href="https://retach.tech/insights/kenya-dpa-compliance-guide">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root { --green: #2a7a52; --dark: #1a1a1a; --red: #9b2335; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; }
+  a { color: var(--green); }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.05em; text-decoration: none; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.6rem; }
+  .callout { background: #e8f4ee; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1e5236; font-size: 0.95rem; }
+  .warning { background: #fdf0f2; border-left: 4px solid var(--red); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warning p { margin: 0; color: #7a1c2a; font-size: 0.95rem; }
+  .penalty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .penalty-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: #fff; }
+  .penalty-card .amount { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--red); margin-bottom: 0.3rem; }
+  .penalty-card .label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; font-weight: 600; }
+  .penalty-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.6rem; background: #fff; font-size: 0.95rem; }
+  .checklist li .check { width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .checklist li .item-text strong { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+  .checklist li .item-text span { color: var(--muted); font-size: 0.88rem; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } .penalty-grid { grid-template-columns: 1fr; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">RETACH<span>.</span></a>
+  <div class="nav-links">
+    <a href="/#about">About</a>
+    <a href="/#framework">Framework</a>
+    <a href="/#services">Services</a>
+    <a href="/#blog">Insights</a>
+    <a href="/#contact">Contact</a>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">GRC · Compliance</span>
+    <h1>Kenya's Data Protection Act: What Your Business Must Do Now</h1>
+    <div class="article-meta">
+      <span><strong>Published:</strong> February 2025</span>
+      <span><strong>Read time:</strong> 6 min</span>
+      <span><strong>Author:</strong> RETACH Digital Ltd</span>
+    </div>
+  </div>
+</div>
+<div class="article-body">
+<p>The Kenya Data Protection Act 2019 and its 2022 Regulations is not a future concern. It is present-tense law with functioning enforcement machinery, real penalties, and a regulator — the Office of the Data Protection Commissioner (ODPC) — that has demonstrated it will use its powers.</p>
+<p>Organisations that are still treating the DPA as a bureaucratic exercise or deferring compliance to "when we have more time" are accumulating liability that could prove existential.</p>
+<div class="warning"><p><strong>Scope:</strong> The Kenya DPA applies to any organisation that processes personal data of Kenyan residents. If you handle names, email addresses, ID numbers, financial records, or health data, you are in scope.</p></div>
+<h2>What the penalties actually look like</h2>
+<div class="penalty-grid">
+  <div class="penalty-card"><div class="label">Corporate penalty</div><div class="amount">KES 5M</div><p>Maximum fine for a body corporate found in violation.</p></div>
+  <div class="penalty-card"><div class="label">Individual penalty</div><div class="amount">KES 3M</div><p>Maximum fine for an individual, including directors.</p></div>
+  <div class="penalty-card"><div class="label">Imprisonment</div><div class="amount">10 years</div><p>Maximum custodial sentence for the most serious violations.</p></div>
+  <div class="penalty-card"><div class="label">Registration</div><div class="amount">Mandatory</div><p>All data controllers and processors must register with the ODPC.</p></div>
+</div>
+<h2>The core obligations</h2>
+<h3>Registration</h3>
+<p>Data controllers and processors must register with the ODPC at odpc.go.ke. Registration requires submitting details of your processing activities, categories of personal data, retention periods, and security measures. It must be renewed and updated when processing activities change materially.</p>
+<h3>Lawful basis for processing</h3>
+<p>You must have a lawful basis for every type of personal data processing. The DPA recognises consent, contract performance, legal obligation, vital interests, public task, and legitimate interests. If you rely on consent, it must be freely given, specific, informed, and unambiguous.</p>
+<h3>Data subject rights</h3>
+<p>Individuals have enforceable rights: access, correction, objection, deletion, and breach notification. Your organisation must have processes to receive and respond to these requests within required timeframes.</p>
+<h3>Breach notification</h3>
+<p>If a breach is likely to result in risk to individuals, you must notify the ODPC within <strong>72 hours</strong> of becoming aware of the breach. Affected individuals must also be notified without undue delay.</p>
+<h3>Data protection by design</h3>
+<p>New systems involving personal data must be designed with data protection built in — not bolted on. This means privacy impact assessments, data minimisation, and privacy-protective default settings.</p>
+<h2>The practical compliance checklist</h2>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Register with the ODPC</strong><span>Required for all data controllers and processors operating in or affecting Kenya.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Appoint a Data Protection Officer (DPO)</strong><span>Required for organisations processing large volumes or sensitive personal data.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Complete a data mapping exercise</strong><span>Document every category of personal data: where it comes from, how it's used, where stored, who has access, when deleted.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Review and document your lawful bases</strong><span>For each type of processing, identify and document the lawful basis. Review consent mechanisms.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Publish a compliant Privacy Notice</strong><span>Must state who you are, what data you collect, why, how long you keep it, and what data subjects' rights are.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Establish a data subject rights process</strong><span>Define how requests for access, correction, deletion, and objection will be received and fulfilled.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Create a breach response procedure</strong><span>Document the incident response process including the 72-hour ODPC notification trigger.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Review third-party data processing agreements</strong><span>Vendors processing personal data on your behalf must have a formal DPA-compliant data processing agreement.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Implement a retention and deletion policy</strong><span>Define retention periods for all data categories and implement processes to delete or anonymise expired data.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Deliver staff training</strong><span>Everyone who handles personal data must understand their obligations. Training must be documented.</span></div></li>
+</ul>
+<h2>Special considerations for SACCOs and financial institutions</h2>
+<p>Kenya's financial sector faces a layered compliance environment. SACCOs must comply with the DPA, the AML/CTF framework (including goAML registration with the FRC), and applicable CBK guidance. The FATF grey-listing of Kenya in 2024 has significantly intensified regulatory scrutiny. Cybersecurity controls — access management, audit logging, incident response — are now effectively part of the AML compliance picture.</p>
+<div class="callout"><p><strong>Where to start if you have done nothing yet:</strong> Begin with the data mapping exercise. Everything else — your lawful basis documentation, privacy notice, retention policy — flows from understanding what personal data you hold and what you do with it.</p></div>
+<div class="cta-block">
+  <h3>Need a DPA compliance gap assessment?</h3>
+  <p>RETACH can map your current data processing against Kenya DPA requirements and produce a prioritised remediation plan.</p>
+  <a href="/#contact" class="cta-btn">Talk to RETACH →</a>
+</div>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+</body>
+</html>
