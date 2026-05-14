@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Most African SMEs Fail Their First Security Audit | RETACH Digital</title>
+<meta name="description" content="Compliance pressure is growing across East Africa. The biggest challenge isn't awareness — it's the gap between what auditors want and what organisations can implement.">
+<meta name="author" content="RETACH Digital Ltd">
+<meta property="og:title" content="Why Most African SMEs Fail Their First Security Audit">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://retach.tech/insights/sme-security-audit-failures">
+<link rel="canonical" href="https://retach.tech/insights/sme-security-audit-failures">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root {
+    --green: #2a7a52;
+    --dark: #1a1a1a;
+    --red: #9b2335;
+    --bg: #f9f9f7;
+    --border: #e0ddd6;
+    --text: #2c2c2a;
+    --muted: #5f5e5a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; }
+  a { color: var(--green); text-decoration: none; }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.05em; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--green); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--green); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul, .article-body ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.5rem; }
+  .callout { background: #e8f4ee; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1e5236; font-size: 0.95rem; }
+  .warning { background: #fdf0f2; border-left: 4px solid var(--red); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warning p { margin: 0; color: #7a1c2a; font-size: 0.95rem; }
+  .sins-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 2rem 0; }
+  .sins-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; background: #fff; }
+  .sins-card .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--green); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .sins-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .sins-card p { font-size: 0.88rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  .data-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.92rem; }
+  .data-table th { background: var(--dark); color: #fff; padding: 0.75rem 1rem; text-align: left; font-weight: 600; }
+  .data-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:nth-child(even) td { background: #f3f2ef; }
+  .tag-fail { background: #fdf0f2; color: var(--red); font-size: 0.78rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; display: inline-block; }
+  .tag-fix { background: #e8f4ee; color: var(--green); font-size: 0.78rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; display: inline-block; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Barlow Condensed', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">RETACH<span>.</span></a>
+  <div class="nav-links">
+    <a href="/#about">About</a>
+    <a href="/#framework">Framework</a>
+    <a href="/#services">Services</a>
+    <a href="/#blog">Insights</a>
+    <a href="/#contact">Contact</a>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Audit Readiness</span>
+    <h1>Why Most African SMEs Fail Their First Security Audit — And How to Fix It</h1>
+    <div class="article-meta">
+      <span><strong>Published:</strong> April 2025</span>
+      <span><strong>Read time:</strong> 8 min</span>
+      <span><strong>Author:</strong> RETACH Digital Ltd</span>
+      <span><strong>Category:</strong> GRC · Compliance</span>
+    </div>
+  </div>
+</div>
+<div class="article-body">
+<p>The audit is scheduled. The auditors arrive. And within the first hour, the engagement shifts from a planned assessment into an uncomfortable excavation of gaps nobody knew existed.</p>
+<p>Across East Africa, a predictable pattern is emerging: businesses that genuinely want to be secure are failing their security audits — not because of malice or negligence, but because of a structural gap between what compliance frameworks demand and what most SMEs can realistically deliver.</p>
+<h2>The compliance landscape has shifted</h2>
+<p>Kenya's Data Protection Act (DPA) came into full force with the 2022 Regulations. SASRA, which regulates Kenya's 176+ Deposit Taking SACCOs, has moved from guidelines to enforcement. The Financial Reporting Centre (FRC) now requires all regulated financial institutions — including SACCOs — to register via the goAML portal as part of Kenya's response to FATF grey-listing in 2024.</p>
+<div class="callout"><p><strong>The fundamental problem:</strong> Most SMEs do not fail audits because they are insecure. They fail because they cannot <em>demonstrate</em> their security posture in the structured, documented way that auditors require.</p></div>
+<h2>The five most common failure points</h2>
+<h3>1. No asset inventory</h3>
+<p>Every major compliance framework — ISO 27001, NIST CSF, CIS Controls — begins with asset identification. Yet most SMEs operate without a maintained inventory of their hardware, software, user accounts, or data stores. Auditors will ask: "Show me your asset register." The answer most organisations give is verbal.</p>
+<h3>2. Policies that exist only on paper — or not at all</h3>
+<p>Information security policies are evidence that your organisation has thought through its security obligations. An acceptable use policy, access control policy, incident response procedure, and data classification standard are the minimum for any meaningful audit. Many organisations have templates downloaded from the internet — with another company's name still in the header.</p>
+<h3>3. Unmanaged access and privilege creep</h3>
+<p>Former employees with active accounts. Administrative privileges granted to users who don't need them. Shared passwords on critical systems. No multi-factor authentication on email or financial platforms. Each of these is both a genuine security risk and a clear audit finding.</p>
+<h3>4. No evidence of monitoring or incident response</h3>
+<p>Auditors want to see evidence that controls are working and being tested. For most SMEs, the honest answer to "how would you know if you had been breached?" is: "We probably wouldn't."</p>
+<h3>5. Backup with no tested recovery</h3>
+<p>A backup that has never been restored is a hypothesis, not a control. Recovery time objectives (RTOs) are rarely defined, let alone tested against actual recovery capability.</p>
+<div class="callout"><p><strong>SACCOs specifically:</strong> SASRA's 2026 framework now requires mandatory goAML registration, AML/CTF programme implementation, and Fit and Proper vetting for senior management. A cybersecurity audit in this context is about organisational governance, not just technology.</p></div>
+<h2>What auditors are actually looking for</h2>
+<p>A well-conducted security audit evaluates your security posture across predictable control domains. The goal is to verify that you have implemented appropriate controls and can demonstrate they are working. Demonstrating security is a communication and documentation task as much as a technical one.</p>
+<table class="data-table">
+<thead><tr><th>Audit area</th><th>What's typically found</th><th>Minimum remediation</th></tr></thead>
+<tbody>
+<tr><td><strong>Asset management</strong></td><td><span class="tag-fail">No register</span></td><td><span class="tag-fix">Documented inventory</span> of all hardware, software, data</td></tr>
+<tr><td><strong>Access control</strong></td><td><span class="tag-fail">Shared accounts, no MFA</span></td><td><span class="tag-fix">IAM review</span> + MFA on critical systems</td></tr>
+<tr><td><strong>Policy framework</strong></td><td><span class="tag-fail">No policies or stale templates</span></td><td><span class="tag-fix">Core policies</span> reviewed and communicated</td></tr>
+<tr><td><strong>Incident response</strong></td><td><span class="tag-fail">No documented procedure</span></td><td><span class="tag-fix">IR plan</span> with defined roles and tested procedure</td></tr>
+<tr><td><strong>Backup and DR</strong></td><td><span class="tag-fail">Never tested restore</span></td><td><span class="tag-fix">Documented RTO/RPO</span> + evidence of test restore</td></tr>
+<tr><td><strong>Risk management</strong></td><td><span class="tag-fail">No risk register</span></td><td><span class="tag-fix">Risk register</span> with treatment decisions documented</td></tr>
+</tbody>
+</table>
+<h2>The S.I.N.S. Framework™ approach to audit preparation</h2>
+<p>RETACH uses the S.I.N.S. Framework™ to structure audit preparation in a way that addresses both technical controls and the governance evidence auditors require.</p>
+<div class="sins-grid">
+  <div class="sins-card"><div class="label">S — Systems</div><h4>Endpoint and identity control</h4><p>Asset inventory, user account management, endpoint configuration standards, MFA deployment.</p></div>
+  <div class="sins-card"><div class="label">I — Infrastructure</div><h4>Backup and availability</h4><p>Documented backup procedures, tested recovery, server hardening, cloud posture management.</p></div>
+  <div class="sins-card"><div class="label">N — Network</div><h4>Perimeter and monitoring</h4><p>Firewall policy documentation, network segmentation, log collection, anomaly detection.</p></div>
+  <div class="sins-card"><div class="label">S — Security</div><h4>Governance evidence</h4><p>Policy framework, risk register, incident response plan, staff awareness training records.</p></div>
+</div>
+<h2>A practical 90-day audit readiness path</h2>
+<p><strong>Days 1–30:</strong> Conduct a gap assessment. Build the asset inventory. Begin policy development starting with the four core policies: acceptable use, access control, incident response, and data protection.</p>
+<p><strong>Days 31–60:</strong> Address highest-risk findings. Remediate access control (stale accounts, MFA, admin privileges). Test and document backups. Begin collecting evidence of control operation.</p>
+<p><strong>Days 61–90:</strong> Complete the risk register. Conduct a tabletop incident response exercise. Finalise documentation. Run an internal pre-audit. Brief staff on their roles.</p>
+<div class="warning"><p><strong>Important:</strong> Many organisations begin audit preparation four to six weeks out. This is rarely enough time. Start earlier than you think you need to.</p></div>
+<p>The goal is not audit preparation as a one-time event — it is the establishment of a security management system that is audit-ready as a natural consequence of how the organisation operates.</p>
+<div class="cta-block">
+  <h3>Ready to prepare for your audit?</h3>
+  <p>RETACH's S.I.N.S. Framework™ Health Scan gives you a clear gap assessment and prioritised remediation roadmap — starting at KES 32,500.</p>
+  <a href="/#contact" class="cta-btn">Talk to RETACH →</a>
+</div>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+</body>
+</html>
