@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S.I.N.S. Security Scanner™ | RETACH Digital</title>
+<meta name="description" content="Free 5-minute security posture assessment for Kenyan SMEs and SACCOs. Get your S.I.N.S. score across Systems, Infrastructure, Network and Security.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;1,400&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --green:   #2a7a52;
+  --green-l: #3a9b68;
+  --green-d: #1e5a3c;
+  --dark:    #111310;
+  --dark2:   #1a1d19;
+  --red:     #9b2335;
+  --amber:   #c07818;
+  --bg:      #0e100d;
+  --card:    #151814;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(42,122,82,0.3);
+  --text:    #e8ebe6;
+  --muted:   #7a8a78;
+  --mono:    'IBM Plex Mono', monospace;
+  --cond:    'Barlow Condensed', sans-serif;
+  --body:    'Barlow', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* grid texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(42,122,82,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,122,82,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(14,16,13,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--cond);
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--text); text-decoration: none; letter-spacing: 0.06em;
+}
+.nav-brand span { color: var(--green); }
+.nav-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--green); letter-spacing: 0.12em;
+  border: 1px solid var(--green-d);
+  padding: 0.25rem 0.7rem; border-radius: 3px;
+  text-transform: uppercase;
+}
+.nav-back {
+  font-size: 0.85rem; color: var(--muted);
+  text-decoration: none;
+}
+.nav-back:hover { color: var(--text); }
+
+/* ─── HERO ────────────────────────────────────────────────── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 5rem 2rem 3.5rem;
+  text-align: center;
+  max-width: 780px; margin: 0 auto;
+}
+.hero-label {
+  font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--green); letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+}
+.hero-label::before, .hero-label::after {
+  content: ''; flex: 1; max-width: 60px;
+  height: 1px; background: var(--green-d);
+}
+.hero h1 {
+  font-family: var(--cond);
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 800; line-height: 1.0;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.2rem;
+}
+.hero h1 em { color: var(--green); font-style: normal; }
+.hero-sub {
+  font-size: 1.05rem; color: var(--muted);
+  line-height: 1.7; max-width: 560px; margin: 0 auto 2rem;
+}
+.hero-meta {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--muted); letter-spacing: 0.06em;
+}
+.hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+.hero-meta .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); display: inline-block;
+}
+
+/* ─── PROGRESS BAR ────────────────────────────────────────── */
+.progress-wrap {
+  position: relative; z-index: 1;
+  max-width: 780px; margin: 0 auto 3rem;
+  padding: 0 2rem;
+}
+.progress-track {
+  height: 3px; background: rgba(255,255,255,0.06);
+  border-radius: 2px; overflow: visible; position: relative;
+}
+.progress-fill {
+  height: 100%; background: var(--green);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 12px rgba(42,122,82,0.6);
+}
+.progress-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 0.6rem;
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--muted); letter-spacing: 0.08em;
+}
+.progress-labels span.active { color: var(--green); }
+
+/* ─── SCANNER CARD ────────────────────────────────────────── */
+.scanner-wrap {
+  position: relative; z-index: 1;
+  max-width: 780px; margin: 0 auto;
+  padding: 0 2rem 6rem;
+}
+
+.section-card {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeUp 0.35s ease forwards;
+}
+.section-card.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  padding: 1.8rem 2rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 1.2rem;
+}
+.section-letter {
+  font-family: var(--cond);
+  font-size: 3.5rem; font-weight: 800;
+  color: var(--green); line-height: 1;
+  opacity: 0.9; min-width: 48px;
+}
+.section-title-wrap {}
+.section-pillar {
+  font-family: var(--mono);
+  font-size: 0.65rem; color: var(--green);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.section-title {
+  font-family: var(--cond);
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--text);
+}
+.section-desc {
+  font-size: 0.88rem; color: var(--muted);
+  margin-top: 0.3rem; line-height: 1.5;
+}
+
+/* Questions */
+.questions-list { padding: 1.5rem 2rem; }
+.question-item {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.question-item:last-child { border-bottom: none; }
+.question-text {
+  font-size: 0.97rem; line-height: 1.55;
+  margin-bottom: 0.9rem; color: var(--text);
+}
+.question-text strong { color: var(--green); font-weight: 600; }
+.options {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+}
+.opt {
+  flex: 1; min-width: 120px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--body); font-size: 0.85rem;
+  cursor: pointer; text-align: center;
+  transition: all 0.18s;
+  position: relative;
+}
+.opt:hover { border-color: var(--green); color: var(--text); }
+.opt.selected-yes {
+  border-color: var(--green);
+  background: rgba(42,122,82,0.12);
+  color: var(--green);
+  font-weight: 600;
+}
+.opt.selected-partial {
+  border-color: var(--amber);
+  background: rgba(192,120,24,0.1);
+  color: var(--amber);
+  font-weight: 600;
+}
+.opt.selected-no {
+  border-color: var(--red);
+  background: rgba(155,35,53,0.1);
+  color: #d44;
+  font-weight: 600;
+}
+
+/* nav buttons */
+.card-footer {
+  padding: 1.2rem 2rem;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.btn {
+  font-family: var(--body); font-weight: 600;
+  font-size: 0.9rem; padding: 0.7rem 1.6rem;
+  border-radius: 8px; border: none; cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-primary {
+  background: var(--green); color: #fff;
+}
+.btn-primary:hover { background: var(--green-l); transform: translateY(-1px); }
+.btn-primary:disabled { background: #2a3a2e; color: var(--muted); cursor: not-allowed; transform: none; }
+.btn-ghost {
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+.q-counter {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--muted); letter-spacing: 0.06em;
+}
+
+/* ─── CONTACT GATE ────────────────────────────────────────── */
+#contact-gate {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  display: none;
+  animation: fadeUp 0.35s ease forwards;
+}
+#contact-gate.active { display: block; }
+.gate-header {
+  background: linear-gradient(135deg, var(--dark2), #0e1a10);
+  border-bottom: 1px solid var(--border2);
+  padding: 2rem;
+  text-align: center;
+}
+.gate-header h2 {
+  font-family: var(--cond);
+  font-size: 1.9rem; font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.gate-header p { font-size: 0.92rem; color: var(--muted); }
+.gate-form { padding: 2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label {
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.form-group input, .form-group select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text); font-family: var(--body); font-size: 0.92rem;
+  padding: 0.7rem 0.9rem;
+  transition: border-color 0.18s;
+  outline: none; width: 100%;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--green);
+}
+.form-group select option { background: #1a1d19; }
+.gate-cta {
+  width: 100%; margin-top: 0.5rem;
+  padding: 0.9rem; font-size: 1rem;
+  background: var(--green); color: #fff; font-weight: 700;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: var(--cond); letter-spacing: 0.06em;
+  transition: all 0.2s;
+}
+.gate-cta:hover { background: var(--green-l); transform: translateY(-1px); }
+.gate-note {
+  text-align: center; margin-top: 0.8rem;
+  font-size: 0.78rem; color: var(--muted);
+}
+
+/* ─── RESULTS ─────────────────────────────────────────────── */
+#results-panel {
+  display: none;
+  animation: fadeUp 0.4s ease forwards;
+}
+#results-panel.active { display: block; }
+
+.results-hero {
+  background: linear-gradient(135deg, #0b1a0e, #0f2014);
+  border: 1px solid var(--border2);
+  border-radius: 16px; padding: 2.5rem 2rem;
+  text-align: center; margin-bottom: 1.5rem;
+}
+.score-ring-wrap {
+  position: relative; width: 180px; height: 180px;
+  margin: 0 auto 1.5rem;
+}
+.score-ring {
+  width: 180px; height: 180px;
+  transform: rotate(-90deg);
+}
+.score-ring-bg {
+  fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 12;
+}
+.score-ring-fill {
+  fill: none; stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1),
+              stroke 0.4s ease;
+}
+.score-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.score-number {
+  font-family: var(--cond);
+  font-size: 3rem; font-weight: 800; line-height: 1;
+}
+.score-label {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+.score-verdict {
+  font-family: var(--cond);
+  font-size: 1.8rem; font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.score-summary { font-size: 0.92rem; color: var(--muted); line-height: 1.6; max-width: 500px; margin: 0 auto; }
+
+/* Pillar scores */
+.pillar-scores {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin-bottom: 1.5rem;
+}
+.pillar-score-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.2rem;
+}
+.psc-header {
+  display: flex; align-items: center; gap: 0.7rem;
+  margin-bottom: 0.8rem;
+}
+.psc-letter {
+  font-family: var(--cond); font-size: 1.6rem;
+  font-weight: 800; color: var(--green); line-height: 1;
+}
+.psc-name {
+  font-family: var(--cond); font-size: 1rem;
+  font-weight: 600; color: var(--text);
+}
+.psc-bar-track {
+  height: 6px; background: rgba(255,255,255,0.06);
+  border-radius: 3px; overflow: hidden;
+}
+.psc-bar-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 0.8s ease;
+}
+.psc-pct {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--muted); margin-top: 0.4rem;
+  display: flex; justify-content: space-between;
+}
+
+/* Findings */
+.findings-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.findings-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--cond); font-size: 1.1rem;
+  font-weight: 700; display: flex; gap: 0.6rem; align-items: center;
+}
+.findings-header .tag {
+  font-family: var(--mono); font-size: 0.62rem;
+  padding: 0.2rem 0.5rem; border-radius: 3px;
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.tag-critical { background: rgba(155,35,53,0.2); color: #e05; border: 1px solid rgba(155,35,53,0.3); }
+.tag-medium { background: rgba(192,120,24,0.15); color: var(--amber); border: 1px solid rgba(192,120,24,0.3); }
+.tag-low { background: rgba(42,122,82,0.15); color: var(--green); border: 1px solid var(--border2); }
+.finding-row {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 0.8rem; align-items: flex-start;
+}
+.finding-row:last-child { border-bottom: none; }
+.finding-icon { font-size: 1rem; margin-top: 0.1rem; flex-shrink: 0; }
+.finding-text { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+.finding-text strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 0.15rem; }
+
+/* CTA block */
+.results-cta {
+  background: linear-gradient(135deg, var(--dark2), #0c1a0e);
+  border: 1px solid var(--border2);
+  border-radius: 16px; padding: 2.5rem 2rem;
+  text-align: center;
+}
+.results-cta h2 {
+  font-family: var(--cond); font-size: 2rem;
+  font-weight: 700; margin-bottom: 0.6rem;
+}
+.results-cta p { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+.cta-price {
+  font-family: var(--mono); font-size: 0.78rem;
+  color: var(--green); letter-spacing: 0.08em;
+  margin-bottom: 1.2rem;
+}
+.cta-price strong { font-size: 1.4rem; font-family: var(--cond); letter-spacing: 0; }
+.btn-cta-large {
+  display: inline-block;
+  background: var(--green); color: #fff;
+  font-family: var(--cond); font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 1rem 2.5rem; border-radius: 8px;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-cta-large:hover { background: var(--green-l); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(42,122,82,0.3); }
+.cta-sub {
+  margin-top: 0.8rem; font-size: 0.8rem; color: var(--muted);
+}
+.cta-sub a { color: var(--green); text-decoration: none; }
+
+/* scanning animation */
+#scanning-overlay {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 4rem 2rem;
+  text-align: center;
+}
+#scanning-overlay.active { display: block; }
+.scan-anim {
+  display: flex; justify-content: center; gap: 6px;
+  margin-bottom: 1.5rem;
+}
+.scan-bar {
+  width: 4px; height: 40px; border-radius: 2px;
+  background: var(--green);
+  animation: scanPulse 1.2s ease-in-out infinite;
+}
+.scan-bar:nth-child(2) { animation-delay: 0.15s; }
+.scan-bar:nth-child(3) { animation-delay: 0.3s; }
+.scan-bar:nth-child(4) { animation-delay: 0.45s; }
+.scan-bar:nth-child(5) { animation-delay: 0.6s; }
+@keyframes scanPulse {
+  0%,100% { transform: scaleY(0.4); opacity: 0.3; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+.scan-label {
+  font-family: var(--mono); font-size: 0.8rem;
+  color: var(--green); letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.scan-sublabel { font-size: 0.85rem; color: var(--muted); }
+
+/* footer */
+.site-footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+.site-footer a { color: var(--green); text-decoration: none; }
+
+/* responsive */
+@media (max-width: 600px) {
+  .hero { padding: 3.5rem 1.25rem 2rem; }
+  .scanner-wrap { padding: 0 1rem 4rem; }
+  .section-header { padding: 1.4rem; }
+  .questions-list { padding: 1rem 1.4rem; }
+  .card-footer { padding: 1rem 1.4rem; }
+  .pillar-scores { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-brand">RETACH<span>.</span></a>
+  <span class="nav-badge">S.I.N.S. Scanner™</span>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Free Assessment · No Login Required</div>
+  <h1>Your <em>S.I.N.S.</em><br>Security Score</h1>
+  <p class="hero-sub">Answer 20 questions across the four pillars of the S.I.N.S. Framework™. Get an instant score, a prioritised finding list, and a clear next step — in under 5 minutes.</p>
+  <div class="hero-meta">
+    <span><span class="dot"></span> 20 questions</span>
+    <span><span class="dot"></span> 4 pillars</span>
+    <span><span class="dot"></span> Instant results</span>
+    <span><span class="dot"></span> Kenyan context</span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+  <div class="progress-labels">
+    <span id="pl-s" class="active">S — Systems</span>
+    <span id="pl-i">I — Infrastructure</span>
+    <span id="pl-n">N — Network</span>
+    <span id="pl-sec">S — Security</span>
+    <span id="pl-done">Results</span>
+  </div>
+</div>
+
+<!-- SCANNER -->
+<div class="scanner-wrap">
+
+  <!-- SECTION 0: Systems -->
+  <div class="section-card active" id="section-0">
+    <div class="section-header">
+      <div class="section-letter">S</div>
+      <div class="section-title-wrap">
+        <div class="section-pillar">Pillar 1 · Foundation Layer</div>
+        <div class="section-title">Systems</div>
+        <div class="section-desc">Endpoints, identity, access control and enterprise applications.</div>
+      </div>
+    </div>
+    <div class="questions-list">
+
+      <div class="question-item" data-q="s1">
+        <div class="question-text">Does your organisation maintain an <strong>up-to-date inventory</strong> of all devices (laptops, desktops, phones, servers) that access your systems?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s1','yes',this)">Yes, fully maintained</button>
+          <button class="opt" onclick="answer('s1','partial',this)">Partial / informal list</button>
+          <button class="opt" onclick="answer('s1','no',this)">No inventory exists</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="s2">
+        <div class="question-text">Is <strong>Multi-Factor Authentication (MFA)</strong> enforced on your email, Microsoft 365, or any cloud system staff use?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s2','yes',this)">Yes, enforced for all</button>
+          <button class="opt" onclick="answer('s2','partial',this)">Some users only</button>
+          <button class="opt" onclick="answer('s2','no',this)">No MFA in use</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="s3">
+        <div class="question-text">When a staff member leaves, are their <strong>accounts and access revoked within 24 hours</strong>?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s3','yes',this)">Yes, consistently</button>
+          <button class="opt" onclick="answer('s3','partial',this)">Sometimes / delayed</button>
+          <button class="opt" onclick="answer('s3','no',this)">No formal process</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="s4">
+        <div class="question-text">Are all endpoints (staff laptops/desktops) running <strong>active, managed endpoint protection</strong> (antivirus / EDR) with a central management console?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s4','yes',this)">Yes, centrally managed</button>
+          <button class="opt" onclick="answer('s4','partial',this)">Local AV, not managed</button>
+          <button class="opt" onclick="answer('s4','no',this)">No endpoint protection</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="s5">
+        <div class="question-text">Does your organisation apply <strong>security patches and OS updates</strong> to all systems within 30 days of release?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s5','yes',this)">Yes, regularly</button>
+          <button class="opt" onclick="answer('s5','partial',this)">Inconsistently</button>
+          <button class="opt" onclick="answer('s5','no',this)">No patch process</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <span class="q-counter">Pillar 1 of 4 · Systems</span>
+      <button class="btn btn-primary" id="next-0" onclick="nextSection(0)" disabled>Next: Infrastructure →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Infrastructure -->
+  <div class="section-card" id="section-1">
+    <div class="section-header">
+      <div class="section-letter">I</div>
+      <div class="section-title-wrap">
+        <div class="section-pillar">Pillar 2 · Operational Layer</div>
+        <div class="section-title">Infrastructure</div>
+        <div class="section-desc">Servers, backup, recovery and cloud environments.</div>
+      </div>
+    </div>
+    <div class="questions-list">
+
+      <div class="question-item" data-q="i1">
+        <div class="question-text">Does your organisation have a <strong>documented backup procedure</strong> that runs automatically on a defined schedule?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('i1','yes',this)">Yes, documented & automated</button>
+          <button class="opt" onclick="answer('i1','partial',this)">Manual / informal backups</button>
+          <button class="opt" onclick="answer('i1','no',this)">No backup procedure</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="i2">
+        <div class="question-text">Has your organisation performed a <strong>tested backup restore</strong> in the last 6 months — confirming data can actually be recovered?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('i2','yes',this)">Yes, tested recently</button>
+          <button class="opt" onclick="answer('i2','partial',this)">Backup exists, never tested</button>
+          <button class="opt" onclick="answer('i2','no',this)">No backup / no testing</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="i3">
+        <div class="question-text">Do you have a defined <strong>Recovery Time Objective (RTO)</strong> — a documented maximum acceptable downtime if your systems fail?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('i3','yes',this)">Yes, formally defined</button>
+          <button class="opt" onclick="answer('i3','partial',this)">Informal understanding only</button>
+          <button class="opt" onclick="answer('i3','no',this)">Never considered</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="i4">
+        <div class="question-text">Are your <strong>servers and cloud environments</strong> configured against a security baseline (e.g. unnecessary services disabled, strong admin passwords, audit logging enabled)?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('i4','yes',this)">Yes, formally hardened</button>
+          <button class="opt" onclick="answer('i4','partial',this)">Default / basic config only</button>
+          <button class="opt" onclick="answer('i4','no',this)">Unknown / not configured</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="i5">
+        <div class="question-text">If your primary system or office became unavailable today, could your organisation <strong>continue critical operations</strong> from an alternate location or cloud system?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('i5','yes',this)">Yes, plan is in place</button>
+          <button class="opt" onclick="answer('i5','partial',this)">Partial capability only</button>
+          <button class="opt" onclick="answer('i5','no',this)">Operations would stop</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-ghost" onclick="prevSection(1)">← Back</button>
+      <button class="btn btn-primary" id="next-1" onclick="nextSection(1)" disabled>Next: Network →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Network -->
+  <div class="section-card" id="section-2">
+    <div class="section-header">
+      <div class="section-letter">N</div>
+      <div class="section-title-wrap">
+        <div class="section-pillar">Pillar 3 · Connectivity Layer</div>
+        <div class="section-title">Network</div>
+        <div class="section-desc">Perimeter, connectivity, access control and monitoring.</div>
+      </div>
+    </div>
+    <div class="questions-list">
+
+      <div class="question-item" data-q="n1">
+        <div class="question-text">Does your organisation have a <strong>configured firewall</strong> with a reviewed rule set — not just the default router settings from your ISP?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('n1','yes',this)">Yes, configured & reviewed</button>
+          <button class="opt" onclick="answer('n1','partial',this)">Basic router firewall only</button>
+          <button class="opt" onclick="answer('n1','no',this)">No firewall / unknown</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="n2">
+        <div class="question-text">Is your <strong>guest WiFi or visitor network</strong> separated from your internal staff and systems network?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('n2','yes',this)">Yes, fully separated</button>
+          <button class="opt" onclick="answer('n2','partial',this)">Same network, different password</button>
+          <button class="opt" onclick="answer('n2','no',this)">Same network, no separation</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="n3">
+        <div class="question-text">Does your organisation use a <strong>VPN or secure remote access solution</strong> for staff working outside the office?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('n3','yes',this)">Yes, VPN or Zero Trust</button>
+          <button class="opt" onclick="answer('n3','partial',this)">Ad hoc / unsecured access</button>
+          <button class="opt" onclick="answer('n3','no',this)">No remote access policy</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="n4">
+        <div class="question-text">Is there any <strong>network traffic monitoring or logging</strong> in place that would detect unusual activity (e.g. large data transfers, unknown devices)?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('n4','yes',this)">Yes, monitored & logged</button>
+          <button class="opt" onclick="answer('n4','partial',this)">Basic ISP logs only</button>
+          <button class="opt" onclick="answer('n4','no',this)">No monitoring</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="n5">
+        <div class="question-text">Is access to your network controlled so that <strong>only authorised devices</strong> (known laptops, phones) can connect — not any device that knows the WiFi password?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('n5','yes',this)">Yes, device-level control</button>
+          <button class="opt" onclick="answer('n5','partial',this)">Password only, no device control</button>
+          <button class="opt" onclick="answer('n5','no',this)">No access control</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-ghost" onclick="prevSection(2)">← Back</button>
+      <button class="btn btn-primary" id="next-2" onclick="nextSection(2)" disabled>Next: Security →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Security Governance -->
+  <div class="section-card" id="section-3">
+    <div class="section-header">
+      <div class="section-letter">S</div>
+      <div class="section-title-wrap">
+        <div class="section-pillar">Pillar 4 · Governance Layer</div>
+        <div class="section-title">Security</div>
+        <div class="section-desc">Policies, compliance, risk management and incident response.</div>
+      </div>
+    </div>
+    <div class="questions-list">
+
+      <div class="question-item" data-q="sec1">
+        <div class="question-text">Does your organisation have a written <strong>Information Security Policy</strong> that staff have read and acknowledged?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('sec1','yes',this)">Yes, current and signed</button>
+          <button class="opt" onclick="answer('sec1','partial',this)">Exists but outdated / unsigned</button>
+          <button class="opt" onclick="answer('sec1','no',this)">No policy exists</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="sec2">
+        <div class="question-text">Does your organisation have a documented <strong>Incident Response procedure</strong> — a step-by-step plan for what to do if you are hacked, lose data, or suffer a breach?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('sec2','yes',this)">Yes, documented & tested</button>
+          <button class="opt" onclick="answer('sec2','partial',this)">Informal understanding only</button>
+          <button class="opt" onclick="answer('sec2','no',this)">No procedure exists</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="sec3">
+        <div class="question-text">Is your organisation registered with the <strong>Office of the Data Protection Commissioner (ODPC)</strong> as required by the Kenya Data Protection Act?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('sec3','yes',this)">Yes, registered</button>
+          <button class="opt" onclick="answer('sec3','partial',this)">In progress / unsure</button>
+          <button class="opt" onclick="answer('sec3','no',this)">Not registered</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="sec4">
+        <div class="question-text">Has your organisation conducted a formal <strong>risk assessment</strong> in the last 12 months to identify and document your top cybersecurity risks?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('sec4','yes',this)">Yes, documented risk register</button>
+          <button class="opt" onclick="answer('sec4','partial',this)">Informal awareness only</button>
+          <button class="opt" onclick="answer('sec4','no',this)">No risk assessment done</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="sec5">
+        <div class="question-text">Do staff receive <strong>security awareness training</strong> at least once a year — including how to spot phishing, handle data, and report incidents?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('sec5','yes',this)">Yes, regular training</button>
+          <button class="opt" onclick="answer('sec5','partial',this)">Occasional / informal</button>
+          <button class="opt" onclick="answer('sec5','no',this)">No training</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-ghost" onclick="prevSection(3)">← Back</button>
+      <button class="btn btn-primary" id="next-3" onclick="showContactGate()" disabled>Get My Results →</button>
+    </div>
+  </div>
+
+  <!-- CONTACT GATE -->
+  <div id="contact-gate">
+    <div class="gate-header">
+      <h2>Almost there — your score is ready</h2>
+      <p>Enter your details to receive your personalised S.I.N.S. score and finding report.</p>
+    </div>
+    <div class="gate-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="f-name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Organisation</label>
+          <input type="text" id="f-org" placeholder="Company or SACCO name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="f-email" placeholder="you@organisation.co.ke">
+        </div>
+        <div class="form-group">
+          <label>Organisation Type</label>
+          <select id="f-type">
+            <option value="">Select type…</option>
+            <option>SACCO (Deposit Taking)</option>
+            <option>SACCO (Non-Deposit Taking)</option>
+            <option>SME (1–50 staff)</option>
+            <option>SME (51–200 staff)</option>
+            <option>Healthcare / Clinic</option>
+            <option>NGO / INGO</option>
+            <option>School / University</option>
+            <option>Financial Institution</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <button class="gate-cta" onclick="showResults()">View My S.I.N.S. Score →</button>
+      <p class="gate-note">Your results appear instantly. RETACH may contact you about a follow-up assessment. No spam.</p>
+    </div>
+  </div>
+
+  <!-- SCANNING ANIMATION -->
+  <div id="scanning-overlay">
+    <div class="scan-anim">
+      <div class="scan-bar"></div>
+      <div class="scan-bar"></div>
+      <div class="scan-bar"></div>
+      <div class="scan-bar"></div>
+      <div class="scan-bar"></div>
+    </div>
+    <div class="scan-label">Analysing your responses…</div>
+    <div class="scan-sublabel">Scoring across all four S.I.N.S. pillars</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-panel">
+
+    <div class="results-hero">
+      <div class="score-ring-wrap">
+        <svg class="score-ring" viewBox="0 0 180 180">
+          <circle class="score-ring-bg" cx="90" cy="90" r="70"/>
+          <circle class="score-ring-fill" id="ring-fill" cx="90" cy="90" r="70"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-number" id="score-number">0</div>
+          <div class="score-label">/ 100</div>
+        </div>
+      </div>
+      <div class="score-verdict" id="score-verdict">—</div>
+      <div class="score-summary" id="score-summary">—</div>
+    </div>
+
+    <div class="pillar-scores" id="pillar-scores"></div>
+    <div class="findings-card" id="findings-card"></div>
+    <div class="results-cta">
+      <h2>Your next step is clear.</h2>
+      <p id="cta-copy">A full S.I.N.S. Health Scan maps every gap found above to a prioritised remediation plan — with fixed timelines and costs. No surprises.</p>
+      <div class="cta-price">Full Health Scan from <strong>KES 32,500</strong> · Delivered in 5 days</div>
+      <a href="/#contact" class="btn-cta-large">Book Your Health Scan →</a>
+      <div class="cta-sub">Or email us directly: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="site-footer">
+  © 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────
+const answers = {};
+const sections = ['s','i','n','sec'];
+const sectionNames = ['Systems','Infrastructure','Network','Security'];
+const questions = {
+  s:   ['s1','s2','s3','s4','s5'],
+  i:   ['i1','i2','i3','i4','i5'],
+  n:   ['n1','n2','n3','n4','n5'],
+  sec: ['sec1','sec2','sec3','sec4','sec5'],
+};
+let currentSection = 0;
+
+// scoring: yes=10, partial=5, no=0
+function score(val) { return val==='yes'?10:val==='partial'?5:0; }
+
+// ─── ANSWER ─────────────────────────────────────────────────
+function answer(qid, val, btn) {
+  answers[qid] = val;
+  // deselect siblings
+  btn.closest('.options').querySelectorAll('.opt').forEach(b => {
+    b.className = 'opt';
+  });
+  btn.classList.add('selected-' + val);
+  checkSectionComplete(currentSection);
+}
+
+function checkSectionComplete(idx) {
+  const sec = sections[idx];
+  const qs = questions[sec];
+  const all = qs.every(q => answers[q]);
+  const btn = document.getElementById('next-' + idx);
+  if (btn) btn.disabled = !all;
+}
+
+// ─── NAVIGATION ─────────────────────────────────────────────
+function nextSection(idx) {
+  document.getElementById('section-' + idx).classList.remove('active');
+  currentSection = idx + 1;
+  if (currentSection < 4) {
+    document.getElementById('section-' + currentSection).classList.add('active');
+  }
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function prevSection(idx) {
+  document.getElementById('section-' + idx).classList.remove('active');
+  currentSection = idx - 1;
+  document.getElementById('section-' + currentSection).classList.add('active');
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showContactGate() {
+  document.getElementById('section-3').classList.remove('active');
+  document.getElementById('contact-gate').classList.add('active');
+  currentSection = 4;
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ─── PROGRESS ────────────────────────────────────────────────
+function updateProgress() {
+  const pct = Math.min(100, (currentSection / 4) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  ['pl-s','pl-i','pl-n','pl-sec','pl-done'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', i === currentSection);
+  });
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────
+function showResults() {
+  const name = document.getElementById('f-name').value.trim() || 'there';
+  const org  = document.getElementById('f-org').value.trim();
+  const type = document.getElementById('f-type').value;
+
+  // hide gate, show scanning
+  document.getElementById('contact-gate').classList.remove('active');
+  document.getElementById('scanning-overlay').classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  setTimeout(() => {
+    document.getElementById('scanning-overlay').classList.remove('active');
+    buildResults(name, org, type);
+    document.getElementById('results-panel').classList.add('active');
+    currentSection = 5;
+    updateProgress();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 2400);
+}
+
+function buildResults(name, org, type) {
+  // pillar scores
+  const pillarScores = {};
+  sections.forEach(sec => {
+    const total = questions[sec].reduce((s,q) => s + score(answers[q] || 'no'), 0);
+    pillarScores[sec] = total; // 0-50 → map to 0-100
+  });
+
+  const overall = Math.round(
+    Object.values(pillarScores).reduce((a,b) => a+b, 0) / 2
+  ); // 0–100
+
+  // ring animation
+  const circumference = 2 * Math.PI * 70; // ≈ 439.8
+  const offset = circumference * (1 - overall / 100);
+  const ringEl = document.getElementById('ring-fill');
+  const color = overall >= 70 ? '#2a7a52' : overall >= 40 ? '#c07818' : '#9b2335';
+  ringEl.style.stroke = color;
+
+  setTimeout(() => {
+    ringEl.style.strokeDashoffset = offset;
+  }, 100);
+
+  // counter
+  let count = 0;
+  const numEl = document.getElementById('score-number');
+  const interval = setInterval(() => {
+    count = Math.min(count + 2, overall);
+    numEl.textContent = count;
+    if (count >= overall) clearInterval(interval);
+  }, 20);
+  numEl.style.color = color;
+
+  // verdict
+  let verdict, summary, ctaCopy;
+  if (overall >= 75) {
+    verdict = 'Good Foundation';
+    summary = `${name ? name + ', your' : 'Your'} organisation has meaningful security controls in place. The gaps that remain are likely in governance documentation and evidence — the areas auditors focus on most. A targeted Health Scan will surface and close them.`;
+    ctaCopy = `Your score shows real security investment. A Health Scan will identify the remaining gaps that could undermine an audit or regulatory review — and fix them before they become findings.`;
+  } else if (overall >= 45) {
+    verdict = 'Significant Gaps';
+    summary = `${name ? name + ', your' : 'Your'} organisation has some controls in place but significant gaps across one or more pillars. These represent real operational and compliance risk — especially under SASRA, Kenya DPA, or audit scrutiny.`;
+    ctaCopy = `Your score reveals gaps that are actively exploitable and audit-reportable. A Health Scan produces a prioritised remediation plan with fixed costs and timelines — so you know exactly what to fix and in what order.`;
+  } else {
+    verdict = 'High Risk Exposure';
+    summary = `${name ? name + ', your' : 'Your'} organisation has limited security controls across multiple pillars. In Kenya's current regulatory environment — with DPA enforcement active and SASRA scrutiny increasing — this level of exposure creates both operational and legal risk.`;
+    ctaCopy = `Your score indicates urgent action is needed. A Health Scan gives you a clear, prioritised remediation plan — starting with the highest-risk gaps. We recommend booking within 30 days.`;
+  }
+
+  document.getElementById('score-verdict').textContent = verdict;
+  document.getElementById('score-verdict').style.color = color;
+  document.getElementById('score-summary').textContent = summary;
+  document.getElementById('cta-copy').textContent = ctaCopy;
+
+  // pillar bars
+  const pillarLabels = {s:'Systems',i:'Infrastructure',n:'Network',sec:'Security'};
+  const pillarDesc   = {
+    s:   ['No asset inventory','No MFA enforced','Stale account access','Endpoint protection gaps','Patch management issues'],
+    i:   ['No documented backup procedure','Backup never tested / no RTO','No DR plan','Infrastructure not hardened','Poor cloud posture'],
+    n:   ['Firewall not configured','No network segmentation','No secure remote access','No traffic monitoring','No device access control'],
+    sec: ['No security policy','No incident response plan','Not ODPC registered','No risk assessment','No staff security training'],
+  };
+
+  const pillarGrid = document.getElementById('pillar-scores');
+  pillarGrid.innerHTML = '';
+  sections.forEach(sec => {
+    const pct = Math.round(pillarScores[sec] * 2); // 0-100
+    const barColor = pct >= 70 ? '#2a7a52' : pct >= 40 ? '#c07818' : '#9b2335';
+    pillarGrid.innerHTML += `
+      <div class="pillar-score-card">
+        <div class="psc-header">
+          <div class="psc-letter">${sec === 'sec' ? 'S' : sec.toUpperCase()}</div>
+          <div class="psc-name">${pillarLabels[sec]}</div>
+        </div>
+        <div class="psc-bar-track">
+          <div class="psc-bar-fill" style="width:${pct}%;background:${barColor};"></div>
+        </div>
+        <div class="psc-pct"><span>${pct >= 70 ? 'Adequate' : pct >= 40 ? 'Needs attention' : 'High risk'}</span><span>${pct}/100</span></div>
+      </div>`;
+  });
+
+  // findings
+  const critical = [], medium = [], low = [];
+  const qKeys = Object.keys(answers);
+  let qIdx = 0;
+  sections.forEach(sec => {
+    questions[sec].forEach((qid, i) => {
+      const val = answers[qid] || 'no';
+      if (val === 'no')      critical.push({ text: pillarDesc[sec][i], pillar: pillarLabels[sec] });
+      else if (val === 'partial') medium.push({ text: pillarDesc[sec][i], pillar: pillarLabels[sec] });
+      else                       low.push({ text: pillarDesc[sec][i], pillar: pillarLabels[sec] });
+    });
+  });
+
+  let findingsHTML = '';
+
+  if (critical.length) {
+    findingsHTML += `<div class="findings-header">Critical findings <span class="tag tag-critical">${critical.length} items</span></div>`;
+    critical.forEach(f => {
+      findingsHTML += `<div class="finding-row"><div class="finding-icon">🔴</div><div class="finding-text"><strong>${f.pillar}: ${f.text}</strong>This gap represents immediate operational or compliance risk and should be prioritised for remediation.</div></div>`;
+    });
+  }
+  if (medium.length) {
+    findingsHTML += `<div class="findings-header" style="border-top:1px solid var(--border)">Partial controls — needs improvement <span class="tag tag-medium">${medium.length} items</span></div>`;
+    medium.forEach(f => {
+      findingsHTML += `<div class="finding-row"><div class="finding-icon">🟡</div><div class="finding-text"><strong>${f.pillar}: ${f.text}</strong>A control exists but is incomplete, inconsistent, or undocumented. An auditor would flag this.</div></div>`;
+    });
+  }
+  if (low.length && low.length < 10) {
+    findingsHTML += `<div class="findings-header" style="border-top:1px solid var(--border)">Adequately controlled <span class="tag tag-low">${low.length} items</span></div>`;
+    low.forEach(f => {
+      findingsHTML += `<div class="finding-row"><div class="finding-icon">🟢</div><div class="finding-text"><strong>${f.pillar}: ${f.text}</strong>This control is in place. A Health Scan will verify implementation quality and evidence.</div></div>`;
+    });
+  }
+
+  document.getElementById('findings-card').innerHTML = findingsHTML;
+}
+</script>
+</body>
+</html>
