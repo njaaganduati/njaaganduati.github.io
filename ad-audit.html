@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AD Audit Portal | RETACH Digital — ad-audit.retach.io</title>
+<meta name="description" content="S.I.N.S. Framework™ AD Security Audit Portal. Upload your combined_findings.json to view pillar scores, findings register, and Detection Readiness Score.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;1,400&family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ──────────────────────────────────────────────────────── */
+:root {
+  --green:   #2a7a52;
+  --green-l: #3a9b68;
+  --green-d: #1e5a3c;
+  --dark:    #111310;
+  --dark2:   #1a1d19;
+  --red:     #9b2335;
+  --red-l:   rgba(155,35,53,0.15);
+  --amber:   #c07818;
+  --amber-l: rgba(192,120,24,0.12);
+  --blue:    #1a5f8a;
+  --bg:      #0e100d;
+  --card:    #141713;
+  --card2:   #181c17;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(42,122,82,0.25);
+  --text:    #e8ebe6;
+  --muted:   #7a8a78;
+  --mono:    'IBM Plex Mono', monospace;
+  --cond:    'Barlow Condensed', sans-serif;
+  --body:    'Barlow', sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* grid texture */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(42,122,82,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(42,122,82,0.025) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(14,16,13,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0.85rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.nav-brand{
+  font-family:var(--cond);font-size:1.25rem;font-weight:700;
+  color:var(--text);text-decoration:none;letter-spacing:0.05em;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.nav-brand span{color:var(--green)}
+.nav-domain{
+  font-family:var(--mono);font-size:0.6rem;color:var(--green);
+  letter-spacing:0.12em;border:1px solid var(--green-d);
+  padding:0.2rem 0.55rem;border-radius:3px;
+}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-back{font-size:0.82rem;color:var(--muted);text-decoration:none}
+.nav-back:hover{color:var(--text)}
+
+/* ─── LANDING / UPLOAD ZONE ───────────────────────────────────────── */
+#landing{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:calc(100vh - 57px);
+  padding:3rem 2rem;text-align:center;
+}
+.landing-eyebrow{
+  font-family:var(--mono);font-size:0.65rem;color:var(--green);
+  letter-spacing:0.15em;text-transform:uppercase;
+  display:flex;align-items:center;gap:0.7rem;margin-bottom:1.4rem;
+}
+.landing-eyebrow::before,.landing-eyebrow::after{
+  content:'';flex:1;max-width:50px;height:1px;background:var(--green-d);
+}
+.landing-title{
+  font-family:var(--cond);font-size:clamp(2.6rem,6vw,4.4rem);
+  font-weight:800;line-height:1.0;letter-spacing:-0.01em;
+  margin-bottom:1rem;max-width:720px;
+}
+.landing-title em{color:var(--green);font-style:normal}
+.landing-sub{
+  font-size:1rem;color:var(--muted);line-height:1.7;
+  max-width:520px;margin-bottom:2.5rem;
+}
+
+/* drop zone */
+.drop-zone{
+  width:100%;max-width:520px;
+  border:2px dashed var(--border2);border-radius:16px;
+  padding:2.5rem 2rem;cursor:pointer;
+  transition:border-color 0.2s,background 0.2s;
+  background:rgba(42,122,82,0.03);
+  position:relative;
+}
+.drop-zone:hover,.drop-zone.drag-over{
+  border-color:var(--green);background:rgba(42,122,82,0.07);
+}
+.drop-icon{
+  width:48px;height:48px;margin:0 auto 1rem;
+  border:1.5px solid var(--border2);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+}
+.drop-title{font-size:1rem;font-weight:600;margin-bottom:0.3rem}
+.drop-sub{font-size:0.82rem;color:var(--muted);line-height:1.5;margin-bottom:1.2rem}
+.drop-btn{
+  display:inline-block;padding:0.6rem 1.4rem;
+  background:var(--green);color:#fff;border-radius:6px;
+  font-size:0.85rem;font-weight:600;letter-spacing:0.03em;
+  border:none;cursor:pointer;transition:background 0.15s;
+}
+.drop-btn:hover{background:var(--green-l)}
+#file-input{display:none}
+
+.paste-row{
+  display:flex;gap:0.5rem;margin-top:1rem;width:100%;max-width:520px;
+}
+.paste-input{
+  flex:1;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);
+  font-family:var(--mono);font-size:0.75rem;outline:none;
+  transition:border-color 0.15s;
+}
+.paste-input:focus{border-color:var(--green)}
+.paste-btn{
+  padding:0.65rem 1.2rem;background:var(--card2);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-size:0.82rem;
+  cursor:pointer;transition:border-color 0.15s,color 0.15s;white-space:nowrap;
+}
+.paste-btn:hover{border-color:var(--green);color:var(--green)}
+
+.demo-link{
+  margin-top:1.5rem;font-size:0.8rem;color:var(--muted);
+}
+.demo-link a{color:var(--green);text-decoration:none}
+.demo-link a:hover{text-decoration:underline}
+
+/* ─── ERROR BANNER ────────────────────────────────────────────────── */
+#error-banner{
+  display:none;position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%);z-index:300;
+  background:#1a0a0d;border:1px solid var(--red);
+  border-radius:8px;padding:0.8rem 1.2rem;
+  font-size:0.82rem;color:#e05060;max-width:480px;text-align:center;
+  box-shadow:0 4px 24px rgba(155,35,53,0.3);
+}
+
+/* ─── DASHBOARD ───────────────────────────────────────────────────── */
+#dashboard{display:none;position:relative;z-index:1}
+
+/* engagement header */
+.engage-bar{
+  background:linear-gradient(135deg,#0b1a0e,#0f2014);
+  border-bottom:1px solid var(--border2);
+  padding:1.8rem 2rem 1.5rem;
+}
+.engage-grid{
+  display:grid;grid-template-columns:1fr auto;gap:1rem;
+  align-items:start;max-width:1400px;margin:0 auto;
+}
+.engage-eyebrow{
+  font-family:var(--mono);font-size:0.6rem;color:var(--green);
+  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem;
+}
+.engage-title{
+  font-family:var(--cond);font-size:2rem;font-weight:700;
+  line-height:1.1;margin-bottom:0.3rem;
+}
+.engage-title em{color:var(--green);font-style:normal}
+.engage-meta{
+  display:flex;flex-wrap:wrap;gap:0.8rem;font-size:0.78rem;color:var(--muted);
+  font-family:var(--mono);
+}
+.engage-meta span{display:flex;align-items:center;gap:0.3rem}
+.engage-actions{display:flex;gap:0.6rem;flex-shrink:0;padding-top:0.2rem}
+.action-btn{
+  padding:0.5rem 0.9rem;border-radius:6px;font-size:0.78rem;
+  font-weight:600;cursor:pointer;border:1px solid var(--border);
+  background:var(--card2);color:var(--text);transition:all 0.15s;
+  white-space:nowrap;
+}
+.action-btn:hover{border-color:var(--green);color:var(--green)}
+.action-btn.primary{background:var(--green);border-color:var(--green);color:#fff}
+.action-btn.primary:hover{background:var(--green-l);border-color:var(--green-l)}
+
+/* ─── SECTION WRAPPER ─────────────────────────────────────────────── */
+.section{padding:2rem;max-width:1400px;margin:0 auto}
+.section-head{margin-bottom:1.2rem}
+.section-label{
+  font-family:var(--mono);font-size:0.6rem;color:var(--muted);
+  letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.2rem;
+}
+.section-title{font-family:var(--cond);font-size:1.3rem;font-weight:600}
+
+/* ─── SUMMARY ROW ─────────────────────────────────────────────────── */
+.summary-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:0.7rem;margin-bottom:2rem;
+}
+.summary-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1rem 1.2rem;
+  transition:border-color 0.15s;
+}
+.summary-card:hover{border-color:var(--border2)}
+.sc-label{font-size:0.72rem;color:var(--muted);margin-bottom:0.35rem;font-family:var(--mono);letter-spacing:0.04em}
+.sc-val{font-family:var(--cond);font-size:2rem;font-weight:700;line-height:1}
+.sc-sub{font-size:0.7rem;color:var(--muted);margin-top:0.2rem}
+
+/* ─── SCORE RINGS GRID ────────────────────────────────────────────── */
+.rings-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:0.8rem;margin-bottom:2rem;
+}
+.ring-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.2rem 0.8rem;text-align:center;
+  transition:border-color 0.2s,transform 0.2s;cursor:default;
+}
+.ring-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.ring-svg-wrap{width:88px;height:88px;margin:0 auto 0.7rem;position:relative}
+.ring-svg{width:100%;height:100%}
+.ring-score-text{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;line-height:1;
+}
+.ring-num{font-family:var(--mono);font-size:1.25rem;font-weight:600}
+.ring-denom{font-size:0.58rem;color:var(--muted)}
+.ring-label{font-size:0.7rem;color:var(--muted);line-height:1.3;margin-bottom:0.2rem}
+.ring-verdict{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.05em}
+
+/* ─── DETECTION READINESS DIAL ────────────────────────────────────── */
+.drdy-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+  display:grid;grid-template-columns:auto 1fr;gap:1.5rem;
+  align-items:center;margin-bottom:2rem;
+}
+.drdy-dial{width:120px;height:120px;flex-shrink:0;position:relative}
+.drdy-dial svg{width:100%;height:100%}
+.drdy-dial-text{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;line-height:1.1;
+}
+.drdy-num{font-family:var(--mono);font-size:1.6rem;font-weight:600}
+.drdy-denom{font-size:0.62rem;color:var(--muted)}
+.drdy-body h3{font-family:var(--cond);font-size:1.1rem;font-weight:600;margin-bottom:0.3rem}
+.drdy-band{
+  display:inline-block;font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.08em;padding:0.2rem 0.55rem;border-radius:3px;
+  margin-bottom:0.6rem;
+}
+.drdy-desc{font-size:0.82rem;color:var(--muted);line-height:1.6}
+.drdy-components{
+  display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.8rem;
+}
+.drdy-comp{
+  font-family:var(--mono);font-size:0.62rem;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:3px;padding:0.18rem 0.45rem;
+}
+
+/* ─── FINDINGS TABLE ──────────────────────────────────────────────── */
+.filter-bar{
+  display:flex;gap:0.4rem;flex-wrap:wrap;
+  align-items:center;margin-bottom:1rem;
+}
+.filter-label{font-size:0.75rem;color:var(--muted);margin-right:0.2rem;font-family:var(--mono)}
+.filter-btn{
+  padding:0.28rem 0.75rem;border-radius:4px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:0.72rem;cursor:pointer;
+  transition:all 0.12s;font-family:var(--body);
+}
+.filter-btn:hover{border-color:var(--green);color:var(--green);background:rgba(42,122,82,0.06)}
+.filter-btn.active{border-color:var(--green);color:var(--green);background:rgba(42,122,82,0.1)}
+.filter-btn.f-crit.active{border-color:var(--red);color:#e05060;background:var(--red-l)}
+.filter-btn.f-high.active{border-color:var(--amber);color:#d48b1a;background:var(--amber-l)}
+
+.search-input{
+  margin-left:auto;padding:0.3rem 0.8rem;border-radius:6px;
+  border:1px solid var(--border);background:var(--card);
+  color:var(--text);font-size:0.78rem;font-family:var(--mono);
+  outline:none;width:200px;transition:border-color 0.15s;
+}
+.search-input:focus{border-color:var(--green)}
+.search-input::placeholder{color:var(--muted)}
+
+.table-wrap{border-radius:10px;border:1px solid var(--border);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+thead tr{background:var(--dark2)}
+th{
+  padding:0.65rem 0.85rem;text-align:left;font-weight:500;
+  font-size:0.68rem;color:var(--muted);letter-spacing:0.05em;
+  white-space:nowrap;
+}
+.sort-btn{
+  background:none;border:none;color:inherit;cursor:pointer;
+  font:inherit;letter-spacing:inherit;display:flex;
+  align-items:center;gap:0.3rem;padding:0;
+}
+.sort-btn:hover{color:var(--text)}
+.sort-arrow{font-size:0.6rem;opacity:0.5}
+.sort-btn.sorted .sort-arrow{opacity:1;color:var(--green)}
+
+.finding-row{
+  cursor:pointer;transition:background 0.1s;
+  border-bottom:1px solid var(--border);
+}
+.finding-row:last-child{border-bottom:none}
+.finding-row:hover{background:rgba(255,255,255,0.02)}
+.finding-row.expanded{background:rgba(42,122,82,0.04)}
+td{padding:0.6rem 0.85rem;vertical-align:middle}
+.sev-pill{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  font-size:0.62rem;font-weight:600;padding:0.18rem 0.5rem;
+  border-radius:3px;white-space:nowrap;font-family:var(--mono);
+}
+.pill-Critical{background:var(--red-l);color:#e05060;border:1px solid rgba(155,35,53,0.3)}
+.pill-High    {background:var(--amber-l);color:#d48b1a;border:1px solid rgba(192,120,24,0.3)}
+.pill-Medium  {background:rgba(58,155,104,0.1);color:#3a9b68;border:1px solid rgba(42,122,82,0.25)}
+.pill-Low     {background:rgba(42,122,82,0.07);color:#2a7a52;border:1px solid rgba(42,122,82,0.15)}
+.pill-Info    {background:rgba(255,255,255,0.03);color:var(--muted);border:1px solid var(--border)}
+
+.check-id{font-family:var(--mono);font-size:0.68rem;color:var(--muted)}
+.pillar-tag{font-size:0.68rem;color:var(--muted);white-space:nowrap}
+.count-cell{text-align:center;font-family:var(--mono);font-size:0.72rem;color:var(--muted)}
+.expand-icon{color:var(--muted);font-size:0.7rem;transition:transform 0.15s}
+.expanded .expand-icon{transform:rotate(90deg);color:var(--green)}
+
+/* finding detail */
+.detail-row{display:none;border-bottom:1px solid var(--border)}
+.detail-row.open{display:table-row}
+.detail-inner{
+  padding:1.2rem 1.5rem 1.4rem;
+  background:rgba(0,0,0,0.25);
+  border-left:3px solid transparent;
+}
+.detail-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1rem;
+}
+.detail-block h4{
+  font-family:var(--mono);font-size:0.58rem;color:var(--green);
+  letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.45rem;
+}
+.detail-block p{font-size:0.8rem;color:var(--muted);line-height:1.65;white-space:pre-wrap}
+.detail-block pre{
+  font-family:var(--mono);font-size:0.68rem;color:var(--muted);
+  background:rgba(255,255,255,0.025);border:1px solid var(--border);
+  border-radius:6px;padding:0.75rem;overflow-x:auto;
+  line-height:1.5;white-space:pre;
+}
+.detail-remit{grid-column:1/-1}
+.detail-footer{
+  display:flex;justify-content:space-between;flex-wrap:wrap;
+  gap:0.4rem;padding-top:0.6rem;border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:0.63rem;color:var(--muted);
+}
+
+/* ─── EMPTY / LOADING STATES ──────────────────────────────────────── */
+.table-empty{
+  text-align:center;padding:3rem 1rem;
+  font-size:0.85rem;color:var(--muted);
+}
+.spinner{
+  width:32px;height:32px;border:2px solid var(--border);
+  border-top-color:var(--green);border-radius:50%;
+  animation:spin 0.8s linear infinite;margin:0 auto 0.8rem;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── PRINT ───────────────────────────────────────────────────────── */
+@media print{
+  #landing,nav,.filter-bar,.action-btn,.search-input,
+  .drop-zone,.paste-row,.demo-link{display:none!important}
+  #dashboard{display:block!important}
+  .detail-row{display:table-row!important}
+  body{background:#fff;color:#000}
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .summary-row{grid-template-columns:repeat(3,1fr)}
+  .rings-grid{grid-template-columns:repeat(3,1fr)}
+  .drdy-card{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .engage-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .summary-row{grid-template-columns:repeat(2,1fr)}
+  .rings-grid{grid-template-columns:repeat(2,1fr)}
+  .section{padding:1.2rem}
+  .engage-bar{padding:1.2rem}
+  .engage-title{font-size:1.5rem}
+  .search-input{width:140px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="https://retach.tech">
+    <span>RETACH</span> Digital
+  </a>
+  <span class="nav-domain">ad-audit.retach.io</span>
+  <div class="nav-right">
+    <a class="nav-back" href="https://retach.tech">← retach.tech</a>
+  </div>
+</nav>
+
+<!-- LANDING / UPLOAD -->
+<div id="landing">
+  <div class="landing-eyebrow">S.I.N.S. Framework™ · Active Directory Audit Portal</div>
+  <h1 class="landing-title">
+    Your AD security<br>findings, <em>visualised</em>
+  </h1>
+  <p class="landing-sub">
+    Run the S.I.N.S. AD Audit Suite on a PAW, then upload your
+    <code style="font-family:var(--mono);font-size:0.85em;background:rgba(255,255,255,0.06);padding:0.1rem 0.35rem;border-radius:3px">combined_findings.json</code>
+    here to view pillar scores, the findings register, and your Detection Readiness Score.
+  </p>
+
+  <div class="drop-zone" id="drop-zone">
+    <div class="drop-icon">📋</div>
+    <div class="drop-title">Drop your findings file here</div>
+    <p class="drop-sub">
+      combined_findings.json · Output from<br>
+      <code style="font-family:var(--mono);font-size:0.8em">Invoke-ADSecurityAudit.ps1</code>
+    </p>
+    <button class="drop-btn" onclick="document.getElementById('file-input').click()">
+      Choose file
+    </button>
+    <input type="file" id="file-input" accept=".json,application/json">
+  </div>
+
+  <div class="paste-row">
+    <input class="paste-input" id="paste-input"
+      placeholder="Or paste JSON here…" autocomplete="off" spellcheck="false">
+    <button class="paste-btn" onclick="loadFromPaste()">Load</button>
+  </div>
+
+  <div class="demo-link">
+    No file? <a href="#" onclick="loadDemo();return false">Load demo data</a> to explore the portal.
+  </div>
+</div>
+
+<!-- ERROR BANNER -->
+<div id="error-banner"></div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <!-- ENGAGEMENT HEADER -->
+  <div class="engage-bar">
+    <div class="engage-grid">
+      <div>
+        <div class="engage-eyebrow">S.I.N.S. AD Audit — RETACH Digital Ltd</div>
+        <div class="engage-title" id="eng-title">Loading…</div>
+        <div class="engage-meta" id="eng-meta"></div>
+      </div>
+      <div class="engage-actions">
+        <button class="action-btn" onclick="window.print()">⊡ Print / PDF</button>
+        <button class="action-btn" onclick="resetPortal()">↩ New file</button>
+        <a id="export-json-link" class="action-btn primary" download>⤓ Download JSON</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY STRIP -->
+  <div class="section" style="padding-bottom:0">
+    <div class="summary-row" id="summary-row"></div>
+  </div>
+
+  <!-- PILLAR SCORE RINGS -->
+  <div class="section" style="padding-bottom:0">
+    <div class="section-head">
+      <div class="section-label">Section 1</div>
+      <div class="section-title">S.I.N.S. Pillar Scores</div>
+    </div>
+    <div class="rings-grid" id="rings-grid"></div>
+  </div>
+
+  <!-- DETECTION READINESS -->
+  <div class="section" style="padding-bottom:0">
+    <div class="section-head">
+      <div class="section-label">Section 2</div>
+      <div class="section-title">Detection Readiness Score</div>
+    </div>
+    <div class="drdy-card" id="drdy-card">
+      <div style="text-align:center;color:var(--muted);font-size:0.82rem">
+        Not available — requires AuditPolicyChecks module output
+      </div>
+    </div>
+  </div>
+
+  <!-- FINDINGS REGISTER -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-label">Section 3</div>
+      <div class="section-title">Findings Register</div>
+    </div>
+
+    <div class="filter-bar" id="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-sev="All"      onclick="setFilter('All',this)">All</button>
+      <button class="filter-btn f-crit" data-sev="Critical" onclick="setFilter('Critical',this)">Critical</button>
+      <button class="filter-btn f-high" data-sev="High"     onclick="setFilter('High',this)">High</button>
+      <button class="filter-btn"        data-sev="Medium"   onclick="setFilter('Medium',this)">Medium</button>
+      <button class="filter-btn"        data-sev="Low"      onclick="setFilter('Low',this)">Low</button>
+      <button class="filter-btn"        data-sev="Info"     onclick="setFilter('Info',this)">Info</button>
+      <input class="search-input" id="search-input" placeholder="Search findings…"
+        oninput="applyFilters()">
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th><button class="sort-btn" onclick="sortTable('Severity')">Severity<span class="sort-arrow">↕</span></button></th>
+            <th><button class="sort-btn" onclick="sortTable('CheckId')">Check ID<span class="sort-arrow">↕</span></button></th>
+            <th>Finding</th>
+            <th>Pillar</th>
+            <th><button class="sort-btn" onclick="sortTable('AffectedCount')">Affected<span class="sort-arrow">↕</span></button></th>
+          </tr>
+        </thead>
+        <tbody id="findings-tbody"></tbody>
+      </table>
+    </div>
+    <div id="findings-count" style="margin-top:0.6rem;font-size:0.72rem;color:var(--muted);font-family:var(--mono)"></div>
+  </div>
+
+</div><!-- /dashboard -->
+
+<script>
+'use strict';
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let G = {
+  data:        null,
+  findings:    [],
+  filtered:    [],
+  sortKey:     'Severity',
+  sortDir:     1,     // 1=asc, -1=desc
+  filterSev:   'All',
+  searchTerm:  '',
+  expandedRow: null,
+};
+
+const SEV_ORDER  = { Critical:0, High:1, Medium:2, Low:3, Info:4 };
+const SEV_EMOJI  = { Critical:'🔴', High:'🟠', Medium:'🟡', Low:'🟢', Info:'⚪' };
+
+const PILLAR_META = {
+  I:   { label:'Infrastructure', color:'#3a9b68' },
+  S1:  { label:'Identity',       color:'#2a7a52' },
+  S2:  { label:'Credentials',    color:'#1e5a3c' },
+  S3:  { label:'Delegation',     color:'#2a7a52' },
+  S4:  { label:'Persistence',    color:'#9b2335' },
+  GPO: { label:'GPO Governance', color:'#c07818' },
+  S5:  { label:'Detection',      color:'#3a9b68' },
+};
+
+// Key used in pillarScores → pilar meta key
+function scoreKeyToMeta(k) {
+  const m = { I:'I', S1:'S1', S2:'S2', S3:'S3', S4:'S4', GPO:'GPO', S5:'S5' };
+  return m[k] || k;
+}
+
+// ─── LOAD ENTRY POINTS ──────────────────────────────────────────────────────
+document.getElementById('file-input').addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) readFile(f);
+});
+
+const dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f) readFile(f);
+});
+
+function readFile(file) {
+  const reader = new FileReader();
+  reader.onload = ev => parseAndRender(ev.target.result);
+  reader.readAsText(file, 'UTF-8');
+}
+
+function loadFromPaste() {
+  const v = document.getElementById('paste-input').value.trim();
+  if (!v) { showError('Nothing to load — paste JSON first.'); return; }
+  parseAndRender(v);
+}
+
+// ─── DEMO DATA ───────────────────────────────────────────────────────────────
+function loadDemo() {
+  const demo = {
+    schema: 'sins-ad-audit-v1',
+    reportType: 'combined-engagement',
+    framework: 'S.I.N.S. Framework™',
+    version: '1.0.0',
+    engagementName: 'DemoSACCO_May2026',
+    clientOrg: 'Demo SACCO Ltd',
+    domain: 'demo.sacco.co.ke',
+    generatedAt: new Date().toISOString(),
+    pillarScores: { I: 68, S1: 42, S2: 35, S3: 71, S4: 55, GPO: 80, S5: 28 },
+    findingsSummary: { total: 12, critical: 3, high: 4, medium: 3, low: 1, info: 1 },
+    findings: [
+      { CheckId:'S2-KERB-001', Title:'14 Kerberoastable accounts found — 4 Domain Admins with SPN', Severity:'Critical',
+        Pillar:'S² — Credential & Kerberos', AffectedCount:14,
+        Description:'14 user accounts have Service Principal Names (SPNs) and will issue RC4-encrypted Kerberos tickets on request. 4 of these are Domain Admin accounts.\n\nAn attacker can request TGS tickets for these SPNs with zero domain privileges, then brute-force them offline.',
+        Evidence:'  [CRITICAL] svc_sql     | SPN: MSSQLSvc/dc01:1433 | Member of: Domain Admins | RC4 eligible\n  [CRITICAL] svc_iis     | SPN: HTTP/web01         | Member of: Domain Admins | RC4 eligible\n  [HIGH    ] svc_backup  | SPN: backup/bkp01       | Password age: 847 days\n  ... 11 more',
+        Remediation:'1. Rotate all Kerberoastable service account passwords immediately (25+ character random)\n2. Convert service accounts to gMSA (auto-rotating, no stored password)\n3. Remove SPN from accounts that do not require it\n4. Enforce AES-only Kerberos encryption (remove RC4)',
+        Reference:'MITRE ATT&CK T1558.003 | RETACH S.I.N.S. S²-KERB-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'S5-DRDY-001', Title:'Detection Readiness Score: 28/100 — Detection-blind', Severity:'Critical',
+        Pillar:'S⁵ — Detection Readiness', AffectedCount:7,
+        Description:'The Detection Readiness Score is 28/100. 7 of 10 attack classes detected in this audit generate NO log evidence in this environment.\n\nDCSync, Kerberoasting, and lateral movement via PtH all proceed silently.',
+        Evidence:'  [BLIND     ] DCSync / Credential Dump     — DS Replication audit not enabled\n  [BLIND     ] Kerberoasting                — Kerberos audit not enabled\n  [BLIND     ] Lateral Movement (PtH)       — Logon audit gaps\n  [DETECTABLE] NTLM Relay via SMB           — SMB signing enforced',
+        Remediation:'Deploy the full RETACH audit policy baseline via GPO targeting the Domain Controllers OU. Priority: Directory Service Replication, Kerberos, Logon, and Sensitive Privilege subcategories.',
+        Reference:'Kenya DPA Art.25 | RETACH S.I.N.S. S⁵-DRDY-001',
+        DetectedAt:'2026-05-21 10:32:14',
+        AffectedObjects: { ReadinessScore:28, ScoreBand:'Detection-blind', ComponentScores:{ AuditPolicy:22, EventLogSizing:40, LAPSCoverage:0, SMBSigning:100, LDAPSigning:50, ProtectedUsers:10 } } },
+      { CheckId:'S5-LAPS-001', Title:'LAPS not deployed — 47 computers have unmanaged local Administrator passwords', Severity:'Critical',
+        Pillar:'S⁵ — Detection Readiness', AffectedCount:47,
+        Description:'Neither Legacy LAPS (ms-Mcs-AdmPwd) nor Windows LAPS schema extensions are present. 47 enabled computers likely share the same local Administrator password set at imaging.',
+        Evidence:'LAPS schema detection:\n  Legacy LAPS (ms-Mcs-AdmPwd): Not detected\n  Windows LAPS (msLAPS-Password): Not detected\nEnabled computers exposed: 47',
+        Remediation:'Deploy Windows LAPS (built into Windows Server 2022 / Windows 11 22H2+). Run Update-LapsADSchema, configure GPO, verify with Get-LapsADPassword.',
+        Reference:'MITRE ATT&CK T1550.002 | RETACH S.I.N.S. S⁵-LAPS-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'S1-PRIV-001', Title:'Domain Admins: 23 members — 8 are service accounts, 4 are disabled', Severity:'High',
+        Pillar:'S¹ — Identity & Access', AffectedCount:23,
+        Description:'The Domain Admins group has 23 members. 8 are identified as service accounts (should never be DA). 4 are disabled accounts retaining privileged membership.',
+        Evidence:'  [HIGH] svc_sql    — Service account in Domain Admins\n  [HIGH] svc_backup  — Service account in Domain Admins\n  [MED ] jsmith_old  — Disabled account, still DA member\n  ... 20 more members',
+        Remediation:'Remove all service accounts from Domain Admins. Convert to gMSA with least-privilege roles. Remove disabled accounts. Target: ≤5 human DA accounts.',
+        Reference:'RETACH S.I.N.S. S¹-PRIV-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'I-OSVER-001', Title:'OS audit: 2 EOL DC(s) running Server 2012 R2 (EOL 2023-10-10)', Severity:'High',
+        Pillar:'I — Infrastructure Health', AffectedCount:2,
+        Description:'2 Domain Controllers are running Windows Server 2012 R2 which reached end-of-life on 2023-10-10. These DCs receive no security patches and are permanently vulnerable.',
+        Evidence:'  [HIGH] dc02.demo.sacco.co.ke | Windows Server 2012 R2 | EOL: 2023-10-10\n  [HIGH] dc03.demo.sacco.co.ke | Windows Server 2012 R2 | EOL: 2023-10-10\n\nDomain Functional Level: Windows2012R2Domain',
+        Remediation:'Promote new Server 2022 DC, transfer FSMO roles, allow replication, then demote EOL DCs. Apply ESU if immediate replacement is not possible.',
+        Reference:'RETACH S.I.N.S. I-OSVER-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'S4-SYSVOL-001', Title:'SYSVOL credential scan: 3 GPP cPassword entries found (MS14-025)', Severity:'High',
+        Pillar:'S⁴ — Persistence & Backdoor', AffectedCount:3,
+        Description:'3 Group Policy Preference files in SYSVOL contain cPassword entries. These are encrypted with a published AES-256 key (MS14-025) and are trivially decryptable by any domain user.',
+        Evidence:'  \\\\demo.sacco.co.ke\\SYSVOL\\...\\Groups.xml → cPassword detected\n  \\\\demo.sacco.co.ke\\SYSVOL\\...\\Drives.xml → cPassword detected\n  2 additional files with credential patterns',
+        Remediation:'Run Get-GPPPassword (PowerSploit) to extract the credentials. Rotate all found passwords immediately. Remove the GPP entries from SYSVOL and AD. Install MS14-025 patch.',
+        Reference:'MS14-025 | CVE-2014-1812 | RETACH S.I.N.S. S⁴-SYSVOL-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'S3-UDEL-001', Title:'Unconstrained delegation: 3 non-DC computers', Severity:'High',
+        Pillar:'S³ — Delegation Abuse Paths', AffectedCount:3,
+        Description:'3 non-DC computer accounts have TrustedForDelegation=True. Any user who authenticates to these machines will have their Kerberos TGT cached and forwardable to any service.',
+        Evidence:'  [HIGH] WEB01.demo.sacco.co.ke | TrustedForDelegation=True | PrinterBug path\n  [HIGH] APP01.demo.sacco.co.ke | TrustedForDelegation=True\n  [HIGH] FS01.demo.sacco.co.ke  | TrustedForDelegation=True',
+        Remediation:'Replace unconstrained delegation with constrained (specific SPNs) or resource-based constrained delegation. Add all Tier-0 accounts to Protected Users group immediately.',
+        Reference:'MITRE ATT&CK T1558 | RETACH S.I.N.S. S³-UDEL-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'G-SCRPT-001', Title:'GPO scripts: 2 credential pattern hits in logon scripts', Severity:'Medium',
+        Pillar:'S⁴+S⁵ — GPO Governance', AffectedCount:2,
+        Description:'2 GPO logon scripts contain patterns matching plaintext credentials. SYSVOL is readable by all authenticated domain users, meaning these credentials are effectively domain-wide exposed.',
+        Evidence:'  [Critical] DriveMap-Finance | map_drives.bat | Plaintext password: PASSWORD=<REDACTED>\n  [High    ] LegacyLogon     | connect.vbs | net use credentials',
+        Remediation:'Rotate the credentials found immediately. Replace with Kerberos-authenticated drive mappings via GPO Preferences. Remove plaintext credentials from all scripts.',
+        Reference:'RETACH S.I.N.S. G-SCRPT-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'S2-KRBT-001', Title:'KRBTGT password age: 1,247 days — Golden Ticket risk window is maximum', Severity:'Medium',
+        Pillar:'S² — Credential & Kerberos', AffectedCount:1,
+        Description:'The KRBTGT account password is 1,247 days old. A stolen KRBTGT hash can be used to forge Golden Tickets valid for the lifetime of the password.',
+        Evidence:'KRBTGT last password set: 2022-11-14\nPassword age: 1,247 days\nGolden Ticket validity window: up to 1,247 days of signed TGTs',
+        Remediation:'Reset KRBTGT password twice, 24 hours apart. First reset invalidates existing Golden Tickets. Second reset closes the lingering session window.',
+        Reference:'MITRE ATT&CK T1558.001 | RETACH S.I.N.S. S²-KRBT-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'I-REACH-001', Title:'DC reachability: all 3 DC(s) reachable', Severity:'Info',
+        Pillar:'I — Infrastructure Health', AffectedCount:0,
+        Description:'All 3 Domain Controllers responded to ICMP ping. No connectivity gaps detected.',
+        Evidence:'  [REACHABLE] dc01.demo.sacco.co.ke (10.0.1.10) | GC: True | Site: Default-First-Site\n  [REACHABLE] dc02.demo.sacco.co.ke (10.0.1.11) | GC: False | Site: Default-First-Site\n  [REACHABLE] dc03.demo.sacco.co.ke (10.0.1.12) | GC: False | Site: Default-First-Site',
+        Remediation:'No action required.',
+        Reference:'RETACH S.I.N.S. I-REACH-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'S5-PROT-001', Title:'Protected Users: 0% Tier-0 coverage — 8 DA accounts unprotected', Severity:'Critical',
+        Pillar:'S⁵ — Detection Readiness', AffectedCount:8,
+        Description:'0 of 8 enabled Tier-0 accounts are enrolled in the Protected Users security group. Each unprotected account is eligible for NTLM authentication, credential caching, and delegation abuse.',
+        Evidence:'  [UNPROTECTED] Administrator | Group: Domain Admins | LastLogon: 2026-05-20\n  [UNPROTECTED] paul.njaaga   | Group: Domain Admins | LastLogon: 2026-05-19\n  ... 6 more Tier-0 accounts',
+        Remediation:'Add all Tier-0 accounts to Protected Users immediately. Pre-check: verify no legacy application requires NTLM for these accounts. Test with one account first.',
+        Reference:'RETACH S.I.N.S. S⁵-PROT-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+      { CheckId:'G-APPL-001', Title:'Application control: no AppLocker or WDAC policies deployed', Severity:'High',
+        Pillar:'S⁴+S⁵ — GPO Governance', AffectedCount:0,
+        Description:'No AppLocker or WDAC application control policies are deployed via Group Policy. Any executable can run on any domain-joined computer.',
+        Evidence:'AppLocker GPOs found: 0\nWDAC GPOs found: 0',
+        Remediation:'Deploy AppLocker in Audit mode first, review Event ID 8003 (would-block) events, then switch to Enforce mode.',
+        Reference:'RETACH S.I.N.S. G-APPL-001',
+        DetectedAt:'2026-05-21 10:32:14' },
+    ]
+  };
+  parseAndRender(JSON.stringify(demo));
+}
+
+// ─── PARSE & RENDER ───────────────────────────────────────────────────────────
+function parseAndRender(raw) {
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch(e) {
+    showError('Invalid JSON — could not parse the file. Check it was exported by Invoke-ADSecurityAudit.ps1.');
+    return;
+  }
+
+  if (data.schema !== 'sins-ad-audit-v1') {
+    showError(`Unexpected schema "${data.schema}". Expected "sins-ad-audit-v1". Ensure the file came from the S.I.N.S. Report Engine.`);
+    return;
+  }
+
+  G.data     = data;
+  G.findings = Array.isArray(data.findings) ? data.findings : [];
+  G.sortKey  = 'Severity';
+  G.sortDir  = 1;
+  G.filterSev = 'All';
+  G.searchTerm = '';
+
+  renderDashboard();
+
+  document.getElementById('landing').style.display    = 'none';
+  document.getElementById('dashboard').style.display  = 'block';
+
+  // Export link
+  const blob = new Blob([raw], {type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const link = document.getElementById('export-json-link');
+  link.href  = url;
+  link.download = `${data.engagementName || 'findings'}_combined_findings.json`;
+}
+
+// ─── DASHBOARD RENDER ────────────────────────────────────────────────────────
+function renderDashboard() {
+  const d = G.data;
+
+  // Engagement header
+  const titleEl = document.getElementById('eng-title');
+  titleEl.innerHTML = `<em>${esc(d.clientOrg || d.engagementName || 'Unknown')}</em> — AD Security Audit`;
+  document.getElementById('eng-meta').innerHTML = [
+    d.domain         ? `<span>🌐 ${esc(d.domain)}</span>` : '',
+    d.engagementName ? `<span>📋 ${esc(d.engagementName)}</span>` : '',
+    d.generatedAt    ? `<span>📅 ${esc(d.generatedAt.split('T')[0])}</span>` : '',
+    d.framework      ? `<span>🔧 ${esc(d.framework)}</span>` : '',
+  ].filter(Boolean).join('');
+
+  // Summary strip
+  const fs = d.findingsSummary || {};
+  const overallScores = Object.values(d.pillarScores || {}).filter(s => typeof s === 'number');
+  const avgScore = overallScores.length
+    ? Math.round(overallScores.reduce((a,b)=>a+b,0)/overallScores.length)
+    : 0;
+
+  document.getElementById('summary-row').innerHTML = `
+    <div class="summary-card">
+      <div class="sc-label">Overall posture</div>
+      <div class="sc-val" style="color:${scoreColor(avgScore)}">${avgScore}</div>
+      <div class="sc-sub">/ 100 average</div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">🔴 Critical</div>
+      <div class="sc-val" style="color:#e05060">${fs.critical||0}</div>
+      <div class="sc-sub">Immediate action</div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">🟠 High</div>
+      <div class="sc-val" style="color:#d48b1a">${fs.high||0}</div>
+      <div class="sc-sub">Within 7 days</div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">🟡 Medium</div>
+      <div class="sc-val" style="color:#3a9b68">${fs.medium||0}</div>
+      <div class="sc-sub">Within 30 days</div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Total findings</div>
+      <div class="sc-val">${fs.total||G.findings.length}</div>
+      <div class="sc-sub">All pillars</div>
+    </div>
+  `;
+
+  renderRings();
+  renderDRDY();
+  renderFilters();
+  renderFindings();
+}
+
+// ─── SCORE RINGS ─────────────────────────────────────────────────────────────
+function renderRings() {
+  const scores = G.data.pillarScores || {};
+  const container = document.getElementById('rings-grid');
+
+  if (!Object.keys(scores).length) {
+    container.innerHTML = '<div class="table-empty">No pillar scores in this file.</div>';
+    return;
+  }
+
+  container.innerHTML = Object.entries(scores).map(([k,score]) => {
+    const meta    = PILLAR_META[k] || { label:k, color:'#3a9b68' };
+    const pct     = Math.max(0, Math.min(100, Math.round(score)));
+    const circ    = 2 * Math.PI * 40; // r=40
+    const dash    = (pct / 100) * circ;
+    const gap     = circ - dash;
+    const color   = scoreColor(pct);
+    const verdict = pct >= 70 ? 'Adequate' : pct >= 40 ? 'Gaps' : 'High Risk';
+
+    return `
+      <div class="ring-card">
+        <div class="ring-svg-wrap">
+          <svg class="ring-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none"
+              stroke="rgba(255,255,255,0.05)" stroke-width="9"/>
+            <circle cx="50" cy="50" r="40" fill="none"
+              stroke="${color}" stroke-width="9"
+              stroke-linecap="round"
+              stroke-dasharray="${dash.toFixed(1)} ${gap.toFixed(1)}"
+              transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="ring-score-text">
+            <span class="ring-num" style="color:${color}">${pct}</span>
+            <span class="ring-denom">/ 100</span>
+          </div>
+        </div>
+        <div class="ring-label">${esc(meta.label)}</div>
+        <div class="ring-verdict" style="color:${color}">${verdict}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ─── DETECTION READINESS DIAL ─────────────────────────────────────────────────
+function renderDRDY() {
+  const findings = G.findings;
+  const drdyF = findings.find(f => f.CheckId === 'S5-DRDY-001');
+  const el    = document.getElementById('drdy-card');
+
+  if (!drdyF || !drdyF.AffectedObjects) {
+    el.innerHTML = `
+      <div style="color:var(--muted);font-size:0.82rem;padding:0.5rem">
+        Detection Readiness Score not found — run AuditPolicyChecks module (S⁵) to generate.
+      </div>`;
+    return;
+  }
+
+  const ao    = drdyF.AffectedObjects;
+  const score = typeof ao.ReadinessScore === 'number' ? ao.ReadinessScore : 0;
+  const band  = ao.ScoreBand || '';
+  const comps = ao.ComponentScores || {};
+
+  const circ  = 2 * Math.PI * 52;
+  const dash  = (score / 100) * circ;
+  const gap   = circ - dash;
+  const color = scoreColor(score);
+
+  const bandBg = score >= 80 ? 'rgba(42,122,82,0.15)'
+               : score >= 60 ? 'rgba(192,120,24,0.12)'
+               : 'rgba(155,35,53,0.15)';
+  const bandColor = color;
+
+  const compHtml = Object.entries(comps).map(([k,v]) => {
+    const label = k.replace(/([A-Z])/g,' $1').trim();
+    return `<span class="drdy-comp" title="${label}">${label}: ${v}%</span>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="drdy-dial">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none"
+          stroke="rgba(255,255,255,0.05)" stroke-width="10"/>
+        <circle cx="60" cy="60" r="52" fill="none"
+          stroke="${color}" stroke-width="10"
+          stroke-linecap="round"
+          stroke-dasharray="${dash.toFixed(1)} ${gap.toFixed(1)}"
+          transform="rotate(-90 60 60)"/>
+      </svg>
+      <div class="drdy-dial-text">
+        <span class="drdy-num" style="color:${color}">${score}</span>
+        <span class="drdy-denom">/ 100</span>
+      </div>
+    </div>
+    <div class="drdy-body">
+      <h3>Detection Readiness Score</h3>
+      <span class="drdy-band" style="background:${bandBg};color:${bandColor}">${esc(band)}</span>
+      <p class="drdy-desc">${esc(drdyF.Description || '').substring(0,300)}${drdyF.Description && drdyF.Description.length > 300 ? '…' : ''}</p>
+      ${compHtml ? `<div class="drdy-components">${compHtml}</div>` : ''}
+    </div>
+  `;
+}
+
+// ─── FILTER BUTTONS ───────────────────────────────────────────────────────────
+function renderFilters() {
+  const counts = { All:G.findings.length };
+  ['Critical','High','Medium','Low','Info'].forEach(s => {
+    counts[s] = G.findings.filter(f => f.Severity === s).length;
+  });
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    const sev = btn.dataset.sev;
+    btn.textContent = sev === 'All' ? `All (${counts.All})` : `${sev} (${counts[sev]||0})`;
+    if (!counts[sev] && sev !== 'All') btn.style.opacity = '0.45';
+  });
+}
+
+function setFilter(sev, btn) {
+  G.filterSev = sev;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// ─── SEARCH & FILTER ──────────────────────────────────────────────────────────
+function applyFilters() {
+  G.searchTerm = document.getElementById('search-input').value.toLowerCase();
+  G.filtered = G.findings.filter(f => {
+    if (G.filterSev !== 'All' && f.Severity !== G.filterSev) return false;
+    if (G.searchTerm) {
+      const haystack = [f.Title,f.CheckId,f.Pillar,f.Description,f.Evidence]
+        .filter(Boolean).join(' ').toLowerCase();
+      if (!haystack.includes(G.searchTerm)) return false;
+    }
+    return true;
+  });
+  sortAndRenderRows();
+}
+
+// ─── SORT ─────────────────────────────────────────────────────────────────────
+function sortTable(key) {
+  if (G.sortKey === key) { G.sortDir *= -1; } else { G.sortKey = key; G.sortDir = 1; }
+  document.querySelectorAll('.sort-btn').forEach(b => {
+    b.classList.remove('sorted');
+    const arrow = b.querySelector('.sort-arrow');
+    if (b.textContent.trim().startsWith(key)) {
+      b.classList.add('sorted');
+      if (arrow) arrow.textContent = G.sortDir === 1 ? '↑' : '↓';
+    }
+  });
+  applyFilters();
+}
+
+function sortAndRenderRows() {
+  const arr = [...G.filtered];
+  arr.sort((a,b) => {
+    let av, bv;
+    if (G.sortKey === 'Severity') {
+      av = SEV_ORDER[a.Severity] ?? 99;
+      bv = SEV_ORDER[b.Severity] ?? 99;
+    } else if (G.sortKey === 'AffectedCount') {
+      av = a.AffectedCount ?? 0;
+      bv = b.AffectedCount ?? 0;
+    } else {
+      av = (a[G.sortKey] || '').toString().toLowerCase();
+      bv = (b[G.sortKey] || '').toString().toLowerCase();
+    }
+    if (av < bv) return -G.sortDir;
+    if (av > bv) return  G.sortDir;
+    return 0;
+  });
+  renderRows(arr);
+}
+
+// ─── RENDER TABLE ROWS ────────────────────────────────────────────────────────
+function renderFindings() {
+  G.filtered = [...G.findings];
+  sortAndRenderRows();
+}
+
+function renderRows(arr) {
+  const tbody = document.getElementById('findings-tbody');
+  const countEl = document.getElementById('findings-count');
+
+  if (!arr.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="table-empty">
+      No findings match the current filter.
+    </td></tr>`;
+    countEl.textContent = '';
+    return;
+  }
+
+  countEl.textContent = `Showing ${arr.length} of ${G.findings.length} findings`;
+
+  tbody.innerHTML = arr.map((f, i) => {
+    const sevClass = `pill-${f.Severity}`;
+    const pillarShort = (f.Pillar||'').replace(/^(S[⁰-⁹¹²³⁴⁵]|I) — /,'').split(' ')[0];
+
+    return `
+      <tr class="finding-row" id="frow-${i}" onclick="toggleRow(${i})">
+        <td><span class="expand-icon" id="fx-${i}">›</span></td>
+        <td><span class="sev-pill ${sevClass}">${SEV_EMOJI[f.Severity]||''} ${esc(f.Severity)}</span></td>
+        <td><span class="check-id">${esc(f.CheckId||'')}</span></td>
+        <td style="max-width:480px">${esc(f.Title||'')}</td>
+        <td><span class="pillar-tag">${esc(pillarShort)}</span></td>
+        <td class="count-cell">${f.AffectedCount > 0 ? f.AffectedCount : '—'}</td>
+      </tr>
+      <tr class="detail-row" id="fdetail-${i}">
+        <td colspan="6">
+          <div class="detail-inner" style="border-left-color:${sevBorderColor(f.Severity)}">
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>Description</h4>
+                <p>${esc(f.Description||'—')}</p>
+              </div>
+              <div class="detail-block">
+                <h4>Evidence</h4>
+                <pre>${esc(f.Evidence||'—')}</pre>
+              </div>
+              <div class="detail-block detail-remit">
+                <h4>Remediation</h4>
+                <p style="color:#c8e0d0">${esc(f.Remediation||'—')}</p>
+              </div>
+            </div>
+            <div class="detail-footer">
+              <span>Reference: ${esc(f.Reference||'—')}</span>
+              <span>Pillar: ${esc(f.Pillar||'—')}</span>
+              <span>Detected: ${esc(f.DetectedAt||'—')}</span>
+              ${f.AffectedCount ? `<span>Affected objects: ${f.AffectedCount}</span>` : ''}
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function toggleRow(i) {
+  const row    = document.getElementById(`frow-${i}`);
+  const detail = document.getElementById(`fdetail-${i}`);
+  const icon   = document.getElementById(`fx-${i}`);
+  if (!detail) return;
+
+  const isOpen = detail.classList.contains('open');
+
+  // Close previous if different
+  if (G.expandedRow !== null && G.expandedRow !== i) {
+    const prev = document.getElementById(`fdetail-${G.expandedRow}`);
+    const prevRow  = document.getElementById(`frow-${G.expandedRow}`);
+    const prevIcon = document.getElementById(`fx-${G.expandedRow}`);
+    if (prev) { prev.classList.remove('open'); }
+    if (prevRow) { prevRow.classList.remove('expanded'); }
+    if (prevIcon) { prevIcon.style.transform=''; prevIcon.style.color=''; }
+  }
+
+  if (isOpen) {
+    detail.classList.remove('open');
+    row.classList.remove('expanded');
+    icon.style.transform = '';
+    icon.style.color = '';
+    G.expandedRow = null;
+  } else {
+    detail.classList.add('open');
+    row.classList.add('expanded');
+    icon.style.transform = 'rotate(90deg)';
+    icon.style.color = 'var(--green)';
+    G.expandedRow = i;
+    detail.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function scoreColor(s) {
+  if (s >= 70) return '#3a9b68';
+  if (s >= 40) return '#c07818';
+  return '#e05060';
+}
+function sevBorderColor(sev) {
+  return { Critical:'#9b2335', High:'#c07818', Medium:'#3a9b68', Low:'#2a7a52', Info:'rgba(255,255,255,0.1)' }[sev] || 'transparent';
+}
+function esc(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 6000);
+}
+
+function resetPortal() {
+  G.data = null; G.findings = []; G.filtered = [];
+  G.expandedRow = null;
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('landing').style.display   = 'flex';
+  document.getElementById('file-input').value        = '';
+  document.getElementById('paste-input').value       = '';
+  document.getElementById('search-input').value      = '';
+}
+</script>
+</body>
+</html>
