@@ -535,16 +535,116 @@ nav {
   .pillar-scores { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
+
+
+
+
+/* ─── SHARED RETACH NAV ───────────────────────────────────────── */
+.sins-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(14,16,13,0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(42,122,82,0.2);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+}
+.sins-nav__brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.25rem; font-weight: 800;
+  color: #e8ebe6; text-decoration: none;
+  letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
+}
+.sins-nav__brand span { color: #2a7a52; }
+.sins-nav__tools {
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.sins-nav__tools::-webkit-scrollbar { display: none; }
+.sins-nav__tool {
+  display: flex; align-items: center;
+  padding: 0 1rem; height: 56px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #7a8a78; text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.18s, border-color 0.18s;
+}
+.sins-nav__tool:hover { color: #e8ebe6; }
+.sins-nav__tool.active {
+  color: #3a9b68;
+  border-bottom-color: #2a7a52;
+}
+.sins-nav__right {
+  display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
+}
+.sins-nav__cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #2a7a52; text-decoration: none;
+  border: 1px solid rgba(42,122,82,0.5);
+  padding: 0.35rem 0.85rem; border-radius: 3px;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s;
+}
+.sins-nav__cta:hover { background: rgba(42,122,82,0.12); color: #3a9b68; }
+.sins-nav__burger {
+  display: none; flex-direction: column;
+  justify-content: center; align-items: center;
+  gap: 4px; width: 32px; height: 32px;
+  background: none; border: none; cursor: pointer; padding: 0;
+}
+.sins-nav__burger span {
+  display: block; width: 18px; height: 2px;
+  background: #7a8a78; border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.sins-nav__burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.sins-nav__burger.open span:nth-child(2) { opacity: 0; }
+.sins-nav__burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 768px) {
+  .sins-nav { padding: 0 1rem; }
+  .sins-nav__tools {
+    display: none; position: absolute;
+    top: 56px; left: 0; right: 0;
+    background: rgba(14,16,13,0.98);
+    border-bottom: 1px solid rgba(42,122,82,0.2);
+    flex-direction: column; gap: 0; padding: 0.5rem 0;
+  }
+  .sins-nav__tools.open { display: flex; }
+  .sins-nav__tool { height: 44px; padding: 0 1.5rem; border-bottom: none; border-left: 2px solid transparent; font-size: 0.72rem; }
+  .sins-nav__tool.active { border-left-color: #2a7a52; border-bottom-color: transparent; }
+  .sins-nav__cta { display: none; }
+  .sins-nav__burger { display: flex; }
+}
+/* ─────────────────────────────────────────────────────────────── */
+
 </style>
 </head>
 <body>
+<nav class="sins-nav">
+  <a href="https://retach.tech" class="sins-nav__brand">RETACH<span>.</span></a>
+  <div class="sins-nav__tools" id="navTools">
+    <a href="https://retach.tech/sins-scanner.html" class="sins-nav__tool active" data-page="scanner">S.I.N.S. Scanner</a>
+    <a href="https://retach.tech/ad-audit.html" class="sins-nav__tool" data-page="ad-audit">AD Audit</a>
+    <a href="https://retach.tech/systems-diagnostic.html" class="sins-nav__tool" data-page="diagnostic">Systems Diagnostic</a>
+    <a href="https://retach.tech/pentest-kit.html" class="sins-nav__tool" data-page="pentest">Pentest Kit</a>
+  </div>
+  <div class="sins-nav__right">
+    <a href="https://retach.tech/#contact" class="sins-nav__cta">Book Assessment</a>
+    <button class="sins-nav__burger" id="navBurger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
 <!-- NAV -->
-<nav>
-  <a href="/" class="nav-brand">RETACH<span>.</span></a>
-  <span class="nav-badge">S.I.N.S. Scanner™</span>
-  <a href="/" class="nav-back">← Back to site</a>
-</nav>
+
 
 <!-- HERO -->
 <div class="hero">
@@ -911,7 +1011,7 @@ nav {
     <div class="results-cta">
       <h2>Your next step is clear.</h2>
       <p id="cta-copy">A full S.I.N.S. Health Scan maps every gap found above to a prioritised remediation plan — with fixed timelines and costs. No surprises.</p>
-      <div class="cta-price">Full Health Scan from <strong>KES 45,000</strong> <span style="font-weight:400;color:var(--muted)">· ≈ USD 350</span> · Delivered in 5 days</div>
+      <div class="cta-price">Full Health Scan from <strong>KES 32,500</strong> · Delivered in 5 days</div>
       <a href="/#contact" class="btn-cta-large">Book Your Health Scan →</a>
       <div class="cta-sub">Or email us directly: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
     </div>
@@ -1134,6 +1234,27 @@ function buildResults(name, org, type) {
 
   document.getElementById('findings-card').innerHTML = findingsHTML;
 }
+</script>
+
+
+<script>
+/* ── Shared nav burger ── */
+(function(){
+  var burger = document.getElementById('navBurger');
+  var tools  = document.getElementById('navTools');
+  if (!burger || !tools) return;
+  burger.addEventListener('click', function(){
+    var open = tools.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', function(e){
+    if (!burger.contains(e.target) && !tools.contains(e.target)) {
+      tools.classList.remove('open');
+      burger.classList.remove('open');
+    }
+  });
+})();
 </script>
 </body>
 </html>
