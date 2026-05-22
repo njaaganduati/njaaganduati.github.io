@@ -1422,9 +1422,12 @@
 .hiw-cta a{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.06em;color:#3a9b68;text-decoration:none;border-bottom:1px solid rgba(58,155,104,0.3);}
 @media(max-width:768px){.hiw-steps{grid-template-columns:1fr;gap:1.5rem;}.hiw-steps::before{display:none;}.hiw-step{flex-direction:row;text-align:left;align-items:flex-start;gap:1rem;}.step-num{flex-shrink:0;margin-bottom:0;}}
 /* ─── FLAGSHIP OFFER ─── */
-.flagship-section{padding:2rem 2rem 4rem;background:#0e100d;}
-.flagship-inner{max-width:1000px;margin:0 auto;}
-.flagship-card{background:linear-gradient(135deg,rgba(42,122,82,0.08) 0%,rgba(14,16,13,0.95) 60%);border:1px solid rgba(42,122,82,0.35);border-radius:14px;padding:2.5rem 3rem;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center;}
+.flagship-section{background:#090c09;border-top:1px solid rgba(42,122,82,0.2);border-bottom:1px solid rgba(42,122,82,0.2);}
+.flagship-inner{max-width:none;margin:0;}
+.flagship-card{display:grid;grid-template-columns:1fr 340px;gap:0;align-items:stretch;min-height:300px;}
+.flag-left{padding:3rem 3rem 3rem 5%;background:linear-gradient(105deg,rgba(42,122,82,0.07) 0%,transparent 70%);border-right:1px solid rgba(42,122,82,0.15);}
+.flag-pricing{padding:3rem 2.5rem;background:rgba(42,122,82,0.05);display:flex;flex-direction:column;justify-content:center;align-items:center;}
+@media(max-width:768px){.flagship-card{grid-template-columns:1fr;}.flag-left{padding:2rem 1.5rem;}.flag-pricing{padding:2rem 1.5rem;border-top:1px solid rgba(42,122,82,0.15);}}
 .flag-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:#3a9b68;margin-bottom:0.5rem;}
 .flag-title{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:700;color:#e8ebe6;line-height:1.1;margin-bottom:0.7rem;}
 .flag-desc{font-size:0.9rem;color:#7a8a78;line-height:1.65;max-width:480px;margin-bottom:1.2rem;}
@@ -1439,7 +1442,6 @@
 .flag-btn:hover{background:#3a9b68;}
 .flag-btn-ghost{display:block;color:#7a8a78;text-decoration:none;font-size:0.72rem;text-align:center;font-family:'IBM Plex Mono',monospace;}
 .flag-btn-ghost:hover{color:#e8ebe6;}
-@media(max-width:768px){.flagship-card{grid-template-columns:1fr;}.flag-pricing{text-align:left;}}
 </style>
 </head>
 <body>
@@ -1744,35 +1746,33 @@
   </div>
 </section>
 
+<!-- FLAGSHIP OFFER -->
+<section class="flagship-section">
+  <div class="flagship-card">
+    <div class="flag-left">
+      <div class="flag-eyebrow">Flagship Engagement &middot; Most Popular</div>
+      <div class="flag-title">RETACH Digital<br>Resilience Assessment</div>
+      <p class="flag-desc">A complete, structured review of your organisation's technology risk posture &mdash; delivered by a CISSP-certified consultant using the S.I.N.S. Framework&#8482;. You receive a scored executive report, a risk heatmap, and an actionable remediation roadmap. No jargon. No surprises. Measurable outcomes.</p>
+      <div class="flag-includes">
+        <span class="flag-tag">Systems Review</span><span class="flag-tag">Infrastructure Audit</span><span class="flag-tag">Network Exposure</span><span class="flag-tag">Security Posture</span><span class="flag-tag">Executive Report</span><span class="flag-tag">Risk Heatmap</span><span class="flag-tag">30/60/90 Roadmap</span><span class="flag-tag">5-Day Delivery</span>
+      </div>
+    </div>
+    <div class="flag-pricing">
+      <div class="flag-price-from">Starting from</div>
+      <div class="flag-price-kes">KES 45,000</div>
+      <div class="flag-price-usd">&asymp; USD 350</div>
+      <div class="flag-delivery">Delivered in 5 business days</div>
+      <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20would%20like%20to%20book%20a%20Digital%20Resilience%20Assessment." class="flag-btn" target="_blank" rel="noopener">Book Now &rarr;</a>
+      <a href="mailto:info@retach.tech" class="flag-btn-ghost">Email us instead</a>
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section id="services">
   <div class="services-header">
     <div>
       <div class="section-eyebrow">What We Do</div>
-
-<!-- FLAGSHIP OFFER -->
-<div class="flagship-section">
-  <div class="flagship-inner">
-    <div class="flagship-card">
-      <div class="flag-left">
-        <div class="flag-eyebrow">Flagship Engagement &middot; Most Popular</div>
-        <div class="flag-title">RETACH Digital<br>Resilience Assessment</div>
-        <p class="flag-desc">A complete, structured review of your organisation's technology risk posture &mdash; delivered by a CISSP-certified consultant using the S.I.N.S. Framework&#8482;. You receive a scored executive report, a risk heatmap, and an actionable remediation roadmap. No jargon. No surprises. Measurable outcomes.</p>
-        <div class="flag-includes">
-          <span class="flag-tag">Systems Review</span><span class="flag-tag">Infrastructure Audit</span><span class="flag-tag">Network Exposure</span><span class="flag-tag">Security Posture</span><span class="flag-tag">Executive Report</span><span class="flag-tag">Risk Heatmap</span><span class="flag-tag">30/60/90 Roadmap</span><span class="flag-tag">5-Day Delivery</span>
-        </div>
-      </div>
-      <div class="flag-pricing">
-        <div class="flag-price-from">Starting from</div>
-        <div class="flag-price-kes">KES 45,000</div>
-        <div class="flag-price-usd">&asymp; USD 350</div>
-        <div class="flag-delivery">Delivered in 5 business days</div>
-        <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20would%20like%20to%20book%20a%20Digital%20Resilience%20Assessment." class="flag-btn" target="_blank" rel="noopener">Book Now &rarr;</a>
-        <a href="mailto:info@retach.tech" class="flag-btn-ghost">Email us instead</a>
-      </div>
-    </div>
-  </div>
-</div>
 
       <h2>Core<br>Service Areas</h2>
     </div>
