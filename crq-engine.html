@@ -318,6 +318,7 @@ footer a{color:var(--gl)}
           <button class="tbtn" onclick="st('ct',this)">Controls</button>
           <button class="tbtn" onclick="st('rm',this)">Roadmap</button>
           <button class="tbtn" onclick="st('bm',this)">Benchmark</button>
+          <button class="tbtn" onclick="st('cx',this)">⚖ Compliance</button>
         </div>
         <div class="tcont">
           <div class="tpane a" id="tp-hm">
@@ -359,6 +360,62 @@ footer a{color:var(--gl)}
             <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Kenya sector benchmarks: Serianu 2023 · CA Kenya Annual Report · CBK Cybersecurity Guidelines · ODPC enforcement data.</p>
             <div id="bmo"></div>
           </div>
+
+          <!-- COMPLIANCE TAB -->
+          <div class="tpane" id="tp-cx">
+            <div id="cx-empty" style="text-align:center;padding:1.5rem .5rem;font-size:.8rem;color:var(--muted);line-height:1.8">
+              <strong style="color:var(--text);display:block;margin-bottom:.4rem">Compliance Intelligence Engine</strong>
+              Run the CRQ calculation first — the compliance module uses your sector and financial profile to determine applicable Kenyan law and score your regulatory exposure.
+            </div>
+            <div id="cx-main" class="hid">
+
+              <!-- Disclaimer -->
+              <div style="padding:.65rem .9rem;background:rgba(192,120,24,0.08);border:1px solid rgba(192,120,24,0.25);border-radius:6px;font-size:.68rem;color:#d48b1a;margin-bottom:1rem;line-height:1.6">
+                <strong>Disclaimer:</strong> This compliance assessment is based on publicly available Kenyan legislation, ODPC determinations, CBK enforcement notices, and reported court decisions as at May 2026. It is indicative only. There may be a margin of error — laws change, jurisprudence evolves, and sector-specific guidance may apply. This does not constitute legal advice. RETACH recommends validation by a qualified Kenyan advocate before relying on this output for compliance decisions. Data sources: Kenya Law · ODPC · judiciary.go.ke · CBK · SASRA · CA Kenya.
+              </div>
+
+              <!-- Composite Risk Score -->
+              <div style="background:var(--dark2);border:1px solid var(--b2);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem">
+                <div>
+                  <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem">S.I.N.S. Risk Score</div>
+                  <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800" id="cx-sins-score">—</div>
+                  <div style="font-size:.62rem;color:var(--muted)">Technical posture</div>
+                </div>
+                <div>
+                  <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem">Compliance Score</div>
+                  <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800" id="cx-comp-score">—</div>
+                  <div style="font-size:.62rem;color:var(--muted)">Regulatory posture</div>
+                </div>
+                <div>
+                  <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem">Total Risk Exposure</div>
+                  <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800;color:#c0392b" id="cx-total-exp">—</div>
+                  <div style="font-size:.62rem;color:var(--muted)">EAL + Regulatory (KES)</div>
+                </div>
+              </div>
+
+              <!-- Formula explanation -->
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);padding:.5rem .75rem;background:rgba(255,255,255,.03);border-radius:5px;margin-bottom:1rem;line-height:1.8">
+                Total Risk Formula: <span style="color:var(--gl)">EAL (scenario-based) + Regulatory Fine Exposure (applicable law × compliance gap %) + Reputational Cost (downtime × revenue/day)</span>
+              </div>
+
+              <!-- Applicable Laws -->
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">Applicable Regulatory Frameworks</div>
+              <div id="cx-laws" style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem"></div>
+
+              <!-- Compliance Self-Assessment -->
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;margin-top:.75rem">Compliance Self-Assessment</div>
+              <div id="cx-checks" style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem"></div>
+
+              <!-- Enforcement Precedents -->
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;margin-top:.75rem">Kenya Enforcement Precedents</div>
+              <div id="cx-cases" style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem"></div>
+
+              <!-- Compliance Roadmap -->
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;margin-top:.75rem">Priority Compliance Actions</div>
+              <div id="cx-actions" style="display:flex;flex-direction:column;gap:.4rem"></div>
+
+            </div>
+          </div>
         </div>
       </div>
 
@@ -372,7 +429,7 @@ footer a{color:var(--gl)}
   </div>
 </div>
 
-<footer>© 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience<br><span style="font-size:.6rem">CRQ model: ISO 27005 risk practices. Benchmarks: Serianu 2023 · CA Kenya · CBK · ODPC. All figures are planning estimates.</span></footer>
+<footer>© 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience<br><span style="font-size:.6rem">CRQ model: ISO 27005 risk practices. Benchmarks: Serianu 2023 · CA Kenya · CBK · ODPC. Compliance: Kenya DPA 2019 · CMCA 2018 (as amended 2024) · CBK Guidelines · SASRA Circular 2022. All figures are planning estimates. Not legal advice.</span></footer>
 
 <script>
 const KR=130;
@@ -476,6 +533,7 @@ function calc(){
   rCT(eal);
   rRM(inp,ss);
   rBM(eal,s);
+  rCX(inp,ss,eal);
 
   document.getElementById('tcp').classList.add('hid');
   document.getElementById('rw').classList.remove('hid');
@@ -631,6 +689,200 @@ function upd(id,r){
   el.innerHTML=`<span class="otag ${tc}" title="${r.ext||''}">${r.lb}</span>`;
   if(r.ext){const row=document.getElementById('orow-'+id.replace('oc-',''));if(row){const d=row.querySelector('.od');if(d)d.textContent=r.ext}}
 }
+
+/* ── COMPLIANCE ENGINE ────────────────────────────────────
+   Kenya Regulatory Intelligence Layer v1.0
+   Sources: Kenya DPA 2019 · CMCA 2018/2024 · KICA 1998
+            CBK Cybersecurity Guidelines 2019
+            SASRA Cybersecurity Circular 2022
+            ODPC Determinations 2022–2026 · judiciary.go.ke
+   ──────────────────────────────────────────────────────── */
+const REGS={
+  dpa:{id:'dpa',short:'DPA 2019',full:'Data Protection Act No. 24 of 2019',body:'ODPC',maxFine:5e6,maxFinePct:.01,imp:0,tier:1,
+    applies:()=>true,
+    desc:'Requires ODPC registration, lawful basis for processing, data minimisation, security measures, and 72-hour breach notification.',
+    checks:[
+      {id:'dp1',lb:'Registered as data controller/processor with ODPC',w:20,fe:5e6},
+      {id:'dp2',lb:'Written Data Protection / Privacy Policy published',w:15,fe:3e6},
+      {id:'dp3',lb:'Data Processing Register (all data flows documented)',w:15,fe:2e6},
+      {id:'dp4',lb:'Data Protection Impact Assessment (DPIA) conducted',w:15,fe:2e6},
+      {id:'dp5',lb:'Consent mechanisms for personal data collection',w:15,fe:3e6},
+      {id:'dp6',lb:'Third-party data processor agreements in place',w:10,fe:2e6},
+      {id:'dp7',lb:'72-hour breach notification procedure documented',w:10,fe:2.5e6},
+    ]},
+  cmca:{id:'cmca',short:'CMCA 2018/2024',full:'Computer Misuse & Cybercrimes Act No. 5 of 2018 (amended 2024)',body:'DCI / NC4',maxFine:25e6,imp:20,tier:1,
+    applies:()=>true,
+    desc:'Organisations with negligent cybersecurity standards face liability. Employees must relinquish credentials on exit. Incidents must be reported.',
+    checks:[
+      {id:'cm1',lb:'Access control and authentication policy documented',w:25,fe:5e6},
+      {id:'cm2',lb:'Cybercrime incident response and reporting procedure',w:25,fe:5e6},
+      {id:'cm3',lb:'Staff offboarding — credential revocation procedure',w:25,fe:7e6},
+      {id:'cm4',lb:'System audit logs retained minimum 12 months',w:25,fe:5e6},
+    ]},
+  kica:{id:'kica',short:'KICA / CA Kenya',full:'Kenya Information & Communications Act Cap 411A · Consumer Protection Regs 2010',body:'Communications Authority',maxFine:3e5,imp:0,tier:2,
+    applies:(sec)=>['fintech','sme','sacco','saccondt','school','ngo'].includes(sec),
+    desc:'ICT service providers must publish terms, maintain consumer data security, and define service availability commitments.',
+    checks:[
+      {id:'ki1',lb:'ICT service terms and conditions published online',w:33,fe:3e5},
+      {id:'ki2',lb:'Consumer data security measures documented',w:33,fe:3e5},
+      {id:'ki3',lb:'Service availability / uptime commitments defined',w:34,fe:3e5},
+    ]},
+  cbk:{id:'cbk',short:'CBK Guidelines 2019',full:'CBK Guidelines on Cybersecurity for Payment Service Providers, July 2019',body:'Central Bank of Kenya',maxFine:5e6,imp:0,tier:1,
+    applies:(sec)=>['fintech','sacco','saccondt'].includes(sec),
+    desc:'PSPs must maintain a cybersecurity framework, conduct annual risk assessments, report incidents quarterly to CBK, and maintain tested BCP/DR plans.',
+    checks:[
+      {id:'cb1',lb:'Cybersecurity framework (policy, roles, governance) documented',w:20,fe:3e6},
+      {id:'cb2',lb:'Annual cybersecurity risk assessment conducted',w:20,fe:3e6},
+      {id:'cb3',lb:'Quarterly CBK cybersecurity incident reports submitted',w:20,fe:2e6},
+      {id:'cb4',lb:'Business Continuity and DR Plan tested in last 12 months',w:20,fe:2.5e6},
+      {id:'cb5',lb:'Third-party and vendor security assessments conducted',w:20,fe:2e6},
+    ]},
+  sasra:{id:'sasra',short:'SASRA Circular 2022',full:'SASRA Cybersecurity Circular No. 1 of 2022',body:'Sacco Societies Regulatory Authority',maxFine:5e6,imp:0,tier:1,
+    applies:(sec)=>['sacco','saccondt'].includes(sec),
+    desc:'SACCOs must implement board-approved cybersecurity policy, conduct annual staff training, maintain DR plans, and report incidents to SASRA.',
+    checks:[
+      {id:'sa1',lb:'Board-approved cybersecurity policy in place',w:25,fe:2e6},
+      {id:'sa2',lb:'Annual cybersecurity staff awareness training',w:25,fe:1.5e6},
+      {id:'sa3',lb:'Disaster Recovery Plan documented and tested',w:25,fe:2e6},
+      {id:'sa4',lb:'Incident reporting mechanism to SASRA established',w:25,fe:1.5e6},
+    ]},
+  cma:{id:'cma',short:'CMA ICT Guidelines 2023',full:'Capital Markets Authority ICT & Cybersecurity Guidelines 2023',body:'Capital Markets Authority',maxFine:1e7,imp:0,tier:2,
+    applies:(sec)=>['fintech'].includes(sec),
+    desc:'Capital markets licensees must align to ISO 27001/NIST, conduct annual penetration testing, and report incidents to CMA.',
+    checks:[
+      {id:'cma1',lb:'Cybersecurity framework aligned to ISO 27001 or NIST',w:40,fe:5e6},
+      {id:'cma2',lb:'Annual penetration testing by qualified firm',w:35,fe:4e6},
+      {id:'cma3',lb:'CMA cybersecurity incident reporting mechanism',w:25,fe:3e6},
+    ]},
+};
+
+const PRECEDENTS=[
+  {case:'ODPC v Oppo Kenya',ref:'ODPC Penalty Notice 001/2022',fine:5e6,imp:0,law:'DPA 2019',breach:'Failure to comply with data subject access request',outcome:'KES 5M — first ODPC penalty notice in Kenya',source:'ODPC Determinations 2022'},
+  {case:'ODPC v Whitepath & Regus Kenya',ref:'ODPC Penalty Notice, April 2023',fine:1e7,imp:0,law:'DPA 2019',breach:'Shared client personal data without consent',outcome:'Combined KES 10M fine against two entities',source:'CMS Law · ODPC 2023'},
+  {case:'ODPC v Nairobi School',ref:'ODPC Penalty Notice, September 2023',fine:4.55e6,imp:0,law:'DPA 2019',breach:'Posted images of minors without parental consent',outcome:'KES 4.55M — near-maximum ODPC fine',source:'Clyde & Co · ODPC Sept 2023'},
+  {case:'ODPC v Nairobi Restaurant',ref:'ODPC Penalty Notice, September 2023',fine:1.85e6,imp:0,law:'DPA 2019',breach:'Posted customer image on social media without consent',outcome:'KES 1.85M fine',source:'Clyde & Co · ODPC Sept 2023'},
+  {case:'Republic v Tools for Humanity (Worldcoin)',ref:'Judicial Review E119 of 2023 · KEHC 5629',fine:0,imp:0,law:'DPA 2019',breach:'Biometric data collection — no ODPC registration, no DPIA',outcome:'12-month operational suspension · court-ordered data deletion',source:'judiciary.go.ke · ODPC 2023/2025'},
+  {case:'Kamande v Nation Media Group',ref:'Constitutional Petition E004 of 2021',fine:1.5e6,imp:0,law:'DPA 2019 / Constitution Art.31',breach:'Unauthorised use of petitioner\'s image in publication',outcome:'KES 1.5M damages — High Court',source:'Kenya Law Reports'},
+  {case:'CMCA — Unauthorised access (typical prosecution)',ref:'Various Magistrate Courts 2019–2024',fine:5e6,imp:3,law:'CMCA 2018 s.14',breach:'Unauthorised access to computer systems',outcome:'KES 300K–5M fines · 6 months–3 years imprisonment',source:'NC4 · Kenya Law · DCI'},
+  {case:'CMCA — Protected system offence (maximum)',ref:'CMCA 2018 s.18 — statutory maximum',fine:25e6,imp:20,law:'CMCA 2018 s.18',breach:'Unauthorised access to protected/critical infrastructure',outcome:'KES 25M fine and/or 20 years imprisonment',source:'Kenya Law — CMCA 2018'},
+];
+
+let _cxState={},_cxApplicable=[],_cxInp=null,_cxSins=50,_cxEAL=0;
+
+function rCX(inp,sinsScore,totalEAL){
+  const sec=inp.sec;
+  _cxInp=inp; _cxSins=sinsScore; _cxEAL=totalEAL;
+  _cxApplicable=Object.values(REGS).filter(r=>r.applies(sec));
+  // Init check state if not set
+  _cxApplicable.forEach(reg=>reg.checks.forEach(c=>{if(_cxState[c.id]===undefined)_cxState[c.id]=50;}));
+
+  function regScore(reg){return reg.checks.reduce((s,c)=>s+((_cxState[c.id]||50)/100)*c.w,0);}
+
+  const tw=_cxApplicable.reduce((s,r)=>s+(r.tier===1?2:1),0);
+  const ws=_cxApplicable.reduce((s,r)=>s+regScore(r)*(r.tier===1?2:1),0)/tw;
+  const cPct=Math.round(ws);
+
+  let regFine=0;
+  _cxApplicable.forEach(reg=>{
+    const gap=(100-regScore(reg))/100;
+    regFine+=Math.min(reg.maxFine,reg.maxFine*gap*1.5);
+    if(reg.id==='dpa'){const pf=inp.rev*(reg.maxFinePct||.01);if(pf<reg.maxFine)regFine+=pf*gap;}
+  });
+  const repCost=(inp.rev/365)*SECTS[sec].rto*((100-sinsScore)/100);
+  const totalRisk=totalEAL+regFine+repCost;
+
+  document.getElementById('cx-empty').classList.add('hid');
+  document.getElementById('cx-main').classList.remove('hid');
+
+  const col=(v)=>v>=70?'#3a9b68':v>=45?'#c07818':'#c0392b';
+  const se=document.getElementById('cx-sins-score');
+  se.textContent=sinsScore+'/100'; se.style.color=col(sinsScore);
+  const ce=document.getElementById('cx-comp-score');
+  ce.textContent=cPct+'/100'; ce.style.color=col(cPct);
+  document.getElementById('cx-total-exp').textContent=fk(Math.round(totalRisk));
+
+  // Laws
+  document.getElementById('cx-laws').innerHTML=_cxApplicable.map(reg=>{
+    const sc2=Math.round(regScore(reg));
+    const gap=(100-sc2)/100;
+    const fe=Math.round(Math.min(reg.maxFine,reg.maxFine*gap*1.5));
+    return`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.35rem;gap:.5rem;flex-wrap:wrap">
+        <div><div style="font-size:.8rem;font-weight:500;color:var(--text)">${reg.short}</div>
+        <div style="font-size:.6rem;color:var(--muted);margin-top:.1rem">${reg.full} · ${reg.body}</div></div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-family:var(--mono);font-size:.72rem;font-weight:600;color:${col(sc2)}">${sc2}/100</div>
+          <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted)">Fine exposure: ${fk(fe)}</div></div>
+      </div>
+      <div style="font-size:.67rem;color:var(--muted);line-height:1.55;margin-bottom:.4rem">${reg.desc}</div>
+      <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden"><div style="height:100%;width:${sc2}%;background:${col(sc2)};border-radius:2px;transition:width .5s"></div></div>
+      <div style="font-family:var(--mono);font-size:.52rem;color:${reg.tier===1?'#c07818':'var(--muted)'};margin-top:.28rem">${reg.tier===1?'TIER 1 — MANDATORY':'TIER 2 — SECTOR-SPECIFIC'} · Max fine: ${fk(reg.maxFine)}${reg.imp?' · Up to '+reg.imp+'yr imprisonment':''}</div>
+    </div>`;
+  }).join('');
+
+  // Self-assessment checks
+  const allChecks=_cxApplicable.flatMap(reg=>reg.checks.map(c=>({...c,rs:reg.short})));
+  document.getElementById('cx-checks').innerHTML=allChecks.map(c=>{
+    const v=_cxState[c.id]||50;
+    const btnStyle=(active,bc,bg,tc)=>`font-family:var(--mono);font-size:.57rem;padding:.22rem .55rem;border-radius:3px;border:1px solid ${bc};background:${bg};color:${tc};cursor:pointer;font-weight:${active?'700':'400'};opacity:${active?'1':'.6'}`;
+    return`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:.55rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:180px">
+        <div style="font-size:.75rem;color:var(--text)">${c.lb}</div>
+        <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted);margin-top:.1rem">${c.rs} · Gap exposure: ${fk(c.fe)}</div>
+      </div>
+      <div style="display:flex;gap:.3rem;flex-shrink:0">
+        <button onclick="setCX('${c.id}',100)" style="${btnStyle(v===100,'var(--b2)','rgba(42,122,82,.12)','var(--gl)')}">✓ Yes</button>
+        <button onclick="setCX('${c.id}',50)" style="${btnStyle(v===50,'var(--border)','rgba(255,255,255,.04)','var(--muted)')}">? Partial</button>
+        <button onclick="setCX('${c.id}',0)" style="${btnStyle(v===0,'rgba(155,35,53,.3)','rgba(155,35,53,.1)','#e05060')}">✗ No</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Precedents
+  document.getElementById('cx-cases').innerHTML=PRECEDENTS.map(p=>`
+    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:.65rem 1rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;flex-wrap:wrap;margin-bottom:.22rem">
+        <div style="font-size:.77rem;font-weight:500;color:var(--text)">${p.case}</div>
+        <div style="text-align:right;flex-shrink:0">
+          ${p.fine>0?`<div style="font-family:var(--mono);font-size:.65rem;color:#c0392b;font-weight:600">${fk(p.fine)}</div>`:''}
+          ${p.imp>0?`<div style="font-family:var(--mono);font-size:.56rem;color:#c07818">${p.imp}yr imprisonment</div>`:''}
+        </div>
+      </div>
+      <div style="font-size:.63rem;color:var(--gl);margin-bottom:.18rem">${p.law} · ${p.ref}</div>
+      <div style="font-size:.67rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Breach:</strong> ${p.breach}</div>
+      <div style="font-size:.67rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Outcome:</strong> ${p.outcome}</div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:rgba(255,255,255,.18);margin-top:.18rem">Source: ${p.source}</div>
+    </div>`).join('');
+
+  // Priority actions
+  const actions=[];
+  _cxApplicable.forEach(reg=>{
+    reg.checks.forEach(c=>{
+      const v=_cxState[c.id]||50;
+      if(v<100){const urg=reg.tier===1&&v===0?'CRITICAL':reg.tier===1?'HIGH':'MEDIUM';
+        actions.push({lb:c.lb,rs:reg.short,urg,fe:c.fe});}
+    });
+  });
+  actions.sort((a,b)=>b.fe-a.fe);
+  const urgCol={CRITICAL:'#c0392b',HIGH:'#c07818',MEDIUM:'#3a9b68'};
+  document.getElementById('cx-actions').innerHTML=actions.length===0
+    ?'<div style="font-size:.75rem;color:var(--gl);padding:.5rem">All checks confirmed — strong compliance posture.</div>'
+    :actions.slice(0,10).map(a=>`
+      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
+        <div><div style="font-size:.75rem;color:var(--text)">${a.lb}</div>
+        <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted)">${a.rs}</div></div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;color:${urgCol[a.urg]}">${a.urg}</div>
+          <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted)">Exposure: ${fk(a.fe)}</div>
+        </div>
+      </div>`).join('');
+}
+
+function setCX(id,val){
+  _cxState[id]=val;
+  if(_cxInp)rCX(_cxInp,_cxSins,_cxEAL);
+}
+/* ── END COMPLIANCE ENGINE ─────────────────────── */
 
 /* URL param pre-load from scanner */
 (function(){
