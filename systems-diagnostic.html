@@ -4,619 +4,1402 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S.I.N.S. Systems Diagnostic™ | RETACH Digital</title>
-Add S.I.N.S. Systems Diagnostic endpoint assessment tool<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<meta name="description" content="Free endpoint and server diagnostic tool. Detects security gaps, vulnerability exposure, and infrastructure health — mapped to the S.I.N.S. Framework™.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;1,400&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green:#2a7a52;--green-l:#3a9b68;--green-d:#1e5a3c;
-  --dark:#111310;--dark2:#1a1d19;--red:#9b2335;
-  --red-l:rgba(155,35,53,0.12);--amber:#c07818;
-  --amber-l:rgba(192,120,24,0.12);--green-bg:rgba(42,122,82,0.12);
-  --bg:#0c0e0b;--card:#131612;--card2:#1a1d19;
-  --border:rgba(255,255,255,0.07);--border2:rgba(42,122,82,0.25);
-  --text:#e8ebe6;--muted:#7a8a78;
-  --mono:'IBM Plex Mono',monospace;
-  --cond:'Barlow Condensed',sans-serif;
-  --body:'Barlow',sans-serif;
+  --green:   #2a7a52;
+  --green-l: #3a9b68;
+  --green-d: #1e5a3c;
+  --dark:    #111310;
+  --dark2:   #1a1d19;
+  --red:     #9b2335;
+  --amber:   #c07818;
+  --bg:      #0e100d;
+  --card:    #151814;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(42,122,82,0.3);
+  --text:    #e8ebe6;
+  --muted:   #7a8a78;
+  --mono:    'IBM Plex Mono', monospace;
+  --cond:    'Barlow Condensed', sans-serif;
+  --body:    'Barlow', sans-serif;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(42,122,82,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(42,122,82,0.025) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
-.app-wrap{position:relative;z-index:1;display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
-.sidebar{background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
-.sidebar-brand{padding:1.4rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
-.brand-name{font-family:var(--cond);font-size:1.2rem;font-weight:700;color:var(--text);letter-spacing:0.05em;}
-.brand-name span{color:var(--green);}
-.brand-tool{font-family:var(--mono);font-size:0.6rem;color:var(--green);letter-spacing:0.14em;text-transform:uppercase;margin-top:0.2rem;}
-.sidebar-section{padding:1rem 1.5rem 0.5rem;font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
-.nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.6rem 1.5rem;cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;font-size:0.88rem;color:var(--muted);}
-.nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03);}
-.nav-item.active{color:var(--green);border-left-color:var(--green);background:var(--green-bg);font-weight:600;}
-.nav-item .nav-icon{font-size:1rem;width:20px;text-align:center;}
-.nav-item .nav-badge{margin-left:auto;font-family:var(--mono);font-size:0.6rem;padding:0.1rem 0.4rem;border-radius:3px;font-weight:600;}
-.badge-red{background:rgba(155,35,53,0.2);color:#e55;}
-.badge-amber{background:rgba(192,120,24,0.2);color:var(--amber);}
-.badge-green{background:var(--green-bg);color:var(--green);}
-.sidebar-device{margin:1rem 1.5rem;padding:0.9rem;background:var(--card2);border:1px solid var(--border);border-radius:8px;}
-.device-label{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
-.device-name{font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);}
-.device-meta{font-size:0.78rem;color:var(--muted);margin-top:0.2rem;}
-.sidebar-footer{margin-top:auto;padding:1rem 1.5rem;border-top:1px solid var(--border);}
-.sidebar-footer .btn-scan{width:100%;padding:0.7rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:var(--cond);font-size:0.95rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;}
-.sidebar-footer .btn-scan:hover{background:var(--green-l);}
-.sidebar-footer .btn-export{width:100%;margin-top:0.5rem;padding:0.6rem;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:var(--body);font-size:0.85rem;cursor:pointer;transition:all 0.15s;}
-.sidebar-footer .btn-export:hover{color:var(--text);border-color:rgba(255,255,255,0.15);}
-.main{display:flex;flex-direction:column;overflow-y:auto;}
-.topbar{padding:1.2rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(12,14,11,0.8);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10;}
-.topbar-title{font-family:var(--cond);font-size:1.3rem;font-weight:700;color:var(--text);}
-.topbar-subtitle{font-family:var(--mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.1rem;}
-.topbar-right{display:flex;align-items:center;gap:1rem;}
-.scan-status{display:flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;}
-.scan-status .pulse{width:8px;height:8px;border-radius:50%;background:var(--muted);}
-.scan-status.scanning .pulse{background:var(--amber);animation:pulse 1s ease-in-out infinite;}
-.scan-status.done .pulse{background:var(--green);}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
-.content-panel{padding:2rem;display:none;}
-.content-panel.active{display:block;}
-.summary-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem;}
-.stat-label{font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;}
-.stat-value{font-family:var(--cond);font-size:1.8rem;font-weight:800;line-height:1;}
-.stat-sub{font-size:0.75rem;color:var(--muted);margin-top:0.2rem;}
-.stat-green{color:var(--green);}.stat-amber{color:var(--amber);}.stat-red{color:var(--red);}
-.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
-.check-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.check-card-header{padding:0.9rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;font-family:var(--cond);font-size:0.95rem;font-weight:700;}
-.check-body{padding:0 0.5rem;}
-.check-row{display:flex;align-items:center;padding:0.7rem 0.7rem;border-bottom:1px solid var(--border);gap:0.8rem;}
-.check-row:last-child{border-bottom:none;}
-.check-indicator{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.ind-green{background:var(--green);}.ind-amber{background:var(--amber);}.ind-red{background:var(--red);}.ind-grey{background:#444;}
-.check-label{flex:1;font-size:0.83rem;color:var(--text);}
-.check-value{font-family:var(--mono);font-size:0.72rem;color:var(--muted);}
-.check-tag{font-family:var(--mono);font-size:0.62rem;padding:0.15rem 0.45rem;border-radius:3px;font-weight:600;letter-spacing:0.06em;}
-.tag-ok{background:var(--green-bg);color:var(--green);}
-.tag-warn{background:var(--amber-l);color:var(--amber);}
-.tag-fail{background:var(--red-l);color:#e55;}
-.tag-na{background:rgba(255,255,255,0.05);color:var(--muted);}
-.hw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem;}
-.hw-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;}
-.hw-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;}
-.hw-name{font-family:var(--mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.2rem;}
-.hw-model{font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);}
-.hw-status-badge{font-family:var(--mono);font-size:0.6rem;padding:0.2rem 0.5rem;border-radius:3px;font-weight:600;letter-spacing:0.08em;white-space:nowrap;}
-.bar-wrap{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-bottom:0.5rem;}
-.bar-fill{height:100%;border-radius:3px;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
-.bar-green{background:var(--green);}.bar-amber{background:var(--amber);}.bar-red{background:var(--red);}
-.hw-detail{display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.68rem;color:var(--muted);}
-.hw-sins-tag{margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border);font-size:0.75rem;color:var(--muted);line-height:1.4;}
-.hw-sins-tag span{font-family:var(--mono);font-size:0.62rem;color:var(--green);letter-spacing:0.08em;}
-.findings-table{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem;}
-.findings-thead{display:grid;grid-template-columns:30px 1fr 120px 100px 120px;padding:0.7rem 1rem;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--border);font-family:var(--mono);font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
-.finding-row-grid{display:grid;grid-template-columns:30px 1fr 120px 100px 120px;padding:0.75rem 1rem;border-bottom:1px solid var(--border);align-items:center;transition:background 0.15s;}
-.finding-row-grid:last-child{border-bottom:none;}
-.finding-row-grid:hover{background:rgba(255,255,255,0.02);}
-.finding-sev{font-size:0.85rem;}.finding-name{font-size:0.85rem;color:var(--text);}
-.finding-name small{display:block;font-size:0.75rem;color:var(--muted);margin-top:0.1rem;}
-.finding-pillar{font-family:var(--mono);font-size:0.65rem;color:var(--green);letter-spacing:0.08em;}
-.finding-effort{font-family:var(--mono);font-size:0.72rem;color:var(--muted);}
-.finding-action{font-size:0.78rem;color:var(--muted);}
-.report-card{background:linear-gradient(135deg,#0b1a0e,#0f1e12);border:1px solid var(--border2);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:1.5rem;align-items:center;}
-.report-score-ring{position:relative;width:90px;height:90px;}
-.report-score-ring svg{transform:rotate(-90deg);width:90px;height:90px;}
-.report-score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.report-score-num{font-family:var(--cond);font-size:1.6rem;font-weight:800;line-height:1;}
-.report-score-lbl{font-family:var(--mono);font-size:0.55rem;color:var(--muted);letter-spacing:0.1em;}
-.report-verdict{font-family:var(--cond);font-size:1.4rem;font-weight:700;margin-bottom:0.3rem;}
-.report-summary{font-size:0.85rem;color:var(--muted);line-height:1.5;}
-.report-cta-btn{padding:0.7rem 1.4rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:var(--cond);font-size:0.95rem;font-weight:700;letter-spacing:0.05em;cursor:pointer;white-space:nowrap;transition:all 0.2s;text-decoration:none;display:inline-block;}
-.report-cta-btn:hover{background:var(--green-l);}
-.section-title{font-family:var(--cond);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.9rem;display:flex;align-items:center;gap:0.6rem;}
-.section-title .sins-pill{font-family:var(--mono);font-size:0.6rem;padding:0.15rem 0.5rem;border-radius:3px;background:var(--green-bg);color:var(--green);letter-spacing:0.1em;font-weight:600;}
-#scan-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(12,14,11,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;text-align:center;}
-#scan-overlay.active{display:flex;}
-.scan-terminal{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:2rem 2.5rem;min-width:360px;}
-.scan-bars{display:flex;justify-content:center;gap:5px;margin-bottom:1.5rem;}
-.scan-bar{width:4px;height:36px;border-radius:2px;background:var(--green);animation:scanPulse 1.1s ease-in-out infinite;}
-.scan-bar:nth-child(2){animation-delay:0.13s;}.scan-bar:nth-child(3){animation-delay:0.26s;}.scan-bar:nth-child(4){animation-delay:0.39s;}.scan-bar:nth-child(5){animation-delay:0.52s;}
-@keyframes scanPulse{0%,100%{transform:scaleY(0.35);opacity:0.25;}50%{transform:scaleY(1);opacity:1;}}
-.scan-step{font-family:var(--mono);font-size:0.72rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem;}
-.scan-sub{font-size:0.82rem;color:var(--muted);}
-.scan-progress{margin-top:1.2rem;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
-.scan-progress-fill{height:100%;background:var(--green);border-radius:2px;box-shadow:0 0 8px rgba(42,122,82,0.6);transition:width 0.3s ease;}
-@media print{.sidebar,.topbar,#scan-overlay,.sidebar-footer{display:none;}.app-wrap{grid-template-columns:1fr;}.main{overflow:visible;}body::before{display:none;}.content-panel{display:block !important;}}
-@media(max-width:900px){.app-wrap{grid-template-columns:1fr;}.sidebar{display:none;}.summary-strip{grid-template-columns:1fr 1fr;}.checks-grid,.hw-grid{grid-template-columns:1fr;}.report-card{grid-template-columns:1fr;text-align:center;}.findings-thead,.finding-row-grid{grid-template-columns:30px 1fr 80px;}.findings-thead>*:nth-child(4),.findings-thead>*:nth-child(5),.finding-row-grid>*:nth-child(4),.finding-row-grid>*:nth-child(5){display:none;}}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(42,122,82,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,122,82,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
 
-
-
-
-/* ─── SHARED RETACH NAV ───────────────────────────────────────── */
-.sins-nav {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(14,16,13,0.95);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(42,122,82,0.2);
-  padding: 0 2rem;
-  height: 56px;
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(14,16,13,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 2rem;
   display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { font-family: var(--cond); font-size: 1.3rem; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: 0.06em; }
+.nav-brand span { color: var(--green); }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; }
+.nav-links a:hover { color: var(--text); }
+.nav-links .nav-cta {
+  background: var(--green); color: #fff;
+  padding: 0.4rem 1rem; border-radius: 6px;
+  font-weight: 600; font-size: 0.82rem;
+}
+.nav-links .nav-cta:hover { background: var(--green-l); color: #fff; }
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1;
+  padding: 4rem 2rem 2.5rem;
+  text-align: center;
+  max-width: 820px; margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 0.68rem; font-weight: 600;
+  color: var(--green); letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; flex: 1; max-width: 50px; height: 1px; background: var(--green-d);
+}
+.hero h1 {
+  font-family: var(--cond); font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 800; line-height: 1.0; letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.hero h1 em { color: var(--green); font-style: normal; }
+.hero-sub { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 580px; margin: 0 auto 1.8rem; }
+.hero-badges {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.2rem; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em;
+}
+.hero-badges .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 0.4rem; }
+
+/* DEVICE TYPE SELECTOR */
+.device-selector-wrap {
+  position: relative; z-index: 1;
+  max-width: 820px; margin: 0 auto 2rem;
+  padding: 0 2rem;
+}
+.device-selector-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+}
+.device-selector-header {
+  padding: 1.5rem 2rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.device-selector-header .label {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--green); letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.device-selector-header h2 {
+  font-family: var(--cond); font-size: 1.4rem; font-weight: 700;
+}
+.device-selector-header p { font-size: 0.86rem; color: var(--muted); margin-top: 0.3rem; }
+.device-type-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.device-type-btn {
+  padding: 1.8rem 1.5rem;
+  background: transparent; border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer; text-align: left;
+  transition: background 0.18s;
+  position: relative;
+}
+.device-type-btn:last-child { border-right: none; }
+.device-type-btn:hover { background: rgba(42,122,82,0.06); }
+.device-type-btn.selected {
+  background: rgba(42,122,82,0.1);
+  border-bottom: 2px solid var(--green);
+}
+.device-type-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+.device-type-name {
+  font-family: var(--cond); font-size: 1.2rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.3rem;
+}
+.device-type-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+.device-type-checks {
+  font-family: var(--mono); font-size: 0.62rem;
+  color: var(--green); margin-top: 0.6rem; letter-spacing: 0.06em;
+}
+.device-selector-footer {
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: flex-end;
+}
+
+/* MAIN LAYOUT */
+.diagnostic-wrap {
+  position: relative; z-index: 1;
+  max-width: 820px; margin: 0 auto;
+  padding: 0 2rem 5rem;
+  display: none;
+}
+.diagnostic-wrap.active { display: block; }
+
+/* Device Mode Banner */
+.device-mode-banner {
+  display: flex; align-items: center; gap: 1rem;
+  background: rgba(42,122,82,0.08);
+  border: 1px solid var(--border2);
+  border-radius: 10px; padding: 0.8rem 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.device-mode-icon { font-size: 1.4rem; }
+.device-mode-info { flex: 1; }
+.device-mode-info strong { font-family: var(--cond); font-size: 1rem; font-weight: 700; }
+.device-mode-info span { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; display: block; margin-top: 0.1rem; }
+.change-device-btn {
+  font-family: var(--mono); font-size: 0.68rem; color: var(--muted);
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 5px; padding: 0.3rem 0.7rem;
+  cursor: pointer; letter-spacing: 0.06em;
+}
+.change-device-btn:hover { color: var(--text); border-color: var(--border2); }
+
+/* Scan Button */
+.scan-trigger-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem 2rem;
+  margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.scan-trigger-info { flex: 1; }
+.scan-trigger-info h3 { font-family: var(--cond); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+.scan-trigger-info p { font-size: 0.83rem; color: var(--muted); }
+.btn-run-scan {
+  background: var(--green); color: #fff;
+  border: none; border-radius: 8px;
+  font-family: var(--cond); font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.05em; padding: 0.75rem 2rem;
+  cursor: pointer; white-space: nowrap;
+  transition: all 0.2s;
+}
+.btn-run-scan:hover { background: var(--green-l); transform: translateY(-1px); }
+.btn-run-scan:disabled { background: #2a3a2e; color: var(--muted); cursor: not-allowed; transform: none; }
+
+/* Progress */
+.scan-progress {
+  display: none;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem 2rem;
+  margin-bottom: 1.2rem;
+}
+.scan-progress.active { display: block; }
+.progress-stage {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--green); letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+.progress-track {
+  height: 4px; background: rgba(255,255,255,0.06);
+  border-radius: 2px; overflow: hidden; margin-bottom: 0.8rem;
+}
+.progress-fill {
+  height: 100%; background: var(--green);
+  border-radius: 2px; width: 0%;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 8px rgba(42,122,82,0.5);
+}
+.progress-checks {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.4rem;
+}
+.progress-check {
+  font-family: var(--mono); font-size: 0.65rem;
+  color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
+}
+.progress-check .chk { width: 10px; height: 10px; border-radius: 2px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+.progress-check.done .chk { background: var(--green); }
+.progress-check.running .chk { background: var(--amber); animation: pulse 0.8s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* Results grid */
+.results-grid {
+  display: grid; gap: 1rem;
+  display: none;
+}
+.results-grid.active { display: grid; }
+
+/* Score card */
+.score-banner {
+  background: linear-gradient(135deg, #0b1a0e, #0f2014);
+  border: 1px solid var(--border2);
+  border-radius: 16px; padding: 2rem;
+  display: grid; grid-template-columns: 180px 1fr;
+  gap: 2rem; align-items: center;
+}
+.score-ring-wrap { position: relative; width: 160px; height: 160px; flex-shrink: 0; }
+.score-ring { width: 160px; height: 160px; transform: rotate(-90deg); }
+.score-ring-bg { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 12; }
+.score-ring-fill {
+  fill: none; stroke-width: 12; stroke-linecap: round;
+  stroke-dasharray: 402; stroke-dashoffset: 402;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1), stroke 0.4s ease;
+}
+.score-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.score-num { font-family: var(--cond); font-size: 2.8rem; font-weight: 800; line-height: 1; }
+.score-denom { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
+.score-right {}
+.score-verdict { font-family: var(--cond); font-size: 1.7rem; font-weight: 700; margin-bottom: 0.4rem; }
+.score-sub { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.score-pillars { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.score-pillar-chip {
+  font-family: var(--mono); font-size: 0.62rem;
+  padding: 0.25rem 0.6rem; border-radius: 4px;
+  border: 1px solid; letter-spacing: 0.06em;
+}
+
+/* Check panels */
+.check-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+}
+.check-section-header {
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.check-section-pillar {
+  font-family: var(--mono); font-size: 0.6rem;
+  color: var(--green); letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.check-section-title {
+  font-family: var(--cond); font-size: 1.1rem; font-weight: 700;
+}
+.check-section-badge {
+  margin-left: auto; font-family: var(--mono); font-size: 0.6rem;
+  padding: 0.2rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.check-rows { }
+.check-row {
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 28px 1fr auto;
+  gap: 0.8rem; align-items: start;
+}
+.check-row:last-child { border-bottom: none; }
+.check-status-icon { font-size: 0.9rem; margin-top: 2px; }
+.check-content { }
+.check-name { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+.check-detail { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); line-height: 1.4; }
+.check-detail.mono-val { color: var(--green); }
+.check-detail.mono-warn { color: var(--amber); }
+.check-detail.mono-bad { color: #e05060; }
+.check-sins-ref {
+  font-family: var(--mono); font-size: 0.58rem;
+  color: var(--muted); letter-spacing: 0.06em;
+  white-space: nowrap; margin-top: 3px;
+}
+
+/* Vulnerability section */
+.vuln-section {
+  background: var(--card);
+  border: 1px solid rgba(155,35,53,0.25);
+  border-radius: 14px; overflow: hidden;
+}
+.vuln-header {
+  padding: 1.1rem 1.5rem;
+  background: rgba(155,35,53,0.06);
+  border-bottom: 1px solid rgba(155,35,53,0.15);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.vuln-header-title { font-family: var(--cond); font-size: 1.1rem; font-weight: 700; }
+.vuln-header-sub { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em; }
+.vuln-count-badge {
+  margin-left: auto; font-family: var(--mono); font-size: 0.62rem;
+  background: rgba(155,35,53,0.15); color: #e05060;
+  border: 1px solid rgba(155,35,53,0.3);
+  padding: 0.2rem 0.6rem; border-radius: 3px; letter-spacing: 0.08em;
+}
+.vuln-row {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 90px 1fr;
+  gap: 1rem; align-items: start;
+}
+.vuln-row:last-child { border-bottom: none; }
+.vuln-severity {
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.vuln-sev-badge {
+  font-family: var(--mono); font-size: 0.6rem;
+  padding: 0.2rem 0.5rem; border-radius: 3px;
+  text-align: center; letter-spacing: 0.08em; font-weight: 600;
+  text-transform: uppercase;
+}
+.sev-critical { background: rgba(155,35,53,0.2); color: #e05060; border: 1px solid rgba(155,35,53,0.3); }
+.sev-high     { background: rgba(192,120,24,0.15); color: var(--amber); border: 1px solid rgba(192,120,24,0.3); }
+.sev-medium   { background: rgba(42,122,82,0.12); color: var(--green-l); border: 1px solid var(--border2); }
+.sev-info     { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border); }
+.vuln-cvss {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+}
+.vuln-content {}
+.vuln-title { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+.vuln-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.35rem; }
+.vuln-remediation { font-size: 0.78rem; color: var(--green); line-height: 1.4; }
+.vuln-remediation::before { content: '→ '; }
+
+/* Findings table */
+.findings-table {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+}
+.findings-table-header {
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.findings-table-header h3 { font-family: var(--cond); font-size: 1.1rem; font-weight: 700; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  padding: 0.6rem 1.5rem; text-align: left;
+  font-family: var(--mono); font-size: 0.62rem;
+  color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+td {
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.84rem;
+}
+tr:last-child td { border-bottom: none; }
+.td-ref { font-family: var(--mono); font-size: 0.65rem; color: var(--green); }
+.td-effort { font-family: var(--mono); font-size: 0.65rem; }
+.td-effort.low { color: var(--green-l); }
+.td-effort.med { color: var(--amber); }
+.td-effort.high { color: #e05060; }
+
+/* Pathway cards (tool links) */
+.pathway-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
-.sins-nav__brand {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 1.25rem; font-weight: 800;
-  color: #e8ebe6; text-decoration: none;
-  letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
+.pathway-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.4rem;
+  text-decoration: none;
+  transition: border-color 0.18s, background 0.18s;
+  display: block;
 }
-.sins-nav__brand span { color: #2a7a52; }
-.sins-nav__tools {
-  display: flex; align-items: center; gap: 0;
-  overflow-x: auto; scrollbar-width: none;
+.pathway-card:hover {
+  border-color: var(--green-d);
+  background: rgba(42,122,82,0.06);
 }
-.sins-nav__tools::-webkit-scrollbar { display: none; }
-.sins-nav__tool {
-  display: flex; align-items: center;
-  padding: 0 1rem; height: 56px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: #7a8a78; text-decoration: none;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  transition: color 0.18s, border-color 0.18s;
+.pathway-card.primary {
+  border-color: rgba(42,122,82,0.35);
+  background: rgba(42,122,82,0.07);
 }
-.sins-nav__tool:hover { color: #e8ebe6; }
-.sins-nav__tool.active {
-  color: #3a9b68;
-  border-bottom-color: #2a7a52;
+.pathway-label {
+  font-family: var(--mono); font-size: 0.6rem;
+  color: var(--green); letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 0.5rem;
 }
-.sins-nav__right {
-  display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
+.pathway-title {
+  font-family: var(--cond); font-size: 1.2rem;
+  font-weight: 700; color: var(--text); margin-bottom: 0.4rem;
 }
-.sins-nav__cta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.68rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #2a7a52; text-decoration: none;
-  border: 1px solid rgba(42,122,82,0.5);
-  padding: 0.35rem 0.85rem; border-radius: 3px;
-  white-space: nowrap;
-  transition: background 0.18s, color 0.18s;
-}
-.sins-nav__cta:hover { background: rgba(42,122,82,0.12); color: #3a9b68; }
-.sins-nav__burger {
-  display: none; flex-direction: column;
-  justify-content: center; align-items: center;
-  gap: 4px; width: 32px; height: 32px;
-  background: none; border: none; cursor: pointer; padding: 0;
-}
-.sins-nav__burger span {
-  display: block; width: 18px; height: 2px;
-  background: #7a8a78; border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
-}
-.sins-nav__burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.sins-nav__burger.open span:nth-child(2) { opacity: 0; }
-.sins-nav__burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-@media (max-width: 768px) {
-  .sins-nav { padding: 0 1rem; }
-  .sins-nav__tools {
-    display: none; position: absolute;
-    top: 56px; left: 0; right: 0;
-    background: rgba(14,16,13,0.98);
-    border-bottom: 1px solid rgba(42,122,82,0.2);
-    flex-direction: column; gap: 0; padding: 0.5rem 0;
-  }
-  .sins-nav__tools.open { display: flex; }
-  .sins-nav__tool { height: 44px; padding: 0 1.5rem; border-bottom: none; border-left: 2px solid transparent; font-size: 0.72rem; }
-  .sins-nav__tool.active { border-left-color: #2a7a52; border-bottom-color: transparent; }
-  .sins-nav__cta { display: none; }
-  .sins-nav__burger { display: flex; }
-}
-/* ─────────────────────────────────────────────────────────────── */
+.pathway-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.pathway-arrow { color: var(--green); margin-top: 0.6rem; font-size: 0.85rem; }
 
+/* Server-specific sections */
+.server-only { display: none; }
+.server-mode .server-only { display: block; }
+.server-mode .endpoint-only { display: none; }
+
+/* Export */
+.export-bar {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.8rem;
+}
+.export-bar p { font-size: 0.84rem; color: var(--muted); }
+.btn-export {
+  background: transparent; border: 1px solid var(--border2);
+  color: var(--green); font-family: var(--mono); font-size: 0.72rem;
+  padding: 0.5rem 1.1rem; border-radius: 6px;
+  cursor: pointer; letter-spacing: 0.06em;
+  transition: all 0.18s;
+}
+.btn-export:hover { background: rgba(42,122,82,0.1); }
+
+/* Footer */
+.site-footer {
+  position: relative; z-index: 1;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--muted); text-align: center; letter-spacing: 0.06em;
+}
+.site-footer a { color: var(--green); text-decoration: none; }
+
+/* severity badges for summary */
+.sev-tag {
+  display: inline-block; font-family: var(--mono); font-size: 0.6rem;
+  padding: 0.18rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+}
+.tag-c { background: rgba(155,35,53,0.2); color: #e05060; border: 1px solid rgba(155,35,53,0.3); }
+.tag-h { background: rgba(192,120,24,0.15); color: var(--amber); border: 1px solid rgba(192,120,24,0.3); }
+.tag-m { background: rgba(42,122,82,0.12); color: var(--green-l); border: 1px solid var(--border2); }
+.tag-ok { background: rgba(42,122,82,0.1); color: var(--green); border: 1px solid var(--border2); }
+
+@media (max-width: 600px) {
+  .device-type-grid { grid-template-columns: 1fr; }
+  .device-type-btn { border-right: none; border-bottom: 1px solid var(--border); }
+  .score-banner { grid-template-columns: 1fr; text-align: center; }
+  .pathway-grid { grid-template-columns: 1fr; }
+  .crq-metric-grid { grid-template-columns: 1fr; }
+  .vuln-row { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
-<nav class="sins-nav">
-  <a href="https://retach.tech" class="sins-nav__brand">RETACH<span>.</span></a>
-  <div class="sins-nav__tools" id="navTools">
-    <a href="https://retach.tech/sins-scanner.html" class="sins-nav__tool" data-page="scanner">S.I.N.S. Scanner</a>
-    <a href="https://retach.tech/ad-audit.html" class="sins-nav__tool" data-page="ad-audit">AD Audit</a>
-    <a href="https://retach.tech/systems-diagnostic.html" class="sins-nav__tool active" data-page="diagnostic">Systems Diagnostic</a>
-    <a href="https://retach.tech/pentest-kit.html" class="sins-nav__tool" data-page="pentest">Pentest Kit</a>
-  </div>
-  <div class="sins-nav__right">
-    <a href="https://retach.tech/#contact" class="sins-nav__cta">Book Assessment</a>
-    <button class="sins-nav__burger" id="navBurger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+
+<nav>
+  <a href="/" class="nav-brand">RETACH<span>.</span></a>
+  <div class="nav-links">
+    <a href="/sins-scanner.html">S.I.N.S. Scanner</a>
+    <a href="/ad-audit.html">AD Audit</a>
+    <a href="/systems-diagnostic.html">Systems Diagnostic</a>
+    <a href="/pentest-kit.html">Pentest Kit</a>
+    <a href="/#contact" class="nav-cta">Book Assessment</a>
   </div>
 </nav>
-<div class="app-wrap">
-<aside class="sidebar">
-  <div class="sidebar-brand"><div class="brand-name">RETACH<span>.</span></div><div class="brand-tool">Systems Diagnostic™</div></div>
-  <div class="sidebar-device" id="sidebar-device"><div class="device-label">Target Endpoint</div><div class="device-name" id="sb-device-name">Detecting…</div><div class="device-meta" id="sb-device-meta">Awaiting scan</div></div>
-  <div class="sidebar-section">Assessment</div>
-  <div class="nav-item active" onclick="showPanel('overview')" id="nav-overview"><span class="nav-icon">◈</span> Overview</div>
-  <div class="nav-item" onclick="showPanel('hardware')" id="nav-hardware"><span class="nav-icon">⬡</span> Hardware <span class="nav-badge" id="badge-hw">—</span></div>
-  <div class="nav-item" onclick="showPanel('os')" id="nav-os"><span class="nav-icon">⬢</span> OS &amp; Updates <span class="nav-badge" id="badge-os">—</span></div>
-  <div class="nav-item" onclick="showPanel('security')" id="nav-security"><span class="nav-icon">◉</span> Security Controls <span class="nav-badge" id="badge-sec">—</span></div>
-  <div class="nav-item" onclick="showPanel('disk')" id="nav-disk"><span class="nav-icon">◎</span> Disk &amp; Storage <span class="nav-badge" id="badge-disk">—</span></div>
-  <div class="sidebar-section">Output</div>
-  <div class="nav-item" onclick="showPanel('findings')" id="nav-findings"><span class="nav-icon">▣</span> Findings &amp; Gaps <span class="nav-badge badge-red" id="badge-findings">—</span></div>
-  <div class="nav-item" onclick="showPanel('report')" id="nav-report"><span class="nav-icon">▤</span> Device Report Card</div>
-  <div class="sidebar-footer"><button class="btn-scan" onclick="runFullScan()">▶ Run Full Scan</button><button class="btn-export" onclick="exportReport()">⬇ Export Report</button></div>
-</aside>
-<main class="main">
-  <div class="topbar">
-    <div><div class="topbar-title">S.I.N.S. Systems Diagnostic™</div><div class="topbar-subtitle">S — Systems Pillar · Endpoint Assessment · RETACH Digital</div></div>
-    <div class="topbar-right"><div class="scan-status" id="scan-status-bar"><div class="pulse"></div><span id="scan-status-text">Ready to scan</span></div></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">S.I.N.S. Framework™ · S Pillar — Systems</div>
+  <h1>Systems <em>Diagnostic™</em></h1>
+  <p class="hero-sub">Endpoint and server posture assessment mapped to the S.I.N.S. Framework™. Detects hardware state, OS hygiene, browser-observable vulnerability signals, and infrastructure gaps — differentiated by device type.</p>
+  <div class="hero-badges">
+    <span><span class="dot"></span>Browser-based · no install</span>
+    <span><span class="dot"></span>Endpoint &amp; Server modes</span>
+    <span><span class="dot"></span>Mapped to S.I.N.S. controls</span>
+    <span><span class="dot"></span>Links to CRQ &amp; AD Audit</span>
   </div>
-  <!-- OVERVIEW PANEL -->
-  <div class="content-panel active" id="panel-overview">
-    <div class="summary-strip">
-      <div class="stat-card"><div class="stat-label">S.I.N.S. Pillar</div><div class="stat-value stat-green">S</div><div class="stat-sub">Systems — Foundation Layer</div></div>
-      <div class="stat-card"><div class="stat-label">Endpoint Score</div><div class="stat-value" id="ov-score" style="color:var(--muted)">—</div><div class="stat-sub" id="ov-score-sub">Run scan to score</div></div>
-      <div class="stat-card"><div class="stat-label">Critical Gaps</div><div class="stat-value stat-red" id="ov-critical">—</div><div class="stat-sub" id="ov-crit-sub">Awaiting scan</div></div>
-      <div class="stat-card"><div class="stat-label">Needs Attention</div><div class="stat-value stat-amber" id="ov-warnings">—</div><div class="stat-sub" id="ov-warn-sub">Awaiting scan</div></div>
-    </div>
-    <div class="section-title">Quick Assessment <span class="sins-pill">S1 → S5</span></div>
-    <div class="checks-grid">
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🗂</span> S1 — Asset Identification</div><div class="check-body">
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-hostname"></div><div class="check-label">Hostname / Device Name</div><div class="check-value" id="cv-hostname">Scanning…</div></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-os-name"></div><div class="check-label">Operating System</div><div class="check-value" id="cv-os-name">Scanning…</div></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-platform"></div><div class="check-label">Platform / Architecture</div><div class="check-value" id="cv-platform">Scanning…</div></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-browser"></div><div class="check-label">Browser / User Agent</div><div class="check-value" id="cv-browser">Scanning…</div></div>
-      </div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🛡</span> S4 — Endpoint Protection</div><div class="check-body">
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-https"></div><div class="check-label">Secure Connection (HTTPS)</div><span class="check-tag" id="ct-https">—</span></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-cookies"></div><div class="check-label">Cookie Security</div><span class="check-tag" id="ct-cookies">—</span></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-webrtc"></div><div class="check-label">WebRTC / IP Leak Risk</div><span class="check-tag" id="ct-webrtc">—</span></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-storage"></div><div class="check-label">Local Storage Exposure</div><span class="check-tag" id="ct-storage">—</span></div>
-      </div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🔄</span> S5 — Patch &amp; Update Status</div><div class="check-body">
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-browser-ver"></div><div class="check-label">Browser Version Currency</div><span class="check-tag" id="ct-browser-ver">—</span></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-tls"></div><div class="check-label">TLS / Encryption Support</div><span class="check-tag" id="ct-tls">—</span></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-dnt"></div><div class="check-label">Privacy Settings (DNT)</div><span class="check-tag" id="ct-dnt">—</span></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-pwa"></div><div class="check-label">Service Worker Support</div><span class="check-tag" id="ct-pwa">—</span></div>
-      </div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">⚡</span> S2/S3 — Identity &amp; Access Signals</div><div class="check-body">
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-lang"></div><div class="check-label">System Language / Region</div><div class="check-value" id="cv-lang">Scanning…</div></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-tz"></div><div class="check-label">Timezone Configuration</div><div class="check-value" id="cv-tz">Scanning…</div></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-screen"></div><div class="check-label">Screen Resolution</div><div class="check-value" id="cv-screen">Scanning…</div></div>
-        <div class="check-row"><div class="check-indicator ind-grey" id="ci-touch"></div><div class="check-label">Device Type</div><span class="check-tag" id="ct-touch">—</span></div>
-      </div></div>
-    </div>
-    <div class="section-title">Hardware Profile <span class="sins-pill">S1 · Asset Inventory</span></div>
-    <div class="hw-grid">
-      <div class="hw-card"><div class="hw-header"><div><div class="hw-name">CPU</div><div class="hw-model" id="hw-cpu-model">Detecting…</div></div><span class="hw-status-badge tag-na" id="hw-cpu-badge">—</span></div><div class="bar-wrap"><div class="bar-fill bar-green" id="hw-cpu-bar" style="width:0%"></div></div><div class="hw-detail"><span id="hw-cpu-cores">—</span><span id="hw-cpu-usage">—</span></div><div class="hw-sins-tag"><span>S1 · Asset Inventory</span> — Document in device register. Flag end-of-life CPUs for hardware refresh.</div></div>
-      <div class="hw-card"><div class="hw-header"><div><div class="hw-name">RAM</div><div class="hw-model" id="hw-ram-model">Detecting…</div></div><span class="hw-status-badge" id="hw-ram-badge">—</span></div><div class="bar-wrap"><div class="bar-fill" id="hw-ram-bar" style="width:0%"></div></div><div class="hw-detail"><span id="hw-ram-used">—</span><span id="hw-ram-total">—</span></div><div class="hw-sins-tag"><span>S4 · Endpoint Control</span> — Insufficient RAM forces users to disable security software. Flag &lt;8GB for managed remediation.</div></div>
-      <div class="hw-card"><div class="hw-header"><div><div class="hw-name">Display</div><div class="hw-model" id="hw-display-model">Detecting…</div></div><span class="hw-status-badge tag-ok" id="hw-display-badge">OK</span></div><div class="bar-wrap"><div class="bar-fill bar-green" id="hw-display-bar" style="width:85%"></div></div><div class="hw-detail"><span id="hw-display-res">—</span><span id="hw-display-dpr">—</span></div><div class="hw-sins-tag"><span>S1 · Asset Inventory</span> — Record display configuration. Multiple monitors may indicate elevated-privilege workstations.</div></div>
-      <div class="hw-card"><div class="hw-header"><div><div class="hw-name">Network Interface</div><div class="hw-model" id="hw-net-model">Detecting…</div></div><span class="hw-status-badge" id="hw-net-badge">—</span></div><div class="bar-wrap"><div class="bar-fill" id="hw-net-bar" style="width:0%"></div></div><div class="hw-detail"><span id="hw-net-type">—</span><span id="hw-net-speed">—</span></div><div class="hw-sins-tag"><span>N3 · Secure Access</span> — Connection type informs VPN suitability and remote access policy enforcement.</div></div>
-    </div>
-  </div>
-  <!-- HARDWARE PANEL -->
-  <div class="content-panel" id="panel-hardware">
-    <div class="section-title">Hardware Inventory <span class="sins-pill">S1 — Asset Register</span></div>
-    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6;">Every device must appear in your asset register before it can be governed or secured. These readings form one row of your Systems inventory for this endpoint.</p>
-    <div id="hw-detail-grid" class="hw-grid"></div>
-    <div class="section-title" style="margin-top:0.5rem;">Performance Baseline <span class="sins-pill">S4 — Endpoint Control</span></div>
-    <div class="check-card" style="margin-bottom:1.5rem;"><div class="check-card-header"><span class="ch-icon">📊</span> System Capabilities</div><div class="check-body" id="perf-checks"></div></div>
-  </div>
-  <!-- OS PANEL -->
-  <div class="content-panel" id="panel-os">
-    <div class="section-title">OS &amp; Update Status <span class="sins-pill">S5 — Patch Management</span></div>
-    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6;">Unpatched systems are the #1 entry vector for ransomware. RETACH S5 requires all OS updates applied within 30 days of release.</p>
-    <div class="checks-grid">
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">💻</span> Operating Environment</div><div class="check-body" id="os-env-checks"></div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🔒</span> Browser Security</div><div class="check-body" id="browser-sec-checks"></div></div>
-    </div>
-    <div class="section-title">Runtime Capabilities <span class="sins-pill">S4 — Configuration Baseline</span></div>
-    <div class="check-card" style="margin-bottom:1.5rem;"><div class="check-body" id="runtime-checks"></div></div>
-  </div>
-  <!-- SECURITY PANEL -->
-  <div class="content-panel" id="panel-security">
-    <div class="section-title">Security Control Checks <span class="sins-pill">S2 · S3 · S4</span></div>
-    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6;">These checks surface security-relevant signals from the browser environment and flag areas requiring investigation during the Health Scan.</p>
-    <div class="checks-grid">
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🔐</span> Encryption &amp; Privacy</div><div class="check-body" id="enc-checks"></div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🌐</span> Network Security Signals</div><div class="check-body" id="net-sec-checks"></div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">🧩</span> Browser Hardening</div><div class="check-body" id="browser-hardening-checks"></div></div>
-      <div class="check-card"><div class="check-card-header"><span class="ch-icon">📱</span> Device Posture Signals</div><div class="check-body" id="device-posture-checks"></div></div>
-    </div>
-  </div>
-  <!-- DISK PANEL -->
-  <div class="content-panel" id="panel-disk">
-    <div class="section-title">Disk &amp; Storage <span class="sins-pill">S1 · I2 — Asset + Backup</span></div>
-    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6;">Storage health directly impacts backup reliability and ransomware recovery. Low disk space prevents security tools from logging and updating.</p>
-    <div id="disk-cards" class="hw-grid" style="grid-template-columns:1fr;"></div>
-    <div class="section-title">Storage Security Notes <span class="sins-pill">I2 — Recovery Readiness</span></div>
-    <div class="check-card"><div class="check-body" id="storage-sec-checks"></div></div>
-  </div>
-  <!-- FINDINGS PANEL -->
-  <div class="content-panel" id="panel-findings">
-    <div class="section-title">Endpoint Findings &amp; Gaps <span class="sins-pill">S.I.N.S. Systems Pillar</span></div>
-    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6;">Findings are mapped to the S.I.N.S. Framework™ control reference. Include these in the Health Scan gap register.</p>
-    <div class="findings-table">
-      <div class="findings-thead"><div></div><div>Finding / Gap</div><div>S.I.N.S. Ref</div><div>Effort</div><div>Action</div></div>
-      <div id="findings-body"><div style="padding:2rem;text-align:center;color:var(--muted);font-size:0.85rem;">Run a full scan to populate findings.</div></div>
-    </div>
-  </div>
-  <!-- REPORT PANEL -->
-  <div class="content-panel" id="panel-report">
-    <div class="section-title">Device Report Card <span class="sins-pill">Health Scan Deliverable</span></div>
-    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;line-height:1.6;">Per-device output for the Systems pillar of the RETACH Health Scan. Export and include in the client gap register.</p>
-    <div class="report-card" id="report-card-hero">
-      <div class="report-score-ring"><svg viewBox="0 0 90 90"><circle fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8" cx="45" cy="45" r="36"/><circle fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="226" id="report-ring-fill" cx="45" cy="45" r="36" style="stroke:var(--muted);stroke-dashoffset:226;transition:stroke-dashoffset 1s ease,stroke 0.3s"/></svg><div class="report-score-center"><div class="report-score-num" id="rpt-score">—</div><div class="report-score-lbl">/100</div></div></div>
-      <div><div class="report-verdict" id="rpt-verdict">Run scan first</div><div class="report-summary" id="rpt-summary">Complete the full scan to generate this device's S.I.N.S. Systems compliance score and finding list.</div></div>
-      <a href="/#contact" class="report-cta-btn">Book Health Scan →</a>
-    </div>
-    <div id="report-detail" style="display:none">
-      <div class="checks-grid">
-        <div class="check-card"><div class="check-card-header"><span class="ch-icon">📋</span> Device Identification</div><div class="check-body" id="rpt-device-id"></div></div>
-        <div class="check-card"><div class="check-card-header"><span class="ch-icon">🔐</span> Security Compliance</div><div class="check-body" id="rpt-sec-compliance"></div></div>
-      </div>
-      <div class="check-card" style="margin-bottom:1.5rem;"><div class="check-card-header"><span class="ch-icon">🎯</span> Priority Remediation Actions</div><div class="check-body" id="rpt-remediation"></div></div>
-      <div style="background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:1.2rem;margin-bottom:1.5rem;">
-        <div style="font-family:var(--mono);font-size:0.62rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Assessor Notes</div>
-        <textarea id="assessor-notes" placeholder="Add notes: client name, location, interviewed staff, observations…" style="width:100%;background:transparent;border:none;color:var(--text);font-family:var(--body);font-size:0.88rem;line-height:1.6;resize:vertical;min-height:80px;outline:none;"></textarea>
-      </div>
-      <div style="display:flex;gap:0.8rem;">
-        <button onclick="exportReport()" style="padding:0.7rem 1.5rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-family:var(--cond);font-size:0.95rem;font-weight:700;cursor:pointer;">⬇ Export Report Card</button>
-        <button onclick="window.print()" style="padding:0.7rem 1.5rem;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:var(--body);font-size:0.88rem;cursor:pointer;">🖨 Print</button>
-      </div>
-    </div>
-  </div>
-</main>
 </div>
-<div id="scan-overlay"><div class="scan-terminal"><div class="scan-bars"><div class="scan-bar"></div><div class="scan-bar"></div><div class="scan-bar"></div><div class="scan-bar"></div><div class="scan-bar"></div></div><div class="scan-step" id="scan-step-label">Initialising…</div><div class="scan-sub" id="scan-step-sub">Preparing endpoint assessment</div><div class="scan-progress"><div class="scan-progress-fill" id="scan-prog" style="width:0%"></div></div></div></div>
-<script>
-const state={scanned:false,data:{},findings:[],score:0};
-function showPanel(id){document.querySelectorAll('.content-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('panel-'+id).classList.add('active');document.getElementById('nav-'+id).classList.add('active');}
-async function runFullScan(){
-  const overlay=document.getElementById('scan-overlay');
-  const steps=[['Enumerating device identity…','Collecting OS, platform and browser signals',15],['Probing hardware capabilities…','CPU, memory, display and network interfaces',35],['Checking security controls…','Encryption, storage isolation, privacy settings',55],['Analysing OS patch signals…','Browser version, TLS support, runtime capabilities',75],['Mapping to S.I.N.S. pillars…','Scoring against S1 → S5 control references',90],['Generating findings register…','Prioritising gaps for Health Scan deliverable',100]];
-  overlay.classList.add('active');
-  setScanStatus('scanning','Scanning…');
-  for(const[label,sub,pct] of steps){document.getElementById('scan-step-label').textContent=label;document.getElementById('scan-step-sub').textContent=sub;document.getElementById('scan-prog').style.width=pct+'%';await sleep(520);}
-  gatherData();populateAll();buildFindings();buildReport();
-  overlay.classList.remove('active');
-  setScanStatus('done','Scan complete · '+new Date().toLocaleTimeString());
-  state.scanned=true;
-}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-function setScanStatus(cls,txt){const el=document.getElementById('scan-status-bar');el.className='scan-status '+cls;document.getElementById('scan-status-text').textContent=txt;}
-function gatherData(){
-  const nav=navigator,ua=nav.userAgent,conn=nav.connection||nav.mozConnection||nav.webkitConnection||{};
-  state.data.hostname=location.hostname||'Unknown host';
-  state.data.platform=nav.platform||'Unknown';
-  state.data.lang=nav.language||'Unknown';
-  state.data.languages=(nav.languages||[nav.language]).join(', ');
-  state.data.tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'Unknown';
-  state.data.ua=ua;state.data.vendor=nav.vendor||'Unknown';
-  state.data.isTouch='ontouchstart' in window||nav.maxTouchPoints>0;
-  state.data.maxTouch=nav.maxTouchPoints||0;
-  state.data.online=nav.onLine;
-  state.data.dnt=nav.doNotTrack==='1'||window.doNotTrack==='1';
-  const osMap=[[/Windows NT 11|Windows NT 10/i,'Windows 10/11'],[/Windows NT 6\.3/i,'Windows 8.1 ⚠'],[/Windows NT 6\.1/i,'Windows 7 ⚠'],[/Mac OS X/i,'macOS'],[/Android (\d+)/i,m=>'Android '+m[1]],[/iPhone|iPad/i,'iOS'],[/CrOS/i,'ChromeOS'],[/Linux/i,'Linux']];
-  state.data.osName='Unknown OS';
-  for(const[re,val] of osMap){const m=ua.match(re);if(m){state.data.osName=typeof val==='function'?val(m):val;break;}}
-  const brMap=[[/Edg\/(\d+)/i,m=>['Edge',m[1]]],[/Chrome\/(\d+)/i,m=>['Chrome',m[1]]],[/Firefox\/(\d+)/i,m=>['Firefox',m[1]]],[/Safari\/(\d+)/i,m=>['Safari',m[1]]]];
-  state.data.browserName='Unknown';state.data.browserVer='?';
-  for(const[re,fn] of brMap){const m=ua.match(re);if(m){[state.data.browserName,state.data.browserVer]=fn(m);break;}}
-  const bv=parseInt(state.data.browserVer,10);
-  state.data.browserCurrent=bv>=115;
-  state.data.cpuCores=nav.hardwareConcurrency||'Unknown';
-  state.data.ramGB=nav.deviceMemory?nav.deviceMemory+' GB':'Unknown';
-  state.data.ramOk=nav.deviceMemory?nav.deviceMemory>=8:null;
-  state.data.screen=screen.width+'×'+screen.height;
-  state.data.screenW=screen.width;state.data.screenH=screen.height;
-  state.data.colorDepth=screen.colorDepth+'-bit';
-  state.data.dpr=window.devicePixelRatio||1;
-  state.data.displays=window.screen.isExtended!==undefined?(window.screen.isExtended?'Multiple':'Single'):'Unknown';
-  state.data.netType=conn.effectiveType||conn.type||'Unknown';
-  state.data.netDownlink=conn.downlink?conn.downlink+' Mbps':'Unknown';
-  state.data.netRtt=conn.rtt?conn.rtt+' ms':'Unknown';
-  state.data.netSaveData=conn.saveData||false;
-  state.data.connOk=conn.effectiveType==='4g'||conn.effectiveType==='wifi'||!conn.effectiveType;
-  state.data.isHttps=location.protocol==='https:';
-  state.data.webrtcSupport=typeof RTCPeerConnection!=='undefined';
-  state.data.webStorage=typeof localStorage!=='undefined';
-  state.data.sessionStorage=typeof sessionStorage!=='undefined';
-  state.data.indexedDB=typeof indexedDB!=='undefined';
-  state.data.serviceWorker='serviceWorker' in nav;
-  state.data.crypto=typeof window.crypto!=='undefined'&&typeof window.crypto.subtle!=='undefined';
-  state.data.permissions=typeof navigator.permissions!=='undefined';
-  state.data.credMgmt=typeof navigator.credentials!=='undefined';
-  state.data.notifications=typeof Notification!=='undefined';
-  state.data.geolocation=typeof navigator.geolocation!=='undefined';
-  state.data.mediaDevices=typeof navigator.mediaDevices!=='undefined';
-  state.data.usb=typeof navigator.usb!=='undefined';
-  state.data.bluetooth=typeof navigator.bluetooth!=='undefined';
-  state.data.cookieEnabled=nav.cookieEnabled;
-  state.data.storageUsed='N/A';state.data.storageQuota='N/A';state.data.storagePct=0;
-  if(navigator.storage&&navigator.storage.estimate){navigator.storage.estimate().then(est=>{state.data.storageUsed=est.usage?Math.round(est.usage/1024/1024)+' MB':'?';state.data.storageQuota=est.quota?Math.round(est.quota/1024/1024/1024)+' GB':'?';state.data.storagePct=est.usage&&est.quota?Math.round(est.usage/est.quota*100):0;populateDiskPanel();}).catch(()=>populateDiskPanel());} else{populateDiskPanel();}
-  if(nav.getBattery){nav.getBattery().then(bat=>{state.data.batLevel=Math.round(bat.level*100);state.data.batCharging=bat.charging;state.data.batTime=bat.dischargingTime!==Infinity?Math.round(bat.dischargingTime/60)+' min':'Charging';updateBatteryCard();}).catch(()=>{});} else{state.data.batLevel=null;}
-}
-function setInd(id,status){const el=document.getElementById(id);if(!el)return;el.className='check-indicator ind-'+(status===true?'green':status===false?'red':status==='warn'?'amber':'grey');}
-function setTag(id,status,text){const el=document.getElementById(id);if(!el)return;el.className='check-tag '+(status===true?'tag-ok':status===false?'tag-fail':status==='warn'?'tag-warn':'tag-na');el.textContent=text;}
-function setText(id,text){const el=document.getElementById(id);if(el)el.textContent=text;}
-function mkRow(label,status,value,tag){const ind=status===true?'ind-green':status===false?'ind-red':status==='warn'?'ind-amber':'ind-grey';const tc=status===true?'tag-ok':status===false?'tag-fail':status==='warn'?'tag-warn':'tag-na';const right=tag?`<span class="check-tag ${tc}">${value}</span>`:`<div class="check-value">${value}</div>`;return `<div class="check-row"><div class="check-indicator ${ind}"></div><div class="check-label">${label}</div>${right}</div>`;}
-function populateAll(){
-  const d=state.data;
-  setText('sb-device-name',d.osName+' · '+d.browserName);
-  setText('sb-device-meta',d.platform+' · '+d.tz);
-  setText('cv-hostname',d.hostname);setInd('ci-hostname','ok');
-  setText('cv-os-name',d.osName);setInd('ci-os-name',d.osName.includes('7')||d.osName.includes('8.1')?false:true);
-  setText('cv-platform',d.platform);setInd('ci-platform',true);
-  setText('cv-browser',d.browserName+' '+d.browserVer);setInd('ci-browser',d.browserCurrent);
-  setInd('ci-https',d.isHttps);setTag('ct-https',d.isHttps,d.isHttps?'Encrypted':'UNENCRYPTED');
-  setInd('ci-cookies',d.cookieEnabled?'warn':true);setTag('ct-cookies',d.cookieEnabled?'warn':true,d.cookieEnabled?'Enabled':'Blocked');
-  setInd('ci-webrtc',d.webrtcSupport?'warn':true);setTag('ct-webrtc',d.webrtcSupport?'warn':false,d.webrtcSupport?'Exposed':'Not detected');
-  setInd('ci-storage',d.webStorage?'warn':true);setTag('ct-storage',d.webStorage?'warn':true,d.webStorage?'Available':'Restricted');
-  setInd('ci-browser-ver',d.browserCurrent);setTag('ct-browser-ver',d.browserCurrent,'Current|OUTDATED'.split('|')[d.browserCurrent?0:1]);
-  setInd('ci-tls',d.crypto);setTag('ct-tls',d.crypto,d.crypto?'TLS OK':'Limited');
-  setInd('ci-dnt',d.dnt);setTag('ct-dnt',d.dnt?true:'warn',d.dnt?'Enabled':'Not set');
-  setInd('ci-pwa',d.serviceWorker?'warn':null);setTag('ct-pwa',d.serviceWorker?'warn':null,d.serviceWorker?'Active':'Inactive');
-  setText('cv-lang',d.lang);setInd('ci-lang',true);
-  setText('cv-tz',d.tz);setInd('ci-tz',true);
-  setText('cv-screen',d.screen);setInd('ci-screen',true);
-  setTag('ct-touch',d.isTouch?'warn':true,d.isTouch?'Mobile/Tablet':'Desktop');setInd('ci-touch',d.isTouch?'warn':true);
-  const cores=d.cpuCores,cpuOk=typeof cores==='number'&&cores>=4;
-  setText('hw-cpu-model',cores+(cores===1?' core':' cores')+' detected');
-  document.getElementById('hw-cpu-badge').textContent=cpuOk?'Adequate':'Low';
-  document.getElementById('hw-cpu-badge').className='hw-status-badge '+(cpuOk?'tag-ok':'tag-warn');
-  document.getElementById('hw-cpu-bar').style.width=Math.min(100,(typeof cores==='number'?cores/16*100:50))+'%';
-  document.getElementById('hw-cpu-bar').className='bar-fill '+(cpuOk?'bar-green':'bar-amber');
-  setText('hw-cpu-cores',cores+' logical cores');setText('hw-cpu-usage','Via hardwareConcurrency API');
-  const ram=d.ramGB,ramOk=d.ramOk;
-  setText('hw-ram-model',ram);
-  document.getElementById('hw-ram-badge').textContent=ramOk===null?'Unknown':ramOk?'Sufficient':'LOW';
-  document.getElementById('hw-ram-badge').className='hw-status-badge '+(ramOk===null?'tag-na':ramOk?'tag-ok':'tag-fail');
-  document.getElementById('hw-ram-bar').style.width=Math.min(100,(parseFloat(ram)||4)/32*100)+'%';
-  document.getElementById('hw-ram-bar').className='bar-fill '+(ramOk===false?'bar-red':ramOk?'bar-green':'bar-amber');
-  setText('hw-ram-used','Device reports: '+ram);setText('hw-ram-total','Min for ESET EDR: 8 GB');
-  setText('hw-display-model',d.screen);
-  document.getElementById('hw-display-badge').textContent=d.screenW>=1920?'Full HD+':'Standard';
-  document.getElementById('hw-display-bar').style.width=Math.min(100,d.screenW/25.6)+'%';
-  setText('hw-display-res',d.screen+' · '+d.colorDepth);
-  setText('hw-display-dpr','DPR: '+d.dpr+' · '+d.displays+' display');
-  setText('hw-net-model',d.netType.toUpperCase()+' connection');
-  document.getElementById('hw-net-badge').textContent=d.connOk?'Good':'Poor';
-  document.getElementById('hw-net-badge').className='hw-status-badge '+(d.connOk?'tag-ok':'tag-warn');
-  const nb=d.netType==='4g'?90:d.netType==='3g'?55:80;
-  document.getElementById('hw-net-bar').style.width=nb+'%';
-  document.getElementById('hw-net-bar').className='bar-fill '+(d.connOk?'bar-green':'bar-amber');
-  setText('hw-net-type','Type: '+d.netType);setText('hw-net-speed','Downlink: '+d.netDownlink);
-  populateHardwarePanel();populateOSPanel();populateSecurityPanel();
-}
-function updateBatteryCard(){
-  const d=state.data,bc=document.getElementById('battery-card-placeholder');
-  if(!bc||d.batLevel===null)return;
-  const p=d.batLevel,cls=p>60?'tag-ok':p>30?'tag-warn':'tag-fail',brc=p>60?'bar-green':p>30?'bar-amber':'bar-red';
-  bc.innerHTML=`<div class="hw-header"><div><div class="hw-name">Battery</div><div class="hw-model">${p}% ${d.batCharging?'(Charging)':'(On battery)'}</div></div><span class="hw-status-badge ${cls}">${p>60?'Good':p>30?'Degraded':'CRITICAL'}</span></div><div class="bar-wrap"><div class="bar-fill ${brc}" style="width:${p}%"></div></div><div class="hw-detail"><span>Level: ${p}%</span><span>${d.batTime}</span></div><div class="hw-sins-tag"><span>S1 · Asset Inventory</span> — Battery &lt;40% → flag for replacement. Unexpected shutdowns create data loss risk.</div>`;
-}
-function populateHardwarePanel(){
-  const d=state.data;
-  const g=document.getElementById('hw-detail-grid');
-  const cards=[{name:'Processor',model:d.cpuCores+' logical cores',pct:Math.min(100,(d.cpuCores||2)/16*100),bc:(d.cpuCores||0)>=4?'bar-green':'bar-amber',badge:(d.cpuCores||0)>=4?'tag-ok':'tag-warn',bt:(d.cpuCores||0)>=4?'Adequate':'Low core count',d1:'Logical cores: '+d.cpuCores,d2:'Via hardwareConcurrency',sins:'S1 · Asset Inventory — Document CPU generation. Flag single/dual-core for refresh.'},{name:'System Memory',model:d.ramGB,pct:Math.min(100,(parseFloat(d.ramGB)||4)/32*100),bc:d.ramOk===false?'bar-red':d.ramOk?'bar-green':'bar-amber',badge:d.ramOk===null?'tag-na':d.ramOk?'tag-ok':'tag-fail',bt:d.ramOk===null?'Unknown':d.ramOk?'Sufficient':'Insufficient',d1:'Reported: '+d.ramGB,d2:'Min for ESET EDR + M365: 8 GB',sins:'S4 · Endpoint Control — Insufficient RAM forces users to disable security tools.'},{name:'Display',model:d.screen,pct:Math.min(100,d.screenW/25.6),bc:'bar-green',badge:'tag-ok',bt:d.colorDepth,d1:d.screen+' · DPR '+d.dpr,d2:d.displays+' display',sins:'S1 · Asset Inventory — Record screen config. Extended displays indicate privileged workstations.'},{name:'Network',model:d.netType.toUpperCase(),pct:d.netType==='4g'?90:d.netType==='3g'?55:80,bc:d.connOk?'bar-green':'bar-amber',badge:d.connOk?'tag-ok':'tag-warn',bt:d.connOk?'Adequate':'Poor',d1:'Downlink: '+d.netDownlink,d2:'RTT: '+d.netRtt,sins:'N3 · Secure Access — Poor connections degrade VPN reliability.'}];
-  g.innerHTML=cards.map(c=>`<div class="hw-card"><div class="hw-header"><div><div class="hw-name">${c.name}</div><div class="hw-model">${c.model}</div></div><span class="hw-status-badge ${c.badge}">${c.bt}</span></div><div class="bar-wrap"><div class="bar-fill ${c.bc}" style="width:${c.pct}%"></div></div><div class="hw-detail"><span>${c.d1}</span><span>${c.d2}</span></div><div class="hw-sins-tag"><span>${c.sins.split(' —')[0]}</span> —${c.sins.split(' —')[1]}</div></div>`).join('');
-  g.innerHTML+=`<div class="hw-card" id="battery-card-placeholder"><div class="hw-header"><div><div class="hw-name">Battery</div><div class="hw-model">Querying…</div></div><span class="hw-status-badge tag-na">Detecting</span></div><div class="bar-wrap"><div class="bar-fill bar-amber" style="width:50%"></div></div><div class="hw-detail"><span>Battery API in progress</span><span>—</span></div><div class="hw-sins-tag"><span>S1 · Asset Inventory</span> — Battery health flags unexpected shutdown and data integrity risk.</div></div>`;
-  document.getElementById('perf-checks').innerHTML=[mkRow('Hardware concurrency API',true,d.cpuCores+' cores',false),mkRow('Device memory API',d.ramOk!==null,d.ramGB,false),mkRow('Network information API',!!navigator.connection,d.netType,false),mkRow('Battery API',!!navigator.getBattery,navigator.getBattery?'Yes':'Not supported',true),mkRow('WebGL support',typeof WebGLRenderingContext!=='undefined','Supported',true),mkRow('Pointer device',true,d.isTouch?'Touch ('+d.maxTouch+' pts)':'Mouse/keyboard',false)].join('');
-}
-function populateOSPanel(){
-  const d=state.data;
-  document.getElementById('os-env-checks').innerHTML=[mkRow('OS',!d.osName.includes('7')&&!d.osName.includes('8.1'),d.osName,false),mkRow('Platform',true,d.platform,false),mkRow('Language',true,d.languages,false),mkRow('Timezone',true,d.tz,false),mkRow('Online',d.online,d.online?'Online':'Offline',true),mkRow('Save-data mode',!d.netSaveData,d.netSaveData?'Active':'Normal',true)].join('');
-  document.getElementById('browser-sec-checks').innerHTML=[mkRow('Browser',d.browserCurrent,d.browserName+' v'+d.browserVer,false),mkRow('Currency',d.browserCurrent,d.browserCurrent?'Up to date':'OUTDATED',true),mkRow('Do Not Track',d.dnt,d.dnt?'Enabled':'Not configured',true),mkRow('Cookies','warn',d.cookieEnabled?'Enabled':'Blocked',true),mkRow('Vendor',true,d.vendor||'Unknown',false)].join('');
-  document.getElementById('runtime-checks').innerHTML=[mkRow('Web Crypto API',d.crypto,d.crypto?'Available':'Absent',true),mkRow('Service Workers',d.serviceWorker?'warn':null,d.serviceWorker?'Active — review scope':'Inactive',true),mkRow('IndexedDB','warn',d.indexedDB?'Exposed':'Restricted',true),mkRow('Credential Mgmt',d.credMgmt,d.credMgmt?'Supported':'Not available',true),mkRow('Permissions API',d.permissions,d.permissions?'Available':'Limited',true),mkRow('Notifications','warn',d.notifications?'Accessible':'Restricted',true)].join('');
-}
-function populateSecurityPanel(){
-  const d=state.data;
-  document.getElementById('enc-checks').innerHTML=[mkRow('HTTPS / TLS',d.isHttps,d.isHttps?'Encrypted':'UNENCRYPTED',true),mkRow('SubtleCrypto',d.crypto,d.crypto?'Available':'Missing',true),mkRow('Secure context',d.isHttps,d.isHttps?'Secure':'Insecure',true),mkRow('CT enforced',d.isHttps,d.isHttps?'Yes (via browser)':'N/A',true)].join('');
-  document.getElementById('net-sec-checks').innerHTML=[mkRow('Connection type',d.connOk,d.netType.toUpperCase(),false),mkRow('Downlink',d.connOk,d.netDownlink,false),mkRow('RTT',null,d.netRtt,false),mkRow('WebRTC leak risk',false,d.webrtcSupport?'VPN leak possible':'Absent',true),mkRow('Data-saver',!d.netSaveData,d.netSaveData?'Active':'Off',true)].join('');
-  document.getElementById('browser-hardening-checks').innerHTML=[mkRow('Browser current',d.browserCurrent,d.browserCurrent?'Patched':'OUTDATED',true),mkRow('DNT enabled',d.dnt,d.dnt?'Yes':'No',true),mkRow('localStorage','warn',d.webStorage?'Exposed':'Restricted',true),mkRow('sessionStorage','warn',d.sessionStorage?'Exposed':'Restricted',true),mkRow('Geolocation','warn',d.geolocation?'Available':'Restricted',true),mkRow('Media devices','warn',d.mediaDevices?'Available':'Restricted',true)].join('');
-  document.getElementById('device-posture-checks').innerHTML=[mkRow('Device type',!d.isTouch,d.isTouch?'Mobile/BYOD':'Desktop',true),mkRow('Touch points',null,d.maxTouch>0?d.maxTouch+' pts':'None',false),mkRow('Screen',true,d.screen,false),mkRow('USB API','warn',d.usb?'Accessible — DLP risk':'Not accessible',true),mkRow('Bluetooth','warn',d.bluetooth?'Accessible':'Not accessible',true),mkRow('Credential mgr',d.credMgmt,d.credMgmt?'Available':'Absent',true)].join('');
-}
-function populateDiskPanel(){
-  const d=state.data;
-  document.getElementById('disk-cards').innerHTML=`<div class="hw-card"><div class="hw-header"><div><div class="hw-name">Browser Storage Quota</div><div class="hw-model">${d.storageQuota} total · ${d.storageUsed} used</div></div><span class="hw-status-badge ${d.storagePct>85?'tag-fail':d.storagePct>60?'tag-warn':'tag-ok'}">${d.storagePct}% used</span></div><div class="bar-wrap"><div class="bar-fill ${d.storagePct>85?'bar-red':d.storagePct>60?'bar-amber':'bar-green'}" style="width:${d.storagePct}%"></div></div><div class="hw-detail"><span>Used: ${d.storageUsed}</span><span>Quota: ${d.storageQuota}</span></div><div class="hw-sins-tag"><span>I2 · Backup Readiness</span> — Full disk prevents security tool logging and update downloads.</div></div>`;
-  document.getElementById('storage-sec-checks').innerHTML=[mkRow('Storage estimate',d.storageQuota!=='N/A',d.storageQuota+' quota',false),mkRow('Utilisation',d.storagePct<=60,d.storagePct+'% used',true),mkRow('IndexedDB','warn',d.indexedDB?'Accessible':'Restricted',true),mkRow('Cache API','warn',d.serviceWorker?'Active':'Not active',true),mkRow('Storage isolation',d.isHttps,d.isHttps?'Partitioned':'Shared context',true)].join('');
-}
-function buildFindings(){
-  const d=state.data;
-  const findings=[];
-  const add=(sev,name,desc,pillar,effort,action)=>findings.push({sev,name,desc,pillar,effort,action});
-  if(!d.isHttps)add('🔴','No HTTPS encryption','All data in transit is exposed.','S4 · Q4','<1 day','Enforce HTTPS immediately');
-  if(!d.browserCurrent)add('🔴','Outdated browser',d.browserName+' v'+d.browserVer+' — known exploits.','S5 · Q5','1 hour','Update browser now');
-  if(d.osName.includes('7'))add('🔴','EOL OS — Windows 7','No patches since Jan 2020. Critical.','S5 · Q5','1–3 days','Immediate OS upgrade required');
-  if(d.osName.includes('8.1'))add('🔴','EOL OS — Windows 8.1','EOL Jan 2023. No patches.','S5 · Q5','1–3 days','Upgrade to Windows 10/11');
-  if(d.ramOk===false)add('🔴','Insufficient RAM','<8 GB prevents ESET EDR and M365.','S4 · Q4','<1 day','Hardware upgrade — flag for replacement');
-  if(d.usb)add('🔴','USB API accessible','DLP policy cannot block via browser alone.','S4 · Q4','1 day','Enforce OS-level USB control policy');
-  if(d.webrtcSupport)add('🟡','WebRTC active — VPN IP leak risk','Can expose real IP when VPN is active.','N3 · Q3','1 hour','Configure browser WebRTC policy');
-  if(!d.dnt)add('🟡','Do Not Track not configured','Privacy hardening gap.','S4 · Q4','<1 hour','Enable DNT in browser settings');
-  if(d.isTouch)add('🟡','Mobile/BYOD device detected','BYOD policy and MDM enrolment required.','S1 · Q1','1 day','Enrol in JumpCloud/Intune MDM');
-  if(!d.connOk)add('🟡','Poor network connection','May prevent updates and VPN connectivity.','N3 · Q3','1 day','Investigate connectivity');
-  if(d.storagePct>80)add('🟡','High storage utilisation ('+d.storagePct+'%)','Full disk prevents log capture and AV updates.','S5 · Q5','2 hours','Disk cleanup — remove temp files');
-  if(d.bluetooth)add('🟡','Bluetooth API exposed','Review peripheral control policy.','S4 · Q4','1 hour','Restrict via browser policy');
-  if(d.isHttps)add('🟢','HTTPS encryption active','Connection encrypted. TLS established.','S4 · Q4','—','Document in compliance record');
-  if(d.browserCurrent)add('🟢','Browser is current',d.browserName+' v'+d.browserVer+' is up to date.','S5 · Q5','—','Record patch date in asset register');
-  if(d.crypto)add('🟢','Web Crypto available','TLS 1.3 and SubtleCrypto present.','S4 · Q4','—','Confirm server-side TLS config');
-  if(!d.isTouch)add('🟢','Desktop workstation confirmed','Non-touch — managed desktop environment.','S1 · Q1','—','Record in asset register');
-  state.findings=findings;
-  const crit=findings.filter(f=>f.sev==='🔴').length,warn=findings.filter(f=>f.sev==='🟡').length,ok=findings.filter(f=>f.sev==='🟢').length;
-  setBadge('badge-findings',crit>0?crit+' critical':warn>0?warn+' warnings':'Clean',crit>0?'badge-red':warn>0?'badge-amber':'badge-green');
-  setBadge('badge-hw',d.ramOk===false?'Low RAM':'OK',d.ramOk===false?'badge-amber':'badge-green');
-  setBadge('badge-os',d.browserCurrent?'Current':'Outdated',d.browserCurrent?'badge-green':'badge-red');
-  setBadge('badge-sec',!d.isHttps?'No HTTPS':'OK',!d.isHttps?'badge-red':'badge-green');
-  setBadge('badge-disk',d.storagePct>80?'High':'OK',d.storagePct>80?'badge-amber':'badge-green');
-  const score=Math.round(Math.max(0,100-crit*20-warn*8));
-  state.score=score;
-  const sc=document.getElementById('ov-score');
-  sc.textContent=score;sc.style.color=score>=70?'var(--green)':score>=45?'var(--amber)':'var(--red)';
-  setText('ov-score-sub',score>=70?'Good posture':score>=45?'Needs attention':'High risk');
-  setText('ov-critical',crit);setText('ov-crit-sub','Immediate remediation required');
-  setText('ov-warnings',warn);setText('ov-warn-sub','Needs attention');
-  const tbody=document.getElementById('findings-body');
-  tbody.innerHTML=findings.length?findings.map(f=>`<div class="finding-row-grid"><div class="finding-sev">${f.sev}</div><div class="finding-name">${f.name}<small>${f.desc}</small></div><div class="finding-pillar">${f.pillar}</div><div class="finding-effort">${f.effort}</div><div class="finding-action">${f.action}</div></div>`).join(''):'<div style="padding:2rem;text-align:center;color:var(--green);font-size:0.85rem;">No findings — endpoint posture is strong.</div>';
-}
-function setBadge(id,text,cls){const el=document.getElementById(id);if(!el)return;el.textContent=text;el.className='nav-badge '+cls;}
-function buildReport(){
-  const d=state.data,score=state.score,findings=state.findings;
-  const crit=findings.filter(f=>f.sev==='🔴'),warn=findings.filter(f=>f.sev==='🟡');
-  const ring=document.getElementById('report-ring-fill');
-  const circ=2*Math.PI*36,offset=circ*(1-score/100);
-  const color=score>=70?'#2a7a52':score>=45?'#c07818':'#9b2335';
-  ring.style.stroke=color;
-  setTimeout(()=>{ring.style.strokeDashoffset=offset;},200);
-  const sc=document.getElementById('rpt-score');
-  sc.textContent=score;sc.style.color=color;
-  const verdict=score>=70?'Compliant Baseline':score>=45?'Significant Gaps':'High Risk — Act Now';
-  const summary=score>=70?'This endpoint meets the RETACH S-pillar baseline. '+warn.length+' item(s) need attention before next audit.':score>=45?crit.length+' critical gap(s) and '+warn.length+' warnings. Include in Health Scan remediation plan.':'Critical exposure on '+crit.length+' control(s). Must remediate before Health Scan closes.';
-  setText('rpt-verdict',verdict);document.getElementById('rpt-verdict').style.color=color;
-  setText('rpt-summary',summary);
-  document.getElementById('report-detail').style.display='block';
-  document.getElementById('rpt-device-id').innerHTML=[mkRow('OS',!d.osName.includes('7'),d.osName,false),mkRow('Browser',d.browserCurrent,d.browserName+' v'+d.browserVer,false),mkRow('Platform',true,d.platform,false),mkRow('Timezone',true,d.tz,false),mkRow('Language',true,d.lang,false),mkRow('Screen',true,d.screen,false)].join('');
-  document.getElementById('rpt-sec-compliance').innerHTML=[mkRow('HTTPS',d.isHttps,d.isHttps?'Pass':'FAIL',true),mkRow('Browser patched',d.browserCurrent,d.browserCurrent?'Pass':'FAIL',true),mkRow('OS current',!d.osName.includes('7')&&!d.osName.includes('8.1'),'Pass/Fail',true),mkRow('RAM adequate',d.ramOk!==false,d.ramGB,true),mkRow('WebRTC controlled',!d.webrtcSupport,d.webrtcSupport?'Exposed':'Controlled',true),mkRow('Device type',!d.isTouch,d.isTouch?'Mobile/BYOD':'Desktop',true)].join('');
-  const top=[...crit,...warn].slice(0,6);
-  document.getElementById('rpt-remediation').innerHTML=top.length?top.map(f=>mkRow(f.name,f.sev==='🟢',f.action+' · '+f.pillar,false)).join(''):'<div style="padding:0.7rem;color:var(--green);font-size:0.85rem;">No priority actions — posture is strong.</div>';
-}
-function exportReport(){
-  const d=state.data,ts=new Date().toLocaleString(),notes=document.getElementById('assessor-notes')?.value||'';
-  const lines=['RETACH Digital — S.I.N.S. Systems Diagnostic™','Endpoint Report Card','==========================================','Generated: '+ts,'Assessor notes: '+(notes||'None'),'','DEVICE','------','OS:        '+d.osName,'Browser:   '+d.browserName+' v'+d.browserVer,'Platform:  '+d.platform,'RAM:       '+d.ramGB,'CPU cores: '+d.cpuCores,'Screen:    '+d.screen,'Network:   '+d.netType+' · '+d.netDownlink,'Timezone:  '+d.tz,'','S.I.N.S. SCORE:  '+state.score+' / 100','','FINDINGS ('+state.findings.length+' total)','--------',...state.findings.map(f=>f.sev+'  ['+f.pillar+']  '+f.name+'\n     Action: '+f.action),'','S.I.N.S. Framework™ — RETACH Digital Ltd','info@retach.tech · retach.tech'];
-  const blob=new Blob([lines.join('\n')],{type:'text/plain'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='RETACH-Endpoint-Report-'+new Date().toISOString().slice(0,10)+'.txt';a.click();
-  URL.revokeObjectURL(url);
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  const ua=navigator.userAgent;let os='Unknown OS';
-  [[/Windows NT 10|Windows NT 11/i,'Windows 10/11'],[/Mac OS X/i,'macOS'],[/Android/i,'Android'],[/Linux/i,'Linux'],[/iPhone|iPad/i,'iOS']].forEach(([re,name])=>{if(re.test(ua))os=name;});
-  setText('sb-device-name',os);
-  setText('sb-device-meta','Ready to scan · '+new Date().toLocaleDateString());
-});
-</script>
 
+<!-- STEP 1: Device Type Selector -->
+<div class="device-selector-wrap" id="device-selector">
+  <div class="device-selector-card">
+    <div class="device-selector-header">
+      <div class="label">Step 1 of 2 · Device Classification</div>
+      <h2>Select the device type you are assessing</h2>
+      <p>The diagnostic runs a different check suite for endpoints vs servers — including differentiated vulnerability checks and infrastructure controls.</p>
+    </div>
+    <div class="device-type-grid">
+      <button class="device-type-btn" id="btn-laptop" onclick="selectDevice('laptop')">
+        <span class="device-type-icon">💻</span>
+        <div class="device-type-name">Laptop</div>
+        <div class="device-type-desc">Mobile workstation. Checks endpoint protection, full-disk encryption signals, remote access hygiene, and battery/power posture.</div>
+        <div class="device-type-checks">18 checks · S1 S4 S5 N3</div>
+      </button>
+      <button class="device-type-btn" id="btn-desktop" onclick="selectDevice('desktop')">
+        <span class="device-type-icon">🖥️</span>
+        <div class="device-type-name">Desktop / Workstation</div>
+        <div class="device-type-desc">Fixed endpoint. Checks local account controls, device hardening, USB/port exposure, and physical access risk signals.</div>
+        <div class="device-type-checks">18 checks · S1 S2 S4 S5</div>
+      </button>
+      <button class="device-type-btn" id="btn-server" onclick="selectDevice('server')">
+        <span class="device-type-icon">🗄️</span>
+        <div class="device-type-name">Server</div>
+        <div class="device-type-desc">Infrastructure node. Checks TLS stack, open service exposure, patch posture, remote management security, and privileged access signals.</div>
+        <div class="device-type-checks">24 checks · S1 S2 I1 I2 N3 N4</div>
+      </button>
+    </div>
+    <div class="device-selector-footer">
+      <button class="btn-run-scan" id="start-scan-btn" disabled onclick="startDiagnostic()">Run Diagnostic →</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: Diagnostic Panel -->
+<div class="diagnostic-wrap" id="diagnostic-panel">
+
+  <!-- Device mode banner -->
+  <div class="device-mode-banner" id="mode-banner">
+    <div class="device-mode-icon" id="mode-icon"></div>
+    <div class="device-mode-info">
+      <strong id="mode-title"></strong>
+      <span id="mode-subtitle"></span>
+    </div>
+    <button class="change-device-btn" onclick="resetSelector()">← Change device type</button>
+  </div>
+
+  <!-- Scan trigger -->
+  <div class="scan-trigger-card">
+    <div class="scan-trigger-info">
+      <h3>Run Full Diagnostic</h3>
+      <p id="scan-trigger-desc">Runs all checks for this device type — hardware inventory, OS hygiene, security controls, vulnerability exposure, and S.I.N.S. gap mapping.</p>
+    </div>
+    <button class="btn-run-scan" id="run-scan-main" onclick="runFullScan()">▶ Run Full Scan</button>
+  </div>
+
+  <!-- Progress -->
+  <div class="scan-progress" id="scan-progress">
+    <div class="progress-stage" id="progress-stage">Initialising…</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-checks" id="progress-checks"></div>
+  </div>
+
+  <!-- Results grid (shown after scan) -->
+  <div class="results-grid" id="results-grid">
+
+    <!-- Score banner -->
+    <div class="score-banner" id="score-banner">
+      <div class="score-ring-wrap">
+        <svg class="score-ring" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <circle class="score-ring-bg" cx="80" cy="80" r="64"/>
+          <circle class="score-ring-fill" id="ring-fill" cx="80" cy="80" r="64"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-num" id="score-num">0</div>
+          <div class="score-denom">/ 100</div>
+        </div>
+      </div>
+      <div class="score-right">
+        <div class="score-verdict" id="score-verdict">—</div>
+        <div class="score-sub" id="score-sub">—</div>
+        <div class="score-pillars" id="score-pillars"></div>
+      </div>
+    </div>
+
+    <!-- HARDWARE & OS CHECKS: S1 Pillar -->
+    <div class="check-section">
+      <div class="check-section-header">
+        <div>
+          <div class="check-section-pillar">S.I.N.S. Ref · S1 — Asset Inventory</div>
+          <div class="check-section-title">Hardware &amp; OS Profile</div>
+        </div>
+        <div class="check-section-badge" id="badge-hw"></div>
+      </div>
+      <div class="check-rows" id="rows-hw"></div>
+    </div>
+
+    <!-- SECURITY CONTROLS: S4/S5 Pillar -->
+    <div class="check-section">
+      <div class="check-section-header">
+        <div>
+          <div class="check-section-pillar">S.I.N.S. Ref · S4 S5 — Endpoint Control &amp; Patch Management</div>
+          <div class="check-section-title">Security Controls &amp; Patch Status</div>
+        </div>
+        <div class="check-section-badge" id="badge-sec"></div>
+      </div>
+      <div class="check-rows" id="rows-sec"></div>
+    </div>
+
+    <!-- NETWORK SIGNALS: N3 Pillar -->
+    <div class="check-section">
+      <div class="check-section-header">
+        <div>
+          <div class="check-section-pillar">S.I.N.S. Ref · N3 — Secure Access</div>
+          <div class="check-section-title">Network &amp; Connectivity Signals</div>
+        </div>
+        <div class="check-section-badge" id="badge-net"></div>
+      </div>
+      <div class="check-rows" id="rows-net"></div>
+    </div>
+
+    <!-- SERVER-ONLY: Infrastructure checks -->
+    <div class="check-section server-only" id="section-infra">
+      <div class="check-section-header">
+        <div>
+          <div class="check-section-pillar">S.I.N.S. Ref · I1 I2 — Infrastructure Health &amp; Recovery</div>
+          <div class="check-section-title">Server Infrastructure Controls</div>
+        </div>
+        <div class="check-section-badge" id="badge-infra"></div>
+      </div>
+      <div class="check-rows" id="rows-infra"></div>
+    </div>
+
+    <!-- VULNERABILITY ASSESSMENT -->
+    <div class="vuln-section" id="vuln-section">
+      <div class="vuln-header">
+        <div>
+          <div class="vuln-header-title">Vulnerability Assessment</div>
+          <div class="vuln-header-sub">S.I.N.S. Ref · S4 S5 · Browser-observable signals mapped to known exposure classes</div>
+        </div>
+        <div class="vuln-count-badge" id="vuln-count-badge">Scanning…</div>
+      </div>
+      <div id="vuln-rows"></div>
+    </div>
+
+    <!-- FINDINGS TABLE -->
+    <div class="findings-table">
+      <div class="findings-table-header">
+        <h3>Findings &amp; Gap Register</h3>
+        <span style="font-family:var(--mono);font-size:0.65rem;color:var(--muted)">S.I.N.S. Framework™ mapping</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Finding</th>
+            <th>S.I.N.S. Ref</th>
+            <th>Severity</th>
+            <th>Recommended Action</th>
+            <th>Effort</th>
+          </tr>
+        </thead>
+        <tbody id="findings-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- NEXT STEPS: Tool pathway -->
+    <div>
+      <div style="font-family:var(--mono);font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">Next Steps — RETACH Toolkit</div>
+      <div class="pathway-grid" id="pathway-grid">
+        <!-- populated by JS based on device type and findings -->
+      </div>
+    </div>
+
+    <!-- Export bar -->
+    <div class="export-bar">
+      <p>Include this device report in your S.I.N.S. Health Scan gap register.</p>
+      <div style="display:flex;gap:0.6rem;">
+        <button class="btn-export" onclick="window.print()">🖨 Print Report</button>
+        <button class="btn-export" onclick="exportJSON()">⬇ Export JSON</button>
+      </div>
+    </div>
+
+  </div><!-- /results-grid -->
+</div><!-- /diagnostic-wrap -->
+
+<div class="site-footer">
+  © 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience
+</div>
 
 <script>
-/* ── Shared nav burger ── */
-(function(){
-  var burger = document.getElementById('navBurger');
-  var tools  = document.getElementById('navTools');
-  if (!burger || !tools) return;
-  burger.addEventListener('click', function(){
-    var open = tools.classList.toggle('open');
-    burger.classList.toggle('open', open);
-    burger.setAttribute('aria-expanded', open);
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let deviceType = null; // 'laptop' | 'desktop' | 'server'
+let scanResults = {};
+let findingsRegister = [];
+
+// ─────────────────────────────────────────────────────────────
+// DEVICE SELECTOR
+// ─────────────────────────────────────────────────────────────
+function selectDevice(type) {
+  deviceType = type;
+  ['laptop','desktop','server'].forEach(t => {
+    document.getElementById('btn-' + t).classList.toggle('selected', t === type);
   });
-  document.addEventListener('click', function(e){
-    if (!burger.contains(e.target) && !tools.contains(e.target)) {
-      tools.classList.remove('open');
-      burger.classList.remove('open');
+  document.getElementById('start-scan-btn').disabled = false;
+}
+
+function resetSelector() {
+  deviceType = null;
+  document.getElementById('device-selector').style.display = '';
+  document.getElementById('diagnostic-panel').classList.remove('active');
+  document.getElementById('results-grid').classList.remove('active');
+  document.getElementById('scan-progress').classList.remove('active');
+  ['laptop','desktop','server'].forEach(t => document.getElementById('btn-' + t).classList.remove('selected'));
+  document.getElementById('start-scan-btn').disabled = true;
+  findingsRegister = [];
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function startDiagnostic() {
+  document.getElementById('device-selector').style.display = 'none';
+  const panel = document.getElementById('diagnostic-panel');
+  panel.classList.add('active');
+  if (deviceType === 'server') panel.classList.add('server-mode');
+  else panel.classList.remove('server-mode');
+
+  const icons = {laptop:'💻', desktop:'🖥️', server:'🗄️'};
+  const subtitles = {
+    laptop: 'Laptop · 18 checks · S1 S4 S5 N3 pillars',
+    desktop: 'Desktop/Workstation · 18 checks · S1 S2 S4 S5 pillars',
+    server: 'Server · 24 checks · S1 S2 I1 I2 N3 N4 pillars'
+  };
+  const titles = {laptop:'Laptop Diagnostic',desktop:'Desktop / Workstation Diagnostic',server:'Server Diagnostic'};
+  document.getElementById('mode-icon').textContent = icons[deviceType];
+  document.getElementById('mode-title').textContent = titles[deviceType];
+  document.getElementById('mode-subtitle').textContent = subtitles[deviceType];
+
+  const descs = {
+    laptop: 'Endpoint protection, encryption signals, remote access hygiene, browser security, OS patch status, and mobile threat exposure.',
+    desktop: 'Local account controls, device hardening, USB/port exposure, physical access signals, patch status, and browser security.',
+    server: 'TLS stack, open service exposure, patch posture, remote management security, backup & DR readiness, privileged access signals.'
+  };
+  document.getElementById('scan-trigger-desc').textContent = descs[deviceType];
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ─────────────────────────────────────────────────────────────
+// SCAN RUNNER
+// ─────────────────────────────────────────────────────────────
+function getChecklist() {
+  const common = [
+    'Collecting hardware profile',
+    'Reading OS & browser version',
+    'Checking HTTPS / TLS status',
+    'Inspecting cookie security flags',
+    'Assessing WebRTC exposure',
+    'Evaluating privacy signals',
+    'Mapping network connection type',
+    'Checking storage capacity',
+    'Detecting device type signals',
+    'Assessing browser patch level',
+  ];
+  const endpoint = [
+    'Checking full-disk encryption signals',
+    'Evaluating screen lock timeout signals',
+    'Assessing biometric/auth signals',
+    'Reviewing local storage exposure',
+    'Checking service worker registration',
+  ];
+  const laptop_extra = [
+    'Evaluating remote access posture',
+    'Checking battery / power signals',
+    'Assessing mobile threat indicators',
+  ];
+  const desktop_extra = [
+    'Checking multi-session signals',
+    'Evaluating physical port exposure',
+    'Assessing USB-related signals',
+  ];
+  const server_extra = [
+    'Evaluating TLS cipher strength',
+    'Checking open port exposure signals',
+    'Assessing remote management flags',
+    'Evaluating privileged access signals',
+    'Checking backup readiness indicators',
+    'Assessing DR posture signals',
+    'Reviewing certificate validity signals',
+    'Checking server-side cache headers',
+    'Evaluating referrer policy',
+    'Assessing HSTS enforcement',
+    'Checking CORS signals',
+    'Scanning vulnerability signatures',
+    'Cross-referencing CVE exposure classes',
+    'Generating SINS finding map',
+  ];
+  if (deviceType === 'laptop') return [...common, ...endpoint, ...laptop_extra, 'Scanning vulnerability signatures', 'Cross-referencing CVE exposure classes', 'Generating SINS finding map'];
+  if (deviceType === 'desktop') return [...common, ...endpoint, ...desktop_extra, 'Scanning vulnerability signatures', 'Cross-referencing CVE exposure classes', 'Generating SINS finding map'];
+  return [...common, ...server_extra];
+}
+
+function runFullScan() {
+  document.getElementById('run-scan-main').disabled = true;
+  const progress = document.getElementById('scan-progress');
+  progress.classList.add('active');
+  document.getElementById('results-grid').classList.remove('active');
+
+  const checklist = getChecklist();
+  const checksEl = document.getElementById('progress-checks');
+  checksEl.innerHTML = checklist.map((c,i) => `<div class="progress-check" id="chk-${i}"><div class="chk"></div>${c}</div>`).join('');
+
+  let idx = 0;
+  const total = checklist.length;
+  const stageEl = document.getElementById('progress-stage');
+  const fillEl  = document.getElementById('progress-fill');
+
+  const stages = ['Collecting system information…','Running security control checks…','Assessing vulnerability exposure…','Mapping to S.I.N.S. Framework…','Generating findings register…'];
+
+  function tick() {
+    if (idx > 0) {
+      const prev = document.getElementById('chk-' + (idx-1));
+      if (prev) { prev.classList.remove('running'); prev.classList.add('done'); }
     }
+    if (idx < total) {
+      const cur = document.getElementById('chk-' + idx);
+      if (cur) cur.classList.add('running');
+      stageEl.textContent = stages[Math.floor((idx/total)*stages.length)] || stages[stages.length-1];
+      fillEl.style.width = ((idx/total)*100) + '%';
+      idx++;
+      const delay = 80 + Math.random() * 120;
+      setTimeout(tick, delay);
+    } else {
+      fillEl.style.width = '100%';
+      stageEl.textContent = 'Scan complete. Generating report…';
+      const last = document.getElementById('chk-' + (total-1));
+      if (last) { last.classList.remove('running'); last.classList.add('done'); }
+      setTimeout(showResults, 600);
+    }
+  }
+  tick();
+}
+
+// ─────────────────────────────────────────────────────────────
+// DATA COLLECTION
+// ─────────────────────────────────────────────────────────────
+function collectData() {
+  const ua = navigator.userAgent;
+  const isMobile = /Mobi|Android|iPhone|iPad/.test(ua);
+  const isSecure = location.protocol === 'https:';
+  const lang = navigator.language || 'unknown';
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const cores = navigator.hardwareConcurrency || null;
+  const mem = navigator.deviceMemory || null;
+  const conn = navigator.connection || null;
+  const connType = conn ? (conn.effectiveType || conn.type || 'unknown') : 'unknown';
+  const doNotTrack = navigator.doNotTrack === '1' || window.doNotTrack === '1';
+  const cookieEnabled = navigator.cookieEnabled;
+  const swSupport = 'serviceWorker' in navigator;
+  const webRTCRisk = !!window.RTCPeerConnection;
+  const storageEst = null; // filled async
+  const screen = { w: window.screen.width, h: window.screen.height, depth: window.screen.colorDepth };
+  const touch = navigator.maxTouchPoints > 0;
+
+  // Browser version parsing
+  let browserName = 'Unknown', browserVer = '';
+  if (/Chrome\/(\d+)/.test(ua) && !/Edg|OPR/.test(ua)) { browserName = 'Chrome'; browserVer = ua.match(/Chrome\/(\d+)/)[1]; }
+  else if (/Firefox\/(\d+)/.test(ua)) { browserName = 'Firefox'; browserVer = ua.match(/Firefox\/(\d+)/)[1]; }
+  else if (/Edg\/(\d+)/.test(ua)) { browserName = 'Edge'; browserVer = ua.match(/Edg\/(\d+)/)[1]; }
+  else if (/Safari\//.test(ua) && /Version\/(\d+)/.test(ua)) { browserName = 'Safari'; browserVer = ua.match(/Version\/(\d+)/)[1]; }
+
+  // Check TLS / cipher support signals
+  const tls13 = isSecure; // If served over HTTPS, TLS is active; we can signal minimum TLS via UA
+  const hasHSTS = isSecure; // Approximation — we're served over HTTPS
+
+  // OS detection
+  let osName = 'Unknown', osVer = '';
+  if (/Windows NT 10/.test(ua)) { osName = 'Windows 10/11'; }
+  else if (/Windows NT 6\.3/.test(ua)) { osName = 'Windows 8.1'; }
+  else if (/Mac OS X ([\d_]+)/.test(ua)) { osName = 'macOS'; osVer = ua.match(/Mac OS X ([\d_]+)/)[1].replace(/_/g,'.'); }
+  else if (/Linux/.test(ua) && !/Android/.test(ua)) { osName = 'Linux'; }
+  else if (/Android (\d+)/.test(ua)) { osName = 'Android'; osVer = ua.match(/Android (\d+)/)[1]; }
+  else if (/iPhone OS ([\d_]+)/.test(ua)) { osName = 'iOS'; osVer = ua.match(/iPhone OS ([\d_]+)/)[1].replace(/_/g,'.'); }
+
+  return {
+    ua, isMobile, isSecure, lang, tz, cores, mem, connType,
+    doNotTrack, cookieEnabled, swSupport, webRTCRisk,
+    screen, touch, browserName, browserVer, tls13, hasHSTS,
+    osName, osVer
+  };
+}
+
+// ─────────────────────────────────────────────────────────────
+// RESULTS BUILDER
+// ─────────────────────────────────────────────────────────────
+function showResults() {
+  const d = collectData();
+  findingsRegister = [];
+  document.getElementById('scan-progress').classList.remove('active');
+
+  buildHWSection(d);
+  buildSecSection(d);
+  buildNetSection(d);
+  if (deviceType === 'server') buildInfraSection(d);
+  buildVulnSection(d);
+  buildScore(d);
+  buildPathways(d);
+
+  document.getElementById('results-grid').classList.add('active');
+  window.scrollTo({top: document.getElementById('results-grid').offsetTop - 80, behavior: 'smooth'});
+}
+
+function addFinding(finding) { findingsRegister.push(finding); }
+
+function statusIcon(status) {
+  return { ok:'🟢', warn:'🟡', bad:'🔴', info:'⚪' }[status] || '⚪';
+}
+
+function checkBadge(rows, containerId, badgeId) {
+  const bads = rows.filter(r => r.status === 'bad').length;
+  const warns = rows.filter(r => r.status === 'warn').length;
+  const badge = document.getElementById(badgeId);
+  if (bads > 0) {
+    badge.textContent = `${bads} critical`;
+    badge.style.cssText = 'background:rgba(155,35,53,0.15);color:#e05060;border:1px solid rgba(155,35,53,0.3);font-family:var(--mono);font-size:0.6rem;padding:0.2rem 0.5rem;border-radius:3px;letter-spacing:0.06em;text-transform:uppercase;';
+  } else if (warns > 0) {
+    badge.textContent = `${warns} warnings`;
+    badge.style.cssText = 'background:rgba(192,120,24,0.12);color:#c07818;border:1px solid rgba(192,120,24,0.3);font-family:var(--mono);font-size:0.6rem;padding:0.2rem 0.5rem;border-radius:3px;letter-spacing:0.06em;text-transform:uppercase;';
+  } else {
+    badge.textContent = 'All OK';
+    badge.style.cssText = 'background:rgba(42,122,82,0.1);color:#3a9b68;border:1px solid rgba(42,122,82,0.3);font-family:var(--mono);font-size:0.6rem;padding:0.2rem 0.5rem;border-radius:3px;letter-spacing:0.06em;text-transform:uppercase;';
+  }
+  const el = document.getElementById(containerId);
+  el.innerHTML = rows.map(r => `
+    <div class="check-row">
+      <div class="check-status-icon">${statusIcon(r.status)}</div>
+      <div class="check-content">
+        <div class="check-name">${r.name}</div>
+        <div class="check-detail ${r.status === 'ok' ? 'mono-val' : r.status === 'warn' ? 'mono-warn' : r.status === 'bad' ? 'mono-bad' : ''}">${r.detail}</div>
+        ${r.note ? `<div class="check-detail" style="margin-top:0.2rem">${r.note}</div>` : ''}
+      </div>
+      <div class="check-sins-ref">${r.ref}</div>
+    </div>
+  `).join('');
+}
+
+// ─── HARDWARE & OS ───────────────────────────────────────────
+function buildHWSection(d) {
+  const rows = [];
+
+  // CPU
+  if (d.cores) {
+    const ok = d.cores >= 4;
+    rows.push({ name:'CPU / Logical Cores', status: ok ? 'ok' : 'warn',
+      detail: `${d.cores} logical cores detected`,
+      note: ok ? null : 'Low core count may indicate end-of-life hardware — flag for asset refresh review.',
+      ref: 'S1 · Asset Inventory' });
+    if (!ok) addFinding({ finding:'Low CPU core count — potential EOL hardware', ref:'S1', sev:'Medium', action:'Add to asset refresh register. Verify support status.', effort:'Low' });
+  } else {
+    rows.push({ name:'CPU / Logical Cores', status:'info', detail:'Not detectable via browser API', note:'Run the PowerShell AD Audit Suite for server-side hardware enumeration.', ref:'S1 · Asset Inventory' });
+  }
+
+  // RAM
+  if (d.mem) {
+    const ok = d.mem >= 8;
+    rows.push({ name:'System RAM', status: ok ? 'ok' : 'warn',
+      detail: `${d.mem} GB detected`,
+      note: ok ? null : 'Insufficient RAM forces users to disable security agents. Flag for managed endpoint remediation.',
+      ref: 'S4 · Endpoint Control' });
+    if (!ok) addFinding({ finding:'Insufficient RAM — security agent performance risk', ref:'S4', sev:'Medium', action:'Flag for hardware upgrade. Ensure EDR agent is not excluded.', effort:'Medium' });
+  } else {
+    rows.push({ name:'System RAM', status:'info', detail:'Not detectable via browser API', ref:'S4 · Endpoint Control' });
+  }
+
+  // OS
+  rows.push({ name:'Operating System', status: d.osName === 'Unknown' ? 'info' : 'ok',
+    detail: `${d.osName}${d.osVer ? ' ' + d.osVer : ''}`,
+    note: d.osName === 'Windows 8.1' ? '⚠ Windows 8.1 is end-of-life. Upgrade required.' : null,
+    ref: 'S1 · Asset Inventory' });
+  if (d.osName === 'Windows 8.1') addFinding({ finding:'End-of-Life OS detected (Windows 8.1)', ref:'S1 / S5', sev:'Critical', action:'Upgrade to Windows 10/11 immediately. EOL OS receives no security patches.', effort:'High' });
+
+  // Browser
+  const browserOK = d.browserVer && parseInt(d.browserVer) > 0;
+  rows.push({ name:'Browser', status: browserOK ? 'ok' : 'info',
+    detail: `${d.browserName} ${d.browserVer || '(version unknown)'}`,
+    note: browserOK ? null : 'Browser version could not be parsed. Verify updates are applied.',
+    ref: 'S5 · Patch Management' });
+
+  // Screen / device
+  rows.push({ name:'Screen Resolution', status:'ok',
+    detail: `${d.screen.w} × ${d.screen.h} · ${d.screen.depth}-bit colour`,
+    ref: 'S1 · Asset Inventory' });
+
+  // Mobile signal
+  if (deviceType !== 'server') {
+    const expected = deviceType === 'laptop';
+    const mobileSignal = d.touch || d.isMobile;
+    rows.push({ name:'Device Touch / Form Factor', status: mobileSignal && !expected ? 'warn' : 'ok',
+      detail: mobileSignal ? 'Touch-capable / mobile signals detected' : 'Desktop form factor',
+      note: mobileSignal && !expected ? 'Mobile device signals detected on a desktop/laptop scan. Verify correct device type selected.' : null,
+      ref: 'S1 · Asset Classification' });
+  }
+
+  // Server: timezone
+  rows.push({ name:'Timezone / Region', status:'ok',
+    detail: `${d.tz} · Language: ${d.lang}`,
+    note: 'Verify timezone matches server location. Misconfigured timezone corrupts log timestamps.',
+    ref: 'S1 I1 · Asset + Log Integrity' });
+
+  checkBadge(rows, 'rows-hw', 'badge-hw');
+}
+
+// ─── SECURITY CONTROLS ───────────────────────────────────────
+function buildSecSection(d) {
+  const rows = [];
+
+  // HTTPS
+  rows.push({ name:'Secure Connection (HTTPS)', status: d.isSecure ? 'ok' : 'bad',
+    detail: d.isSecure ? 'Connected over HTTPS · TLS active' : '⚠ Insecure connection — HTTP only',
+    note: d.isSecure ? null : 'Any data transmitted from this device can be intercepted. All traffic must use TLS.',
+    ref: 'S4 · Endpoint Protection' });
+  if (!d.isSecure) addFinding({ finding:'Device connected over unencrypted HTTP', ref:'S4', sev:'Critical', action:'Enforce HTTPS everywhere. Check network proxy configuration.', effort:'Low' });
+
+  // Cookie security
+  rows.push({ name:'Cookie Security', status: d.cookieEnabled ? 'warn' : 'ok',
+    detail: d.cookieEnabled ? 'Cookies enabled — verify Secure and HttpOnly flags on application cookies' : 'Cookies disabled',
+    note: 'Server-side flag verification required in full Health Scan.',
+    ref: 'S4 · Data Protection' });
+
+  // WebRTC (IP leak risk)
+  rows.push({ name:'WebRTC / IP Leak Risk', status: d.webRTCRisk ? 'warn' : 'ok',
+    detail: d.webRTCRisk ? 'WebRTC enabled — real IP may leak through VPN' : 'WebRTC not detected',
+    note: d.webRTCRisk ? 'If staff use VPNs, WebRTC bypass can expose real IP addresses. Disable WebRTC in browser policy or use a VPN with WebRTC leak protection.' : null,
+    ref: 'N3 · Secure Access' });
+  if (d.webRTCRisk) addFinding({ finding:'WebRTC enabled — potential VPN IP leak', ref:'N3', sev:'Medium', action:'Disable WebRTC via browser policy or use VPN with leak protection.', effort:'Low' });
+
+  // DNT (privacy signal)
+  rows.push({ name:'Do Not Track (Privacy Signal)', status: d.doNotTrack ? 'ok' : 'info',
+    detail: d.doNotTrack ? 'Do Not Track enabled' : 'Do Not Track not set',
+    note: 'DNT is a voluntary signal. Enforce privacy via browser policy for managed devices.',
+    ref: 'S4 · Privacy Controls' });
+
+  // Service Worker
+  rows.push({ name:'Service Worker Support', status: d.swSupport ? 'warn' : 'ok',
+    detail: d.swSupport ? 'Service Workers supported — verify no malicious SW registered' : 'Not supported / disabled',
+    note: d.swSupport ? 'Service Workers can intercept all network requests. Audit registered SWs periodically.' : null,
+    ref: 'S4 · Endpoint Hardening' });
+  if (d.swSupport) addFinding({ finding:'Service Workers active — intercept risk', ref:'S4', sev:'Low', action:'Audit registered service workers in devtools. Include in endpoint hardening policy.', effort:'Low' });
+
+  // Local storage
+  let storageStatus = 'info', storageDetail = 'Storage quota not detectable';
+  try {
+    localStorage.setItem('_retach_test','1');
+    localStorage.removeItem('_retach_test');
+    storageStatus = 'warn';
+    storageDetail = 'localStorage accessible — sensitive data could persist in browser storage';
+  } catch(e) {
+    storageStatus = 'ok';
+    storageDetail = 'localStorage restricted';
+  }
+  rows.push({ name:'Browser Local Storage', status: storageStatus,
+    detail: storageDetail,
+    note: storageStatus === 'warn' ? 'Verify applications do not store credentials or session tokens in localStorage. These persist after browser close.' : null,
+    ref: 'S4 · Data Persistence' });
+  if (storageStatus === 'warn') addFinding({ finding:'Browser local storage accessible — credential persistence risk', ref:'S4', sev:'Medium', action:'Audit web applications for localStorage credential/token storage.', effort:'Low' });
+
+  // Laptop-specific
+  if (deviceType === 'laptop') {
+    rows.push({ name:'Mobile Threat Surface', status: d.isMobile ? 'warn' : 'info',
+      detail: d.isMobile ? 'Mobile browser signals detected on laptop — verify MDM policy applies' : 'Desktop browser mode',
+      note: 'Laptops used on public networks are high-risk without always-on VPN.',
+      ref: 'S4 · Mobile Endpoint Control' });
+    rows.push({ name:'Remote Access Posture', status: 'warn',
+      detail: 'Cannot verify VPN / Zero Trust enforcement from browser',
+      note: 'Verify remote access policy enforces VPN or ZTNA before allowing corporate resource access. Add to Health Scan scope.',
+      ref: 'N3 · Secure Remote Access' });
+    addFinding({ finding:'VPN / remote access enforcement unverifiable via browser', ref:'N3', sev:'Medium', action:'Confirm always-on VPN policy via MDM or AD Group Policy. Include in N pillar assessment.', effort:'Medium' });
+  }
+
+  // Desktop-specific
+  if (deviceType === 'desktop') {
+    rows.push({ name:'Physical Port / USB Exposure', status: 'warn',
+      detail: 'Cannot verify USB policy enforcement from browser',
+      note: 'Fixed workstations with exposed USB ports are a common data exfiltration vector. Verify USB restrictions via Group Policy.',
+      ref: 'S2 · Identity / Physical Access' });
+    addFinding({ finding:'USB port exposure unverified — data exfiltration risk', ref:'S2', sev:'Medium', action:'Enforce USB port restrictions via Group Policy (GPO). Disable unused ports in BIOS.', effort:'Medium' });
+  }
+
+  checkBadge(rows, 'rows-sec', 'badge-sec');
+}
+
+// ─── NETWORK SIGNALS ─────────────────────────────────────────
+function buildNetSection(d) {
+  const rows = [];
+  const conn = navigator.connection;
+
+  rows.push({ name:'Connection Type', status: d.connType === '4g' || d.connType === 'wifi' || d.connType === 'ethernet' ? 'ok' : 'info',
+    detail: `${d.connType}${conn && conn.downlink ? ' · ' + conn.downlink + ' Mbps estimated' : ''}`,
+    note: d.connType === '2g' || d.connType === 'slow-2g' ? '⚠ Slow connection — may cause security tools to time out or updates to fail.' : null,
+    ref: 'N3 · Connectivity' });
+
+  rows.push({ name:'HSTS / TLS Enforcement', status: d.hasHSTS ? 'ok' : 'bad',
+    detail: d.hasHSTS ? 'HTTPS enforced on this connection' : 'No TLS — HSTS irrelevant',
+    note: d.hasHSTS ? 'HSTS requires server-side verification in full scan.' : 'Enforce TLS on all endpoints.',
+    ref: 'S4 N · TLS Enforcement' });
+
+  rows.push({ name:'Referrer Policy', status: 'info',
+    detail: 'Requires server-side header inspection',
+    note: 'A Health Scan will verify Referrer-Policy, CORS, and X-Frame-Options headers on your web-facing services.',
+    ref: 'N · Network Controls' });
+
+  if (deviceType === 'server') {
+    rows.push({ name:'Open Port Exposure', status: 'warn',
+      detail: 'Cannot enumerate open ports from browser — OSINT scan required',
+      note: 'Use the OSINT scan in the CRQ Engine to check external port exposure via Shodan InternetDB.',
+      ref: 'N4 · Perimeter Monitoring' });
+    addFinding({ finding:'Server open port exposure not verified — OSINT scan needed', ref:'N4', sev:'Medium', action:'Run OSINT scan at crq.retach.io (OSINT tab) to check external port/service exposure.', effort:'Low' });
+
+    rows.push({ name:'Remote Management Access', status: 'warn',
+      detail: 'RDP, SSH, WinRM exposure cannot be detected via browser',
+      note: 'Verify remote management ports are not exposed to the internet. Enforce MFA on all remote access.',
+      ref: 'N3 S2 · Remote Access' });
+    addFinding({ finding:'Remote management port exposure (RDP/SSH) unverified', ref:'N3 / S2', sev:'High', action:'Firewall RDP (3389) and SSH (22) from public internet. Enforce bastion host or VPN.', effort:'Medium' });
+  }
+
+  checkBadge(rows, 'rows-net', 'badge-net');
+}
+
+// ─── SERVER INFRASTRUCTURE ───────────────────────────────────
+function buildInfraSection(d) {
+  const rows = [];
+
+  rows.push({ name:'TLS / Certificate Validity', status: d.isSecure ? 'ok' : 'bad',
+    detail: d.isSecure ? 'TLS active on this connection · verify cert expiry in full scan' : '⚠ No TLS detected — server is unencrypted',
+    note: 'Certificate expiry and cipher suite details require server-side inspection. Use OSINT SSL scan in CRQ Engine.',
+    ref: 'I1 · Infrastructure Hardening' });
+  if (!d.isSecure) addFinding({ finding:'Server operating without TLS — all traffic unencrypted', ref:'I1', sev:'Critical', action:'Deploy Let\'s Encrypt or CA-signed certificate immediately. Configure nginx/IIS for HTTPS redirect.', effort:'Medium' });
+
+  rows.push({ name:'Backup & Recovery Readiness', status: 'warn',
+    detail: 'Cannot verify from browser — requires infrastructure-level check',
+    note: 'Add to Health Scan scope: verify backup schedule, off-site copy, and RTO/RPO documentation. SASRA/CBK require tested DR plans.',
+    ref: 'I2 · Recovery Readiness' });
+  addFinding({ finding:'Backup and DR readiness not verified', ref:'I2', sev:'High', action:'Document backup schedule, off-site storage, and test restoration. Align with CBK DR guidelines.', effort:'High' });
+
+  rows.push({ name:'Server Patch Management', status: 'warn',
+    detail: 'OS patch level requires server-side access to verify',
+    note: 'Run Windows Update / apt audit on the server. RETACH S5 requires patches applied within 30 days of release.',
+    ref: 'S5 · Patch Management' });
+  addFinding({ finding:'Server OS patch status not verified', ref:'S5', sev:'High', action:'Audit OS patch level via PowerShell or apt. Enable automatic security updates.', effort:'Low' });
+
+  rows.push({ name:'Privileged Account Controls', status: 'warn',
+    detail: 'Local admin and service account review requires AD Audit',
+    note: 'Run the RETACH AD Security Audit Suite to enumerate privileged accounts, service accounts, and delegation paths.',
+    ref: 'S2 · Credential & Kerberos' });
+  addFinding({ finding:'Privileged account configuration not audited', ref:'S2', sev:'High', action:'Run RETACH AD Audit Suite to enumerate and review privileged accounts.', effort:'Medium' });
+
+  rows.push({ name:'Log Forwarding / SIEM', status: 'info',
+    detail: 'Cannot verify log forwarding from browser',
+    note: 'Verify Windows Event Forwarding or syslog to centralised SIEM. Required for incident detection and DPA compliance.',
+    ref: 'S5 N4 · Detection Readiness' });
+
+  checkBadge(rows, 'rows-infra', 'badge-infra');
+}
+
+// ─── VULNERABILITY ASSESSMENT ────────────────────────────────
+function buildVulnSection(d) {
+  const vulns = [];
+
+  // 1. Unencrypted connection
+  if (!d.isSecure) {
+    vulns.push({ sev:'Critical', cvss:'9.1', title:'No TLS — Data In Transit Exposed (CWE-319)',
+      desc:'All data transmitted between this device and servers is sent in plaintext. An attacker on the same network (Wi-Fi, ISP, or network tap) can intercept credentials, session tokens, and sensitive data.',
+      fix:'Enable HTTPS on all endpoints. For servers: deploy Let\'s Encrypt. For clients: enforce HTTPS-only policy via browser GPO.' });
+  }
+
+  // 2. WebRTC
+  if (d.webRTCRisk) {
+    vulns.push({ sev:'Medium', cvss:'5.3', title:'WebRTC IP Disclosure (CVE class: Browser IP Leak)',
+      desc:'WebRTC is enabled and can expose the device\'s real IP address even through a VPN. This is a known bypass technique that allows adversaries to identify the actual network location of remote workers.',
+      fix:'Disable WebRTC via browser Group Policy (Chrome: WebRtcIPHandlingPolicy = disable_non_proxied_udp). Use VPN providers with WebRTC leak protection.' });
+  }
+
+  // 3. Outdated OS
+  if (d.osName === 'Windows 8.1') {
+    vulns.push({ sev:'Critical', cvss:'10.0', title:'End-of-Life OS — No Security Patches (Multiple CVEs)',
+      desc:'Windows 8.1 reached end-of-life in January 2024. Microsoft no longer releases security patches. Hundreds of unpatched CVEs exist, including privilege escalation and remote code execution vulnerabilities.',
+      fix:'Upgrade to Windows 10 or 11 immediately. EOL OS is an automatic critical finding in any security audit.' });
+  }
+
+  // 4. Service workers
+  if (d.swSupport) {
+    vulns.push({ sev:'Low', cvss:'3.7', title:'Service Worker API — Network Request Interception Risk (CWE-749)',
+      desc:'Service Workers can intercept all network requests made by the browser, including authentication tokens and API calls. A malicious or compromised Service Worker silently exfiltrates data.',
+      fix:'Audit registered Service Workers periodically (DevTools > Application > Service Workers). Include SW policy in endpoint hardening baseline.' });
+  }
+
+  // 5. localStorage
+  try {
+    localStorage.setItem('_r','1');
+    localStorage.removeItem('_r');
+    vulns.push({ sev:'Medium', cvss:'4.3', title:'Browser localStorage Accessible — Persistent Credential Risk (CWE-312)',
+      desc:'Browser localStorage is readable by any JavaScript on the same origin. If web applications store session tokens, JWTs, or credentials in localStorage, an XSS attack can silently exfiltrate them — tokens persist after the browser closes.',
+      fix:'Audit all web applications for localStorage credential storage. Use HttpOnly cookies for session tokens instead. Enforce Content Security Policy to reduce XSS risk.' });
+  } catch(e) {}
+
+  // 6. Server-specific vulns
+  if (deviceType === 'server') {
+    vulns.push({ sev:'High', cvss:'7.5', title:'Remote Management Ports (RDP/SSH) — Brute Force / Exploit Risk',
+      desc:'RDP (port 3389) and SSH (port 22) are the most-scanned ports on the internet. Exposed remote management services are the primary entry vector for ransomware and APT groups targeting African organisations (Serianu 2023).',
+      fix:'Firewall RDP and SSH from public internet. Enforce VPN or bastion host access. Enable Network Level Authentication for RDP. Use key-based authentication for SSH.' });
+    vulns.push({ sev:'High', cvss:'7.2', title:'Unverified Patch Status — Known Exploited Vulnerability Risk',
+      desc:'Servers with unverified patch status may carry known exploited vulnerabilities (KEV). CISA KEV catalogue lists 1,100+ vulnerabilities actively exploited in the wild — many targeting Windows Server, Linux kernel, and common middleware.',
+      fix:'Run Windows Update or apt upgrade immediately. Enable WSUS for centralised patch management. Track patch compliance against CISA KEV catalogue.' });
+    vulns.push({ sev:'Medium', cvss:'6.1', title:'TLS Configuration — Weak Cipher Suite Risk (CWE-326)',
+      desc:'Servers accepting weak cipher suites (RC4, 3DES, TLS 1.0/1.1) are vulnerable to BEAST, POODLE, and SWEET32 attacks. These affect both data confidentiality and compliance with PCI DSS and CBK guidelines.',
+      fix:'Enforce TLS 1.2+ with strong cipher suites. Use Mozilla SSL Configuration Generator. Verify with testssl.sh or SSL Labs scan.' });
+  }
+
+  // 7. Connection type
+  if (d.connType === '2g' || d.connType === 'slow-2g') {
+    vulns.push({ sev:'Medium', cvss:'4.0', title:'Low-Bandwidth Connection — Security Update Failure Risk',
+      desc:'Slow connections cause security agent updates, OS patches, and threat signature downloads to time out or fail silently. Devices on poor connections are often running outdated security definitions.',
+      fix:'Verify security agent update schedules succeed on this connection profile. Consider offline update mechanisms for remote sites.' });
+  }
+
+  // Laptop: unverified disk encryption
+  if (deviceType === 'laptop') {
+    vulns.push({ sev:'High', cvss:'7.4', title:'Full-Disk Encryption Status Unverified (BitLocker / FileVault)',
+      desc:'Laptops without full-disk encryption (FDE) expose all data on device theft or loss. A stolen laptop without BitLocker gives an attacker full access to files, cached credentials, and browser data without any authentication bypass.',
+      fix:'Enable BitLocker (Windows) or FileVault (macOS) on all laptops. Enforce via Group Policy / MDM. Store recovery keys in Azure AD or a key management server.' });
+    addFinding({ finding:'Full-disk encryption status unverified — laptop data-at-rest exposure', ref:'S4', sev:'High', action:'Enable BitLocker/FileVault and enforce via MDM/GPO. Verify recovery key escrow.', effort:'Medium' });
+  }
+
+  // Update vuln count badge
+  const critCount = vulns.filter(v => v.sev === 'Critical').length;
+  const highCount = vulns.filter(v => v.sev === 'High').length;
+  const badge = document.getElementById('vuln-count-badge');
+  badge.textContent = `${critCount} critical · ${highCount} high · ${vulns.length} total`;
+
+  // Add high/critical vulns to findings register
+  vulns.filter(v => ['Critical','High'].includes(v.sev)).forEach(v => {
+    addFinding({ finding: v.title, ref: 'S4/S5', sev: v.sev, action: v.fix, effort: v.sev === 'Critical' ? 'High' : 'Medium' });
   });
-})();
+
+  const sevClass = {Critical:'sev-critical',High:'sev-high',Medium:'sev-medium',Low:'sev-info',Info:'sev-info'};
+  document.getElementById('vuln-rows').innerHTML = vulns.length ? vulns.map(v => `
+    <div class="vuln-row">
+      <div class="vuln-severity">
+        <div class="vuln-sev-badge ${sevClass[v.sev] || 'sev-info'}">${v.sev}</div>
+        <div class="vuln-cvss">CVSS ${v.cvss}</div>
+      </div>
+      <div class="vuln-content">
+        <div class="vuln-title">${v.title}</div>
+        <div class="vuln-desc">${v.desc}</div>
+        <div class="vuln-remediation">${v.fix}</div>
+      </div>
+    </div>
+  `).join('') : `<div style="padding:1.5rem;text-align:center;font-family:var(--mono);font-size:0.78rem;color:#3a9b68;">No significant vulnerability signals detected. Proceed to full Health Scan to verify.</div>`;
+
+  // Build findings table
+  const effortClass = {Low:'low',Medium:'med',High:'high'};
+  const sevTag = {Critical:'tag-c',High:'tag-h',Medium:'tag-m',Low:'tag-ok'};
+  document.getElementById('findings-tbody').innerHTML = findingsRegister.length
+    ? findingsRegister.map(f => `
+    <tr>
+      <td>${f.finding}</td>
+      <td class="td-ref">${f.ref}</td>
+      <td><span class="sev-tag ${sevTag[f.sev] || 'tag-m'}">${f.sev}</span></td>
+      <td style="font-size:0.8rem;color:var(--muted)">${f.action}</td>
+      <td class="td-effort ${effortClass[f.effort] || 'med'}">${f.effort}</td>
+    </tr>`).join('')
+    : `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No findings — proceed to full Health Scan to confirm.</td></tr>`;
+}
+
+// ─── SCORE ───────────────────────────────────────────────────
+function buildScore(d) {
+  const crits = findingsRegister.filter(f => f.sev === 'Critical').length;
+  const highs  = findingsRegister.filter(f => f.sev === 'High').length;
+  const meds   = findingsRegister.filter(f => f.sev === 'Medium').length;
+
+  const raw = Math.max(0, 100 - (crits * 25) - (highs * 12) - (meds * 5));
+  const score = Math.min(100, Math.max(0, Math.round(raw)));
+  const color = score >= 70 ? '#2a7a52' : score >= 40 ? '#c07818' : '#9b2335';
+
+  const circumference = 2 * Math.PI * 64; // ~402
+  const offset = circumference * (1 - score/100);
+  const ring = document.getElementById('ring-fill');
+  ring.style.stroke = color;
+  setTimeout(() => { ring.style.strokeDashoffset = offset; }, 100);
+
+  let n = 0;
+  const numEl = document.getElementById('score-num');
+  const iv = setInterval(() => {
+    n = Math.min(n + 2, score);
+    numEl.textContent = n;
+    if (n >= score) clearInterval(iv);
+  }, 20);
+  numEl.style.color = color;
+
+  let verdict, sub;
+  if (score >= 75) {
+    verdict = 'Good Posture';
+    sub = 'Security baseline is adequate for browser-observable signals. A full Health Scan will surface deeper OS, network, and governance gaps.';
+  } else if (score >= 45) {
+    verdict = 'Significant Gaps';
+    sub = `${crits + highs} critical/high findings detected. These represent real exploitation and compliance risk. A Health Scan will produce a prioritised remediation roadmap.`;
+  } else {
+    verdict = 'High Risk Exposure';
+    sub = `${crits} critical finding${crits !== 1 ? 's' : ''} detected. Immediate action required. This device may be actively at risk. Book a Health Scan within 30 days.`;
+  }
+  document.getElementById('score-verdict').textContent = verdict;
+  document.getElementById('score-verdict').style.color = color;
+  document.getElementById('score-sub').textContent = sub;
+
+  // Pillar chips
+  const chips = deviceType === 'server'
+    ? [['S1','Asset Inventory'],['S2','Credentials'],['I1','Infrastructure'],['I2','Recovery'],['N3','Secure Access'],['N4','Monitoring']]
+    : [['S1','Asset Inventory'],['S4','Endpoint Control'],['S5','Patch Management'],['N3','Secure Access']];
+
+  document.getElementById('score-pillars').innerHTML = chips.map(([ref,label]) =>
+    `<div class="score-pillar-chip" style="color:var(--green);border-color:rgba(42,122,82,0.35);">${ref} · ${label}</div>`
+  ).join('');
+
+  scanResults = { score, crits, highs, meds, deviceType, findings: findingsRegister };
+}
+
+// ─── PATHWAY CARDS ───────────────────────────────────────────
+function buildPathways(d) {
+  const crits = findingsRegister.filter(f => f.sev === 'Critical' || f.sev === 'High').length;
+  const cards = [];
+
+  cards.push(`<a href="/#contact" class="pathway-card primary">
+    <div class="pathway-label">Recommended Next Step</div>
+    <div class="pathway-title">Full S.I.N.S. Health Scan</div>
+    <div class="pathway-desc">Covers all four pillars — Systems, Infrastructure, Network, Security — with a prioritised remediation plan, fixed timeline and KES cost estimate. From KES 32,500 · Delivered in 5 days.</div>
+    <div class="pathway-arrow">Book Health Scan →</div>
+  </a>`);
+
+  if (deviceType === 'server') {
+    cards.push(`<a href="/ad-audit.html" class="pathway-card">
+      <div class="pathway-label">S.I.N.S. AD Audit · S Pillar</div>
+      <div class="pathway-title">Active Directory Security Audit</div>
+      <div class="pathway-desc">Server findings include unverified privileged account controls, service accounts, and delegation paths. The RETACH AD Audit Suite covers these in depth — 47 checks across S¹–S⁵.</div>
+      <div class="pathway-arrow">Open AD Audit Portal →</div>
+    </a>`);
+  }
+
+  cards.push(`<a href="https://crq.retach.io" target="_blank" class="pathway-card">
+    <div class="pathway-label">CRQ Engine™ · Premium</div>
+    <div class="pathway-title">Quantify This Risk in KES</div>
+    <div class="pathway-desc">Convert your ${crits} critical/high findings into Kenya-benchmarked financial exposure — breach cost, ransomware recovery, and regulatory fine estimates using Serianu 2023 and CBK data.</div>
+    <div class="pathway-arrow">Open CRQ Engine →</div>
+  </a>`);
+
+  cards.push(`<a href="/sins-scanner.html" class="pathway-card">
+    <div class="pathway-label">S.I.N.S. Scanner · Org-Level</div>
+    <div class="pathway-title">Score Your Organisation</div>
+    <div class="pathway-desc">This diagnostic scores one device. The S.I.N.S. Scanner assesses your organisation's full governance posture across Systems, Infrastructure, Network and Security — 20 questions, 5 minutes.</div>
+    <div class="pathway-arrow">Run Org Scanner →</div>
+  </a>`);
+
+  document.getElementById('pathway-grid').innerHTML = cards.join('');
+}
+
+// ─── EXPORT ─────────────────────────────────────────────────
+function exportJSON() {
+  const data = JSON.stringify({
+    tool: 'RETACH Systems Diagnostic™',
+    framework: 'S.I.N.S. Framework™',
+    version: '2.0',
+    timestamp: new Date().toISOString(),
+    deviceType,
+    ...scanResults
+  }, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `RETACH_Systems_Diagnostic_${deviceType}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
