@@ -641,6 +641,7 @@ const SECT_LABELS={
 
 /* ── Ransomware intel state ── */
 let rwLoaded=false;
+let rwLoadedRegion='';
 
 function getCRQRegion(){
   // Read from the region toggle if it exists (crq-engine region selector)
@@ -654,7 +655,7 @@ function getCurrentSector(){
 }
 
 async function loadRWIntel(){
-  if(rwLoaded)return; // only fetch once per session
+  if(rwLoaded&&rwLoadedRegion===getCRQRegion())return;
   const wrap=document.getElementById('rw-intel');
   const loading=document.getElementById('rw-loading');
   const region=getCRQRegion();
@@ -669,27 +670,24 @@ async function loadRWIntel(){
       // Use recent victims feed, filter by sector keyword
       const r=await fetch(API+'/api/osint/ransomware/region/global',{signal:AbortSignal.timeout(12000)});
       const data=await r.json();
-      victims=(data||[]).filter(v=>{
-        const desc=(v.description||v.sector||'').toLowerCase();
+      victims=(data.victims||[]).filter(v=>{
+        const desc=(v.description||v.activity||'').toLowerCase();
         return!sectorLabel||desc.includes(sectorLabel)||desc.includes('financial')||desc.includes('bank');
       }).slice(0,15);
     } else {
       // Fetch each country and merge
-      const fetches=countries.map(c=>
-        fetch(API+'/api/osint/ransomware/region/'+region,{signal:AbortSignal.timeout(12000)})
-          .then(r=>r.json()).catch(()=>[])
-      );
-      const results=await Promise.all(fetches);
-      victims=results.flat();
+      const r=await fetch(API+'/api/osint/ransomware/region/'+region+(sectorLabel?'?sector='+sectorLabel:''),{signal:AbortSignal.timeout(12000)});
+      const data=await r.json();
+      victims=(data.victims||[]);
     }
 
     // Sort by date descending
-    victims.sort((a,b)=>new Date(b.published||b.date||0)-new Date(a.published||a.date||0));
+    victims.sort((a,b)=>new Date(b.attackdate||b.published||b.date||0)-new Date(a.attackdate||a.published||a.date||0));
 
     // Count by sector for stats
     const total=victims.length;
     const last90=victims.filter(v=>{
-      const d=new Date(v.published||v.date||0);
+      const d=new Date(v.attackdate||v.published||v.date||0);
       return(Date.now()-d.getTime())<90*86400000;
     });
     const groups=[...new Set(victims.slice(0,20).map(v=>v.group||v.threat_actor||'Unknown'))];
@@ -740,7 +738,7 @@ async function loadRWIntel(){
         ${showList.map(v=>{
           const name=v.victim||v.name||'Undisclosed';
           const grp=v.group||v.threat_actor||'Unknown';
-          const date=v.published||v.date||'';
+          const date=v.attackdate||v.published||v.date||'';
           const dateStr=date?new Date(date).toLocaleDateString('en-KE',{month:'short',year:'numeric'}):'';
           return`<div class="rw-victim-row">
             <div class="rw-vname">${name}</div>
@@ -764,6 +762,7 @@ async function loadRWIntel(){
     wrap.style.display='block';
     loading.style.display='none';
     rwLoaded=true;
+    rwLoadedRegion=region;
 
   }catch(err){
     loading.innerHTML=`<div style="padding:.75rem;background:rgba(192,120,24,.06);border:1px solid rgba(192,120,24,.2);border-radius:6px;font-size:.7rem;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Threat intel temporarily unavailable.</strong><br>ransomware.live API may be unreachable. RETACH runs a manual threat intel sweep in every paid assessment regardless of API availability.</div>`;
