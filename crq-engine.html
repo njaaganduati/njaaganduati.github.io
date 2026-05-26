@@ -667,7 +667,7 @@ async function loadRWIntel(){
 
     if(region==='global'){
       // Use recent victims feed, filter by sector keyword
-      const r=await fetch('https://api.ransomware.live/v2/recentvictims',{signal:AbortSignal.timeout(8000)});
+      const r=await fetch(API+'/api/osint/ransomware/region/global',{signal:AbortSignal.timeout(12000)});
       const data=await r.json();
       victims=(data||[]).filter(v=>{
         const desc=(v.description||v.sector||'').toLowerCase();
@@ -676,7 +676,7 @@ async function loadRWIntel(){
     } else {
       // Fetch each country and merge
       const fetches=countries.map(c=>
-        fetch(`https://api.ransomware.live/v2/victims/country/${c}`,{signal:AbortSignal.timeout(8000)})
+        fetch(API+'/api/osint/ransomware/region/'+region,{signal:AbortSignal.timeout(12000)})
           .then(r=>r.json()).catch(()=>[])
       );
       const results=await Promise.all(fetches);
