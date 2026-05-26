@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>S.I.N.S. AD Audit — Alpha Investors SACCO Ltd — Sample Report | RETACH Digital</title>
-<meta name="description" content="Sample S.I.N.S. Framework™ Active Directory Security Audit report. RETACH Digital Ltd — see what a real engagement deliverable looks like.">
+<title>Before &amp; After — Free Scanner vs Paid Assessment | RETACH Digital</title>
+<meta name="description" content="See exactly what the free S.I.N.S. Scanner gives you — and what a paid RETACH assessment delivers. Side-by-side comparison with sample AD Audit report.">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,41 +23,380 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 5rem}
 a{color:var(--gl);text-decoration:none}
-
-/* ── SAMPLE BANNER ────────────────────────────────────────── */
-.sample-banner{
-  background:linear-gradient(90deg,rgba(192,120,24,0.15),rgba(192,120,24,0.08));
-  border-bottom:1px solid rgba(192,120,24,0.35);
-  padding:0.65rem 2.5rem;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  flex-wrap:wrap;
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(42,122,82,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(42,122,82,0.025) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;
 }
-.sample-banner-text{
+
+/* ── NAV ─────────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,16,13,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0.9rem 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.nav-brand{font-family:var(--cond);font-size:1.25rem;font-weight:800;letter-spacing:0.06em;text-decoration:none;color:var(--text)}
+.nav-brand em{color:var(--green);font-style:normal}
+.nav-links{display:flex;gap:1.4rem;align-items:center}
+.nav-links a{font-size:0.82rem;color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--green);color:#fff!important;padding:0.4rem 1.1rem;border-radius:6px;font-weight:600;font-size:0.82rem}
+.nav-cta:hover{background:var(--gl)!important}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.page-hero{
+  position:relative;z-index:1;
+  background:linear-gradient(135deg,#0b1a0e,#0f2014);
+  border-bottom:1px solid var(--border);
+  padding:4rem 2.5rem 3rem;text-align:center;
+}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:0.68rem;color:var(--green);
+  letter-spacing:0.18em;text-transform:uppercase;
+  margin-bottom:1rem;
+  display:flex;align-items:center;justify-content:center;gap:0.6rem;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gd)}
+.page-hero h1{
+  font-family:var(--cond);font-size:clamp(2.4rem,5.5vw,4rem);font-weight:800;
+  line-height:1.0;margin-bottom:1rem;
+}
+.page-hero h1 em{color:var(--green);font-style:normal}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.7;max-width:600px;margin:0 auto 2rem}
+.hero-sub strong{color:var(--text)}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  display:inline-block;background:var(--green);color:#fff;
+  font-family:var(--cond);font-size:1rem;font-weight:700;letter-spacing:0.05em;
+  padding:0.8rem 2rem;border-radius:8px;text-decoration:none;
+  transition:all 0.2s;
+}
+.btn-primary:hover{background:var(--gl);transform:translateY(-1px);color:#fff}
+.btn-ghost{
+  display:inline-block;
+  border:1px solid var(--border2);color:var(--green);
+  font-family:var(--cond);font-size:1rem;font-weight:700;letter-spacing:0.05em;
+  padding:0.8rem 2rem;border-radius:8px;text-decoration:none;
+  transition:all 0.2s;background:transparent;
+}
+.btn-ghost:hover{background:rgba(42,122,82,0.08);color:var(--gl)}
+
+/* ── COMPARISON SECTION ───────────────────────────────────── */
+.compare-section{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:3.5rem 2rem;
+}
+.compare-intro{text-align:center;margin-bottom:2.5rem}
+.compare-intro .label{
+  font-family:var(--mono);font-size:0.65rem;color:var(--muted);
+  letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem;
+}
+.compare-intro h2{font-family:var(--cond);font-size:2rem;font-weight:700;margin-bottom:0.5rem}
+.compare-intro p{font-size:0.92rem;color:var(--muted);line-height:1.6;max-width:560px;margin:0 auto}
+
+/* Tier header row */
+.tier-headers{display:grid;grid-template-columns:200px 1fr 1fr;gap:0;margin-bottom:0;border-radius:14px 14px 0 0;overflow:hidden;border:1px solid var(--border);border-bottom:none}
+.tier-hdr-spacer{background:rgba(255,255,255,0.01);padding:1.2rem 1.5rem;border-right:1px solid var(--border)}
+.tier-hdr{padding:1.4rem 1.8rem;display:flex;flex-direction:column;gap:0.3rem;border-right:1px solid var(--border)}
+.tier-hdr:last-child{border-right:none}
+.tier-hdr.free{background:rgba(255,255,255,0.02)}
+.tier-hdr.paid{background:rgba(42,122,82,0.08)}
+.tier-badge{
+  font-family:var(--mono);font-size:0.6rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;align-self:flex-start;
+}
+.badge-free{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
+.badge-paid{background:rgba(42,122,82,0.15);color:var(--gl);border:1px solid var(--border2)}
+.tier-hdr-name{font-family:var(--cond);font-size:1.3rem;font-weight:700}
+.tier-hdr-sub{font-size:0.78rem;color:var(--muted)}
+.tier-hdr-price{font-family:var(--mono);font-size:0.78rem;color:var(--green);margin-top:0.3rem}
+
+/* Comparison grid */
+.compare-grid{border:1px solid var(--border);border-radius:0 0 14px 14px;overflow:hidden}
+.compare-row{
+  display:grid;grid-template-columns:200px 1fr 1fr;
+  border-bottom:1px solid var(--border);
+}
+.compare-row:last-child{border-bottom:none}
+.compare-row:hover{background:rgba(255,255,255,0.01)}
+.compare-feature{
+  padding:1rem 1.5rem;
+  border-right:1px solid var(--border);
+  background:rgba(255,255,255,0.015);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.compare-feature-name{font-size:0.84rem;font-weight:600;color:var(--text);margin-bottom:0.15rem}
+.compare-feature-desc{font-size:0.72rem;color:var(--muted);line-height:1.4}
+.compare-cell{
+  padding:1rem 1.8rem;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;gap:0.3rem;
+}
+.compare-cell:last-child{border-right:none}
+.compare-cell.free{background:transparent}
+.compare-cell.paid{background:rgba(42,122,82,0.04)}
+.cell-value{font-size:0.85rem;color:var(--text);line-height:1.5}
+.cell-value.na{color:var(--muted);font-style:italic}
+.cell-value.locked{
+  color:var(--muted);
+  display:flex;align-items:center;gap:0.4rem;
+  font-size:0.8rem;
+}
+.cell-value.locked::before{content:'🔒';font-size:0.7rem}
+.cell-check{font-size:0.78rem;font-family:var(--mono)}
+.cell-check.yes{color:var(--gl)}
+.cell-check.no{color:var(--muted)}
+.cell-check.partial{color:var(--amber)}
+
+/* ── FEATURE DEEP DIVES ───────────────────────────────────── */
+.deep-section{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:0 2rem 3.5rem;
+}
+.deep-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+/* Free panel */
+.panel{
+  border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);
+}
+.panel-header{
+  padding:1.2rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:0.8rem;
+}
+.panel-header .badge{
+  font-family:var(--mono);font-size:0.58rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.18rem 0.5rem;border-radius:3px;
+}
+.panel-header .badge.free{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
+.panel-header .badge.paid{background:rgba(42,122,82,0.15);color:var(--gl);border:1px solid var(--border2)}
+.panel-header h3{font-family:var(--cond);font-size:1.1rem;font-weight:700}
+.panel-body{padding:1.5rem}
+.panel.free-panel{background:var(--card)}
+.panel.paid-panel{background:linear-gradient(135deg,#0d1a11,#111f18);border-color:rgba(42,122,82,0.25)}
+
+/* Free score mock */
+.mock-score-ring-wrap{position:relative;width:120px;height:120px;margin:0 auto 1rem}
+.mock-score-ring{width:120px;height:120px;transform:rotate(-90deg)}
+.mock-score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.mock-score-num{font-family:var(--cond);font-size:2rem;font-weight:800;color:#c07818;line-height:1}
+.mock-verdict{font-family:var(--cond);font-size:1.1rem;font-weight:700;color:#c07818;text-align:center;margin-bottom:0.3rem}
+.mock-summary{font-size:0.78rem;color:var(--muted);text-align:center;line-height:1.5;margin-bottom:1rem}
+.mock-pillar-bars{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem}
+.mock-bar-row{display:flex;align-items:center;gap:0.6rem}
+.mock-bar-label{font-family:var(--mono);font-size:0.62rem;color:var(--muted);width:90px;flex-shrink:0}
+.mock-bar-track{flex:1;height:5px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden}
+.mock-bar-fill{height:100%;border-radius:3px}
+.mock-bar-pct{font-family:var(--mono);font-size:0.6rem;color:var(--muted);width:32px;text-align:right;flex-shrink:0}
+.mock-findings-header{
+  font-family:var(--cond);font-size:0.9rem;font-weight:700;
+  border-top:1px solid var(--border);padding-top:0.8rem;margin-top:0.8rem;margin-bottom:0.5rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.mock-tag{
+  font-family:var(--mono);font-size:0.58rem;font-weight:600;
+  padding:0.15rem 0.4rem;border-radius:3px;letter-spacing:0.06em;
+}
+.tag-crit{background:rgba(155,35,53,0.2);color:#e05060;border:1px solid rgba(155,35,53,0.3)}
+.tag-med{background:rgba(192,120,24,0.12);color:#c07818;border:1px solid rgba(192,120,24,0.3)}
+.tag-ok{background:rgba(42,122,82,0.1);color:var(--gl);border:1px solid var(--border2)}
+.mock-finding{
+  padding:0.5rem 0;border-bottom:1px solid var(--border);
+  display:flex;gap:0.5rem;align-items:flex-start;
+  font-size:0.78rem;
+}
+.mock-finding:last-child{border-bottom:none}
+.mock-finding strong{color:var(--text);font-weight:600;display:block;font-size:0.8rem}
+.mock-finding span{color:var(--muted)}
+
+/* Lock overlay */
+.locked-block{
+  position:relative;border-radius:8px;overflow:hidden;
+  margin-top:0.8rem;
+}
+.locked-content{
+  padding:1.2rem;
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);border-radius:8px;
+  filter:blur(4px);
+  pointer-events:none;user-select:none;
+}
+.locked-overlay{
+  position:absolute;inset:0;
+  background:rgba(14,16,13,0.65);backdrop-filter:blur(2px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.4rem;
+  border-radius:8px;
+}
+.locked-overlay .lock-icon{font-size:1.4rem}
+.locked-overlay .lock-text{
+  font-family:var(--mono);font-size:0.65rem;color:var(--muted);
+  letter-spacing:0.08em;text-align:center;line-height:1.5;
+}
+.locked-overlay .lock-cta{
+  font-family:var(--mono);font-size:0.62rem;color:var(--green);
+  letter-spacing:0.08em;margin-top:0.2rem;
+  border:1px solid var(--border2);padding:0.25rem 0.7rem;border-radius:4px;
+  text-decoration:none;background:rgba(42,122,82,0.08);
+}
+
+/* Paid panel elements */
+.paid-metric-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;border:1px solid rgba(42,122,82,0.2);
+  border-radius:10px;overflow:hidden;margin-bottom:1rem;
+}
+.paid-metric{padding:0.9rem 1rem;border-right:1px solid rgba(42,122,82,0.15)}
+.paid-metric:last-child{border-right:none}
+.paid-metric-lbl{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.3rem}
+.paid-metric-val{font-family:var(--cond);font-size:1.3rem;font-weight:700}
+.paid-metric-val.red{color:#e05060}
+.paid-metric-val.amber{color:var(--amber)}
+.paid-metric-val.green{color:var(--gl)}
+.paid-metric-sub{font-family:var(--mono);font-size:0.6rem;color:var(--muted);margin-top:0.15rem}
+
+.paid-finding-row{
+  display:grid;grid-template-columns:80px 1fr;gap:0.8rem;
+  padding:0.7rem 0;border-bottom:1px solid var(--border);
+  font-size:0.8rem;
+}
+.paid-finding-row:last-child{border-bottom:none}
+.paid-finding-ref{font-family:var(--mono);font-size:0.62rem;color:var(--green);padding-top:2px}
+.paid-finding-title{font-weight:600;color:var(--text);margin-bottom:0.15rem}
+.paid-finding-action{font-size:0.75rem;color:var(--muted);line-height:1.4}
+.paid-finding-action::before{content:'→ ';color:var(--green)}
+
+.compliance-row{
+  display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;
+  padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.8rem;
+}
+.compliance-row:last-child{border-bottom:none}
+.compliance-framework{font-weight:600;color:var(--text);margin-bottom:0.15rem;font-size:0.82rem}
+.compliance-status{font-size:0.72rem;color:var(--muted)}
+.compliance-score{
+  font-family:var(--cond);font-size:1.2rem;font-weight:700;
+  white-space:nowrap;text-align:right;
+}
+
+.roadmap-mini{margin-top:0.8rem}
+.roadmap-phase{
+  display:flex;gap:0.8rem;align-items:flex-start;
+  padding:0.7rem 0;border-bottom:1px solid var(--border);
+}
+.roadmap-phase:last-child{border-bottom:none}
+.roadmap-dot{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:0.62rem;font-weight:600;margin-top:1px;
+}
+.dot-red{background:rgba(155,35,53,0.2);color:#e05060;border:1px solid rgba(155,35,53,0.3)}
+.dot-amber{background:rgba(192,120,24,0.12);color:var(--amber);border:1px solid rgba(192,120,24,0.3)}
+.dot-green{background:rgba(42,122,82,0.12);color:var(--gl);border:1px solid var(--border2)}
+.roadmap-content{}
+.roadmap-window{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:0.15rem}
+.roadmap-items{font-size:0.78rem;color:var(--muted);line-height:1.6}
+
+/* ── WHAT YOU GET TABLE ──────────────────────────────────── */
+.what-section{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:0 2rem 3.5rem;
+}
+.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.what-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem 1.6rem;
+}
+.what-card.paid-what{
+  background:rgba(42,122,82,0.06);
+  border-color:rgba(42,122,82,0.25);
+}
+.what-card-header{
+  display:flex;align-items:center;gap:0.7rem;
+  margin-bottom:1rem;padding-bottom:0.8rem;
+  border-bottom:1px solid var(--border);
+}
+.what-card-header .badge{
+  font-family:var(--mono);font-size:0.58rem;font-weight:600;
+  padding:0.18rem 0.5rem;border-radius:3px;letter-spacing:0.1em;
+  text-transform:uppercase;
+}
+.what-card-title{font-family:var(--cond);font-size:1.1rem;font-weight:700}
+.what-list{list-style:none;padding:0}
+.what-list li{
+  font-size:0.83rem;color:var(--muted);padding:0.45rem 0;
+  border-bottom:1px solid var(--border);
+  display:flex;gap:0.5rem;align-items:baseline;line-height:1.4;
+}
+.what-list li:last-child{border-bottom:none}
+.what-list .icon{flex-shrink:0;width:16px;text-align:center;font-size:0.85rem}
+.what-list .included{color:var(--text)}
+
+/* ── DIVIDER ─────────────────────────────────────────────── */
+.section-divider{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:0 2rem 2rem;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-label{
+  font-family:var(--mono);font-size:0.65rem;
+  color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;
+  white-space:nowrap;
+}
+
+/* ── MID CTA ─────────────────────────────────────────────── */
+.mid-cta{
+  position:relative;z-index:1;
+  background:linear-gradient(135deg,#0c1a0e,#111f18);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:3rem 2rem;text-align:center;
+  margin-bottom:3rem;
+}
+.mid-cta h2{font-family:var(--cond);font-size:2rem;font-weight:700;margin-bottom:0.5rem}
+.mid-cta p{font-size:0.92rem;color:var(--muted);max-width:480px;margin:0 auto 1.5rem;line-height:1.6}
+.mid-cta-price{
+  font-family:var(--mono);font-size:0.75rem;color:var(--green);
+  letter-spacing:0.08em;margin-bottom:1.2rem;
+}
+.mid-cta-price strong{font-family:var(--cond);font-size:1.4rem;letter-spacing:0}
+.cta-sub{margin-top:0.8rem;font-size:0.78rem;color:var(--muted)}
+.cta-sub a{color:var(--green)}
+
+/* ── SAMPLE REPORT SECTION ───────────────────────────────── */
+.sample-label-bar{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;
+  padding:0 2rem 1.5rem;
+}
+.sample-label-inner{
+  background:rgba(192,120,24,0.08);
+  border:1px solid rgba(192,120,24,0.25);
+  border-radius:10px;padding:1rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;
+}
+.sample-label-text{
   font-family:var(--mono);font-size:0.68rem;color:#c07818;letter-spacing:0.08em;
 }
-.sample-banner-cta{
+.sample-label-cta{
   font-family:var(--mono);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;
   color:#fff;background:#9b2335;border:none;padding:0.4rem 1rem;border-radius:3px;
   cursor:pointer;white-space:nowrap;text-decoration:none;
 }
-.sample-banner-cta:hover{background:#b82a40;color:#fff}
+.sample-label-cta:hover{background:#b82a40;color:#fff}
 
-/* ── REPORT NAV ───────────────────────────────────────────── */
-.report-nav{
-  background:rgba(14,16,13,0.97);border-bottom:1px solid var(--border);
-  padding:0.9rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  position:sticky;top:0;z-index:100;
-}
-.nav-brand{font-family:var(--cond);font-size:1.2rem;font-weight:800;letter-spacing:0.06em}
-.nav-brand em{color:var(--green);font-style:normal}
-.nav-badge{
-  font-family:var(--mono);font-size:0.62rem;color:var(--green);
-  border:1px solid var(--gd);padding:0.2rem 0.65rem;border-radius:3px;letter-spacing:0.1em;
-  white-space:nowrap;
-}
-.nav-right{font-size:0.78rem;color:var(--muted);white-space:nowrap}
+/* ── EVERYTHING BELOW IS THE ORIGINAL REPORT ─────────────── */
+.report-wrap{position:relative;z-index:1}
 
-/* ── HERO ─────────────────────────────────────────────────── */
+/* REPORT HERO */
 .report-hero{
   background:linear-gradient(135deg,#0b1a0e 0%,#0f2014 60%,#0a1a10 100%);
   padding:3.5rem 2.5rem 2.5rem;
@@ -86,194 +425,523 @@ a{color:var(--gl);text-decoration:none}
 }
 .hero-meta-item span{color:var(--text);display:block;font-size:0.8rem;margin-top:0.15rem}
 
-/* ── SECTIONS ─────────────────────────────────────────────── */
+/* SECTIONS */
 .report-section{padding:2.5rem 2.5rem 0}
 .section-header{margin-bottom:1.5rem}
-.section-label{
-  font-family:var(--mono);font-size:0.6rem;color:var(--muted);
-  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem;
-}
+.section-label{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem}
 .section-title{font-family:var(--cond);font-size:1.5rem;font-weight:700}
 
-/* ── EXEC SUMMARY ─────────────────────────────────────────── */
+/* EXEC SUMMARY */
 .exec-summary{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .exec-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
 .exec-row:last-child{border-bottom:none}
 .exec-cell,.exec-score-card{padding:1.3rem 1.5rem;border-right:1px solid var(--border)}
 .exec-cell:last-child,.exec-score-card:last-child{border-right:none}
-.exec-label{
-  font-family:var(--mono);font-size:0.58rem;color:var(--muted);
-  letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;
-}
+.exec-label{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem}
 .exec-value{font-size:0.92rem;font-weight:500;line-height:1.4}
 .exec-score{font-family:var(--cond);font-size:2.2rem;font-weight:800;line-height:1}
 .exec-verdict{font-size:0.75rem;color:var(--muted);margin-top:0.25rem;font-family:var(--mono)}
 
-/* ── PILLAR RINGS ─────────────────────────────────────────── */
+/* PILLAR RINGS */
 .rings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
-.score-ring-item{
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.4rem 1rem;text-align:center;
-  transition:border-color 0.2s;
-}
+.score-ring-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1rem;text-align:center;transition:border-color 0.2s}
 .score-ring-item:hover{border-color:rgba(42,122,82,0.3)}
 .ring-svg{width:100px;height:100px;margin:0 auto 0.7rem;display:block}
 .ring-label{font-size:0.7rem;color:var(--muted);line-height:1.4;margin-bottom:0.3rem}
 .ring-verdict{font-size:0.65rem;font-family:var(--mono);letter-spacing:0.06em;font-weight:600}
 
-/* ── DRS DIAL ─────────────────────────────────────────────── */
-.drs-card{
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
-}
-.drs-dial{flex-shrink:0}
-.drs-info{}
+/* DRS */
+.drs-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .drs-score-big{font-family:var(--cond);font-size:3.5rem;font-weight:800;line-height:1;color:#c07818}
 .drs-band{font-family:var(--mono);font-size:0.72rem;color:#c07818;letter-spacing:0.08em;margin-top:0.2rem}
 .drs-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-top:0.6rem;max-width:500px}
 
-/* ── FILTER BAR ───────────────────────────────────────────── */
+/* FILTER */
 .filter-bar{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
 .filter-label{font-size:0.75rem;color:var(--muted);margin-right:0.2rem;font-family:var(--mono)}
-.filter-btn{
-  padding:0.3rem 0.85rem;border-radius:4px;border:1px solid var(--border);
-  background:transparent;color:var(--muted);font-size:0.72rem;cursor:pointer;
-  transition:all 0.15s;font-family:var(--mono);letter-spacing:0.04em;
-}
+.filter-btn{padding:0.3rem 0.85rem;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:0.72rem;cursor:pointer;transition:all 0.15s;font-family:var(--mono);letter-spacing:0.04em}
 .filter-btn:hover,.filter-btn.active{border-color:var(--green);color:var(--gl);background:rgba(42,122,82,0.08)}
 .filter-btn[data-sev="Critical"].active{border-color:#9b2335;color:#e05060;background:rgba(155,35,53,0.1)}
 .filter-btn[data-sev="High"].active{border-color:#c07818;color:#d48b1a;background:rgba(192,120,24,0.1)}
 
-/* ── FINDINGS TABLE ───────────────────────────────────────── */
+/* FINDINGS TABLE */
 .findings-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:0.82rem}
 thead tr{background:var(--dark2);border-bottom:1px solid var(--border)}
-th{padding:0.75rem 0.9rem;text-align:left;font-weight:600;font-size:0.68rem;
-  color:var(--muted);letter-spacing:0.06em;white-space:nowrap;font-family:var(--mono)}
+th{padding:0.75rem 0.9rem;text-align:left;font-weight:600;font-size:0.68rem;color:var(--muted);letter-spacing:0.06em;white-space:nowrap;font-family:var(--mono)}
 .finding-row{cursor:pointer;transition:background 0.12s;border-bottom:1px solid var(--border)}
 .finding-row:hover{filter:brightness(1.12)}
 .finding-row td{padding:0.7rem 0.9rem;vertical-align:middle}
-.sev-badge{
-  font-size:0.62rem;padding:0.2rem 0.55rem;border-radius:3px;
-  color:#fff;font-weight:700;white-space:nowrap;font-family:var(--mono);letter-spacing:0.04em;
-}
-code{
-  font-family:var(--mono);font-size:0.7rem;
-  background:rgba(255,255,255,0.05);padding:0.15rem 0.4rem;border-radius:3px;
-}
+.sev-badge{font-size:0.62rem;padding:0.2rem 0.55rem;border-radius:3px;color:#fff;font-weight:700;white-space:nowrap;font-family:var(--mono);letter-spacing:0.04em}
+code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);padding:0.15rem 0.4rem;border-radius:3px}
 .check-cell{white-space:nowrap}
 .count-cell,.date-cell{text-align:center;color:var(--muted);white-space:nowrap}
 .pillar-cell{font-size:0.7rem;color:var(--muted);white-space:nowrap}
 .title-cell{line-height:1.4}
 .expand-hint{font-size:0.65rem;color:var(--muted);float:right;font-family:var(--mono)}
 
-/* ── FINDING DETAIL ───────────────────────────────────────── */
+/* FINDING DETAIL */
 .finding-detail td{padding:0}
-.detail-block{
-  background:rgba(0,0,0,0.35);border-top:1px solid var(--border2);
-  padding:1.4rem 1.8rem;
-}
+.detail-block{background:rgba(0,0,0,0.35);border-top:1px solid var(--border2);padding:1.4rem 1.8rem}
 .detail-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .detail-section{margin-bottom:1rem}
-.detail-label{
-  font-family:var(--mono);font-size:0.58rem;color:var(--green);
-  letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;
-}
+.detail-label{font-family:var(--mono);font-size:0.58rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem}
 .detail-text{font-size:0.82rem;line-height:1.65;color:var(--muted)}
-.detail-pre{
-  font-family:var(--mono);font-size:0.7rem;
-  background:rgba(255,255,255,0.03);border:1px solid var(--border);
-  border-radius:6px;padding:0.85rem;overflow-x:auto;
-  color:#a8b8a4;white-space:pre;line-height:1.55;
-}
+.detail-pre{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:0.85rem;overflow-x:auto;color:#a8b8a4;white-space:pre;line-height:1.55}
 .remediation-text{color:#c8e0d0}
-.detail-footer{
-  display:flex;justify-content:space-between;font-size:0.65rem;
-  color:var(--muted);font-family:var(--mono);
-  border-top:1px solid var(--border);padding-top:0.6rem;margin-top:0.8rem;
-  flex-wrap:wrap;gap:0.3rem;
-}
+.detail-footer{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--muted);font-family:var(--mono);border-top:1px solid var(--border);padding-top:0.6rem;margin-top:0.8rem;flex-wrap:wrap;gap:0.3rem}
 
-/* ── REMEDIATION ROADMAP ──────────────────────────────────── */
+/* ROADMAP */
 .roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.roadmap-card{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:1.2rem 1.4rem;
-}
-.roadmap-window{
-  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;
-  text-transform:uppercase;margin-bottom:0.5rem;font-weight:600;
-}
+.roadmap-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem}
+.roadmap-window{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;font-weight:600}
 .roadmap-card h4{font-family:var(--cond);font-size:1.1rem;font-weight:700;margin-bottom:0.7rem}
 .roadmap-list{list-style:none;padding:0}
-.roadmap-list li{
-  font-size:0.8rem;color:var(--muted);padding:0.3rem 0;
-  border-bottom:1px solid var(--border);display:flex;gap:0.5rem;align-items:baseline;
-}
+.roadmap-list li{font-size:0.8rem;color:var(--muted);padding:0.3rem 0;border-bottom:1px solid var(--border);display:flex;gap:0.5rem;align-items:baseline}
 .roadmap-list li:last-child{border-bottom:none}
 .roadmap-list li::before{content:'→';color:var(--green);flex-shrink:0;font-family:var(--mono)}
 
-/* ── SIGN-OFF ─────────────────────────────────────────────── */
-.signoff-card{
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;
-}
+/* SIGN-OFF */
+.signoff-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
 .signoff-field{border-bottom:1px solid rgba(255,255,255,0.12);padding-bottom:0.5rem;margin-top:1.5rem}
 .signoff-field-label{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:1.5rem}
-.disclaimer{
-  font-size:0.72rem;color:var(--muted);line-height:1.6;
-  background:rgba(155,35,53,0.06);border:1px solid rgba(155,35,53,0.2);
-  border-radius:8px;padding:1rem 1.2rem;margin-top:1rem;
-}
+.disclaimer{font-size:0.72rem;color:var(--muted);line-height:1.6;background:rgba(155,35,53,0.06);border:1px solid rgba(155,35,53,0.2);border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}
 .disclaimer strong{color:#e05060}
 
-/* ── FOOTER ───────────────────────────────────────────────── */
-.report-footer{
-  margin:3rem 2.5rem 0;padding:1.5rem 0;
-  border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:0.7rem;color:var(--muted);flex-wrap:wrap;gap:0.5rem;
-}
+/* FOOTER */
+.report-footer{margin:3rem 2.5rem 0;padding:1.5rem 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;color:var(--muted);flex-wrap:wrap;gap:0.5rem}
 .footer-brand{font-family:var(--mono);letter-spacing:0.06em;margin-bottom:0.2rem}
 .footer-brand em{color:var(--green);font-style:normal}
-.confidential{
-  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;
-  color:#9b2335;border:1px solid rgba(155,35,53,0.3);
-  padding:0.25rem 0.6rem;border-radius:3px;
-}
+.confidential{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:#9b2335;border:1px solid rgba(155,35,53,0.3);padding:0.25rem 0.6rem;border-radius:3px}
 
 @media print{
-  .sample-banner,.filter-bar,.report-nav{display:none}
+  nav,.sample-label-inner,.filter-bar,.compare-section,.deep-section,.what-section,.mid-cta,.sample-label-bar,.page-hero{display:none}
   .finding-detail{display:table-row!important}
   .detail-cols{grid-template-columns:1fr}
   body{background:#fff;color:#000}
 }
-@media(max-width:700px){
+@media(max-width:768px){
+  .tier-headers,.compare-row{grid-template-columns:1fr}
+  .tier-hdr-spacer{display:none}
+  .compare-feature{border-bottom:1px solid var(--border)}
+  .deep-grid{grid-template-columns:1fr}
+  .what-grid{grid-template-columns:1fr}
+  .paid-metric-row{grid-template-columns:1fr 1fr}
   .exec-row{grid-template-columns:1fr 1fr}
   .rings-grid{grid-template-columns:repeat(2,1fr)}
   .roadmap-grid{grid-template-columns:1fr}
   .signoff-card{grid-template-columns:1fr}
   .detail-cols{grid-template-columns:1fr}
   .report-hero,.report-section{padding-left:1.2rem;padding-right:1.2rem}
-  .sample-banner,.report-footer{padding-left:1.2rem;padding-right:1.2rem}
-  .report-nav{padding:0.9rem 1.2rem}
+  .report-footer{padding-left:1.2rem;padding-right:1.2rem;margin-left:0;margin-right:0}
 }
 </style>
 </head>
 <body>
 
-<!-- SAMPLE BANNER -->
-<div class="sample-banner">
-  <span class="sample-banner-text">⚠ SAMPLE REPORT — Client data is anonymised. This demonstrates a real RETACH S.I.N.S. AD Audit engagement deliverable.</span>
-  <a href="https://retach.tech/#contact" class="sample-banner-cta">Book Your Audit →</a>
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-brand"><em>RETACH</em> Digital Ltd</a>
+  <div class="nav-links">
+    <a href="/sins-scanner.html">Free Scanner</a>
+    <a href="https://crq.retach.io" target="_blank">CRQ Engine</a>
+    <a href="/ad-audit.html">AD Audit</a>
+    <a href="/#contact" class="nav-cta">Book Assessment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-eyebrow">S.I.N.S. Framework™ · Sample Deliverable</div>
+  <h1>Free Scanner vs<br><em>Paid Assessment</em></h1>
+  <p class="hero-sub">The free scanner shows you <strong>where your gaps are</strong>. The paid assessment tells you <strong>what they cost, how to fix them, and what the regulator expects</strong> — in writing, with evidence.</p>
+  <div class="hero-actions">
+    <a href="/#contact" class="btn-primary">Book Your Assessment →</a>
+    <a href="/sins-scanner.html" class="btn-ghost">Try Free Scanner First</a>
+  </div>
 </div>
 
-<!-- NAV -->
-<nav class="report-nav">
-  <div class="nav-brand"><em>RETACH</em> Digital Ltd</div>
-  <div class="nav-badge">S.I.N.S. Framework™ · CONFIDENTIAL</div>
-  <div class="nav-right">22 May 2026</div>
-</nav>
+<!-- COMPARISON TABLE -->
+<div class="compare-section">
+  <div class="compare-intro">
+    <div class="label">Side-by-side</div>
+    <h2>What each level delivers</h2>
+    <p>Both start from the same 20 questions. The difference is depth, financial quantification, and what you can hand to a regulator or board.</p>
+  </div>
+
+  <div class="tier-headers">
+    <div class="tier-hdr-spacer"></div>
+    <div class="tier-hdr free">
+      <span class="tier-badge badge-free">Free</span>
+      <div class="tier-hdr-name">S.I.N.S. Scanner</div>
+      <div class="tier-hdr-sub">Instant, self-serve, no login</div>
+      <div class="tier-hdr-price">KES 0 · 5 minutes</div>
+    </div>
+    <div class="tier-hdr paid">
+      <span class="tier-badge badge-paid">Paid · Health Scan</span>
+      <div class="tier-hdr-name">S.I.N.S. Health Scan</div>
+      <div class="tier-hdr-sub">Delivered by a RETACH consultant</div>
+      <div class="tier-hdr-price">From KES 45,000 · 5 business days</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">S.I.N.S. posture score</div>
+        <div class="compare-feature-desc">Overall score across all four pillars</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value">Score 0–100 with verdict</div>
+        <div class="cell-check yes">✓ Included</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Score per pillar + per-check breakdown</div>
+        <div class="cell-check yes">✓ Included — with evidence trail</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Findings list</div>
+        <div class="compare-feature-desc">Identified security gaps</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value">Gap labels (e.g. "No MFA enforced")</div>
+        <div class="cell-check partial">△ Summary only</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Full finding register — description, evidence, MITRE ATT&CK reference, affected objects, severity rating</div>
+        <div class="cell-check yes">✓ Detailed with remediation steps</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Financial risk (EAL in KES)</div>
+        <div class="compare-feature-desc">What these gaps cost if exploited</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value locked">Indicative range via CRQ Engine only</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Breach cost, ransomware recovery, and business interruption — calculated in KES using Kenya sector data (Serianu 2023 / CBK)</div>
+        <div class="cell-check yes">✓ Organisation-specific EAL</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Regulatory exposure</div>
+        <div class="compare-feature-desc">DPA, SASRA, CBK, CMCA fines</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value locked">Not included</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Compliance score per framework + fine exposure estimate per gap. Covers DPA 2019, SASRA Circular 2022, CBK Cybersecurity Guidelines, CMCA 2018</div>
+        <div class="cell-check yes">✓ Full compliance intelligence layer</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Remediation roadmap</div>
+        <div class="compare-feature-desc">Prioritised plan with timelines and costs</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value locked">Not included</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Three-phase plan (0–7 days / 30 days / 90 days) with action items, effort estimates, and implementation cost ranges in KES</div>
+        <div class="cell-check yes">✓ Ready to present to management</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Evidence &amp; documentation</div>
+        <div class="compare-feature-desc">Auditor or board-ready output</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value na">Not applicable</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Signed PDF report, engagement reference number, consultant credentials, client sign-off page</div>
+        <div class="cell-check yes">✓ Suitable for SASRA / CBK audit file</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">AD / technical depth</div>
+        <div class="compare-feature-desc">Active Directory, network, endpoint checks</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value na">Not included</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Available as add-on: 47-check AD Audit (Kerberoasting, AS-REP, delegation paths, GPO governance, detection readiness)</div>
+        <div class="cell-check yes">✓ PowerShell-based, domain-authenticated</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Delivery format</div>
+        <div class="compare-feature-desc">How you receive the output</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value">Instant browser results · no download</div>
+        <div class="cell-check yes">✓ Instant</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">RETACH-branded PDF report + JSON findings export + debrief call</div>
+        <div class="cell-check yes">✓ 5 business days</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DEEP DIVE: FREE VS PAID side by side -->
+<div class="deep-section">
+  <div class="section-header" style="margin-bottom:1.5rem">
+    <div class="section-label" style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem">Visual comparison</div>
+    <div class="section-title" style="font-family:var(--cond);font-size:1.5rem;font-weight:700">What the output looks like</div>
+  </div>
+
+  <div class="deep-grid">
+
+    <!-- FREE PANEL -->
+    <div class="panel free-panel">
+      <div class="panel-header">
+        <span class="badge free">Free</span>
+        <h3>S.I.N.S. Scanner Output</h3>
+      </div>
+      <div class="panel-body">
+        <!-- Score ring mock -->
+        <div class="mock-score-ring-wrap">
+          <svg class="mock-score-ring" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#c07818" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="163 327"/>
+          </svg>
+          <div class="mock-score-center">
+            <div class="mock-score-num">38</div>
+            <div style="font-family:var(--mono);font-size:0.55rem;color:var(--muted)">/100</div>
+          </div>
+        </div>
+        <div class="mock-verdict">Significant Gaps</div>
+        <div class="mock-summary">Your organisation has some controls in place but significant gaps across multiple pillars — representing real operational and compliance risk.</div>
+        <div class="mock-pillar-bars">
+          <div class="mock-bar-row"><div class="mock-bar-label">Systems</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:40%;background:#c07818"></div></div><div class="mock-bar-pct">40</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Infrastructure</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:30%;background:#9b2335"></div></div><div class="mock-bar-pct">30</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Network</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:50%;background:#c07818"></div></div><div class="mock-bar-pct">50</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Security</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:20%;background:#9b2335"></div></div><div class="mock-bar-pct">20</div></div>
+        </div>
+        <div class="mock-findings-header">Critical findings <span class="mock-tag tag-crit">5 items</span></div>
+        <div class="mock-finding"><span>🔴</span><div><strong>Infrastructure: No backup procedure</strong><span>This gap represents immediate operational risk and should be prioritised.</span></div></div>
+        <div class="mock-finding"><span>🔴</span><div><strong>Security: No incident response plan</strong><span>This gap represents immediate compliance risk under Kenya DPA.</span></div></div>
+        <div class="mock-finding"><span>🔴</span><div><strong>Systems: No MFA enforced</strong><span>This gap represents immediate operational risk.</span></div></div>
+
+        <!-- LOCKED: Financial layer -->
+        <div class="locked-block">
+          <div class="locked-content">
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem">Estimated financial exposure</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem">
+              <div style="background:rgba(155,35,53,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 4M</div><div style="font-size:0.65rem;color:var(--muted)">Breach cost</div></div>
+              <div style="background:rgba(192,120,24,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 2M</div><div style="font-size:0.65rem;color:var(--muted)">Ransomware</div></div>
+              <div style="background:rgba(192,120,24,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 5M</div><div style="font-size:0.65rem;color:var(--muted)">DPA fine</div></div>
+            </div>
+            <div style="margin-top:0.5rem;font-size:0.7rem;color:var(--muted)">Compliance score · Regulatory exposure · Remediation roadmap</div>
+          </div>
+          <div class="locked-overlay">
+            <div class="lock-icon">🔒</div>
+            <div class="lock-text">Financial layer, compliance scores &amp;<br>remediation roadmap not included<br>in the free scanner</div>
+            <a href="/#contact" class="lock-cta">Unlock with Health Scan →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PAID PANEL -->
+    <div class="panel paid-panel">
+      <div class="panel-header">
+        <span class="badge paid">Paid · Health Scan</span>
+        <h3>Full Assessment Output</h3>
+      </div>
+      <div class="panel-body">
+        <!-- Financial metrics -->
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem">Cyber Risk Quantification — KES</div>
+        <div class="paid-metric-row">
+          <div class="paid-metric">
+            <div class="paid-metric-lbl">Breach Cost (EAL)</div>
+            <div class="paid-metric-val red">KES 3.8M</div>
+            <div class="paid-metric-sub">Serianu 2023 benchmark</div>
+          </div>
+          <div class="paid-metric">
+            <div class="paid-metric-lbl">Ransomware Recovery</div>
+            <div class="paid-metric-val amber">KES 2.1M</div>
+            <div class="paid-metric-sub">Based on revenue band</div>
+          </div>
+          <div class="paid-metric">
+            <div class="paid-metric-lbl">DPA Fine Exposure</div>
+            <div class="paid-metric-val amber">KES 4.5M</div>
+            <div class="paid-metric-sub">1% turnover or KES 5M</div>
+          </div>
+        </div>
+
+        <!-- Compliance scores -->
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;margin-top:0.8rem">Compliance Intelligence</div>
+        <div style="background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:8px;padding:0.8rem 1rem;margin-bottom:0.8rem">
+          <div class="compliance-row">
+            <div><div class="compliance-framework">Kenya DPA 2019 (ODPC)</div><div class="compliance-status">3 of 8 controls met · 5 gaps</div></div>
+            <div class="compliance-score" style="color:#9b2335">38%</div>
+          </div>
+          <div class="compliance-row">
+            <div><div class="compliance-framework">SASRA Circular 2022</div><div class="compliance-status">4 of 10 controls met · 6 gaps</div></div>
+            <div class="compliance-score" style="color:#c07818">40%</div>
+          </div>
+          <div class="compliance-row">
+            <div><div class="compliance-framework">CBK Cybersecurity 2019</div><div class="compliance-status">5 of 9 controls met · 4 gaps</div></div>
+            <div class="compliance-score" style="color:#c07818">56%</div>
+          </div>
+        </div>
+
+        <!-- Top findings with remediation -->
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem">Priority Findings with Remediation</div>
+        <div style="background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:8px;padding:0.8rem 1rem;margin-bottom:0.8rem">
+          <div class="paid-finding-row">
+            <div class="paid-finding-ref">I2 · Critical</div>
+            <div><div class="paid-finding-title">No documented backup procedure or tested restore</div><div class="paid-finding-action">Implement automated daily backup to off-site location. Test restore within 30 days. Document RTO/RPO. SASRA requires tested DR plan.</div></div>
+          </div>
+          <div class="paid-finding-row">
+            <div class="paid-finding-ref">Sec · Critical</div>
+            <div><div class="paid-finding-title">No incident response procedure</div><div class="paid-finding-action">Draft IR plan using RETACH template. Include ODPC 72-hour breach notification requirement. Brief all staff within 30 days.</div></div>
+          </div>
+          <div class="paid-finding-row">
+            <div class="paid-finding-ref">S1 · Critical</div>
+            <div><div class="paid-finding-title">MFA not enforced on Microsoft 365</div><div class="paid-finding-action">Enable Conditional Access policy in Azure AD. Enforce MFA for all users. Priority: admin accounts first. Estimated effort: 4 hours.</div></div>
+          </div>
+        </div>
+
+        <!-- Remediation roadmap -->
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem">Remediation Roadmap</div>
+        <div class="roadmap-mini">
+          <div class="roadmap-phase">
+            <div class="roadmap-dot dot-red">0–7</div>
+            <div class="roadmap-content">
+              <div class="roadmap-window">Days 0–7 · Immediate · KES 12,000–28,000</div>
+              <div class="roadmap-items">Enable MFA on M365 · Enable HTTPS on web services · Brief staff on IR reporting procedure</div>
+            </div>
+          </div>
+          <div class="roadmap-phase">
+            <div class="roadmap-dot dot-amber">30</div>
+            <div class="roadmap-content">
+              <div class="roadmap-window">Days 8–30 · Priority · KES 45,000–95,000</div>
+              <div class="roadmap-items">Implement automated backup · Draft and test IR plan · ODPC registration · Configure firewall baseline</div>
+            </div>
+          </div>
+          <div class="roadmap-phase">
+            <div class="roadmap-dot dot-green">90</div>
+            <div class="roadmap-content">
+              <div class="roadmap-window">Days 31–90 · Systematic · KES 80,000–160,000</div>
+              <div class="roadmap-items">Document risk register · Deploy network segmentation · Conduct staff security training · Remediation verification check</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- WHAT YOU GET -->
+<div class="what-section">
+  <div class="section-header">
+    <div class="section-label" style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem">Deliverables</div>
+    <div class="section-title" style="font-family:var(--cond);font-size:1.5rem;font-weight:700">Everything included in the Health Scan</div>
+  </div>
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="what-card-header">
+        <span class="badge free" style="font-family:var(--mono);font-size:0.58rem;font-weight:600;padding:0.18rem 0.5rem;border-radius:3px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)">Free Scanner</span>
+        <div class="what-card-title">What you get for free</div>
+      </div>
+      <ul class="what-list">
+        <li><span class="icon">✅</span><span class="included">S.I.N.S. posture score 0–100</span></li>
+        <li><span class="icon">✅</span><span class="included">Pillar-by-pillar breakdown (S / I / N / Sec)</span></li>
+        <li><span class="icon">✅</span><span class="included">Gap labels — what controls are missing</span></li>
+        <li><span class="icon">✅</span><span class="included">Indicative EAL range via CRQ Engine</span></li>
+        <li><span class="icon">✅</span><span class="included">Sector benchmark comparison</span></li>
+        <li><span class="icon">⬜</span>Specific finding descriptions with evidence</li>
+        <li><span class="icon">⬜</span>Financial exposure in KES (organisation-specific)</li>
+        <li><span class="icon">⬜</span>Regulatory compliance scores (DPA / SASRA / CBK)</li>
+        <li><span class="icon">⬜</span>Prioritised remediation roadmap with costs</li>
+        <li><span class="icon">⬜</span>Signed PDF report for audit / board use</li>
+        <li><span class="icon">⬜</span>Consultant debrief call</li>
+      </ul>
+    </div>
+    <div class="what-card paid-what">
+      <div class="what-card-header">
+        <span class="badge paid" style="font-family:var(--mono);font-size:0.58rem;font-weight:600;padding:0.18rem 0.5rem;border-radius:3px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(42,122,82,0.15);color:var(--gl);border:1px solid var(--border2)">Health Scan · From KES 45,000</span>
+        <div class="what-card-title">What you get when you engage</div>
+      </div>
+      <ul class="what-list">
+        <li><span class="icon">✅</span><span class="included">Everything in the free scanner</span></li>
+        <li><span class="icon">✅</span><span class="included">Full findings register — description, evidence, MITRE ATT&CK ref, affected objects</span></li>
+        <li><span class="icon">✅</span><span class="included">Financial risk quantification — breach, ransomware, BI in KES</span></li>
+        <li><span class="icon">✅</span><span class="included">Compliance scorecard — DPA 2019, SASRA, CBK, CMCA</span></li>
+        <li><span class="icon">✅</span><span class="included">Regulatory fine exposure estimate per gap</span></li>
+        <li><span class="icon">✅</span><span class="included">Three-phase remediation roadmap with KES cost estimates</span></li>
+        <li><span class="icon">✅</span><span class="included">RETACH-branded PDF — suitable for board / audit file</span></li>
+        <li><span class="icon">✅</span><span class="included">Engagement reference number + consultant credentials</span></li>
+        <li><span class="icon">✅</span><span class="included">Client sign-off page for SASRA record-keeping</span></li>
+        <li><span class="icon">✅</span><span class="included">30-minute debrief call with lead consultant</span></li>
+        <li><span class="icon">✅</span><span class="included">Delivered in 5 business days</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- MID CTA -->
+<div class="mid-cta">
+  <h2>Ready to see your full picture?</h2>
+  <p>Most organisations that complete the free scanner book a Health Scan within 2 weeks. The gap between knowing you have a problem and knowing exactly what it costs and how to fix it is where the real value is.</p>
+  <div class="mid-cta-price">Health Scan from <strong>KES 45,000</strong> · Delivered in 5 business days</div>
+  <a href="/#contact" class="btn-primary">Book Your Health Scan →</a>
+  <div class="cta-sub">Or email: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
+</div>
+
+<!-- SAMPLE REPORT INTRO -->
+<div class="section-divider">
+  <div class="divider-line"></div>
+  <div class="divider-label">Below: Real Sample Report</div>
+  <div class="divider-line"></div>
+</div>
+
+<div class="sample-label-bar">
+  <div class="sample-label-inner">
+    <span class="sample-label-text">⚠ SAMPLE REPORT — Client data is anonymised. This is a real RETACH S.I.N.S. AD Audit engagement deliverable. This is what you get.</span>
+    <a href="https://retach.tech/#contact" class="sample-label-cta">Book Your Audit →</a>
+  </div>
+</div>
+
+<!-- ============================================================
+     ORIGINAL REPORT CONTENT BELOW
+     ============================================================ -->
+<div class="report-wrap">
+
+<!-- NAV badge for report context -->
+<div style="background:rgba(14,16,13,0.97);border-bottom:1px solid var(--border);padding:0.7rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:65px;z-index:90;">
+  <div style="font-family:var(--cond);font-size:1rem;font-weight:800;letter-spacing:0.06em"><span style="color:var(--green)">RETACH</span> Digital Ltd · Sample AD Audit Report</div>
+  <div style="font-family:var(--mono);font-size:0.62rem;color:var(--green);border:1px solid var(--gd);padding:0.2rem 0.65rem;border-radius:3px;letter-spacing:0.1em">S.I.N.S. Framework™ · SAMPLE</div>
+  <div style="font-size:0.78rem;color:var(--muted)">Alpha Investors SACCO Ltd · May 2026</div>
+</div>
 
 <!-- HERO -->
 <div class="report-hero">
@@ -293,7 +961,7 @@ code{
   </div>
 </div>
 
-<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<!-- SECTION 1: EXEC SUMMARY -->
 <div class="report-section">
   <div class="section-header">
     <div class="section-label">Section 1</div>
@@ -301,1056 +969,202 @@ code{
   </div>
   <div class="exec-summary">
     <div class="exec-row">
-      <div class="exec-cell">
-        <div class="exec-label">Organisation</div>
-        <div class="exec-value">Alpha Investors SACCO Ltd</div>
-      </div>
-      <div class="exec-cell">
-        <div class="exec-label">Domain assessed</div>
-        <div class="exec-value">alpha-inv.co.ke</div>
-      </div>
-      <div class="exec-cell">
-        <div class="exec-label">Assessment date</div>
-        <div class="exec-value">15–16 May 2026</div>
-      </div>
-      <div class="exec-cell">
-        <div class="exec-label">Lead consultant</div>
-        <div class="exec-value">Paul N. Nduati, CISSP · CASP+</div>
-      </div>
+      <div class="exec-cell"><div class="exec-label">Organisation</div><div class="exec-value">Alpha Investors SACCO Ltd</div></div>
+      <div class="exec-cell"><div class="exec-label">Domain assessed</div><div class="exec-value">alpha-inv.co.ke</div></div>
+      <div class="exec-cell"><div class="exec-label">Assessment date</div><div class="exec-value">15–16 May 2026</div></div>
+      <div class="exec-cell"><div class="exec-label">Lead consultant</div><div class="exec-value">Paul N. Nduati, CISSP · CASP+</div></div>
     </div>
     <div class="exec-row">
-      <div class="exec-score-card">
-        <div class="exec-label">Overall posture</div>
-        <div class="exec-score" style="color:#c07818">42 / 100</div>
-        <div class="exec-verdict" style="color:#c07818">Significant Gaps</div>
-      </div>
-      <div class="exec-score-card">
-        <div class="exec-label">Critical findings</div>
-        <div class="exec-score" style="color:#9b2335">4</div>
-        <div class="exec-verdict">Immediate action required</div>
-      </div>
-      <div class="exec-score-card">
-        <div class="exec-label">High findings</div>
-        <div class="exec-score" style="color:#c07818">7</div>
-        <div class="exec-verdict">Remediate within 7 days</div>
-      </div>
-      <div class="exec-score-card">
-        <div class="exec-label">Total findings</div>
-        <div class="exec-score">19</div>
-        <div class="exec-verdict">Across all pillars</div>
-      </div>
+      <div class="exec-score-card"><div class="exec-label">Overall posture</div><div class="exec-score" style="color:#c07818">42 / 100</div><div class="exec-verdict" style="color:#c07818">Significant Gaps</div></div>
+      <div class="exec-score-card"><div class="exec-label">Critical findings</div><div class="exec-score" style="color:#9b2335">4</div><div class="exec-verdict">Immediate action required</div></div>
+      <div class="exec-score-card"><div class="exec-label">High findings</div><div class="exec-score" style="color:#c07818">7</div><div class="exec-verdict">Remediate within 7 days</div></div>
+      <div class="exec-score-card"><div class="exec-label">Total findings</div><div class="exec-score">19</div><div class="exec-verdict">Across all pillars</div></div>
     </div>
   </div>
 </div>
 
 <!-- SECTION 2: PILLAR SCORES -->
 <div class="report-section" style="margin-top:2rem">
-  <div class="section-header">
-    <div class="section-label">Section 2</div>
-    <div class="section-title">S.I.N.S. pillar scores</div>
-  </div>
+  <div class="section-header"><div class="section-label">Section 2</div><div class="section-title">S.I.N.S. pillar scores</div></div>
   <div class="rings-grid">
-
-    <!-- I — Infrastructure -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#3a9b68" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="198 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">70</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">I — Infrastructure Health</div>
-      <div class="ring-verdict" style="color:#3a9b68">Adequate</div>
-    </div>
-
-    <!-- S1 — Identity -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">S¹ — Identity &amp; Access</div>
-      <div class="ring-verdict" style="color:#c07818">Gaps</div>
-    </div>
-
-    <!-- S2 — Credential -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#9b2335" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="57 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">20</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">S² — Credential &amp; Kerberos</div>
-      <div class="ring-verdict" style="color:#9b2335">High Risk</div>
-    </div>
-
-    <!-- S3 — Delegation -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="113 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">40</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">S³ — Delegation Paths</div>
-      <div class="ring-verdict" style="color:#c07818">Gaps</div>
-    </div>
-
-    <!-- S4 — Persistence -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="141 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">50</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">S⁴ — Persistence &amp; GPO</div>
-      <div class="ring-verdict" style="color:#c07818">Gaps</div>
-    </div>
-
-    <!-- S5 — Detection -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#9b2335" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="76 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">27</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">S⁵ — Detection Readiness</div>
-      <div class="ring-verdict" style="color:#9b2335">High Risk</div>
-    </div>
-
-    <!-- GPO -->
-    <div class="score-ring-item">
-      <svg viewBox="0 0 100 100" class="ring-svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8"
-          stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/>
-        <text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text>
-        <text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text>
-      </svg>
-      <div class="ring-label">S⁴+S⁵ — GPO Governance</div>
-      <div class="ring-verdict" style="color:#c07818">Gaps</div>
-    </div>
-
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#3a9b68" stroke-width="8" stroke-linecap="round" stroke-dasharray="198 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">70</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">I — Infrastructure Health</div><div class="ring-verdict" style="color:#3a9b68">Adequate</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S¹ — Identity &amp; Access</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#9b2335" stroke-width="8" stroke-linecap="round" stroke-dasharray="57 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">20</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S² — Credential &amp; Kerberos</div><div class="ring-verdict" style="color:#9b2335">High Risk</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="113 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">40</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S³ — Delegation Paths</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="141 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">50</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁴ — Persistence &amp; GPO</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#9b2335" stroke-width="8" stroke-linecap="round" stroke-dasharray="76 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">27</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁵ — Detection Readiness</div><div class="ring-verdict" style="color:#9b2335">High Risk</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁴+S⁵ — GPO Governance</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
   </div>
-
-  <!-- Detection Readiness Score -->
   <div class="drs-card" style="margin-top:1rem">
-    <div class="drs-dial">
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
-        <circle cx="60" cy="60" r="50" fill="none" stroke="#c07818" stroke-width="10"
-          stroke-linecap="round" stroke-dasharray="101 314" transform="rotate(-90 60 60)"/>
-        <text x="60" y="56" text-anchor="middle" fill="#e8ebe6" font-size="20" font-weight="700" font-family="monospace">32</text>
-        <text x="60" y="70" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">DRS / 100</text>
-      </svg>
-    </div>
+    <div class="drs-dial"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="#c07818" stroke-width="10" stroke-linecap="round" stroke-dasharray="101 314" transform="rotate(-90 60 60)"/><text x="60" y="56" text-anchor="middle" fill="#e8ebe6" font-size="20" font-weight="700" font-family="monospace">32</text><text x="60" y="70" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">DRS / 100</text></svg></div>
     <div class="drs-info">
       <div class="exec-label" style="margin-bottom:0.3rem">Detection Readiness Score (DRS)</div>
       <div class="drs-score-big">32 / 100</div>
       <div class="drs-band">Limited Visibility</div>
-      <p class="drs-desc">The organisation has minimal audit logging in place and no centralised SIEM. Critical events — including privileged account usage, Kerberos ticket activity, and GPO changes — are not being captured. An attacker with domain-level access could operate undetected for weeks. This is the highest-priority remediation area.</p>
+      <p class="drs-desc">The organisation has minimal audit logging in place and no centralised SIEM. Critical events — including privileged account usage, Kerberos ticket activity, and GPO changes — are not being captured. An attacker with domain-level access could operate undetected for weeks.</p>
     </div>
   </div>
 </div>
 
-<!-- SECTION 3: FINDINGS REGISTER -->
+<!-- SECTION 3: FINDINGS -->
 <div class="report-section" style="margin-top:2rem">
-  <div class="section-header">
-    <div class="section-label">Section 3</div>
-    <div class="section-title">Findings register</div>
-  </div>
-
+  <div class="section-header"><div class="section-label">Section 3</div><div class="section-title">Findings register</div></div>
   <div class="filter-bar">
     <span class="filter-label">Filter:</span>
-    <button class="filter-btn active" data-sev="All"      onclick="filterFindings('All',this)">All (19)</button>
+    <button class="filter-btn active" data-sev="All" onclick="filterFindings('All',this)">All (19)</button>
     <button class="filter-btn" data-sev="Critical" onclick="filterFindings('Critical',this)">Critical (4)</button>
-    <button class="filter-btn" data-sev="High"     onclick="filterFindings('High',this)">High (7)</button>
-    <button class="filter-btn" data-sev="Medium"   onclick="filterFindings('Medium',this)">Medium (5)</button>
-    <button class="filter-btn" data-sev="Low"      onclick="filterFindings('Low',this)">Low (2)</button>
-    <button class="filter-btn" data-sev="Info"     onclick="filterFindings('Info',this)">Info (1)</button>
+    <button class="filter-btn" data-sev="High" onclick="filterFindings('High',this)">High (7)</button>
+    <button class="filter-btn" data-sev="Medium" onclick="filterFindings('Medium',this)">Medium (5)</button>
+    <button class="filter-btn" data-sev="Low" onclick="filterFindings('Low',this)">Low (2)</button>
+    <button class="filter-btn" data-sev="Info" onclick="filterFindings('Info',this)">Info (1)</button>
   </div>
-
   <div class="findings-table-wrap">
     <table id="findings-table">
-      <thead>
-        <tr>
-          <th>Severity</th>
-          <th>Check ID</th>
-          <th>Finding</th>
-          <th>Pillar</th>
-          <th>Affected</th>
-          <th>Date</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Severity</th><th>Check ID</th><th>Finding</th><th>Pillar</th><th>Affected</th><th>Date</th></tr></thead>
       <tbody id="findings-tbody">
-
-        <!-- CRITICAL -->
-        <tr class="finding-row" data-sev="Critical"
-            style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)"
-            onclick="toggleDetail('fd0')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td>
-          <td class="check-cell"><code>S2-KERB-001</code></td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd0')">
+          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S2-KERB-001</code></td>
           <td class="title-cell">Kerberoastable service accounts detected <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S² — Credential</td>
-          <td class="count-cell">6</td>
-          <td class="date-cell">2026-05-15</td>
+          <td class="pillar-cell">S² — Credential</td><td class="count-cell">6</td><td class="date-cell">2026-05-15</td>
         </tr>
-        <tr class="finding-detail" id="fd0" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">6 user accounts have Service Principal Names (SPNs) configured, making them Kerberoastable. An attacker with any valid domain credentials can request a Kerberos service ticket for these accounts and attempt to crack the password hash offline — with no noise on the network and no account lockout risk.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">SamAccountName      SPN                              PasswordAge
+        <tr class="finding-detail" id="fd0" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">6 user accounts have Service Principal Names (SPNs) configured, making them Kerberoastable. An attacker with any valid domain credentials can request a Kerberos service ticket for these accounts and attempt to crack the password hash offline — with no noise on the network and no account lockout risk.</div></div><div class="detail-section"><div class="detail-label">Evidence</div><pre class="detail-pre">SamAccountName      SPN                              PasswordAge
 ---                 ---                              -----------
 svc_sql             MSSQLSvc/db01.alpha-inv.co.ke    847 days
 svc_backup          BackupExec/bkp01.alpha-inv.co.ke 1,203 days
 svc_erp             HTTP/erp.alpha-inv.co.ke         612 days
 svc_reports         HTTP/reports.alpha-inv.co.ke     945 days
 helpdesk_admin      HTTP/helpdesk.alpha-inv.co.ke    388 days
-svc_monitoring      WSMAN/mon01.alpha-inv.co.ke      721 days</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Audit each SPN — remove any that are not actively required.
-2. Migrate all service accounts to Group Managed Service Accounts (gMSA) — passwords rotate automatically (240-character, machine-managed).
-3. For accounts that cannot use gMSA: reset passwords to 25+ character random strings immediately and enforce AES-only Kerberos encryption (remove RC4).
-4. Enable "Protected Users" security group for all service accounts where possible.
+svc_monitoring      WSMAN/mon01.alpha-inv.co.ke      721 days</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Audit each SPN — remove any that are not actively required.<br>2. Migrate all service accounts to Group Managed Service Accounts (gMSA).<br>3. For accounts that cannot use gMSA: reset passwords to 25+ character random strings immediately and enforce AES-only Kerberos encryption.<br>4. Enable "Protected Users" security group for all service accounts where possible.<br><br>Priority order: svc_sql and svc_backup first (oldest passwords, highest-privilege services).</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1558.003 · CIS Control 5.4</span><span>Detected: 2026-05-15 09:14:22</span></div></div></td></tr>
 
-Priority order: svc_sql and svc_backup first (oldest passwords, highest-privilege services).</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1558.003 · CIS Control 5.4</span>
-                <span>Detected: 2026-05-15 09:14:22</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="Critical"
-            style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)"
-            onclick="toggleDetail('fd1')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td>
-          <td class="check-cell"><code>S2-ASRP-001</code></td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd1')">
+          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S2-ASRP-001</code></td>
           <td class="title-cell">AS-REP roastable accounts — pre-auth disabled <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S² — Credential</td>
-          <td class="count-cell">3</td>
-          <td class="date-cell">2026-05-15</td>
+          <td class="pillar-cell">S² — Credential</td><td class="count-cell">3</td><td class="date-cell">2026-05-15</td>
         </tr>
-        <tr class="finding-detail" id="fd1" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">3 accounts have Kerberos pre-authentication disabled (DONT_REQUIRE_PREAUTH flag). This allows an unauthenticated attacker to request an AS-REP response for these accounts from any network-accessible DC, obtaining an encrypted hash that can be cracked offline without ever needing valid domain credentials.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">SamAccountName      Enabled   PasswordLastSet
+        <tr class="finding-detail" id="fd1" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">3 accounts have Kerberos pre-authentication disabled. This allows an unauthenticated attacker to request an AS-REP response, obtaining an encrypted hash that can be cracked offline without any valid domain credentials.</div></div><div class="detail-section"><div class="detail-label">Evidence</div><pre class="detail-pre">SamAccountName      Enabled   PasswordLastSet
 ---                 -------   ---------------
 legacy_app_svc      True      2023-11-04
 testuser_old        True      2022-08-17
-api_connector       True      2024-02-09</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Enable Kerberos pre-authentication on all 3 accounts immediately (uncheck "Do not require Kerberos preauthentication" in ADUC → Account → Account Options).
-2. Immediately reset passwords for all 3 accounts to 25+ character random strings.
-3. Disable legacy_app_svc and testuser_old if they are no longer actively required — these appear to be legacy/test accounts.
-4. Review why pre-authentication was disabled — if a legacy application required it, migrate that application.
+api_connector       True      2024-02-09</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Enable Kerberos pre-authentication on all 3 accounts immediately.<br>2. Reset passwords to 25+ character random strings.<br>3. Disable legacy_app_svc and testuser_old if no longer required.<br><br>This can be remediated in under 30 minutes.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1558.004 · MS-KILE RFC 4120</span><span>Detected: 2026-05-15 09:16:07</span></div></div></td></tr>
 
-This can be remediated in under 30 minutes.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1558.004 · MS-KILE RFC 4120</span>
-                <span>Detected: 2026-05-15 09:16:07</span>
-              </div>
-            </div>
-          </td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd2')">
+          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S1-PRIV-003</code></td>
+          <td class="title-cell">Domain Admins group contains 11 members — excessive privilege <span class="expand-hint">▼ expand</span></td>
+          <td class="pillar-cell">S¹ — Identity</td><td class="count-cell">11</td><td class="date-cell">2026-05-15</td>
         </tr>
+        <tr class="finding-detail" id="fd2" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">The Domain Admins group contains 11 members — significantly above the recommended maximum of 2–3. Each DA account is a potential path to full domain compromise. 3 of these accounts have not logged in within the last 90 days, indicating they may be stale or service accounts incorrectly elevated.</div></div><div class="detail-section"><div class="detail-label">Evidence</div><pre class="detail-pre">Domain Admins members (11):
+Administrator, paul.admin, james.it, grace.it,
+svc_deploy, backup_admin, helpdesk_lead,
+legacy_admin, test_admin, mary.infra, peter.sec
 
-        <tr class="finding-row" data-sev="Critical"
-            style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)"
-            onclick="toggleDetail('fd2')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td>
-          <td class="check-cell"><code>S1-PRIV-001</code></td>
-          <td class="title-cell">Excessive Domain Admin membership — 14 accounts <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S¹ — Identity</td>
-          <td class="count-cell">14</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd2" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">14 user accounts are members of the Domain Admins group. Industry best practice for an organisation of this size (347 users) is 2–3 DA accounts maximum, used exclusively for domain administration tasks via dedicated Privileged Access Workstations (PAW). Each excess DA account is a lateral movement path to full domain compromise.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Domain Admins membership (14 accounts):
-Administrator (built-in)
-paul.kamau          — ICT Manager (expected)
-brian.otieno        — ICT Officer (expected)
-grace.wanjiku       — CEO (⚠ should not be DA)
-accounts.manager    — Finance role (⚠ should not be DA)
-helpdesk1           — Helpdesk tier 1 (⚠ excessive)
-helpdesk2           — Helpdesk tier 1 (⚠ excessive)
-svc_backup          — Service account (⚠ DA not required)
-svc_monitoring      — Service account (⚠ DA not required)
-+5 additional accounts (see full CSV appendix)</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Retain only 2–3 named DA accounts for ICT Manager and one deputy — with dedicated admin accounts separate from daily-use accounts.
-2. Remove all service accounts from Domain Admins — audit what permissions they actually require and assign minimum necessary rights.
-3. Remove non-ICT staff (CEO, Finance Manager) from DA — use delegation for any specific tasks they need.
-4. Remove helpdesk tier-1 accounts — create a delegated OU with specific rights instead.
-5. Implement Protected Users group for all remaining DA accounts.
-6. Enable DA account audit logging in SIEM (once deployed).</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1078.002 · CIS Control 5.3 · ISO 27001 A.9.2.3</span>
-                <span>Detected: 2026-05-15 09:22:44</span>
-              </div>
-            </div>
-          </td>
-        </tr>
+Stale (>90 days no logon): svc_deploy, legacy_admin, test_admin</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Remove all 11 accounts from Domain Admins.<br>2. Re-add only 2–3 named individuals who require DA privileges for day-to-day operations.<br>3. Disable svc_deploy, legacy_admin, and test_admin immediately — investigate before deletion.<br>4. Use just-in-time (JIT) privilege escalation for temporary DA access via PAM tools.<br>5. Enable DA logon auditing (Event ID 4672).</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1078.002 · CIS Control 5.4 · MS Security Baseline</span><span>Detected: 2026-05-15 10:02:14</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="Critical"
-            style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)"
-            onclick="toggleDetail('fd3')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td>
-          <td class="check-cell"><code>S2-KRBT-001</code></td>
-          <td class="title-cell">KRBTGT password not rotated in over 3 years <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S² — Credential</td>
-          <td class="count-cell">1</td>
-          <td class="date-cell">2026-05-15</td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd3')">
+          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S5-AUD-001</code></td>
+          <td class="title-cell">Advanced audit policy not configured — no privileged activity logging <span class="expand-hint">▼ expand</span></td>
+          <td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td>
         </tr>
-        <tr class="finding-detail" id="fd3" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">The KRBTGT account password was last changed 1,247 days ago (approximately 3.4 years). The KRBTGT hash is used to sign all Kerberos tickets in the domain. A compromised KRBTGT hash enables a "Golden Ticket" attack — allowing an attacker to forge Kerberos tickets for any user, including Domain Admins, with arbitrary lifetimes, even after passwords are reset.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">KRBTGT Account:
-  PasswordLastSet : 2023-01-18 08:33:12
-  PasswordAge     : 1,247 days
-  Recommendation  : Rotate every 180 days maximum
-  Golden Ticket   : Risk window OPEN since Jan 2023</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">Follow Microsoft's KRBTGT reset procedure exactly — this must be done in two stages to avoid authentication disruptions:
+        <tr class="finding-detail" id="fd3" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">Neither domain controller has Advanced Audit Policy configured. Critical security events — including privileged account usage (4672), Kerberos ticket activity (4769), GPO changes (5136), and account management events (4728) — are not being captured. An attacker with domain access could operate undetected.</div></div><div class="detail-section"><div class="detail-label">Evidence</div><pre class="detail-pre">DC01 \ DC02 — Advanced Audit Policy:
+Account Logon      : Not Configured
+Account Management : Not Configured
+DS Access          : Not Configured
+Logon/Logoff       : Not Configured
+Privilege Use      : Not Configured
+Policy Change      : Not Configured</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Deploy Advanced Audit Policy via GPO (Computer Config → Windows Settings → Security Settings → Advanced Audit Policy).<br>2. Enable at minimum: Account Logon (Success+Failure), Account Management (Success), Privilege Use (Success), DS Access (Success), Policy Change (Success+Failure).<br>3. Set Security event log to minimum 512 MB and configure log forwarding to SIEM or centralised collector.<br>4. Required for SASRA and CBK compliance. Estimated effort: 4 hours.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1562.002 · CIS Control 8 · SASRA Circular 2022</span><span>Detected: 2026-05-16 08:45:00</span></div></div></td></tr>
 
-Stage 1: Reset KRBTGT password (run during maintenance window).
-Stage 2: Wait 10 hours (replication convergence + ticket expiry).
-Stage 3: Reset KRBTGT password a second time.
+        <tr class="finding-row" data-sev="High" style="border-left:3px solid #c07818" onclick="toggleDetail('fd4')">
+          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td><td class="check-cell"><code>S1-STALE-001</code></td>
+          <td class="title-cell">47 enabled user accounts — no logon in 90+ days <span class="expand-hint">▼ expand</span></td>
+          <td class="pillar-cell">S¹ — Identity</td><td class="count-cell">47</td><td class="date-cell">2026-05-15</td>
+        </tr>
+        <tr class="finding-detail" id="fd4" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">47 enabled Active Directory accounts have not logged on in over 90 days. Stale accounts represent a persistent attack surface — they are valid credential targets for password spraying, credential stuffing, and Kerberoasting. Former employees, contractors, and decommissioned service accounts are common causes.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Export the list and cross-reference with HR active employee records.<br>2. Disable (do not delete) all accounts with no business justification within 7 days.<br>3. Review and disable/delete within 30 days after confirming no service dependency.<br>4. Implement a quarterly stale account review process. Estimated effort: 3–4 hours.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1078 · CIS Control 5.3 · Kenya DPA — Data Minimisation</span><span>Detected: 2026-05-15 09:30:00</span></div></div></td></tr>
 
-After reset: establish a recurring 180-day rotation schedule. Document as a change management item. Verify all DCs have replicated before closing the maintenance window.
+        <tr class="finding-row" data-sev="High" style="border-left:3px solid #c07818" onclick="toggleDetail('fd5')">
+          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td><td class="check-cell"><code>S2-PWD-001</code></td>
+          <td class="title-cell">Default domain password policy — minimum 7 characters, no complexity <span class="expand-hint">▼ expand</span></td>
+          <td class="pillar-cell">S² — Credential</td><td class="count-cell">All users</td><td class="date-cell">2026-05-15</td>
+        </tr>
+        <tr class="finding-detail" id="fd5" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">The domain password policy enforces a minimum of only 7 characters with basic complexity. This falls well below the NIST SP 800-63B recommendation of 8+ characters and CBK password guidelines. 7-character passwords are vulnerable to rapid offline cracking following a hash extraction.</div></div><div class="detail-section"><div class="detail-label">Evidence</div><pre class="detail-pre">Default Domain Policy — Password Settings:
+Minimum Length    : 7 (recommended: 14+)
+Complexity        : Enabled (basic only)
+Max Password Age  : 42 days
+Min Password Age  : 1 day
+History           : 24 passwords
+Reversible Enc.   : Disabled</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Update Default Domain Policy to minimum 14 characters.<br>2. Remove maximum password age (NIST recommends removing expiry in favour of length).<br>3. Implement a Fine-Grained Password Policy (FGPP) for privileged accounts — minimum 20 characters.<br>4. Enable HIBP (Have I Been Pwned) integration via Azure AD Password Protection or equivalent tool.</div></div></div></div><div class="detail-footer"><span>Reference: NIST SP 800-63B · CBK Cybersecurity Guidelines 2019 · CIS Control 5.2</span><span>Detected: 2026-05-15 09:45:00</span></div></div></td></tr>
 
-⚠ Do not reset the KRBTGT password during business hours — schedule a maintenance window.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1558.001 · MS KB2733948</span>
-                <span>Detected: 2026-05-15 09:28:51</span>
-              </div>
-            </div>
-          </td>
+        <!-- Medium findings (condensed) -->
+        <tr class="finding-row" data-sev="Medium" onclick="toggleDetail('fd6')">
+          <td><span class="sev-badge" style="background:#555">🟡 Medium</span></td><td class="check-cell"><code>S3-DEL-001</code></td>
+          <td class="title-cell">Unconstrained delegation configured on 2 non-DC computers <span class="expand-hint">▼ expand</span></td>
+          <td class="pillar-cell">S³ — Delegation</td><td class="count-cell">2</td><td class="date-cell">2026-05-15</td>
         </tr>
+        <tr class="finding-detail" id="fd6" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">2 non-DC computers (APP01, LEGACY-SRV) have unconstrained Kerberos delegation enabled. Any account that authenticates to a service on these servers will have their Kerberos TGT cached on the machine — extractable by an attacker with local admin access to impersonate any user, including Domain Admins.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Remove unconstrained delegation from APP01 and LEGACY-SRV.<br>2. Replace with constrained delegation (S4U2Proxy) or resource-based constrained delegation (RBCD) limited to specific SPNs.<br>3. Add all DA and sensitive accounts to the "Protected Users" group — prevents TGT delegation.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1558.001 · MS-KILE</span><span>Detected: 2026-05-15 11:20:00</span></div></div></td></tr>
 
-        <!-- HIGH -->
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd4')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>S1-STAL-001</code></td>
-          <td class="title-cell">Stale privileged accounts — inactive for 90+ days <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S¹ — Identity</td>
-          <td class="count-cell">23</td>
-          <td class="date-cell">2026-05-15</td>
+        <tr class="finding-row" data-sev="Medium" onclick="toggleDetail('fd7')">
+          <td><span class="sev-badge" style="background:#555">🟡 Medium</span></td><td class="check-cell"><code>S5-SMB-001</code></td>
+          <td class="title-cell">SMB signing not enforced on all domain members <span class="expand-hint">▼ expand</span></td>
+          <td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">18 hosts</td><td class="date-cell">2026-05-16</td>
         </tr>
-        <tr class="finding-detail" id="fd4" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">23 accounts have not logged in for over 90 days but remain enabled in Active Directory. 4 of these are members of elevated groups (Domain Admins or Account Operators). Stale accounts are a common persistence vector — former employees, contractors, or test accounts that were never offboarded provide silent access paths.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Stale accounts (90+ days, enabled):
-Total: 23  |  Privileged: 4  |  Standard: 19
+        <tr class="finding-detail" id="fd7" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">SMB signing is not enforced across 18 domain member workstations and servers. Without SMB signing, an attacker on the local network can perform NTLM relay attacks — capturing authentication requests and relaying them to other services, potentially gaining administrative access without cracking any passwords.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Enable "Microsoft network server: Digitally sign communications (always)" via GPO on all domain computers.<br>2. Also enable "Microsoft network client: Digitally sign communications (always)".<br>3. Deploy via Computer Configuration → Windows Settings → Security Settings → Local Policies → Security Options.<br>Estimated effort: 1–2 hours (GPO deployment).</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1557.001 · CIS Benchmark L1</span><span>Detected: 2026-05-16 09:15:00</span></div></div></td></tr>
 
-Top stale privileged accounts:
-john.mwangi.old    — Last logon: 2025-07-14  (DA member)
-contractor_acacia  — Last logon: 2025-09-02  (DA member)
-audit_cba_2024     — Last logon: 2025-03-18  (Account Ops)
-intern_oct24       — Last logon: 2024-10-31  (Account Ops)</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Disable all 23 stale accounts immediately (do not delete — retain for 30 days in case of business need).
-2. Remove the 4 stale privileged accounts from all elevated groups before disabling.
-3. Implement an automated stale account review: query for accounts inactive 90+ days monthly, route to line managers for confirmation, disable after 7 days with no response.
-4. Implement an offboarding checklist that includes AD account disable on the day of departure.
-5. Establish a contractor account lifecycle policy — all contractor accounts should have an expiry date set at creation.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1078 · CIS Control 5.2 · Kenya DPA Article 25</span>
-                <span>Detected: 2026-05-15 09:31:17</span>
-              </div>
-            </div>
-          </td>
-        </tr>
+        <tr class="finding-row" data-sev="Medium" onclick="toggleDetail('fd8')"><td><span class="sev-badge" style="background:#555">🟡 Medium</span></td><td class="check-cell"><code>I1-LAPS-001</code></td><td class="title-cell">LAPS not deployed — shared local admin password across endpoints <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">I — Infrastructure</td><td class="count-cell">63 endpoints</td><td class="date-cell">2026-05-16</td></tr>
+        <tr class="finding-detail" id="fd8" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">Windows LAPS (Local Administrator Password Solution) is not deployed. This means the local administrator password is likely the same across all 63 endpoints. If an attacker compromises any single machine, they can immediately authenticate to all other machines using pass-the-hash or pass-the-password techniques.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Deploy Windows LAPS (built into Windows 10 22H2+ / Windows 11 / Server 2019+).<br>2. Configure LAPS policy via GPO to rotate the local admin password every 30 days.<br>3. Store passwords in AD computer objects or Azure AD — readable only by authorised IT staff.<br>Estimated effort: 4 hours to deploy, 30 minutes per subsequent rotation review.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1078.003 · CIS Control 5.4</span><span>Detected: 2026-05-16 10:05:00</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd5')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>S3-UDEL-001</code></td>
-          <td class="title-cell">Unconstrained delegation configured on 2 servers <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S³ — Delegation</td>
-          <td class="count-cell">2</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd5" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">Two non-DC servers have "Trust this computer for delegation to any service (Kerberos only)" — unconstrained delegation — enabled. When a user authenticates to a server with unconstrained delegation, their TGT is stored in that server's memory. An attacker who compromises either server can extract these TGTs and impersonate any user who has recently authenticated to it, including Domain Admins.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Servers with Unconstrained Delegation (non-DC):
-APP01.alpha-inv.co.ke  — Application server
-LEGACY01.alpha-inv.co.ke — Legacy ERP server
+        <tr class="finding-row" data-sev="Medium" onclick="toggleDetail('fd9')"><td><span class="sev-badge" style="background:#555">🟡 Medium</span></td><td class="check-cell"><code>S1-SHAD-001</code></td><td class="title-cell">4 shadow admin accounts detected (AdminCount=1, not in privileged group) <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S¹ — Identity</td><td class="count-cell">4</td><td class="date-cell">2026-05-15</td></tr>
+        <tr class="finding-detail" id="fd9" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">4 accounts have AdminCount=1 set but are not members of any privileged group. This indicates these accounts were previously added to a privileged group (triggering AdminSDHolder protection) and then removed — retaining a hardened ACL that prevents modification. 1 of these accounts has logged on in the last 30 days.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Investigate the recently-active shadow admin account immediately — treat as potential compromise indicator.<br>2. Clear AdminCount=0 on all 4 accounts after investigation.<br>3. Allow SDProp to revert ACLs (runs every 60 minutes).<br>4. Review account creation and modification history in event logs.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1098 · SDProp / AdminSDHolder</span><span>Detected: 2026-05-15 10:45:00</span></div></div></td></tr>
 
-TrustedForDelegation = True
-TrustedToAuthForDelegation = False</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Migrate from Unconstrained to Constrained Delegation (KCD) — specify only the services each server legitimately needs to impersonate users for.
-2. If Resource-Based Constrained Delegation (RBCD) is feasible, prefer it — it can be configured without domain admin rights.
-3. Add both servers to the "Protected Users" group — this prevents TGT forwarding entirely if no delegation is actually needed.
-4. Review whether LEGACY01 genuinely requires delegation — if the ERP system does not use Kerberos pass-through, delegation can be disabled entirely.
-5. Enable monitoring for TGT-forwarding events (Event ID 4768, 4769) from these servers.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1134.001 · MS Security Advisory</span>
-                <span>Detected: 2026-05-15 10:02:33</span>
-              </div>
-            </div>
-          </td>
-        </tr>
+        <tr class="finding-row" data-sev="Medium" onclick="toggleDetail('fd10')"><td><span class="sev-badge" style="background:#555">🟡 Medium</span></td><td class="check-cell"><code>S5-EVTLOG-001</code></td><td class="title-cell">Security event log size insufficient — 20 MB on both DCs <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td></tr>
+        <tr class="finding-detail" id="fd10" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">The Security event log on both domain controllers is configured to 20 MB with "overwrite events as needed". At current event volumes, logs are being overwritten within 24–48 hours. This makes forensic investigation of incidents impossible and violates SASRA record-keeping requirements.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Set Security log size to minimum 1 GB on each DC via GPO (Computer Config → Windows Settings → Security Settings → Event Log).<br>2. Configure log forwarding to a centralised SIEM or Windows Event Collector immediately.<br>3. Retain security logs for minimum 12 months per SASRA requirements.<br>Estimated effort: 1 hour.</div></div></div></div><div class="detail-footer"><span>Reference: SASRA Circular 2022 · CIS Control 8.2 · NIST SP 800-92</span><span>Detected: 2026-05-16 09:00:00</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd6')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>S5-AUDP-001</code></td>
-          <td class="title-cell">Advanced audit policy not configured — no SIEM ingestion <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S⁵ — Detection</td>
-          <td class="count-cell">2 DCs</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd6" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">Both domain controllers are using basic audit policy only. Advanced audit policy subcategories (Account Logon, Account Management, DS Access, Logon/Logoff, Object Access, Policy Change, Privilege Use, System) are not configured. Critical security event categories are not being logged at the required granularity. There is no SIEM or log aggregation in place — logs are not retained beyond the default Windows event log circular buffer (~7 days).</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Advanced Audit Policy (auditpol /get /category:*):
-  Account Logon         : No Auditing
-  Account Management    : Success only (insufficient)
-  Directory Service     : No Auditing
-  Logon/Logoff          : Success only
-  Object Access         : No Auditing
-  Privilege Use         : No Auditing
-  Policy Change         : Success only
+        <tr class="finding-row" data-sev="Low" onclick="toggleDetail('fd11')"><td><span class="sev-badge" style="background:#1e5a3c">ℹ Low</span></td><td class="check-cell"><code>S1-PRIV-004</code></td><td class="title-cell">Protected Users security group not utilised for privileged accounts <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S¹ — Identity</td><td class="count-cell">All DAs</td><td class="date-cell">2026-05-15</td></tr>
+        <tr class="finding-detail" id="fd11" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">No accounts are members of the Protected Users security group. This group prevents: NTLM authentication, DES and RC4 Kerberos encryption, unconstrained delegation use, and TGT renewal beyond 4 hours — significantly hardening privileged accounts against credential theft.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">Add all Domain Admins and sensitive service accounts to the Protected Users security group. Test in a lab environment first — Protected Users restrictions may break legacy applications that rely on NTLM or RC4 Kerberos. Estimated effort: 2–4 hours including testing.</div></div></div></div><div class="detail-footer"><span>Reference: MS KB2871997 · MITRE ATT&CK T1558</span><span>Detected: 2026-05-15 11:00:00</span></div></div></td></tr>
 
-SIEM/Log Forwarder     : NOT DETECTED
-Security Event Retention: ~7 days (circular buffer)</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">Immediate (this week):
-1. Deploy the RETACH recommended Advanced Audit Policy GPO — configure Success and Failure for: Account Logon, Account Management, Directory Service Access, Logon/Logoff, Privilege Use, Policy Change.
-2. Increase Security event log size to minimum 1GB per DC.
-3. Enable PowerShell Script Block Logging and Module Logging via GPO.
+        <tr class="finding-row" data-sev="Low" onclick="toggleDetail('fd12')"><td><span class="sev-badge" style="background:#1e5a3c">ℹ Low</span></td><td class="check-cell"><code>S5-LDAP-001</code></td><td class="title-cell">LDAP signing not required — LDAP relay possible <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td></tr>
+        <tr class="finding-detail" id="fd12" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">LDAP signing is not required on the domain controllers. This enables LDAP relay attacks where an attacker with network access can relay LDAP authentication to the DC to perform privileged operations, including adding computer objects to the domain or modifying ACLs.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Set "Domain controller: LDAP server signing requirements" to "Require signing" via GPO.<br>2. Set "Network security: LDAP client signing requirements" to "Require signing" on all domain members.<br>3. Test all LDAP-dependent applications before enforcing — some legacy apps use unsigned LDAP.<br>Estimated effort: 2–3 hours including application testing.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1557 · MS ADV190023</span><span>Detected: 2026-05-16 09:30:00</span></div></div></td></tr>
 
-30-day roadmap:
-4. Deploy a log aggregation solution — minimum viable: Windows Event Forwarding (WEF) to a central Windows Event Collector.
-5. Evaluate SIEM options appropriate for SACCO scale: Microsoft Sentinel (cost-effective at low volume), Wazuh (open source), or Graylog.
-6. Define a 90-day log retention policy to meet SASRA and Kenya DPA requirements.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1562.002 · CIS Control 8 · SASRA ICT Guidelines 2023</span>
-                <span>Detected: 2026-05-16 08:44:11</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd7')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>S2-WKEP-001</code></td>
-          <td class="title-cell">Weak Kerberos encryption — RC4 still permitted domain-wide <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S² — Credential</td>
-          <td class="count-cell">Domain-wide</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd7" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">The domain permits RC4-HMAC Kerberos encryption in addition to AES-128 and AES-256. RC4 is a weak cipher with known cryptographic weaknesses. When Kerberoasting attacks capture service ticket hashes, RC4-encrypted tickets are significantly faster to crack than AES tickets. Additionally, RC4 support enables downgrade attacks where an attacker can force weaker encryption to be negotiated.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Domain: alpha-inv.co.ke
-  msDS-SupportedEncryptionTypes: 0x7 (RC4, AES128, AES256)
-  RC4_HMAC_MD5 enabled: True  ← WEAK
-
-Accounts using RC4 only (no AES flag):
-  17 service accounts
-  3 legacy computer accounts
-  Encryption not set (defaults to RC4): 41 accounts</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Set msDS-SupportedEncryptionTypes = 0x18 (AES128 + AES256 only) on all service accounts.
-2. Update the Default Domain Policy Kerberos settings to require AES encryption.
-3. Set "Network security: Configure encryption types allowed for Kerberos" GPO to AES128 and AES256 only (remove RC4, DES).
-4. For the 41 accounts with no encryption type set: run Set-ADUser with -KerberosEncryptionType AES128,AES256.
-5. Test legacy applications for compatibility before disabling RC4 domain-wide — some older systems may require a phased migration.
-6. After migration: reset all service account passwords to invalidate existing RC4 ticket hashes.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1558.003 · RFC 4757 · MS KB4520412</span>
-                <span>Detected: 2026-05-15 09:41:08</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd8')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>S4-ADSH-001</code></td>
-          <td class="title-tail">AdminSDHolder inconsistency — 8 accounts affected <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S⁴ — Persistence</td>
-          <td class="count-cell">8</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd8" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">8 accounts have the AdminCount attribute set to 1 but are no longer members of any protected group. This is a residual from historical group membership and indicates that SDProp (the process that enforces AdminSDHolder permissions) has left these accounts with restricted ACLs. An attacker with knowledge of this can identify former privileged accounts that may have been moved to lower-security OUs while retaining restricted inheritance.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Accounts with AdminCount=1, no protected group:
-  mary.njeri        — moved from DA 2024-08 (adminCount not cleared)
-  old.ict.manager   — former DA, now disabled (adminCount not cleared)
-  support.tier2     — former Account Operators member
-  + 5 additional (see full CSV appendix)</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. For each affected account: confirm they are no longer members of any protected group.
-2. Clear AdminCount to 0 (Set-ADUser -Clear adminCount).
-3. Re-enable ACL inheritance on each account's AD object (uncheck "Protect object from accidental deletion" is separate — re-enable inheritance in the Security tab Advanced settings).
-4. Move accounts to appropriate OUs with correct GPO inheritance.
-5. Implement a quarterly AdminCount audit as part of your identity governance process.
-
-Note: This cleanup must be done carefully — clearing AdminCount on an account still in a protected group will create an SDProp battle.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MS TechNet AdminSDHolder · MITRE ATT&CK T1078.002</span>
-                <span>Detected: 2026-05-16 09:12:44</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd9')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>G-PASS-001</code></td>
-          <td class="title-cell">Default domain password policy — 8-char min, no MFA enforcement <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">GPO — Governance</td>
-          <td class="count-cell">Domain-wide</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd9" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-cols">
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Description</div>
-                    <div class="detail-text">The Default Domain Policy enforces an 8-character minimum password length with complexity requirements but no passphrase guidance. The organisation has no Fine-Grained Password Policy (PSO) for privileged accounts. No MFA is enforced at the domain level (no Conditional Access or RADIUS MFA integration). 8-character passwords with standard complexity are typically crackable in hours using GPU-based cracking tools.</div>
-                  </div>
-                  <div class="detail-section">
-                    <div class="detail-label">Evidence</div>
-                    <pre class="detail-pre">Default Domain Policy — Password Settings:
-  MinPasswordLength     : 8
-  PasswordHistoryCount  : 10
-  MaxPasswordAge        : 90 days
-  MinPasswordAge        : 1 day
-  Complexity            : Enabled
-  Reversible Encryption : Disabled
-
-Fine-Grained PSO for privileged accounts: NONE
-MFA integration detected: NONE</pre>
-                  </div>
-                </div>
-                <div>
-                  <div class="detail-section">
-                    <div class="detail-label">Remediation</div>
-                    <div class="detail-text remediation-text">1. Create a Fine-Grained Password Policy for all privileged accounts (Domain Admins, Account Operators, etc.): minimum 15 characters, 60-day max age, history 24.
-2. Update Default Domain Policy to 12-character minimum (allow longer passphrases — "Three words separated by hyphens" is more secure than 8-char complexity).
-3. Deploy MFA for all remote access and VPN authentication — integrate with Microsoft Entra ID (Azure AD) or a RADIUS MFA provider.
-4. Consider deploying Microsoft Entra Password Protection to block common weak passwords (Kenya-specific wordlists available).
-5. Review the 90-day rotation policy — current NIST guidance recommends longer passwords with no forced rotation, unless compromise is detected.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: NIST SP 800-63B · CIS Control 5.2 · SASRA ICT Guidelines 2023</span>
-                <span>Detected: 2026-05-16 10:08:22</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="High"
-            style="border-left:3px solid #c07818;background:rgba(192,120,24,0.08)"
-            onclick="toggleDetail('fd10')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td>
-          <td class="check-cell"><code>S5-DRDY-001</code></td>
-          <td class="title-cell">No incident response plan — no DR test on record <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S⁵ — Detection</td>
-          <td class="count-cell">—</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd10" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">No documented Incident Response Plan (IRP) exists. No disaster recovery test has been performed in the audit period. The organisation cannot demonstrate a tested recovery capability to SASRA or an external auditor. In the event of a ransomware attack or domain compromise, there is no defined playbook for containment, eradication, or recovery — significantly extending the impact window.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Commission a lightweight IRP document (RETACH can provide a SACCO-specific template as part of the Remediation Programme).
-2. Define at minimum: (a) detection triggers, (b) escalation contacts, (c) containment steps for ransomware and account compromise, (d) ODPC breach notification procedure (72-hour requirement under Kenya DPA).
-3. Schedule a tabletop exercise within 60 days — no infrastructure required, typically 2–3 hours with ICT and management teams.
-4. Implement backup restoration testing quarterly — document results as evidence for SASRA audits.</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: NIST SP 800-61r3 · Kenya DPA Section 43 · SASRA ICT Guidelines 5.8</span>
-                <span>Detected: 2026-05-16 11:22:09</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <!-- MEDIUM -->
-        <tr class="finding-row" data-sev="Medium"
-            style="border-left:3px solid #3a9b68;background:rgba(58,155,104,0.07)"
-            onclick="toggleDetail('fd11')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟡 Medium</span></td>
-          <td class="check-cell"><code>I-OSVER-001</code></td>
-          <td class="title-cell">Windows Server 2012 R2 detected — end of support Oct 2023 <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">I — Infrastructure</td>
-          <td class="count-cell">1</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd11" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">LEGACY01.alpha-inv.co.ke is running Windows Server 2012 R2, which reached end of extended support on 10 October 2023. No security patches have been issued for this OS since that date. The server is running the legacy ERP system and is domain-joined with unconstrained delegation (see S3-UDEL-001). This combination represents a significantly elevated attack surface.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Enroll in Microsoft Extended Security Updates (ESU) for Server 2012 R2 immediately — provides patches through October 2026 at no cost via Azure Arc enrollment.
-2. Plan migration of the ERP application to a supported OS (Server 2022) within 12 months.
-3. Isolate LEGACY01 at the network layer — restrict inbound/outbound connections to only what the ERP application requires.
-4. Disable unconstrained delegation on this server (see S3-UDEL-001 remediation).</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MS Product Lifecycle · CIS Control 2.2</span>
-                <span>Detected: 2026-05-15 09:55:44</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="Medium"
-            style="border-left:3px solid #3a9b68;background:rgba(58,155,104,0.07)"
-            onclick="toggleDetail('fd12')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟡 Medium</span></td>
-          <td class="check-cell"><code>S4-GPOP-001</code></td>
-          <td class="title-cell">14 orphaned GPOs — no links, no documentation <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S⁴ — Persistence</td>
-          <td class="count-cell">14</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd12" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">14 Group Policy Objects exist in the domain but are not linked to any OU, site, or domain. These orphaned GPOs consume SYSVOL storage and represent a risk: any administrator who links an orphaned GPO (intentionally or accidentally) could apply unreviewed settings across the domain. Some orphaned GPOs contain settings that override security baselines if linked.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Review each of the 14 orphaned GPOs — determine if they are still needed.
-2. Document GPOs that are intentionally unlinked (e.g., "test GPO", "emergency break-glass GPO").
-3. Delete GPOs that are no longer required.
-4. Implement a GPO governance process: all GPOs must have an owner, a description, and a change log comment.
-5. Enable GPO change auditing (S5-AUDP-001 remediation covers this).</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: CIS Control 4.1 · MS GPMC Best Practices</span>
-                <span>Detected: 2026-05-16 09:44:17</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="Medium"
-            style="border-left:3px solid #3a9b68;background:rgba(58,155,104,0.07)"
-            onclick="toggleDetail('fd13')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟡 Medium</span></td>
-          <td class="check-cell"><code>S1-ADMC-001</code></td>
-          <td class="title-cell">AD Recycle Bin not enabled <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S¹ — Identity</td>
-          <td class="count-cell">Domain</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd13" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">The Active Directory Recycle Bin is not enabled. Without it, accidentally deleted objects (users, groups, OUs, GPOs) cannot be recovered without a full AD restore from backup — which requires a domain controller reboot into Directory Services Restore Mode. The Recycle Bin allows recovery of deleted objects with all attributes intact for up to 180 days, with no service interruption.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">Enable the AD Recycle Bin immediately (one-time, non-reversible, zero-downtime operation):
-
-Enable-ADOptionalFeature "Recycle Bin Feature" `
-  -Scope ForestOrConfigurationSet `
-  -Target "alpha-inv.co.ke" `
-  -Confirm:$false
-
-Note: This requires Forest Functional Level 2008 R2 or higher. Verify with: Get-ADForest | Select ForestMode
-Note: This is irreversible — once enabled, cannot be disabled without raising the forest FFL.</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MS TechNet AD Recycle Bin · CIS Control 11.3</span>
-                <span>Detected: 2026-05-15 09:48:32</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="Medium"
-            style="border-left:3px solid #3a9b68;background:rgba(58,155,104,0.07)"
-            onclick="toggleDetail('fd14')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟡 Medium</span></td>
-          <td class="check-cell"><code>S3-SENS-001</code></td>
-          <td class="title-cell">Sensitive groups accessible via standard user enumeration <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">S³ — Delegation</td>
-          <td class="count-cell">4 groups</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd14" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">4 sensitive groups (Domain Admins, Backup Operators, Account Operators, IT Security) have default ACLs allowing any authenticated user to enumerate their membership via LDAP. This enables reconnaissance — an attacker with any valid credential can immediately identify privileged accounts to target. This is a standard AD default but represents unnecessary information disclosure.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Restrict LDAP read access to sensitive group membership — set the group object ACL to deny Authenticated Users from reading the member attribute.
-2. Use the Protected Users security group for all DA accounts — this also limits some LDAP exposure.
-3. This is an advanced hardening step — implement after addressing Critical and High findings.
-4. Test thoroughly in a lab environment before applying to production — some applications use LDAP to verify group membership and may break if this attribute is restricted.</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1087.002 · BloodHound enumeration paths</span>
-                <span>Detected: 2026-05-15 10:14:58</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="Medium"
-            style="border-left:3px solid #3a9b68;background:rgba(58,155,104,0.07)"
-            onclick="toggleDetail('fd15')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟡 Medium</span></td>
-          <td class="check-cell"><code>G-INV-001</code></td>
-          <td class="title-cell">LAPS not deployed — local admin passwords not managed <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">GPO — Governance</td>
-          <td class="count-cell">Domain-wide</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd15" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">Microsoft Local Administrator Password Solution (LAPS) is not deployed. All workstations likely share a common local administrator password, either from the organisation's default build or a GPO preference (which stores the password in SYSVOL in a recoverable format). A single compromised workstation provides local admin access to all workstations — enabling lateral movement across the fleet.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Deploy Windows LAPS (built into Windows 11 22H2+ and Server 2019+) — it is free and requires no additional licensing.
-2. For older systems, deploy legacy LAPS (Microsoft LAPS v1.x) via GPO.
-3. Configure LAPS to rotate local admin passwords every 30 days and store in the AD computer object (accessible only to delegated admins).
-4. Verify no GPO Preferences are currently setting local admin passwords (these are stored in SYSVOL with reversible encryption — remove immediately if found).</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1550.002 · MS LAPS deployment guide · CIS Control 5.4</span>
-                <span>Detected: 2026-05-16 10:22:31</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <!-- LOW -->
-        <tr class="finding-row" data-sev="Low"
-            style="border-left:3px solid #2a7a52;background:rgba(42,122,82,0.06)"
-            onclick="toggleDetail('fd16')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟢 Low</span></td>
-          <td class="check-cell"><code>I-REACH-001</code></td>
-          <td class="title-cell">Secondary DC replication lag — average 47 minutes <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">I — Infrastructure</td>
-          <td class="count-cell">1 DC</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd16" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">DC02 shows an average intrasite replication latency of 47 minutes against DC01. Expected for intrasite replication is under 15 minutes. This could indicate network connectivity issues between sites or a misconfigured replication schedule. Extended replication lag means security changes (password resets, account disables) propagate slowly — creating a window where a disabled account might still authenticate against DC02.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Run repadmin /showrepl and repadmin /replsummary to identify the specific replication failure point.
-2. Check connectivity between DC01 and DC02 on port 135 (RPC) and ephemeral ports.
-3. Verify the site link schedule — if DCs are in different AD sites, ensure the site link allows continuous replication.
-4. If replication errors are found (USN rollback, lingering objects), follow Microsoft's resolution procedures before the issue escalates.</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MS repadmin documentation · AD replication troubleshooting guide</span>
-                <span>Detected: 2026-05-15 08:52:17</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <tr class="finding-row" data-sev="Low"
-            style="border-left:3px solid #2a7a52;background:rgba(42,122,82,0.06)"
-            onclick="toggleDetail('fd17')">
-          <td><span class="sev-badge" style="background:#2a7a52">🟢 Low</span></td>
-          <td class="check-cell"><code>G-RGRP-001</code></td>
-          <td class="title-cell">Restricted Groups policy not configured for workstations <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">GPO — Governance</td>
-          <td class="count-cell">Domain-wide</td>
-          <td class="date-cell">2026-05-16</td>
-        </tr>
-        <tr class="finding-detail" id="fd17" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">No Restricted Groups or Privileged Access Workstation (PAW) GPO is in place. This means domain admin accounts can interactively log into workstations, exposing their credentials to harvesting via tools like Mimikatz. Any workstation compromise could yield DA credentials if a DA has recently logged in.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">1. Create a GPO denying Domain Admins from interactive logon to standard workstations (Computer Configuration → Windows Settings → Security Settings → User Rights Assignment → "Deny log on locally" and "Deny log on through Remote Desktop Services").
-2. Create a dedicated PAW OU with hardened workstations for administrative tasks only.
-3. This is a hardening step — implement after Critical and High remediations are complete.</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MITRE ATT&CK T1003.001 · MS PAW deployment guidance</span>
-                <span>Detected: 2026-05-16 10:31:55</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
-        <!-- INFO -->
-        <tr class="finding-row" data-sev="Info"
-            style="border-left:3px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.02)"
-            onclick="toggleDetail('fd18')">
-          <td><span class="sev-badge" style="background:#444">ℹ Info</span></td>
-          <td class="check-cell"><code>I-DCCT-001</code></td>
-          <td class="title-cell">Domain functional level: Windows Server 2016 — upgrade available <span class="expand-hint">▼ expand</span></td>
-          <td class="pillar-cell">I — Infrastructure</td>
-          <td class="count-cell">Domain</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr class="finding-detail" id="fd18" style="display:none">
-          <td colspan="6">
-            <div class="detail-block">
-              <div class="detail-section">
-                <div class="detail-label">Description</div>
-                <div class="detail-text">The domain and forest functional level is Windows Server 2016. Windows Server 2025 functional level is now available and enables additional security features including improved Kerberos armoring, enhanced LDAP channel binding enforcement, and additional AD protection features. No immediate security risk, but raising the FFL is recommended as part of the remediation roadmap.</div>
-              </div>
-              <div class="detail-section">
-                <div class="detail-label">Remediation</div>
-                <div class="detail-text remediation-text">Plan an upgrade to Server 2019 or 2022 functional level as part of the infrastructure modernisation roadmap. This requires all DCs to be running the target OS version first. No urgency — schedule within 12 months as part of planned infrastructure work.</div>
-              </div>
-              <div class="detail-footer">
-                <span>Reference: MS AD Functional Levels documentation</span>
-                <span>Detected: 2026-05-15 08:44:03</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-
+        <tr class="finding-row" data-sev="Info" onclick="toggleDetail('fd13')"><td><span class="sev-badge" style="background:#333;color:var(--muted)">ℹ Info</span></td><td class="check-cell"><code>S1-ASSET-001</code></td><td class="title-cell">19 computer objects inactive for 180+ days — clean-up recommended <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S¹ — Identity</td><td class="count-cell">19</td><td class="date-cell">2026-05-15</td></tr>
+        <tr class="finding-detail" id="fd13" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">19 computer objects in Active Directory have not contacted the domain in 180+ days. These are likely decommissioned machines whose AD objects were not removed. Stale computer objects inflate the attack surface and create confusion in asset inventory.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Export the list and cross-reference with physical asset register and IT asset management system.<br>2. Disable objects not accounted for. Delete after 30-day confirmation period.<br>3. Implement a quarterly stale computer object review. Estimated effort: 2 hours.</div></div></div></div><div class="detail-footer"><span>Reference: CIS Control 1.1 · S.I.N.S. S1 — Asset Inventory</span><span>Detected: 2026-05-15 10:00:00</span></div></div></td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
 <!-- SECTION 4: REMEDIATION ROADMAP -->
-<div class="report-section" style="margin-top:2.5rem">
-  <div class="section-header">
-    <div class="section-label">Section 4</div>
-    <div class="section-title">Remediation roadmap</div>
-  </div>
+<div class="report-section" style="margin-top:2rem">
+  <div class="section-header"><div class="section-label">Section 4</div><div class="section-title">Remediation roadmap</div></div>
   <div class="roadmap-grid">
     <div class="roadmap-card">
-      <div class="roadmap-window" style="color:#9b2335">⬤ Immediate — Week 1</div>
-      <h4>Critical &amp; blocking</h4>
+      <div class="roadmap-window" style="color:#9b2335">Phase 1 · Days 0–7 · Critical</div>
+      <h4>Immediate Actions</h4>
       <ul class="roadmap-list">
-        <li>Enable pre-authentication on 3 AS-REP accounts (30 min)</li>
-        <li>Remove excess Domain Admins (11 accounts)</li>
-        <li>Reset passwords for all Kerberoastable service accounts</li>
-        <li>Schedule KRBTGT double-reset maintenance window</li>
-        <li>Disable 4 stale privileged accounts</li>
-        <li>Deploy Advanced Audit Policy GPO to both DCs</li>
+        <li>Enable Kerberos pre-auth on 3 AS-REP accounts</li>
+        <li>Reduce Domain Admins to 3 named accounts</li>
+        <li>Deploy Advanced Audit Policy via GPO</li>
+        <li>Reset passwords for all Kerberoastable SPNs</li>
       </ul>
     </div>
     <div class="roadmap-card">
-      <div class="roadmap-window" style="color:#c07818">⬤ Short-term — 30 days</div>
-      <h4>High priority</h4>
+      <div class="roadmap-window" style="color:#c07818">Phase 2 · Days 8–30 · High</div>
+      <h4>Priority Remediation</h4>
       <ul class="roadmap-list">
         <li>Migrate service accounts to gMSA</li>
-        <li>Disable RC4 — enforce AES-only Kerberos</li>
-        <li>Replace unconstrained delegation with KCD</li>
-        <li>Deploy LAPS to all workstations</li>
-        <li>Enable AD Recycle Bin</li>
-        <li>Enroll LEGACY01 in ESU via Azure Arc</li>
-        <li>Create Fine-Grained PSO for privileged accounts</li>
-        <li>Clear AdminCount on 8 legacy accounts</li>
+        <li>Disable 47 stale user accounts</li>
+        <li>Deploy LAPS on all 63 endpoints</li>
+        <li>Increase Security log to 1 GB + forwarding</li>
+        <li>Enforce SMB signing via GPO</li>
+        <li>Investigate 4 shadow admin accounts</li>
       </ul>
     </div>
     <div class="roadmap-card">
-      <div class="roadmap-window" style="color:#3a9b68">⬤ Medium-term — 60–90 days</div>
-      <h4>Governance &amp; detection</h4>
+      <div class="roadmap-window" style="color:#3a9b68">Phase 3 · Days 31–90 · Systematic</div>
+      <h4>Structural Improvements</h4>
       <ul class="roadmap-list">
-        <li>Deploy SIEM / log aggregation (WEF or Wazuh)</li>
-        <li>Commission Incident Response Plan document</li>
-        <li>Conduct IRP tabletop exercise</li>
-        <li>Clean up 14 orphaned GPOs</li>
+        <li>Remove unconstrained delegation — APP01, LEGACY-SRV</li>
+        <li>Require LDAP signing on all DCs</li>
+        <li>Add DAs to Protected Users group</li>
+        <li>Update domain password policy to 14+ chars</li>
         <li>Disable 19 stale standard accounts</li>
         <li>Implement MFA for remote access</li>
-        <li>Create PAW GPO — restrict DA workstation logon</li>
-        <li>Restrict sensitive group LDAP enumeration</li>
       </ul>
     </div>
   </div>
@@ -1358,10 +1172,7 @@ Note: This is irreversible — once enabled, cannot be disabled without raising 
 
 <!-- SECTION 5: SIGN-OFF -->
 <div class="report-section" style="margin-top:2.5rem">
-  <div class="section-header">
-    <div class="section-label">Section 5</div>
-    <div class="section-title">Engagement sign-off</div>
-  </div>
+  <div class="section-header"><div class="section-label">Section 5</div><div class="section-title">Engagement sign-off</div></div>
   <div class="signoff-card">
     <div>
       <div class="exec-label">RETACH Digital Ltd — Lead Consultant</div>
@@ -1379,8 +1190,8 @@ Note: This is irreversible — once enabled, cannot be disabled without raising 
       <div class="signoff-field"></div>
       <div class="signoff-field-label">Name: _______________ &nbsp; Title: _______________ &nbsp; Date: _______________</div>
       <div class="disclaimer">
-        <strong>Confidentiality:</strong> This report contains sensitive security findings specific to Alpha Investors SACCO Ltd. It is classified CONFIDENTIAL and must be handled in accordance with the engagement NDA. Do not share electronically without encryption. Retain for a minimum of 3 years in accordance with SASRA record-keeping requirements.<br><br>
-        <strong>Legal notice:</strong> This assessment was conducted under written authorisation in compliance with the <strong>Kenya Computer Misuse and Cybercrimes Act 2018</strong>. Unauthorised reproduction or disclosure of this report may constitute an offence.
+        <strong>Confidentiality:</strong> This report contains sensitive security findings specific to Alpha Investors SACCO Ltd. It is classified CONFIDENTIAL and must be handled in accordance with the engagement NDA. Do not share electronically without encryption.<br><br>
+        <strong>Legal notice:</strong> This assessment was conducted under written authorisation in compliance with the <strong>Kenya Computer Misuse and Cybercrimes Act 2018</strong>. Unauthorised reproduction or disclosure may constitute an offence.
       </div>
     </div>
   </div>
@@ -1394,39 +1205,32 @@ Note: This is irreversible — once enabled, cannot be disabled without raising 
     <div style="margin-top:0.3rem">Engagement: RETACH-2026-017 · Alpha Investors SACCO Ltd · alpha-inv.co.ke</div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem">
-    <span class="confidential">CONFIDENTIAL</span>
+    <span class="confidential">SAMPLE</span>
     <a href="https://retach.tech/#contact" style="font-family:var(--mono);font-size:0.65rem;color:var(--green);letter-spacing:0.08em">Book your audit → retach.tech</a>
   </div>
 </div>
+
+</div><!-- /report-wrap -->
 
 <script>
 function toggleDetail(id) {
   var row = document.getElementById(id);
   var isOpen = row.style.display !== 'none';
-  // Close all open details
   document.querySelectorAll('.finding-detail').forEach(function(r){ r.style.display='none'; });
   document.querySelectorAll('.expand-hint').forEach(function(h){ h.textContent='▼ expand'; });
   if (!isOpen) {
     row.style.display = 'table-row';
     var prevRow = row.previousElementSibling;
-    if (prevRow) {
-      var hint = prevRow.querySelector('.expand-hint');
-      if (hint) hint.textContent = '▲ collapse';
-    }
+    if (prevRow) { var hint = prevRow.querySelector('.expand-hint'); if (hint) hint.textContent = '▲ collapse'; }
     row.scrollIntoView({behavior:'smooth', block:'nearest'});
   }
 }
-
 function filterFindings(sev, btn) {
   document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
   document.querySelectorAll('.finding-detail').forEach(function(r){ r.style.display='none'; });
   document.querySelectorAll('.finding-row').forEach(function(row){
-    if (sev === 'All' || row.dataset.sev === sev) {
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
+    if (sev === 'All' || row.dataset.sev === sev) { row.style.display = ''; } else { row.style.display = 'none'; }
   });
 }
 </script>
