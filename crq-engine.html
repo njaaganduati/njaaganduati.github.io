@@ -179,9 +179,177 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .hid{display:none!important}
 footer{text-align:center;padding:2rem;font-size:.7rem;color:var(--muted);border-top:1px solid var(--border);margin-top:3rem;position:relative;z-index:1}
 footer a{color:var(--gl)}
+
+/* ── REGION SELECTOR ─────────────────────────────── */
+.region-bar{display:flex;gap:.35rem;margin-bottom:.9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:.3rem;flex-wrap:wrap}
+.region-btn{flex:1;padding:.45rem .4rem;border:none;border-radius:6px;background:transparent;color:var(--muted);font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;cursor:pointer;transition:all .15s;white-space:nowrap;text-align:center}
+.region-btn.active{background:var(--green);color:#fff;font-weight:600}
+.region-btn:hover:not(.active){background:rgba(42,122,82,.1);color:var(--gl)}
+.region-flag{margin-right:.3rem}
+
+/* ── EMAIL GATE MODAL ────────────────────────────── */
+.gate-overlay{position:fixed;inset:0;background:rgba(10,14,10,.88);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.gate-modal{background:var(--card);border:1px solid var(--b2);border-radius:16px;padding:2.2rem;max-width:440px;width:100%;position:relative;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.gate-modal::before{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(42,122,82,.06),transparent 60%);pointer-events:none}
+.gate-eyebrow{font-family:var(--mono);font-size:.6rem;color:var(--gl);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+.gate-eyebrow::after{content:'';flex:1;height:1px;background:var(--gd)}
+.gate-modal h2{font-family:var(--cond);font-size:1.65rem;font-weight:800;line-height:1.05;margin-bottom:.55rem}
+.gate-modal h2 em{color:var(--green);font-style:normal}
+.gate-modal p{font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:1.4rem}
+.gate-fields{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1rem}
+.gate-field{display:flex;flex-direction:column;gap:.3rem}
+.gate-field label{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.gate-field input{background:var(--dark2);border:1px solid var(--border);color:var(--text);font-family:var(--body);font-size:.88rem;padding:.6rem .8rem;border-radius:7px;outline:none;transition:border-color .15s}
+.gate-field input:focus{border-color:var(--gd)}
+.gate-submit{width:100%;padding:.8rem;border:none;border-radius:8px;background:var(--green);color:#fff;font-family:var(--cond);font-size:1rem;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .2s;margin-bottom:.7rem}
+.gate-submit:hover{background:var(--gl);transform:translateY(-1px)}
+.gate-note{font-size:.68rem;color:var(--muted);text-align:center;line-height:1.55}
+.gate-note a{color:var(--gl)}
+.gate-value-list{display:flex;flex-direction:column;gap:.3rem;margin-bottom:1.2rem}
+.gate-value-item{font-size:.75rem;color:var(--muted);display:flex;gap:.5rem;align-items:flex-start}
+.gate-value-item::before{content:'✓';color:var(--gl);flex-shrink:0;font-weight:700}
+
+/* ── PDF EXPORT BUTTON ───────────────────────────── */
+.pdf-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 1rem;background:rgba(42,122,82,.06);border:1px solid var(--b2);border-radius:10px;flex-wrap:wrap}
+.pdf-bar-info{font-size:.75rem;color:var(--muted);line-height:1.5}
+.pdf-bar-info strong{color:var(--text);display:block;font-size:.82rem;margin-bottom:.1rem}
+.pdf-actions{display:flex;gap:.6rem;flex-shrink:0}
+.btn-pdf{padding:.55rem 1.1rem;border:1px solid var(--b2);border-radius:6px;background:var(--green);color:#fff;font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-pdf:hover{background:var(--gl)}
+.btn-pdf.ghost{background:transparent;color:var(--gl)}
+.btn-pdf.ghost:hover{background:rgba(42,122,82,.1)}
+
+/* ── PRINT / PDF STYLES ──────────────────────────── */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important;color:#111!important;font-family:'Barlow',sans-serif;margin:0;padding:0}
+  .pb,.pb-badge,.nl,.ncta,.hero,.wrap .panel:first-child,.tc-wrap,.ucta,.gate-overlay,.pdf-bar,.tbar,nav{display:none!important}
+  .wrap{display:block!important;max-width:100%;padding:0!important}
+  .op{gap:.6rem!important}
+  .mr{grid-template-columns:repeat(3,1fr)!important}
+  .mc{background:#f4f6f4!important;border:1px solid #ccd8cc!important;break-inside:avoid}
+  .mv{color:#111!important}
+  .mv.r{color:#9b2335!important}
+  .mv.a{color:#c07818!important}
+  .mv.g{color:#1e5a3c!important}
+  .ml{color:#555!important;font-size:.52rem!important}
+  .msub{color:#666!important}
+  .panel{background:#fff!important;border:1px solid #ccd8cc!important}
+  .tcont{background:#fff!important;border:1px solid #ccd8cc!important}
+  .tpane{display:none!important}
+  .tpane.a{display:block!important;margin-bottom:.8rem}
+  th{color:#444!important;border-bottom:1px solid #bbb!important;background:#f0f3f0!important}
+  td{color:#222!important}
+  tr:hover td{background:transparent!important}
+  .lhb{border:1px solid currentColor!important}
+  .hid{display:none!important}
+  .print-show{display:block!important}
+  footer{color:#555!important;border-top:2px solid #2a7a52!important;font-size:.58rem!important;margin-top:1rem!important}
+
+  /* PDF Report Header — white background, RETACH brand */
+  .pdf-header{
+    display:block!important;
+    background:#fff!important;
+    border-bottom:3px solid #2a7a52!important;
+    padding:1rem 1.4rem 0.8rem!important;
+    margin-bottom:1rem!important;
+    page-break-after:avoid!important;
+  }
+  .pdf-header-top{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;margin-bottom:.6rem!important;flex-wrap:wrap!important;gap:.6rem!important}
+  .pdf-header-logo-wrap{display:flex!important;align-items:center!important;gap:.6rem!important}
+  .pdf-logo-svg{width:36px!important;height:32px!important;display:block!important;flex-shrink:0!important}
+  .pdf-brand-name{font-family:'Barlow Condensed',sans-serif!important;font-size:1.3rem!important;font-weight:800!important;letter-spacing:.04em!important;color:#111!important;line-height:1!important}
+  .pdf-brand-name span{color:#2a7a52!important}
+  .pdf-brand-tag{font-family:'IBM Plex Mono',monospace!important;font-size:.52rem!important;color:#666!important;letter-spacing:.08em!important;margin-top:.15rem!important}
+  .pdf-header-title-wrap{text-align:right!important}
+  .pdf-report-type{font-family:'Barlow Condensed',sans-serif!important;font-size:1rem!important;font-weight:700!important;color:#111!important;letter-spacing:.03em!important}
+  .pdf-report-sub{font-family:'IBM Plex Mono',monospace!important;font-size:.55rem!important;color:#2a7a52!important;letter-spacing:.08em!important;margin-top:.1rem!important}
+  .pdf-header-divider{height:1px!important;background:#ddd!important;margin:.5rem 0!important}
+  .pdf-header-meta{display:grid!important;grid-template-columns:repeat(6,1fr)!important;gap:.3rem!important}
+  .pdf-header-item{display:flex!important;flex-direction:column!important;gap:.1rem!important}
+  .pdf-meta-label{font-family:'IBM Plex Mono',monospace!important;font-size:.48rem!important;color:#888!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+  .pdf-header-item strong{font-size:.72rem!important;color:#111!important;font-weight:700!important}
+
+  /* Disclaimer */
+  .pdf-disclaimer{
+    display:block!important;
+    padding:.5rem .8rem!important;
+    background:#fff8f0!important;
+    border:1px solid #ddb070!important;
+    border-radius:4px!important;
+    font-size:.55rem!important;
+    color:#555!important;
+    line-height:1.55!important;
+    margin-top:.8rem!important;
+    break-inside:avoid!important;
+  }
+}
 </style>
 </head>
 <body>
+
+<!-- EMAIL GATE MODAL -->
+<div class="gate-overlay" id="gate-overlay">
+  <div class="gate-modal">
+    <div class="gate-eyebrow">CRQ Engine™ · Access</div>
+    <h2>Quantify your<br><em>cyber risk in KES</em></h2>
+    <p>Enter your details to unlock the full financial risk model — EAL by scenario, regulatory exposure, control ROI ranking, and 90-day roadmap.</p>
+    <div class="gate-value-list">
+      <div class="gate-value-item">Expected Annual Loss in your currency + USD</div>
+      <div class="gate-value-item">6-scenario risk heatmap with likelihood scores</div>
+      <div class="gate-value-item">Live OSINT surface scan on your domain</div>
+      <div class="gate-value-item">Regulatory fine exposure (ODPC / GDPR / DPA)</div>
+      <div class="gate-value-item">Control ROI ranking — which fix saves the most</div>
+      <div class="gate-value-item">Exportable PDF report — KES 7,500 · USD 58</div>
+    </div>
+    <div class="gate-fields">
+      <div class="gate-field">
+        <label>Full Name</label>
+        <input type="text" id="gate-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="gate-field">
+        <label>Work Email</label>
+        <input type="email" id="gate-email" placeholder="you@organisation.com" autocomplete="email">
+      </div>
+      <div class="gate-field">
+        <label>Organisation</label>
+        <input type="text" id="gate-org" placeholder="Company or SACCO name" autocomplete="organization">
+      </div>
+    </div>
+    <button class="gate-submit" onclick="submitGate()">Access CRQ Engine →</button>
+    <p class="gate-note">Used only to personalise your report. RETACH may follow up — no spam.<br>Already accessed? <a href="#" onclick="bypassGate();return false">Continue →</a></p>
+  </div>
+</div>
+
+<!-- PDF REPORT HEADER (hidden on screen, shown on print) -->
+<div class="pdf-header" style="display:none" id="pdf-header">
+  <div class="pdf-header-top">
+    <div class="pdf-header-logo-wrap">
+      <!-- RETACH SVG Logo -->
+      <svg class="pdf-logo-svg" viewBox="1640 1100 1900 1650" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#2a7a52" d="M3228.836,1206.723c-55.371,0-103.99,29.221-131.541,73.23h-1139.06l-10.06,9.689c-13.16-73.26-76.66-128.82-153.02-128.82c-85.88,0-155.51,70.301-155.51,157.012c0,74.529,51.42,136.92,120.39,153l-8.19,7.889v1133.99l809.6-575.5v-479.49l-142.061-128h286.09v1152h-65.559l-88.98-89.58c3.209-12.549,4.91-25.719,4.91-39.279c0-86.711-69.631-157.01-155.52-157.01c-85.881,0-155.51,70.299-155.51,157.01c0,86.73,69.629,157.029,155.51,157.029c13.859,0,27.289-1.83,40.078-5.27l136.932,154.449h459.93V1444.604h58.25c27.199,45.629,76.73,76.15,133.32,76.15c85.889,0,155.52-70.301,155.52-157.021C3384.355,1277.023,3314.725,1206.723,3228.836,1206.723z M1792.595,1401.094c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66s85.83,38.801,85.83,86.66C1878.425,1362.293,1839.995,1401.094,1792.595,1401.094z M2267.045,2018.514l-355.08,260.549v-800.959l31.72-31.721l323.36,288.609V2018.514z M2397.765,2536.123c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66c47.401,0,85.831,38.801,85.831,86.66C2483.596,2497.322,2445.166,2536.123,2397.765,2536.123z M3226.275,1446.992c-47.4,0-85.82-38.799-85.82-86.648c0-47.861,38.42-86.66,85.82-86.66s85.83,38.799,85.83,86.66C3312.105,1408.193,3273.676,1446.992,3226.275,1446.992z"/>
+      </svg>
+      <div class="pdf-header-wordmark">
+        <div class="pdf-brand-name">RETACH <span>Digital Ltd</span></div>
+        <div class="pdf-brand-tag">The S.I.N.S. Framework™ for Digital Resilience</div>
+      </div>
+    </div>
+    <div class="pdf-header-title-wrap">
+      <div class="pdf-report-type">Cyber Risk Quantification Report</div>
+      <div class="pdf-report-sub">CRQ Engine™ · ISO 27005 Risk Model</div>
+    </div>
+  </div>
+  <div class="pdf-header-divider"></div>
+  <div class="pdf-header-meta">
+    <div class="pdf-header-item"><span class="pdf-meta-label">Organisation</span><strong id="pdf-org-name">—</strong></div>
+    <div class="pdf-header-item"><span class="pdf-meta-label">Prepared for</span><strong id="pdf-user-name">—</strong></div>
+    <div class="pdf-header-item"><span class="pdf-meta-label">Region</span><strong id="pdf-region-name">Kenya</strong></div>
+    <div class="pdf-header-item"><span class="pdf-meta-label">Generated</span><strong id="pdf-date">—</strong></div>
+    <div class="pdf-header-item"><span class="pdf-meta-label">Reference</span><strong id="pdf-ref">—</strong></div>
+    <div class="pdf-header-item"><span class="pdf-meta-label">Classification</span><strong style="color:#9b2335">CONFIDENTIAL</strong></div>
+  </div>
+</div>
 
 <div class="pb">
   <div class="pb-t">RETACH CRQ ENGINE™ · Cyber Risk Quantification + Live OSINT Pre-Assessment</div>
@@ -204,15 +372,15 @@ footer a{color:var(--gl)}
 <div class="hero">
   <div class="hi">
     <div class="heyebrow">CRQ Engine™ · S.I.N.S. Framework</div>
-    <h1>What are your <em>security gaps</em><br>costing you — in KES?</h1>
-    <p class="hsub">The RETACH CRQ Engine translates your S.I.N.S. posture into <strong>Expected Annual Loss</strong> — scenario by scenario, pillar by pillar. Run a live OSINT surface scan. Get a board-ready financial risk model in minutes.</p>
+    <h1>What are your <em>security gaps</em><br>costing you?</h1>
+    <p class="hsub">The RETACH CRQ Engine translates your S.I.N.S. posture into <strong>Expected Annual Loss</strong> — scenario by scenario, pillar by pillar. Run a live OSINT surface scan. Get a board-ready financial risk model in minutes. <strong>Kenya · East Africa · Global.</strong></p>
     <div class="hpills">
       <span class="hpill a">ISO 27005 risk model</span>
-      <span class="hpill a">Kenya-calibrated benchmarks</span>
+      <span class="hpill a">Kenya · East Africa · Global</span>
       <span class="hpill a">Live DNS + SSL + breach OSINT</span>
-      <span class="hpill a">EAL in KES + USD</span>
-      <span class="hpill">Serianu / CBK data</span>
-      <span class="hpill">ODPC fine exposure</span>
+      <span class="hpill a">EAL in local currency + USD</span>
+      <span class="hpill">Serianu / IBM / CBK data</span>
+      <span class="hpill">ODPC · GDPR · DPA fine exposure</span>
     </div>
   </div>
 </div>
@@ -223,7 +391,15 @@ footer a{color:var(--gl)}
     <div class="panel">
       <div class="ph"><div class="pt">Organisation Profile</div><div class="ps">Step 1 of 2</div></div>
       <div class="pb2">
-        <div class="sdiv" style="border-top:none;padding-top:0">Organisation</div>
+        <div class="sdiv" style="border-top:none;padding-top:0">Region & Organisation</div>
+
+        <label class="fl">Region</label>
+        <div class="region-bar" id="region-bar">
+          <button class="region-btn active" data-region="kenya" onclick="setRegion('kenya',this)"><span class="region-flag">🇰🇪</span>Kenya</button>
+          <button class="region-btn" data-region="eastafrica" onclick="setRegion('eastafrica',this)"><span class="region-flag">🌍</span>East Africa</button>
+          <button class="region-btn" data-region="global" onclick="setRegion('global',this)"><span class="region-flag">🌐</span>Global</button>
+        </div>
+
         <label class="fl">Sector</label>
         <select id="i-sec" onchange="onIC()">
           <option value="sacco">SACCO (Deposit-Taking)</option>
@@ -235,7 +411,7 @@ footer a{color:var(--gl)}
           <option value="ngo">NGO / INGO</option>
           <option value="school">School / University</option>
         </select>
-        <div class="sg"><div class="st"><span class="sn">Annual Revenue / Budget</span><span class="sv" id="lrev">KES 50M</span></div><input type="range" min="1" max="200" value="50" step="1" id="irev" oninput="ul('lrev',fk(this.value*1e6));onIC()"></div>
+        <div class="sg"><div class="st"><span class="sn">Annual Revenue / Budget</span><span class="sv" id="lrev">KES 50M</span></div><input type="range" min="1" max="200" value="50" step="1" id="irev" oninput="ul('lrev',fmtRevSlider(this.value));onIC()"></div>
         <div class="sg"><div class="st"><span class="sn">Staff / Endpoints</span><span class="sv" id="lstf">50 people</span></div><input type="range" min="5" max="500" value="50" step="5" id="istf" oninput="ul('lstf',this.value+' people');onIC()"></div>
         <div class="sg"><div class="st"><span class="sn">Monthly Digital Transactions</span><span class="sv" id="ltx">5,000 / mo</span></div><input type="range" min="0" max="100" value="5" step="1" id="itx" oninput="ul('ltx',(this.value*1000).toLocaleString()+' / mo');onIC()"></div>
 
@@ -250,7 +426,7 @@ footer a{color:var(--gl)}
         <div class="tr"><button class="tb" data-g="mfa" data-v="none" onclick="tog('mfa',this)">None</button><button class="tb on" data-g="mfa" data-v="partial" onclick="tog('mfa',this)">Partial</button><button class="tb" data-g="mfa" data-v="full" onclick="tog('mfa',this)">All staff</button></div>
         <label class="fl">Backup tested in last 90 days?</label>
         <div class="tr"><button class="tb on" data-g="bk" data-v="no" onclick="tog('bk',this)">No</button><button class="tb" data-g="bk" data-v="yes" onclick="tog('bk',this)">Yes</button></div>
-        <label class="fl">ODPC Registered?</label>
+        <label class="fl" id="lbl-reg">Data Protection Registered? <span id="reg-hint" style="color:var(--muted);font-size:.55rem">(ODPC)</span></label>
         <div class="tr"><button class="tb on" data-g="odpc" data-v="no" onclick="tog('odpc',this)">No</button><button class="tb" data-g="odpc" data-v="yes" onclick="tog('odpc',this)">Yes</button></div>
 
         <button class="cbtn" onclick="calc()">Calculate Risk Exposure →</button>
@@ -305,9 +481,43 @@ footer a{color:var(--gl)}
         <div class="mc hl"><div class="ml">Expected Annual Loss</div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
         <div class="mc am"><div class="ml">Worst-Case Event</div><div class="mv a" id="owc">—</div><div class="msub">95th percentile</div></div>
         <div class="mc"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
-        <div class="mc am"><div class="ml">Regulatory Fine Exposure</div><div class="mv a" id="ofine">—</div><div class="msub" id="ofinesub">ODPC max</div></div>
+        <div class="mc am"><div class="ml">Regulatory Fine Exposure</div><div class="mv a" id="ofine">—</div><div class="msub" id="ofinesub">Max fine</div></div>
         <div class="mc"><div class="ml">Risk as % of Revenue</div><div class="mv" id="opct">—</div><div class="msub">EAL / annual revenue</div></div>
         <div class="mc"><div class="ml">Est. Recovery Time</div><div class="mv" id="ort">—</div><div class="msub">downtime, ransomware event</div></div>
+      </div>
+
+      <!-- PDF EXPORT BAR -->
+      <div class="pdf-bar" id="pdf-bar">
+        <div class="pdf-bar-info">
+          <strong>Export this report</strong>
+          Branded PDF — board-ready, RETACH letterhead, engagement reference, disclaimer.
+        </div>
+        <div class="pdf-actions">
+          <button class="btn-pdf ghost" onclick="exportPDF()" title="Free preview — watermarked">⬇ Preview PDF</button>
+          <button class="btn-pdf" onclick="showPDFPaywall()">Buy Report — <span id="pdf-price-label">KES 7,500 · USD 58</span></button>
+        </div>
+      </div>
+
+      <!-- PDF PAYWALL MODAL -->
+      <div id="pdf-paywall" style="display:none;background:var(--card);border:1px solid var(--b2);border-radius:12px;padding:1.4rem;text-align:center;animation:fadeIn .2s ease">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--gl);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem">CRQ Report · PDF Export</div>
+        <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800;margin-bottom:.4rem">Board-ready CRQ Report</div>
+        <div style="font-size:.82rem;color:var(--muted);line-height:1.65;max-width:380px;margin:0 auto .9rem">RETACH-branded PDF with your full risk model, scenario table, control roadmap, and compliance scorecard. Suitable for board, audit file, or insurance submission.</div>
+        <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem">
+          <div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;min-width:120px">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:.2rem">SME / NGO</div>
+            <div style="font-family:var(--cond);font-size:1.4rem;font-weight:800" id="price-sme">KES 7,500</div>
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--gl)" id="price-sme-usd">≈ USD 58</div>
+          </div>
+          <div style="background:rgba(42,122,82,.08);border:1px solid var(--b2);border-radius:8px;padding:.7rem 1rem;min-width:120px">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-bottom:.2rem">SACCO / Regulated</div>
+            <div style="font-family:var(--cond);font-size:1.4rem;font-weight:800" id="price-reg">KES 15,000</div>
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--gl)" id="price-reg-usd">≈ USD 115</div>
+          </div>
+        </div>
+        <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20want%20to%20purchase%20the%20CRQ%20PDF%20report." target="_blank" class="ubtn" style="font-size:.85rem;padding:.65rem 1.6rem">Purchase via WhatsApp →</a>
+        <div style="font-size:.68rem;color:var(--muted);margin-top:.7rem">Email: <a href="mailto:info@retach.tech">info@retach.tech</a> · M-Pesa, bank transfer, card accepted</div>
+        <button onclick="document.getElementById('pdf-paywall').style.display='none'" style="background:none;border:none;color:var(--muted);font-size:.72rem;cursor:pointer;margin-top:.6rem">← Back to results</button>
       </div>
 
       <div>
@@ -318,7 +528,6 @@ footer a{color:var(--gl)}
           <button class="tbtn" onclick="st('ct',this)">Controls</button>
           <button class="tbtn" onclick="st('rm',this)">Roadmap</button>
           <button class="tbtn" onclick="st('bm',this)">Benchmark</button>
-          <button class="tbtn" onclick="st('cx',this)">⚖ Compliance</button>
         </div>
         <div class="tcont">
           <div class="tpane a" id="tp-hm">
@@ -360,62 +569,6 @@ footer a{color:var(--gl)}
             <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Kenya sector benchmarks: Serianu 2023 · CA Kenya Annual Report · CBK Cybersecurity Guidelines · ODPC enforcement data.</p>
             <div id="bmo"></div>
           </div>
-
-          <!-- COMPLIANCE TAB -->
-          <div class="tpane" id="tp-cx">
-            <div id="cx-empty" style="text-align:center;padding:1.5rem .5rem;font-size:.8rem;color:var(--muted);line-height:1.8">
-              <strong style="color:var(--text);display:block;margin-bottom:.4rem">Compliance Intelligence Engine</strong>
-              Run the CRQ calculation first — the compliance module uses your sector and financial profile to determine applicable Kenyan law and score your regulatory exposure.
-            </div>
-            <div id="cx-main" class="hid">
-
-              <!-- Disclaimer -->
-              <div style="padding:.65rem .9rem;background:rgba(192,120,24,0.08);border:1px solid rgba(192,120,24,0.25);border-radius:6px;font-size:.68rem;color:#d48b1a;margin-bottom:1rem;line-height:1.6">
-                <strong>Disclaimer:</strong> This compliance assessment is based on publicly available Kenyan legislation, ODPC determinations, CBK enforcement notices, and reported court decisions as at May 2026. It is indicative only. There may be a margin of error — laws change, jurisprudence evolves, and sector-specific guidance may apply. This does not constitute legal advice. RETACH recommends validation by a qualified Kenyan advocate before relying on this output for compliance decisions. Data sources: Kenya Law · ODPC · judiciary.go.ke · CBK · SASRA · CA Kenya.
-              </div>
-
-              <!-- Composite Risk Score -->
-              <div style="background:var(--dark2);border:1px solid var(--b2);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem">
-                <div>
-                  <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem">S.I.N.S. Risk Score</div>
-                  <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800" id="cx-sins-score">—</div>
-                  <div style="font-size:.62rem;color:var(--muted)">Technical posture</div>
-                </div>
-                <div>
-                  <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem">Compliance Score</div>
-                  <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800" id="cx-comp-score">—</div>
-                  <div style="font-size:.62rem;color:var(--muted)">Regulatory posture</div>
-                </div>
-                <div>
-                  <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem">Total Risk Exposure</div>
-                  <div style="font-family:var(--cond);font-size:1.5rem;font-weight:800;color:#c0392b" id="cx-total-exp">—</div>
-                  <div style="font-size:.62rem;color:var(--muted)">EAL + Regulatory (KES)</div>
-                </div>
-              </div>
-
-              <!-- Formula explanation -->
-              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);padding:.5rem .75rem;background:rgba(255,255,255,.03);border-radius:5px;margin-bottom:1rem;line-height:1.8">
-                Total Risk Formula: <span style="color:var(--gl)">EAL (scenario-based) + Regulatory Fine Exposure (applicable law × compliance gap %) + Reputational Cost (downtime × revenue/day)</span>
-              </div>
-
-              <!-- Applicable Laws -->
-              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">Applicable Regulatory Frameworks</div>
-              <div id="cx-laws" style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem"></div>
-
-              <!-- Compliance Self-Assessment -->
-              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;margin-top:.75rem">Compliance Self-Assessment</div>
-              <div id="cx-checks" style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem"></div>
-
-              <!-- Enforcement Precedents -->
-              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;margin-top:.75rem">Kenya Enforcement Precedents</div>
-              <div id="cx-cases" style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem"></div>
-
-              <!-- Compliance Roadmap -->
-              <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;margin-top:.75rem">Priority Compliance Actions</div>
-              <div id="cx-actions" style="display:flex;flex-direction:column;gap:.4rem"></div>
-
-            </div>
-          </div>
         </div>
       </div>
 
@@ -429,11 +582,106 @@ footer a{color:var(--gl)}
   </div>
 </div>
 
-<footer>© 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience<br><span style="font-size:.6rem">CRQ model: ISO 27005 risk practices. Benchmarks: Serianu 2023 · CA Kenya · CBK · ODPC. Compliance: Kenya DPA 2019 · CMCA 2018 (as amended 2024) · CBK Guidelines · SASRA Circular 2022. All figures are planning estimates. Not legal advice.</span></footer>
+<div class="pdf-disclaimer" style="display:none">
+  <strong>Disclaimer:</strong> This CRQ report is generated by the RETACH S.I.N.S. Framework™ risk model using ISO 27005 methodology and calibrated sector benchmarks. All EAL figures are planning estimates with an acknowledged margin of error — actual loss experience will vary. Regulatory fine figures reflect published maximum exposures and are indicative only; consult a qualified legal advisor before relying on compliance assessments. This report does not constitute legal, financial, or insurance advice. RETACH Digital Ltd accepts no liability for decisions made solely on the basis of this output.
+</div>
+<footer>© 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience<br><span style="font-size:.6rem">CRQ model: ISO 27005. Kenya benchmarks: Serianu 2023 · CA Kenya · CBK · ODPC. Global benchmarks: IBM Cost of a Data Breach 2024 · Verizon DBIR 2024. All figures are planning estimates. Not legal or financial advice.</span></footer>
 
 <script>
-const KR=130;
-const SECTS={
+// ── REGION CONFIG ─────────────────────────────────────────────────────────
+const REGIONS = {
+  kenya: {
+    name: 'Kenya',
+    currency: 'KES',
+    rate: 1,          // base currency IS KES
+    usdRate: 130,     // KES per USD
+    fmtMain: v => fmtKES(v),
+    fmtSub:  v => '≈ USD ' + Math.round(v/130).toLocaleString(),
+    regLabel: 'ODPC Registered?',
+    regHint:  '(ODPC — Kenya DPA 2019)',
+    regFineLabel: 'ODPC max fine',
+    regulators: 'ODPC (Kenya DPA 2019)',
+    benchSource: 'Serianu 2023 · CA Kenya · CBK · ODPC enforcement data',
+    payScenario: 'Payment fraud & M-Pesa abuse',
+    payPillar: 'S¹/S³ Systems/Net',
+    roadmapReg: (no) => no ? '<strong>Register with the ODPC</strong>. Unregistered data processors face up to KES 5M in fines. Registration is 2–4 weeks and approx KES 5K.' : 'Review your ODPC data processing register. Document every third-party processor and all data flows.',
+    priceSME: 'KES 7,500', priceSMEusd: '≈ USD 58',
+    priceReg: 'KES 15,000', priceRegusd: '≈ USD 115',
+    pdfPriceLabel: 'KES 7,500 · USD 58',
+  },
+  eastafrica: {
+    name: 'East Africa',
+    currency: 'USD',
+    rate: 130,        // inputs in KES-equivalent, display in USD
+    usdRate: 1,
+    fmtMain: v => 'USD ' + Math.round(v/130).toLocaleString(),
+    fmtSub:  v => '≈ KES ' + fmtKES(v),
+    regLabel: 'Data Protection Registered?',
+    regHint:  '(NITA-U · TCRA · RURA · ODPC)',
+    regFineLabel: 'DPA fine exposure',
+    regulators: 'Kenya DPA · Uganda PDPA · Tanzania PDPA · Rwanda DPL',
+    benchSource: 'Serianu East Africa 2023 · Regional DPA enforcement data',
+    payScenario: 'Payment fraud & mobile money abuse',
+    payPillar: 'S¹/S³ Systems/Net',
+    roadmapReg: (no) => no ? '<strong>Register with your national DPA regulator</strong>. All East African states now have active data protection legislation with enforcement fines ranging USD 5,000–75,000.' : 'Review your data processing register and cross-border data transfer agreements across EA jurisdictions.',
+    priceSME: 'USD 58', priceSMEusd: '≈ KES 7,500',
+    priceReg: 'USD 115', priceRegusd: '≈ KES 15,000',
+    pdfPriceLabel: 'USD 58 · USD 115',
+  },
+  global: {
+    name: 'Global',
+    currency: 'USD',
+    rate: 130,
+    usdRate: 1,
+    fmtMain: v => 'USD ' + Math.round(v/130).toLocaleString(),
+    fmtSub:  v => { const gbp = Math.round(v/130/1.27); return '≈ GBP ' + gbp.toLocaleString() + ' · EUR ' + Math.round(v/130/1.08).toLocaleString(); },
+    regLabel: 'Data Protection Compliant?',
+    regHint:  '(GDPR · HIPAA · CCPA · ISO 27001)',
+    regFineLabel: 'GDPR / DPA max fine',
+    regulators: 'GDPR (EU/UK) · HIPAA (US) · CCPA (CA) · ISO 27001',
+    benchSource: 'IBM Cost of a Data Breach 2024 · Verizon DBIR 2024',
+    payScenario: 'Business email compromise & wire fraud',
+    payPillar: 'S¹/S³ Systems/Net',
+    roadmapReg: (no) => no ? '<strong>Establish GDPR / DPA compliance baseline.</strong> GDPR fines reach €20M or 4% of global turnover. Engage a DPO and conduct a data mapping exercise.' : 'Review your ROPA (Records of Processing Activities). Ensure data transfer mechanisms (SCCs, adequacy decisions) are current.',
+    priceSME: 'USD 75', priceSMEusd: '≈ GBP 59',
+    priceReg: 'USD 150', priceRegusd: '≈ GBP 118',
+    pdfPriceLabel: 'USD 75 · USD 150',
+  }
+};
+
+let currentRegion = 'kenya';
+
+function setRegion(key, btn) {
+  currentRegion = key;
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const R = REGIONS[key];
+  // Update regulatory label
+  document.getElementById('reg-hint').textContent = R.regHint;
+  // Update revenue slider display
+  ul('lrev', fmtRevSlider(document.getElementById('irev').value));
+  // Update pdf price label
+  document.getElementById('pdf-price-label').textContent = R.pdfPriceLabel;
+  // Update paywall prices
+  document.getElementById('price-sme').textContent = R.priceSME;
+  document.getElementById('price-sme-usd').textContent = R.priceSMEusd;
+  document.getElementById('price-reg').textContent = R.priceReg;
+  document.getElementById('price-reg-usd').textContent = R.priceRegusd;
+  // Update benchmark label
+  const bm = document.querySelector('#tp-bm p');
+  if (bm) bm.textContent = R.benchSource + '.';
+}
+
+function fmtRevSlider(val) {
+  const R = REGIONS[currentRegion];
+  const kesVal = val * 1e6;
+  if (currentRegion === 'kenya') return fmtKES(kesVal);
+  return 'USD ' + Math.round(kesVal / R.rate).toLocaleString() + 'K';
+}
+
+// ── SECTOR / SCENARIO DATA ────────────────────────────────────────────────
+const KR = 130;
+const SECTS = {
   sacco:    {n:'SACCO (DT)',    bF:1.8,iM:1.4,rF:5e6,rto:10,bch:[6.2,12.4],sa:true},
   saccondt: {n:'SACCO (NDT)',   bF:1.4,iM:1.2,rF:3e6,rto:12,bch:[4.5,9.2], sa:true},
   fintech:  {n:'Fintech/PSP',   bF:2.4,iM:1.8,rF:5e6,rto:7, bch:[9.1,22.0],sa:false},
@@ -443,59 +691,140 @@ const SECTS={
   ngo:      {n:'NGO/INGO',      bF:0.9,iM:0.8,rF:2e6,rto:20,bch:[1.8,4.5], sa:false},
   school:   {n:'School/Uni',    bF:1.0,iM:0.9,rF:2e6,rto:16,bch:[2.2,5.8], sa:false},
 };
-const SCS=[
-  {id:'phish', n:'Phishing & account compromise',    p:'S¹ Systems',       bL:.85,bI:.04},
-  {id:'ransom',n:'Ransomware & operational downtime', p:'S² Infrastructure',bL:.55,bI:.18},
-  {id:'fraud', n:'Payment fraud & M-Pesa abuse',     p:'S¹/S³ Systems/Net',bL:.65,bI:.06},
-  {id:'breach',n:'Data breach & ODPC liability',     p:'S⁴ Security',      bL:.45,bI:.12},
-  {id:'dr',    n:'Business continuity failure',      p:'S² Infrastructure',bL:.40,bI:.22},
-  {id:'ins',   n:'Insider threat / privilege abuse', p:'S¹ Systems',       bL:.35,bI:.09},
-];
-const CTRLS=[
-  {n:'Multi-Factor Authentication (MFA)',         rd:.28,ef:'Low',   cs:'KES 0–15K/yr',  mt:'Applies to all account-based scenarios'},
-  {n:'Tested backup & DR procedure',              rd:.32,ef:'Low',   cs:'KES 20–50K setup',mt:'Directly cuts ransomware & DR EAL'},
-  {n:'Email security — SPF/DKIM/DMARC',           rd:.18,ef:'Low',   cs:'KES 0–5K',      mt:'Reduces phishing likelihood 60–80%'},
-  {n:'Endpoint detection & response (EDR)',        rd:.16,ef:'Medium',cs:'KES 3–8K/seat/yr',mt:'Detects ransomware pre-execution'},
-  {n:'Privileged access review & cleanup',         rd:.15,ef:'Medium',cs:'4hr internal',  mt:'Eliminates insider & lateral movement risk'},
-  {n:'Network segmentation',                       rd:.14,ef:'Medium',cs:'KES 30–80K',    mt:'Limits blast radius of any breach'},
-  {n:'Staff phishing simulation',                  rd:.12,ef:'Medium',cs:'KES 15–30K',    mt:'Reduces click rate avg 60% over 12 months'},
-  {n:'ODPC registration & DPA policy',             rd:.08,ef:'Low',   cs:'KES 5–10K',     mt:'Eliminates KES 5M fine exposure'},
-];
-const TS={mfa:'partial',bk:'no',odpc:'no'};
+// Global benchmarks (IBM 2024, VDBIR 2024) in KES-equivalent for maths consistency
+const SECTS_GLOBAL = {
+  sacco:    {n:'Financial Services',bF:2.2,iM:1.6,rF:Math.round(20e6*130/5),rto:9, bch:[9.5,18.0], sa:false},
+  saccondt: {n:'Financial Services',bF:2.2,iM:1.6,rF:Math.round(20e6*130/5),rto:9, bch:[9.5,18.0], sa:false},
+  fintech:  {n:'Fintech/Payments',  bF:2.5,iM:1.9,rF:Math.round(20e6*130/5),rto:7, bch:[12.0,25.0],sa:false},
+  sme:      {n:'SME',               bF:1.3,iM:1.1,rF:Math.round(10e6*130/5),rto:15,bch:[3.5,9.0],  sa:false},
+  health:   {n:'Healthcare',        bF:2.0,iM:1.7,rF:Math.round(15e6*130/5),rto:20,bch:[7.0,15.0], sa:false},
+  govt:     {n:'Public Sector',     bF:1.4,iM:1.2,rF:Math.round(10e6*130/5),rto:25,bch:[4.0,10.0], sa:false},
+  ngo:      {n:'Non-Profit',        bF:1.0,iM:0.9,rF:Math.round(5e6*130/5), rto:18,bch:[2.0,5.5],  sa:false},
+  school:   {n:'Education',         bF:1.2,iM:1.0,rF:Math.round(8e6*130/5), rto:16,bch:[2.8,7.0],  sa:false},
+};
 
-function fk(v){if(v>=1e9)return'KES '+(v/1e9).toFixed(1)+'B';if(v>=1e6)return'KES '+(v/1e6).toFixed(1)+'M';if(v>=1e3)return'KES '+(v/1e3).toFixed(0)+'K';return'KES '+Math.round(v)}
-function fu(v){return'≈ USD '+(v/KR).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function getSects() {
+  return currentRegion === 'global' ? SECTS_GLOBAL : SECTS;
+}
+
+const CTRLS = [
+  {n:'Multi-Factor Authentication (MFA)',         rd:.28,ef:'Low',   cs:'Free – USD 120/yr', mt:'Applies to all account-based scenarios'},
+  {n:'Tested backup & DR procedure',              rd:.32,ef:'Low',   cs:'USD 150–400 setup', mt:'Directly cuts ransomware & DR EAL'},
+  {n:'Email security — SPF/DKIM/DMARC',           rd:.18,ef:'Low',   cs:'Free',              mt:'Reduces phishing likelihood 60–80%'},
+  {n:'Endpoint detection & response (EDR)',        rd:.16,ef:'Medium',cs:'USD 25–65/seat/yr', mt:'Detects ransomware pre-execution'},
+  {n:'Privileged access review & cleanup',         rd:.15,ef:'Medium',cs:'4hr internal',      mt:'Eliminates insider & lateral movement risk'},
+  {n:'Network segmentation',                       rd:.14,ef:'Medium',cs:'USD 250–600',       mt:'Limits blast radius of any breach'},
+  {n:'Staff phishing simulation',                  rd:.12,ef:'Medium',cs:'USD 120–240',       mt:'Reduces click rate avg 60% over 12 months'},
+  {n:'DPA/GDPR registration & policy',             rd:.08,ef:'Low',   cs:'USD 40–80',         mt:'Eliminates maximum regulatory fine exposure'},
+];
+const TS = {mfa:'partial',bk:'no',odpc:'no'};
+
+// ── FORMATTING ─────────────────────────────────────────────────────────────
+function fmtKES(v) {
+  if(v>=1e9) return 'KES '+(v/1e9).toFixed(1)+'B';
+  if(v>=1e6) return 'KES '+(v/1e6).toFixed(1)+'M';
+  if(v>=1e3) return 'KES '+(v/1e3).toFixed(0)+'K';
+  return 'KES '+Math.round(v);
+}
+// Legacy alias used in existing code
+function fk(v){ return fmtKES(v); }
+
+function fmtMain(v) { return REGIONS[currentRegion].fmtMain(v); }
+function fmtSub(v)  { return REGIONS[currentRegion].fmtSub(v); }
+
 function ul(id,v){document.getElementById(id).textContent=v}
 function tog(g,btn){document.querySelectorAll(`[data-g="${g}"]`).forEach(b=>b.classList.remove('on'));btn.classList.add('on');TS[g]=btn.dataset.v;onIC()}
 function onIC(){}
-function gi(){
-  return{
-    sec:document.getElementById('i-sec').value,
-    rev:parseFloat(document.getElementById('irev').value)*1e6,
-    stf:parseFloat(document.getElementById('istf').value),
-    tx:parseFloat(document.getElementById('itx').value)*1e3,
-    s:parseFloat(document.getElementById('is').value),
-    i:parseFloat(document.getElementById('ii').value),
-    n:parseFloat(document.getElementById('in2').value),
-    se:parseFloat(document.getElementById('isec2').value),
-    mfa:TS.mfa,bk:TS.bk==='yes',odpc:TS.odpc==='yes'
+
+// ── EMAIL GATE ─────────────────────────────────────────────────────────────
+const GATE_KEY = 'retach_crq_user';
+
+function checkGate() {
+  const saved = localStorage.getItem(GATE_KEY);
+  if (saved) {
+    const data = JSON.parse(saved);
+    populatePDFMeta(data.name, data.org);
+    document.getElementById('gate-overlay').style.display = 'none';
+  }
+  // else overlay stays visible
+}
+
+function submitGate() {
+  const name  = document.getElementById('gate-name').value.trim();
+  const email = document.getElementById('gate-email').value.trim();
+  const org   = document.getElementById('gate-org').value.trim();
+  if (!name || !email || !email.includes('@')) {
+    document.getElementById('gate-email').focus();
+    document.getElementById('gate-email').style.borderColor = '#c0392b';
+    return;
+  }
+  localStorage.setItem(GATE_KEY, JSON.stringify({name, email, org, ts: Date.now()}));
+  populatePDFMeta(name, org);
+  document.getElementById('gate-overlay').style.display = 'none';
+}
+
+function bypassGate() {
+  const saved = localStorage.getItem(GATE_KEY);
+  if (saved) {
+    document.getElementById('gate-overlay').style.display = 'none';
+  } else {
+    // No saved data — show minimal entry
+    document.getElementById('gate-overlay').style.display = 'none';
   }
 }
-function sins(inp){return Math.round((inp.s+inp.i+inp.n+inp.se)/4)}
+
+function populatePDFMeta(name, org) {
+  const ref = 'RETACH-CRQ-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'});
+  const el = id => document.getElementById(id);
+  if(el('pdf-user-name')) el('pdf-user-name').textContent = name || '—';
+  if(el('pdf-org-name'))  el('pdf-org-name').textContent  = org  || '—';
+  if(el('pdf-date'))      el('pdf-date').textContent      = dateStr;
+  if(el('pdf-ref'))       el('pdf-ref').textContent       = ref;
+}
+
+// ── INPUT ──────────────────────────────────────────────────────────────────
+function gi() {
+  return {
+    sec: document.getElementById('i-sec').value,
+    rev: parseFloat(document.getElementById('irev').value)*1e6,
+    stf: parseFloat(document.getElementById('istf').value),
+    tx:  parseFloat(document.getElementById('itx').value)*1e3,
+    s:   parseFloat(document.getElementById('is').value),
+    i:   parseFloat(document.getElementById('ii').value),
+    n:   parseFloat(document.getElementById('in2').value),
+    se:  parseFloat(document.getElementById('isec2').value),
+    mfa: TS.mfa, bk: TS.bk==='yes', odpc: TS.odpc==='yes'
+  }
+}
+function sins(inp){ return Math.round((inp.s+inp.i+inp.n+inp.se)/4) }
 function rm(inp){
   let m=1.0;
-  m*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;
-  m*=inp.bk?.70:1.0;
-  m*=inp.odpc?.88:1.0;
-  m*=(1.85-sins(inp)/100*1.70);
-  return Math.max(0.12,m)
+  m *= inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;
+  m *= inp.bk?.70:1.0;
+  m *= inp.odpc?.88:1.0;
+  m *= (1.85-sins(inp)/100*1.70);
+  return Math.max(0.12,m);
 }
 function sc(inp){
-  const s=SECTS[inp.sec],r=rm(inp);
+  const s=getSects()[inp.sec], r=rm(inp);
+  const R = REGIONS[currentRegion];
+  const payName = R.payScenario;
+  const payPillar = R.payPillar;
+  const SCS=[
+    {id:'phish', n:'Phishing & account compromise',       p:'S¹ Systems',        bL:.85,bI:.04},
+    {id:'ransom',n:'Ransomware & operational downtime',   p:'S² Infrastructure', bL:.55,bI:.18},
+    {id:'fraud', n:payName,                               p:payPillar,           bL:.65,bI:.06},
+    {id:'breach',n:'Data breach & regulatory liability',  p:'S⁴ Security',       bL:.45,bI:.12},
+    {id:'dr',    n:'Business continuity failure',         p:'S² Infrastructure', bL:.40,bI:.22},
+    {id:'ins',   n:'Insider threat / privilege abuse',    p:'S¹ Systems',        bL:.35,bI:.09},
+  ];
   return SCS.map(d=>({...d,lh:Math.min(0.97,d.bL*s.bF*r),imp:inp.rev*d.bI*s.iM*(1+inp.stf/600)*r}))
     .map(d=>({...d,lh:Math.round(d.lh*100),imp:Math.round(d.imp),eal:Math.round(d.lh/100*Math.round(d.imp))}))
-    .sort((a,b)=>b.eal-a.eal)
+    .sort((a,b)=>b.eal-a.eal);
 }
+
 function st(id,btn){
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('a'));
   document.querySelectorAll('.tpane').forEach(p=>p.classList.remove('a'));
@@ -503,37 +832,42 @@ function st(id,btn){
   document.getElementById('tp-'+id).classList.add('a');
 }
 
+// ── CALC ──────────────────────────────────────────────────────────────────
 function calc(){
-  const inp=gi(),ss=sins(inp),scs=sc(inp);
+  const inp=gi(), ss=sins(inp), scs=sc(inp);
   const eal=scs.reduce((a,b)=>a+b.eal,0);
   const wc=Math.max(...scs.map(s=>s.imp));
-  const s=SECTS[inp.sec],r=rm(inp);
+  const s=getSects()[inp.sec], r=rm(inp);
+  const R=REGIONS[currentRegion];
   const pct=(eal/inp.rev*100).toFixed(1);
   const fine=r>0.7?s.rF:Math.round(s.rF*0.5);
   const svd=ss>=70?'Good foundation':ss>=45?'Significant gaps':'High risk exposure';
   const sc2=ss>=70?'g':ss>=45?'a':'r';
   const pc2=parseFloat(pct)>10?'r':parseFloat(pct)>5?'a':'g';
 
-  document.getElementById('oeal').textContent=fk(eal);
-  document.getElementById('oeal').className='mv r';
-  document.getElementById('oealusd').textContent=fu(eal);
-  document.getElementById('owc').textContent=fk(wc);
+  document.getElementById('oeal').textContent   = fmtMain(eal);
+  document.getElementById('oeal').className     = 'mv r';
+  document.getElementById('oealusd').textContent= fmtSub(eal);
+  document.getElementById('owc').textContent    = fmtMain(wc);
   const sel=document.getElementById('osins');
   sel.textContent=ss; sel.className='mv '+sc2;
   document.getElementById('osinsvd').textContent=svd;
-  document.getElementById('ofine').textContent=fk(fine);
-  document.getElementById('ofinesub').textContent=s.sa?'ODPC + SASRA exposure':'ODPC max fine';
+  document.getElementById('ofine').textContent  = fmtMain(fine);
+  document.getElementById('ofinesub').textContent= s.sa?R.regulators+' exposure':R.regFineLabel;
   const pel=document.getElementById('opct');
   pel.textContent=pct+'%'; pel.className='mv '+pc2;
   const rel=document.getElementById('ort');
   rel.textContent=s.rto+' days'; rel.className='mv '+(s.rto>14?'r':'a');
+
+  // Update PDF header region
+  const pdReg = document.getElementById('pdf-region-name');
+  if(pdReg) pdReg.textContent = R.name;
 
   rHM(scs,eal);
   rSC(scs,eal);
   rCT(eal);
   rRM(inp,ss);
   rBM(eal,s);
-  rCX(inp,ss,eal);
 
   document.getElementById('tcp').classList.add('hid');
   document.getElementById('rw').classList.remove('hid');
@@ -559,33 +893,35 @@ function rSC(scs,eal){
     const bw=Math.round(s.eal/max*100);
     const bc=s.lh>70?'#c0392b':s.lh>45?'#c07818':'#2a7a52';
     const lc=s.lh>70?'lh-h':s.lh>45?'lh-m':'lh-l';
-    return`<tr><td>${s.n}<div class="sc-bar-w"><div class="sc-bar" style="width:${bw}%;background:${bc}"></div><span class="sc-pct">${Math.round(s.eal/eal*100)}%</span></div></td><td style="font-size:.65rem;color:var(--muted)">${s.p}</td><td><span class="lhb ${lc}">${s.lh}%</span></td><td style="text-align:right;font-family:var(--mono);font-size:.76rem;white-space:nowrap">${fk(s.eal)}</td></tr>`;
+    return`<tr><td>${s.n}<div class="sc-bar-w"><div class="sc-bar" style="width:${bw}%;background:${bc}"></div><span class="sc-pct">${Math.round(s.eal/eal*100)}%</span></div></td><td style="font-size:.65rem;color:var(--muted)">${s.p}</td><td><span class="lhb ${lc}">${s.lh}%</span></td><td style="text-align:right;font-family:var(--mono);font-size:.76rem;white-space:nowrap">${fmtMain(s.eal)}</td></tr>`;
   }).join('');
 }
 
 function rCT(eal){
+  const R=REGIONS[currentRegion];
   document.getElementById('ctl').innerHTML=CTRLS.map(c=>{
     const sv=Math.round(eal*c.rd);
     const bw=Math.round(c.rd*100*2.8);
-    return`<div class="cr"><div><div class="cn">${c.n}</div><div class="cm">${c.mt}</div><div style="height:3px;background:var(--border);border-radius:2px;margin-top:5px;width:${Math.min(100,bw)}%;max-width:180px"><div style="height:3px;background:var(--gl);border-radius:2px;width:100%"></div></div></div><div style="text-align:right;flex-shrink:0"><div class="cred">-${Math.round(c.rd*100)}% EAL</div><div style="font-family:var(--mono);font-size:.58rem;color:var(--gl);margin-top:2px">saves ${fk(sv)}/yr</div><div style="font-family:var(--mono);font-size:.58rem;color:var(--amber)">${c.cs}</div></div></div>`;
+    return`<div class="cr"><div><div class="cn">${c.n}</div><div class="cm">${c.mt}</div><div style="height:3px;background:var(--border);border-radius:2px;margin-top:5px;width:${Math.min(100,bw)}%;max-width:180px"><div style="height:3px;background:var(--gl);border-radius:2px;width:100%"></div></div></div><div style="text-align:right;flex-shrink:0"><div class="cred">-${Math.round(c.rd*100)}% EAL</div><div style="font-family:var(--mono);font-size:.58rem;color:var(--gl);margin-top:2px">saves ${fmtMain(sv)}/yr</div><div style="font-family:var(--mono);font-size:.58rem;color:var(--amber)">${c.cs}</div></div></div>`;
   }).join('');
 }
 
 function rRM(inp,ss){
-  const nm=inp.mfa==='none',nb=!inp.bk,no=!inp.odpc,lw=ss<45;
+  const R=REGIONS[currentRegion];
+  const nm=inp.mfa==='none', nb=!inp.bk, no=!inp.odpc, lw=ss<45;
   const items={
     d30:[
       nm?'<strong>Enable MFA immediately</strong> — admin, email, banking accounts first. Single highest-ROI control: reduces phishing EAL by 28%.':'Audit all admin and service accounts. Remove inactive accounts. Document every privilege with justification.',
-      'Run email security check: verify SPF record is published, DKIM signing is active, DMARC is at enforcement (p=reject). Use MX Toolbox for a free check.',
+      'Run email security check: verify SPF record is published, DKIM signing is active, DMARC is at enforcement (p=reject). Free check at MXToolbox.',
       'Identify your 3 most critical systems. Confirm each has a tested backup and you know your recovery time objective.',
     ],
     d60:[
-      nb?'<strong>Schedule a full backup restoration test this month.</strong> Name a backup owner. Ransomware recovery depends entirely on this. Sets a quarterly test calendar.':'Document your DR procedure step-by-step with named contacts. Conduct a tabletop exercise with your team.',
-      lw?'Conduct a formal risk assessment against your top 5 assets. ISO 27005 model — RETACH delivers this in a 2-day engagement.':'Update your Information Security Policy. Get written board sign-off. File a copy with the ODPC data register.',
-      no?'<strong>Register with the ODPC</strong>. Unregistered data processors face up to KES 5M in fines. Registration is 2–4 weeks and approx KES 5K.':'Review your ODPC data processing register. Document every third-party processor and all data flows.',
+      nb?'<strong>Schedule a full backup restoration test this month.</strong> Name a backup owner. Ransomware recovery depends on this entirely.':'Document your DR procedure step-by-step with named contacts. Conduct a tabletop exercise with your team.',
+      lw?'Conduct a formal risk assessment against your top 5 assets. ISO 27005 model — RETACH delivers this in a 2-day engagement.':'Update your Information Security Policy. Get written board sign-off.',
+      R.roadmapReg(no),
     ],
     d90:[
-      'Segment your network: separate guest WiFi, M-Pesa/payment terminals, and core business systems. Each segment limits breach blast radius.',
+      'Segment your network: separate guest WiFi, payment terminals, and core business systems. Each segment limits breach blast radius.',
       'Run your first phishing simulation. Track the click rate — your human risk KPI. Target: below 10% within 6 months.',
       'Establish a monthly access review: who has admin rights, which systems, why. Prevents 60% of insider threat scenarios.',
     ]
@@ -595,16 +931,54 @@ function rRM(inp,ss){
 }
 
 function rBM(eal,s){
+  const R=REGIONS[currentRegion];
   const [lo,hi]=s.bch.map(v=>v*1e6);
-  const peers=[{n:s.n+' (low)',v:lo,c:'#2a7a52'},{n:s.n+' (high)',v:hi,c:'#c07818'},{n:'Your organisation',v:eal,c:eal>hi?'#c0392b':eal>lo?'#c07818':'#2a7a52'}];
+  const peers=[
+    {n:s.n+' (low)',v:lo,c:'#2a7a52'},
+    {n:s.n+' (high)',v:hi,c:'#c07818'},
+    {n:'Your organisation',v:eal,c:eal>hi?'#c0392b':eal>lo?'#c07818':'#2a7a52'}
+  ];
   const mx=Math.max(...peers.map(p=>p.v))*1.1;
   const pos=eal>hi?'Above sector average — elevated risk':eal>lo?'Within sector average range':'Below sector average — better than peers';
   const pc=eal>hi?'#c0392b':eal>lo?'#c07818':'#2a7a52';
-  document.getElementById('bmo').innerHTML=`<div style="margin-bottom:.9rem">${peers.map(p=>`<div class="br"><div class="bl">${p.n}</div><div class="bt"><div class="bf" style="width:${Math.round(p.v/mx*100)}%;background:${p.c}"></div></div><div class="bv">${fk(p.v)}</div></div>`).join('')}</div><div style="padding:.7rem .9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;font-size:.77rem"><span style="color:var(--muted)">Your position: </span><strong style="color:${pc}">${pos}</strong></div><p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sources: Serianu Africa Cybersecurity Report 2023 · Communications Authority of Kenya · CBK Cybersecurity Guidelines · ODPC enforcement data.</p>`;
+  document.getElementById('bmo').innerHTML=`
+    <div style="margin-bottom:.9rem">
+      ${peers.map(p=>`<div class="br"><div class="bl">${p.n}</div><div class="bt"><div class="bf" style="width:${Math.round(p.v/mx*100)}%;background:${p.c}"></div></div><div class="bv">${fmtMain(p.v)}</div></div>`).join('')}
+    </div>
+    <div style="padding:.7rem .9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;font-size:.77rem">
+      <span style="color:var(--muted)">Your position: </span><strong style="color:${pc}">${pos}</strong>
+    </div>
+    <p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sources: ${R.benchSource}.</p>`;
 }
 
-/* ── OSINT via api.retach.io ─────────────────────── */
-const API='https://api.retach.io';
+// ── PDF EXPORT ─────────────────────────────────────────────────────────────
+function exportPDF() {
+  // Show print-only elements
+  document.getElementById('pdf-header').style.display = 'block';
+  document.querySelector('.pdf-disclaimer').style.display = 'block';
+  // Hide paywall modal if open
+  document.getElementById('pdf-paywall').style.display = 'none';
+  // Ensure all result tabs are visible for print
+  setTimeout(() => {
+    window.print();
+    // Restore after print dialog closes
+    setTimeout(() => {
+      document.getElementById('pdf-header').style.display = 'none';
+      document.querySelector('.pdf-disclaimer').style.display = 'none';
+    }, 1000);
+  }, 100);
+}
+
+function showPDFPaywall() {
+  const pw = document.getElementById('pdf-paywall');
+  pw.style.display = pw.style.display === 'none' ? 'block' : 'none';
+  if (pw.style.display === 'block') {
+    pw.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+// ── OSINT ──────────────────────────────────────────────────────────────────
+const API = 'https://api.retach.io';
 
 async function runOS(){
   const raw=document.getElementById('od').value.trim().toLowerCase().replace(/^https?:\/\//,'').replace(/\/.*/,'');
@@ -613,8 +987,6 @@ async function runOS(){
   btn.disabled=true;btn.textContent='Scanning…';
   document.getElementById('oor').innerHTML=shell(raw);
   const R={};
-
-  // Single composite call to the API
   try{
     const r=await fetch(`${API}/api/osint/full`,{
       method:'POST',
@@ -622,44 +994,32 @@ async function runOS(){
       body:JSON.stringify({domain:raw})
     });
     const data=await r.json();
-
-    // Parse DNS results
     const dns=data.dns?.results||{};
     R.mx=parseMX(dns.mx);upd('oc-mx',R.mx);
     R.spf=parseSPF(dns.spf);upd('oc-spf',R.spf);
     R.dmarc=parseDMARC(dns.dmarc);upd('oc-dmarc',R.dmarc);
     R.dkim=parseDKIM(dns.dkim);upd('oc-dkim',R.dkim);
     R.a=parseA(dns.a);upd('oc-a',R.a);
-
-    // SSL
     R.ssl=parseSSL(data.ssl);upd('oc-ssl',R.ssl);
-
-    // HIBP placeholder
     R.hibp={st:'warn',lb:'HIBP: verify at haveibeenpwned.com',ext:'Domain owner verification required — RETACH runs live in paid assessment'};
     upd('oc-hibp',R.hibp);
-
-    // Shodan
     R.sh=parseShodan(data.shodan);upd('oc-sh',R.sh);
-
   }catch(e){
-    // Fallback: mark all as warn
     ['mx','spf','dmarc','dkim','ssl','a','hibp','sh'].forEach(k=>{
       R[k]={st:'warn',lb:'API unavailable',ext:'Check api.retach.io/health'};
       upd('oc-'+k,R[k]);
     });
   }
-
   const vals=Object.values(R);
   const ok=vals.filter(v=>v&&v.st==='ok').length;
-  const sc=Math.round(ok/vals.length*100);
+  const sc2=Math.round(ok/vals.length*100);
   const sf=document.getElementById('osf');
-  if(sf){sf.style.width=sc+'%';sf.style.background=sc>=70?'#2a7a52':sc>=45?'#c07818':'#c0392b'}
+  if(sf){sf.style.width=sc2+'%';sf.style.background=sc2>=70?'#2a7a52':sc2>=45?'#c07818':'#c0392b'}
   const sv=document.getElementById('osv');
-  if(sv)sv.textContent=sc+'/100 exposure score';
+  if(sv)sv.textContent=sc2+'/100 exposure score';
   btn.disabled=false;btn.textContent='Scan Again →';
 }
 
-// Parsers — convert API response to display objects
 function parseMX(mx){if(!mx)return{st:'warn',lb:'Check failed'};return mx.found?{st:'ok',lb:`${mx.count} MX record(s)`,ext:mx.records.join(' · ')}:{st:'critical',lb:'No MX records',ext:'Domain cannot receive email'};}
 function parseSPF(spf){if(!spf)return{st:'warn',lb:'Check failed'};if(!spf.found)return{st:'critical',lb:'No SPF record',ext:'Domain can be spoofed — phishing risk HIGH'};return{st:spf.strict?'ok':'warn',lb:spf.strict?'SPF: -all (strict)':'SPF: ~all (soft)',ext:(spf.record||'').substring(0,90)};}
 function parseDMARC(d){if(!d)return{st:'warn',lb:'Check failed'};if(!d.found)return{st:'critical',lb:'No DMARC record',ext:'Email spoofing not blocked — add DMARC p=reject'};const p=d.policy||'none';return{st:p==='reject'?'ok':p==='quarantine'?'warn':'critical',lb:`DMARC: p=${p}`,ext:p==='reject'?'Strong enforcement':p==='quarantine'?'Partial — upgrade to p=reject':'No enforcement'};}
@@ -670,14 +1030,14 @@ function parseShodan(sh){if(!sh||!sh.found)return{st:'ok',lb:'No Shodan data yet
 
 function shell(d){
   const cks=[
-    {id:'mx',   lb:'MX records',                  det:'Domain mail routing records'},
-    {id:'spf',  lb:'SPF record (sender policy)',   det:'Prevents email spoofing'},
-    {id:'dmarc',lb:'DMARC policy (enforcement)',   det:'p=reject blocks spoofed delivery'},
-    {id:'dkim', lb:'DKIM (signing key)',            det:'Email cryptographic signature'},
-    {id:'ssl',  lb:'SSL/TLS certificate',          det:'Expiry and issuer check via crt.sh'},
-    {id:'a',    lb:'Domain resolves (A record)',   det:'IP address lookup'},
-    {id:'hibp', lb:'Domain breach data',           det:'Checks known credential exposure'},
-    {id:'sh',   lb:'Open ports & services',        det:'Shodan InternetDB via api.retach.io'},
+    {id:'mx',   lb:'MX records',                 det:'Domain mail routing records'},
+    {id:'spf',  lb:'SPF record (sender policy)',  det:'Prevents email spoofing'},
+    {id:'dmarc',lb:'DMARC policy (enforcement)',  det:'p=reject blocks spoofed delivery'},
+    {id:'dkim', lb:'DKIM (signing key)',           det:'Email cryptographic signature'},
+    {id:'ssl',  lb:'SSL/TLS certificate',         det:'Expiry and issuer check via crt.sh'},
+    {id:'a',    lb:'Domain resolves (A record)',  det:'IP address lookup'},
+    {id:'hibp', lb:'Domain breach data',          det:'Checks known credential exposure'},
+    {id:'sh',   lb:'Open ports & services',       det:'Shodan InternetDB via api.retach.io'},
   ];
   return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.io):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
 }
@@ -690,201 +1050,7 @@ function upd(id,r){
   if(r.ext){const row=document.getElementById('orow-'+id.replace('oc-',''));if(row){const d=row.querySelector('.od');if(d)d.textContent=r.ext}}
 }
 
-/* ── COMPLIANCE ENGINE ────────────────────────────────────
-   Kenya Regulatory Intelligence Layer v1.0
-   Sources: Kenya DPA 2019 · CMCA 2018/2024 · KICA 1998
-            CBK Cybersecurity Guidelines 2019
-            SASRA Cybersecurity Circular 2022
-            ODPC Determinations 2022–2026 · judiciary.go.ke
-   ──────────────────────────────────────────────────────── */
-const REGS={
-  dpa:{id:'dpa',short:'DPA 2019',full:'Data Protection Act No. 24 of 2019',body:'ODPC',maxFine:5e6,maxFinePct:.01,imp:0,tier:1,
-    applies:()=>true,
-    desc:'Requires ODPC registration, lawful basis for processing, data minimisation, security measures, and 72-hour breach notification.',
-    checks:[
-      {id:'dp1',lb:'Registered as data controller/processor with ODPC',w:20,fe:5e6},
-      {id:'dp2',lb:'Written Data Protection / Privacy Policy published',w:15,fe:3e6},
-      {id:'dp3',lb:'Data Processing Register (all data flows documented)',w:15,fe:2e6},
-      {id:'dp4',lb:'Data Protection Impact Assessment (DPIA) conducted',w:15,fe:2e6},
-      {id:'dp5',lb:'Consent mechanisms for personal data collection',w:15,fe:3e6},
-      {id:'dp6',lb:'Third-party data processor agreements in place',w:10,fe:2e6},
-      {id:'dp7',lb:'72-hour breach notification procedure documented',w:10,fe:2.5e6},
-    ]},
-  cmca:{id:'cmca',short:'CMCA 2018/2024',full:'Computer Misuse & Cybercrimes Act No. 5 of 2018 (amended 2024)',body:'DCI / NC4',maxFine:25e6,imp:20,tier:1,
-    applies:()=>true,
-    desc:'Organisations with negligent cybersecurity standards face liability. Employees must relinquish credentials on exit. Incidents must be reported.',
-    checks:[
-      {id:'cm1',lb:'Access control and authentication policy documented',w:25,fe:5e6},
-      {id:'cm2',lb:'Cybercrime incident response and reporting procedure',w:25,fe:5e6},
-      {id:'cm3',lb:'Staff offboarding — credential revocation procedure',w:25,fe:7e6},
-      {id:'cm4',lb:'System audit logs retained minimum 12 months',w:25,fe:5e6},
-    ]},
-  kica:{id:'kica',short:'KICA / CA Kenya',full:'Kenya Information & Communications Act Cap 411A · Consumer Protection Regs 2010',body:'Communications Authority',maxFine:3e5,imp:0,tier:2,
-    applies:(sec)=>['fintech','sme','sacco','saccondt','school','ngo'].includes(sec),
-    desc:'ICT service providers must publish terms, maintain consumer data security, and define service availability commitments.',
-    checks:[
-      {id:'ki1',lb:'ICT service terms and conditions published online',w:33,fe:3e5},
-      {id:'ki2',lb:'Consumer data security measures documented',w:33,fe:3e5},
-      {id:'ki3',lb:'Service availability / uptime commitments defined',w:34,fe:3e5},
-    ]},
-  cbk:{id:'cbk',short:'CBK Guidelines 2019',full:'CBK Guidelines on Cybersecurity for Payment Service Providers, July 2019',body:'Central Bank of Kenya',maxFine:5e6,imp:0,tier:1,
-    applies:(sec)=>['fintech','sacco','saccondt'].includes(sec),
-    desc:'PSPs must maintain a cybersecurity framework, conduct annual risk assessments, report incidents quarterly to CBK, and maintain tested BCP/DR plans.',
-    checks:[
-      {id:'cb1',lb:'Cybersecurity framework (policy, roles, governance) documented',w:20,fe:3e6},
-      {id:'cb2',lb:'Annual cybersecurity risk assessment conducted',w:20,fe:3e6},
-      {id:'cb3',lb:'Quarterly CBK cybersecurity incident reports submitted',w:20,fe:2e6},
-      {id:'cb4',lb:'Business Continuity and DR Plan tested in last 12 months',w:20,fe:2.5e6},
-      {id:'cb5',lb:'Third-party and vendor security assessments conducted',w:20,fe:2e6},
-    ]},
-  sasra:{id:'sasra',short:'SASRA Circular 2022',full:'SASRA Cybersecurity Circular No. 1 of 2022',body:'Sacco Societies Regulatory Authority',maxFine:5e6,imp:0,tier:1,
-    applies:(sec)=>['sacco','saccondt'].includes(sec),
-    desc:'SACCOs must implement board-approved cybersecurity policy, conduct annual staff training, maintain DR plans, and report incidents to SASRA.',
-    checks:[
-      {id:'sa1',lb:'Board-approved cybersecurity policy in place',w:25,fe:2e6},
-      {id:'sa2',lb:'Annual cybersecurity staff awareness training',w:25,fe:1.5e6},
-      {id:'sa3',lb:'Disaster Recovery Plan documented and tested',w:25,fe:2e6},
-      {id:'sa4',lb:'Incident reporting mechanism to SASRA established',w:25,fe:1.5e6},
-    ]},
-  cma:{id:'cma',short:'CMA ICT Guidelines 2023',full:'Capital Markets Authority ICT & Cybersecurity Guidelines 2023',body:'Capital Markets Authority',maxFine:1e7,imp:0,tier:2,
-    applies:(sec)=>['fintech'].includes(sec),
-    desc:'Capital markets licensees must align to ISO 27001/NIST, conduct annual penetration testing, and report incidents to CMA.',
-    checks:[
-      {id:'cma1',lb:'Cybersecurity framework aligned to ISO 27001 or NIST',w:40,fe:5e6},
-      {id:'cma2',lb:'Annual penetration testing by qualified firm',w:35,fe:4e6},
-      {id:'cma3',lb:'CMA cybersecurity incident reporting mechanism',w:25,fe:3e6},
-    ]},
-};
-
-const PRECEDENTS=[
-  {case:'ODPC v Oppo Kenya',ref:'ODPC Penalty Notice 001/2022',fine:5e6,imp:0,law:'DPA 2019',breach:'Failure to comply with data subject access request',outcome:'KES 5M — first ODPC penalty notice in Kenya',source:'ODPC Determinations 2022'},
-  {case:'ODPC v Whitepath & Regus Kenya',ref:'ODPC Penalty Notice, April 2023',fine:1e7,imp:0,law:'DPA 2019',breach:'Shared client personal data without consent',outcome:'Combined KES 10M fine against two entities',source:'CMS Law · ODPC 2023'},
-  {case:'ODPC v Nairobi School',ref:'ODPC Penalty Notice, September 2023',fine:4.55e6,imp:0,law:'DPA 2019',breach:'Posted images of minors without parental consent',outcome:'KES 4.55M — near-maximum ODPC fine',source:'Clyde & Co · ODPC Sept 2023'},
-  {case:'ODPC v Nairobi Restaurant',ref:'ODPC Penalty Notice, September 2023',fine:1.85e6,imp:0,law:'DPA 2019',breach:'Posted customer image on social media without consent',outcome:'KES 1.85M fine',source:'Clyde & Co · ODPC Sept 2023'},
-  {case:'Republic v Tools for Humanity (Worldcoin)',ref:'Judicial Review E119 of 2023 · KEHC 5629',fine:0,imp:0,law:'DPA 2019',breach:'Biometric data collection — no ODPC registration, no DPIA',outcome:'12-month operational suspension · court-ordered data deletion',source:'judiciary.go.ke · ODPC 2023/2025'},
-  {case:'Kamande v Nation Media Group',ref:'Constitutional Petition E004 of 2021',fine:1.5e6,imp:0,law:'DPA 2019 / Constitution Art.31',breach:'Unauthorised use of petitioner\'s image in publication',outcome:'KES 1.5M damages — High Court',source:'Kenya Law Reports'},
-  {case:'CMCA — Unauthorised access (typical prosecution)',ref:'Various Magistrate Courts 2019–2024',fine:5e6,imp:3,law:'CMCA 2018 s.14',breach:'Unauthorised access to computer systems',outcome:'KES 300K–5M fines · 6 months–3 years imprisonment',source:'NC4 · Kenya Law · DCI'},
-  {case:'CMCA — Protected system offence (maximum)',ref:'CMCA 2018 s.18 — statutory maximum',fine:25e6,imp:20,law:'CMCA 2018 s.18',breach:'Unauthorised access to protected/critical infrastructure',outcome:'KES 25M fine and/or 20 years imprisonment',source:'Kenya Law — CMCA 2018'},
-];
-
-let _cxState={},_cxApplicable=[],_cxInp=null,_cxSins=50,_cxEAL=0;
-
-function rCX(inp,sinsScore,totalEAL){
-  const sec=inp.sec;
-  _cxInp=inp; _cxSins=sinsScore; _cxEAL=totalEAL;
-  _cxApplicable=Object.values(REGS).filter(r=>r.applies(sec));
-  // Init check state if not set
-  _cxApplicable.forEach(reg=>reg.checks.forEach(c=>{if(_cxState[c.id]===undefined)_cxState[c.id]=50;}));
-
-  function regScore(reg){return reg.checks.reduce((s,c)=>s+((_cxState[c.id]||50)/100)*c.w,0);}
-
-  const tw=_cxApplicable.reduce((s,r)=>s+(r.tier===1?2:1),0);
-  const ws=_cxApplicable.reduce((s,r)=>s+regScore(r)*(r.tier===1?2:1),0)/tw;
-  const cPct=Math.round(ws);
-
-  let regFine=0;
-  _cxApplicable.forEach(reg=>{
-    const gap=(100-regScore(reg))/100;
-    regFine+=Math.min(reg.maxFine,reg.maxFine*gap*1.5);
-    if(reg.id==='dpa'){const pf=inp.rev*(reg.maxFinePct||.01);if(pf<reg.maxFine)regFine+=pf*gap;}
-  });
-  const repCost=(inp.rev/365)*SECTS[sec].rto*((100-sinsScore)/100);
-  const totalRisk=totalEAL+regFine+repCost;
-
-  document.getElementById('cx-empty').classList.add('hid');
-  document.getElementById('cx-main').classList.remove('hid');
-
-  const col=(v)=>v>=70?'#3a9b68':v>=45?'#c07818':'#c0392b';
-  const se=document.getElementById('cx-sins-score');
-  se.textContent=sinsScore+'/100'; se.style.color=col(sinsScore);
-  const ce=document.getElementById('cx-comp-score');
-  ce.textContent=cPct+'/100'; ce.style.color=col(cPct);
-  document.getElementById('cx-total-exp').textContent=fk(Math.round(totalRisk));
-
-  // Laws
-  document.getElementById('cx-laws').innerHTML=_cxApplicable.map(reg=>{
-    const sc2=Math.round(regScore(reg));
-    const gap=(100-sc2)/100;
-    const fe=Math.round(Math.min(reg.maxFine,reg.maxFine*gap*1.5));
-    return`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.35rem;gap:.5rem;flex-wrap:wrap">
-        <div><div style="font-size:.8rem;font-weight:500;color:var(--text)">${reg.short}</div>
-        <div style="font-size:.6rem;color:var(--muted);margin-top:.1rem">${reg.full} · ${reg.body}</div></div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-family:var(--mono);font-size:.72rem;font-weight:600;color:${col(sc2)}">${sc2}/100</div>
-          <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted)">Fine exposure: ${fk(fe)}</div></div>
-      </div>
-      <div style="font-size:.67rem;color:var(--muted);line-height:1.55;margin-bottom:.4rem">${reg.desc}</div>
-      <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden"><div style="height:100%;width:${sc2}%;background:${col(sc2)};border-radius:2px;transition:width .5s"></div></div>
-      <div style="font-family:var(--mono);font-size:.52rem;color:${reg.tier===1?'#c07818':'var(--muted)'};margin-top:.28rem">${reg.tier===1?'TIER 1 — MANDATORY':'TIER 2 — SECTOR-SPECIFIC'} · Max fine: ${fk(reg.maxFine)}${reg.imp?' · Up to '+reg.imp+'yr imprisonment':''}</div>
-    </div>`;
-  }).join('');
-
-  // Self-assessment checks
-  const allChecks=_cxApplicable.flatMap(reg=>reg.checks.map(c=>({...c,rs:reg.short})));
-  document.getElementById('cx-checks').innerHTML=allChecks.map(c=>{
-    const v=_cxState[c.id]||50;
-    const btnStyle=(active,bc,bg,tc)=>`font-family:var(--mono);font-size:.57rem;padding:.22rem .55rem;border-radius:3px;border:1px solid ${bc};background:${bg};color:${tc};cursor:pointer;font-weight:${active?'700':'400'};opacity:${active?'1':'.6'}`;
-    return`<div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:.55rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap">
-      <div style="flex:1;min-width:180px">
-        <div style="font-size:.75rem;color:var(--text)">${c.lb}</div>
-        <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted);margin-top:.1rem">${c.rs} · Gap exposure: ${fk(c.fe)}</div>
-      </div>
-      <div style="display:flex;gap:.3rem;flex-shrink:0">
-        <button onclick="setCX('${c.id}',100)" style="${btnStyle(v===100,'var(--b2)','rgba(42,122,82,.12)','var(--gl)')}">✓ Yes</button>
-        <button onclick="setCX('${c.id}',50)" style="${btnStyle(v===50,'var(--border)','rgba(255,255,255,.04)','var(--muted)')}">? Partial</button>
-        <button onclick="setCX('${c.id}',0)" style="${btnStyle(v===0,'rgba(155,35,53,.3)','rgba(155,35,53,.1)','#e05060')}">✗ No</button>
-      </div>
-    </div>`;
-  }).join('');
-
-  // Precedents
-  document.getElementById('cx-cases').innerHTML=PRECEDENTS.map(p=>`
-    <div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:.65rem 1rem">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;flex-wrap:wrap;margin-bottom:.22rem">
-        <div style="font-size:.77rem;font-weight:500;color:var(--text)">${p.case}</div>
-        <div style="text-align:right;flex-shrink:0">
-          ${p.fine>0?`<div style="font-family:var(--mono);font-size:.65rem;color:#c0392b;font-weight:600">${fk(p.fine)}</div>`:''}
-          ${p.imp>0?`<div style="font-family:var(--mono);font-size:.56rem;color:#c07818">${p.imp}yr imprisonment</div>`:''}
-        </div>
-      </div>
-      <div style="font-size:.63rem;color:var(--gl);margin-bottom:.18rem">${p.law} · ${p.ref}</div>
-      <div style="font-size:.67rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Breach:</strong> ${p.breach}</div>
-      <div style="font-size:.67rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Outcome:</strong> ${p.outcome}</div>
-      <div style="font-family:var(--mono);font-size:.5rem;color:rgba(255,255,255,.18);margin-top:.18rem">Source: ${p.source}</div>
-    </div>`).join('');
-
-  // Priority actions
-  const actions=[];
-  _cxApplicable.forEach(reg=>{
-    reg.checks.forEach(c=>{
-      const v=_cxState[c.id]||50;
-      if(v<100){const urg=reg.tier===1&&v===0?'CRITICAL':reg.tier===1?'HIGH':'MEDIUM';
-        actions.push({lb:c.lb,rs:reg.short,urg,fe:c.fe});}
-    });
-  });
-  actions.sort((a,b)=>b.fe-a.fe);
-  const urgCol={CRITICAL:'#c0392b',HIGH:'#c07818',MEDIUM:'#3a9b68'};
-  document.getElementById('cx-actions').innerHTML=actions.length===0
-    ?'<div style="font-size:.75rem;color:var(--gl);padding:.5rem">All checks confirmed — strong compliance posture.</div>'
-    :actions.slice(0,10).map(a=>`
-      <div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-        <div><div style="font-size:.75rem;color:var(--text)">${a.lb}</div>
-        <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted)">${a.rs}</div></div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;color:${urgCol[a.urg]}">${a.urg}</div>
-          <div style="font-family:var(--mono);font-size:.55rem;color:var(--muted)">Exposure: ${fk(a.fe)}</div>
-        </div>
-      </div>`).join('');
-}
-
-function setCX(id,val){
-  _cxState[id]=val;
-  if(_cxInp)rCX(_cxInp,_cxSins,_cxEAL);
-}
-/* ── END COMPLIANCE ENGINE ─────────────────────── */
-
-/* URL param pre-load from scanner */
+// ── URL PARAM PRE-LOAD ─────────────────────────────────────────────────────
 (function(){
   const p=new URLSearchParams(window.location.search);
   if(p.get('s')){document.getElementById('is').value=p.get('s');ul('ls',p.get('s')+' / 100')}
@@ -893,6 +1059,9 @@ function setCX(id,val){
   if(p.get('sec')){document.getElementById('isec2').value=p.get('sec');ul('lsec2',p.get('sec')+' / 100')}
   if(p.get('sector'))document.getElementById('i-sec').value=p.get('sector');
   if(p.has('s')||p.has('sector'))setTimeout(calc,400);
+
+  // Check gate on load
+  checkGate();
 })();
 </script>
 </body>
