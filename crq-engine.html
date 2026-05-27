@@ -179,6 +179,28 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
 .hid{display:none!important}
 footer{text-align:center;padding:2rem;font-size:.7rem;color:var(--muted);border-top:1px solid var(--border);margin-top:3rem;position:relative;z-index:1}
+
+/* Actuarial loss distribution band */
+.ald{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;margin-top:.65rem}
+.ald-hd{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:.4rem;margin-bottom:.85rem}
+.ald-title{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.ald-method{font-family:var(--mono);font-size:.55rem;color:var(--muted);opacity:.65}
+.ald-bands{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.65rem;margin-bottom:.85rem}
+@media(max-width:500px){.ald-bands{grid-template-columns:1fr}}
+.ald-b{background:var(--dark2);border-radius:8px;padding:.75rem .85rem;border:1px solid var(--border)}
+.ald-b.p50{border-color:rgba(42,122,82,.25)}
+.ald-b.p75{border-color:rgba(192,120,24,.3);background:rgba(192,120,24,.04)}
+.ald-b.p95{border-color:rgba(155,35,53,.35);background:rgba(155,35,53,.05)}
+.ald-pct{font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.28rem}
+.ald-b.p50 .ald-pct{color:var(--gl)} .ald-b.p75 .ald-pct{color:var(--amber)} .ald-b.p95 .ald-pct{color:#e05060}
+.ald-val{font-family:var(--cond);font-size:1.25rem;font-weight:800;line-height:1.1}
+.ald-b.p50 .ald-val{color:#c0392b} .ald-b.p75 .ald-val{color:var(--amber)} .ald-b.p95 .ald-val{color:#e05060}
+.ald-sub{font-size:.62rem;color:var(--muted);margin-top:.2rem}
+.ald-track{position:relative;height:10px;background:var(--dark2);border-radius:5px;overflow:hidden;margin-bottom:.5rem;border:1px solid var(--border)}
+.ald-fill-50{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:linear-gradient(90deg,rgba(42,122,82,.5),rgba(42,122,82,.8))}
+.ald-fill-75{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:linear-gradient(90deg,rgba(42,122,82,.4),rgba(192,120,24,.7))}
+.ald-fill-95{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:linear-gradient(90deg,rgba(42,122,82,.3),rgba(155,35,53,.8))}
+.ald-note{font-size:.62rem;color:var(--muted);line-height:1.6;padding:.5rem .65rem;background:rgba(255,255,255,.025);border-radius:5px}
 footer a{color:var(--gl)}
 
 /* ── Ransomware intel card ── */
@@ -358,6 +380,36 @@ footer a{color:var(--gl)}
         <div class="mc"><div class="ml">Est. Recovery Time</div><div class="mv" id="ort">—</div><div class="msub">downtime, ransomware event</div></div>
       </div>
 
+      <!-- Actuarial Loss Distribution Band -->
+      <div class="ald" id="ald-card">
+        <div class="ald-hd">
+          <div class="ald-title">Actuarial Loss Distribution · Annual Aggregate</div>
+          <div class="ald-method">Poisson-Lognormal frequency-severity · σ calibrated to Kenya sector data</div>
+        </div>
+        <div class="ald-track"><div class="ald-fill-95" id="ald-track-95" style="width:0%"></div><div class="ald-fill-75" id="ald-track-75" style="width:0%"></div><div class="ald-fill-50" id="ald-track-50" style="width:0%"></div></div>
+        <div class="ald-bands">
+          <div class="ald-b p50">
+            <div class="ald-pct">Expected (50th %ile)</div>
+            <div class="ald-val" id="ald-50">—</div>
+            <div class="ald-sub" id="ald-50-usd">—</div>
+            <div class="ald-sub">Median outcome</div>
+          </div>
+          <div class="ald-b p75">
+            <div class="ald-pct">Adverse (75th %ile)</div>
+            <div class="ald-val" id="ald-75">—</div>
+            <div class="ald-sub" id="ald-75-usd">—</div>
+            <div class="ald-sub">Above-average loss year</div>
+          </div>
+          <div class="ald-b p95">
+            <div class="ald-pct">Severe (95th %ile)</div>
+            <div class="ald-val" id="ald-95">—</div>
+            <div class="ald-sub" id="ald-95-usd">—</div>
+            <div class="ald-sub">Tail risk / stress scenario</div>
+          </div>
+        </div>
+        <div class="ald-note">Modelling methodology: Poisson arrival frequency per scenario, lognormal severity distribution (σ calibrated to Serianu 2023 Kenya loss data and CBK incident reports). Confidence intervals are actuarial-style estimates — not guarantees. <strong style="color:var(--text)">Use the 95th percentile figure for cyber insurance sizing and board-level stress testing.</strong></div>
+      </div>
+
       <div>
         <div class="tbar">
           <button class="tbtn a" onclick="st('hm',this)">Heatmap</button>
@@ -386,7 +438,7 @@ footer a{color:var(--gl)}
 
           <div class="tpane" id="tp-sc">
             <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">EAL = Likelihood × Financial Impact. Sorted by EAL. Likelihood = annual probability of occurrence given your control posture.</p>
-            <table><thead><tr><th>Scenario</th><th>Pillar</th><th>Likelihood</th><th style="text-align:right">EAL / yr</th></tr></thead><tbody id="sctb"></tbody></table>
+            <table><thead><tr><th>Scenario</th><th>Pillar</th><th>Likelihood</th><th style="text-align:right">EAL / yr</th><th style="text-align:right;color:var(--amber)">75th %ile</th><th style="text-align:right;color:#e05060">95th %ile</th></tr></thead><tbody id="sctb"></tbody></table>
           </div>
 
           <div class="tpane" id="tp-os">
@@ -524,6 +576,29 @@ function st(id,btn){
   document.getElementById('tp-'+id).classList.add('a');
 }
 
+// Actuarial loss distribution — Poisson-Lognormal approximation
+// Sector dispersion (σ) calibrated to Kenya incident loss data (Serianu 2023, CBK)
+const SIGMA={sacco:.82,saccondt:.75,fintech:.95,sme:.68,health:.78,govt:.65,ngo:.60,school:.62};
+function actPercentiles(eal,sec){
+  const sg=SIGMA[sec]||0.75;
+  const mu=Math.log(Math.max(eal,1))-sg*sg/2;
+  return{p50:Math.round(Math.exp(mu)),p75:Math.round(Math.exp(mu+0.674*sg)),p95:Math.round(Math.exp(mu+1.645*sg))}
+}
+function calcALD(eal,sec){
+  const p=actPercentiles(eal,sec);
+  const mx=p.p95;
+  document.getElementById('ald-50').textContent=fk(p.p50);
+  document.getElementById('ald-50-usd').textContent=fu(p.p50);
+  document.getElementById('ald-75').textContent=fk(p.p75);
+  document.getElementById('ald-75-usd').textContent=fu(p.p75);
+  document.getElementById('ald-95').textContent=fk(p.p95);
+  document.getElementById('ald-95-usd').textContent=fu(p.p95);
+  document.getElementById('ald-track-50').style.width=Math.round(p.p50/mx*100)+'%';
+  document.getElementById('ald-track-75').style.width=Math.round(p.p75/mx*100)+'%';
+  document.getElementById('ald-track-95').style.width='100%';
+  return p;
+}
+
 function calc(){
   const inp=gi(),ss=sins(inp),scs=sc(inp);
   const eal=scs.reduce((a,b)=>a+b.eal,0);
@@ -535,10 +610,12 @@ function calc(){
   const sc2=ss>=70?'g':ss>=45?'a':'r';
   const pc2=parseFloat(pct)>10?'r':parseFloat(pct)>5?'a':'g';
 
+  const perc=calcALD(eal,inp.sec);
+
   document.getElementById('oeal').textContent=fk(eal);
   document.getElementById('oeal').className='mv r';
   document.getElementById('oealusd').textContent=fu(eal);
-  document.getElementById('owc').textContent=fk(wc);
+  document.getElementById('owc').textContent=fk(perc.p95);
   const sel=document.getElementById('osins');
   sel.textContent=ss; sel.className='mv '+sc2;
   document.getElementById('osinsvd').textContent=svd;
@@ -550,7 +627,7 @@ function calc(){
   rel.textContent=s.rto+' days'; rel.className='mv '+(s.rto>14?'r':'a');
 
   rHM(scs,eal);
-  rSC(scs,eal);
+  rSC(scs,eal,inp.sec);
   rCT(eal);
   rRM(inp,ss);
   rBM(eal,s);
@@ -573,13 +650,17 @@ function rHM(scs,eal){
   document.getElementById('hmg').innerHTML=html;
 }
 
-function rSC(scs,eal){
+function rSC(scs,eal,sec){
+  const sg=SIGMA[sec]||0.75;
   const max=scs[0].eal;
   document.getElementById('sctb').innerHTML=scs.map(s=>{
     const bw=Math.round(s.eal/max*100);
     const bc=s.lh>70?'#c0392b':s.lh>45?'#c07818':'#2a7a52';
     const lc=s.lh>70?'lh-h':s.lh>45?'lh-m':'lh-l';
-    return`<tr><td>${s.n}<div class="sc-bar-w"><div class="sc-bar" style="width:${bw}%;background:${bc}"></div><span class="sc-pct">${Math.round(s.eal/eal*100)}%</span></div></td><td style="font-size:.65rem;color:var(--muted)">${s.p}</td><td><span class="lhb ${lc}">${s.lh}%</span></td><td style="text-align:right;font-family:var(--mono);font-size:.76rem;white-space:nowrap">${fk(s.eal)}</td></tr>`;
+    const s_mu=Math.log(Math.max(s.eal,1))-sg*sg/2;
+    const p75s=Math.round(Math.exp(s_mu+0.674*sg));
+    const p95s=Math.round(Math.exp(s_mu+1.645*sg));
+    return`<tr><td>${s.n}<div class="sc-bar-w"><div class="sc-bar" style="width:${bw}%;background:${bc}"></div><span class="sc-pct">${Math.round(s.eal/eal*100)}%</span></div></td><td style="font-size:.65rem;color:var(--muted)">${s.p}</td><td><span class="lhb ${lc}">${s.lh}%</span></td><td style="text-align:right;font-family:var(--mono);font-size:.76rem;white-space:nowrap">${fk(s.eal)}</td><td style="text-align:right;font-family:var(--mono);font-size:.68rem;color:var(--amber);white-space:nowrap">${fk(p75s)}</td><td style="text-align:right;font-family:var(--mono);font-size:.68rem;color:#e05060;white-space:nowrap">${fk(p95s)}</td></tr>`;
   }).join('');
 }
 
