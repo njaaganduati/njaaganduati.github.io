@@ -1422,6 +1422,43 @@
 .hiw-cta a{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.06em;color:#3a9b68;text-decoration:none;border-bottom:1px solid rgba(58,155,104,0.3);}
 @media(max-width:768px){.hiw-steps{grid-template-columns:1fr;gap:1.5rem;}.hiw-steps::before{display:none;}.hiw-step{flex-direction:row;text-align:left;align-items:flex-start;gap:1rem;}.step-num{flex-shrink:0;margin-bottom:0;}}
 /* ─── FLAGSHIP OFFER ─── */
+/* ─── METHODOLOGY ─── */
+.meth-section{padding:5rem 2rem;background:#0b0e0b;border-top:1px solid rgba(42,122,82,0.15);}
+.meth-inner{max-width:900px;margin:0 auto;}
+.meth-header{margin-bottom:3rem;}
+.meth-steps{display:flex;flex-direction:column;gap:0;margin-bottom:3rem;}
+.meth-step{display:grid;grid-template-columns:56px 1fr;gap:1.25rem;padding:1.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.meth-step:last-child{border-bottom:none;}
+.meth-step-num{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;font-weight:600;color:rgba(42,122,82,0.5);padding-top:2px;flex-shrink:0;}
+.meth-step-title{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:700;color:#e8ebe6;letter-spacing:0.02em;margin-bottom:0.5rem;}
+.meth-step-text{font-size:0.85rem;color:#7a8a78;line-height:1.75;}
+.meth-formula{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;background:rgba(42,122,82,0.08);border:1px solid rgba(42,122,82,0.2);border-radius:5px;padding:0.55rem 0.85rem;margin-top:0.75rem;line-height:1.6;}
+.meth-assumptions{background:#111310;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:1.5rem;margin-bottom:2rem;}
+.meth-assump-title{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;color:#e8ebe6;margin-bottom:0.3rem;}
+.meth-assump-sub{font-size:0.78rem;color:#7a8a78;margin-bottom:1.25rem;}
+.meth-assump-grid{display:flex;flex-direction:column;gap:0;}
+.meth-assump-row{display:grid;grid-template-columns:1fr 1.4fr 1.4fr;gap:1rem;padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.78rem;line-height:1.55;}
+.meth-assump-row:last-child{border-bottom:none;}
+.meth-assump-hdr{font-family:'IBM Plex Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#7a8a78;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.08)!important;}
+.ma-label{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:#3a9b68;font-weight:500;}
+.ma-body{color:#9aaa98;}
+.ma-caveat{color:#7a8a78;font-style:italic;}
+.meth-disclaimer{margin-top:1.25rem;padding:0.75rem 1rem;background:rgba(192,120,24,0.06);border:1px solid rgba(192,120,24,0.2);border-radius:6px;font-size:0.68rem;color:#a08040;line-height:1.7;}
+.meth-disclaimer strong{color:#c07818;}
+.meth-sources{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;padding:1rem 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);}
+.meth-sources-label{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#7a8a78;white-space:nowrap;flex-shrink:0;}
+.meth-sources-list{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.meth-source{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:#7a8a78;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:0.18rem 0.55rem;border-radius:3px;}
+.meth-cta{text-align:center;}
+.meth-cta a{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.06em;color:#3a9b68;text-decoration:none;border-bottom:1px solid rgba(58,155,104,0.3);}
+.meth-cta a:hover{border-bottom-color:#3a9b68;}
+@media(max-width:768px){
+  .meth-step{grid-template-columns:40px 1fr;gap:0.75rem;}
+  .meth-assump-row{grid-template-columns:1fr;gap:0.25rem;}
+  .meth-assump-hdr{display:none;}
+  .ma-caveat::before{content:'⚠ ';color:#c07818;}
+}
+
 .flagship-section{background:#090c09;border-top:1px solid rgba(42,122,82,0.2);border-bottom:1px solid rgba(42,122,82,0.2);}
 .flagship-inner{max-width:none;margin:0;}
 .flagship-card{display:grid;grid-template-columns:1fr 340px;gap:0;align-items:stretch;min-height:300px;}
@@ -1746,6 +1783,133 @@
       <div class="hiw-step"><div class="step-num">05</div><div><div class="step-title">Continuous Assurance</div><div class="step-desc">Ongoing virtual CISO support, monitoring, and quarterly reviews to sustain your posture.</div></div></div>
     </div>
     <div class="hiw-cta"><a href="https://retach.tech/sins-scanner.html">Start with your free S.I.N.S. score &rarr; scanner.retach.io</a></div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="meth-section" id="methodology">
+  <div class="meth-inner">
+
+    <div class="meth-header">
+      <div class="hiw-eyebrow">How RETACH Arrives at Your Number</div>
+      <h2 class="hiw-title">The math behind<br>the model.</h2>
+      <p class="hiw-subtitle">No black boxes. Every figure RETACH produces traces back to a calculation you can verify — in plain English.</p>
+    </div>
+
+    <!-- THE 5 STEPS OF THE MODEL -->
+    <div class="meth-steps">
+      <div class="meth-step">
+        <div class="meth-step-num">01</div>
+        <div class="meth-step-body">
+          <div class="meth-step-title">Count how often attacks happen</div>
+          <div class="meth-step-text">We start with the annual probability of each attack type — phishing, ransomware, fraud, data breach, business continuity failure, insider threat. These base frequencies come from Serianu Africa Cybersecurity Report 2023, CBK incident data, and Communications Authority of Kenya quarterly reports. A SACCO faces attacks 1.8× more often than a baseline organisation. A Fintech, 2.4× more. These are not assumptions — they are published sector frequencies.</div>
+        </div>
+      </div>
+      <div class="meth-step">
+        <div class="meth-step-num">02</div>
+        <div class="meth-step-body">
+          <div class="meth-step-title">Estimate how much each event costs</div>
+          <div class="meth-step-text">Severity is modelled as a percentage of annual revenue — because an organisation's revenue is the most reliable proxy for the scale of data held, transactions processed, and operational complexity. Ransomware typically costs 18% of annual revenue when it hits. A data breach costs 12%. These percentages are calibrated to East Africa incident cost data and validated against global benchmarks from IBM Cost of a Data Breach 2023 and Zurich Insurance emerging markets loss data.</div>
+        </div>
+      </div>
+      <div class="meth-step">
+        <div class="meth-step-num">03</div>
+        <div class="meth-step-body">
+          <div class="meth-step-title">Multiply: Expected Loss = Frequency × Severity</div>
+          <div class="meth-step-text">This is the same formula an insurance actuary uses to price a premium. If ransomware has a 30% annual probability of hitting your organisation and costs KES 9M when it does, your expected annual loss from ransomware is KES 2.7M. We calculate this for six attack types and sum them. That total is your Expected Annual Loss — what you should expect to lose, on average, in any given year.</div>
+          <div class="meth-formula">EAL = &Sigma; (Frequency &times; Severity) across all six S.I.N.S. scenarios</div>
+        </div>
+      </div>
+      <div class="meth-step">
+        <div class="meth-step-num">04</div>
+        <div class="meth-step-body">
+          <div class="meth-step-title">Adjust for your specific controls</div>
+          <div class="meth-step-text">Your controls reduce your risk. Full MFA cuts overall exposure by 38%. A tested and documented backup procedure cuts it by 30%. ODPC registration reduces regulatory fine exposure by 12%. Your S.I.N.S. score — derived from the four-pillar assessment — applies a continuous modifier: a score of 100 produces 85% risk reduction; a score of 0 produces 85% risk amplification. Every organisation retains a minimum 12% residual risk floor — no organisation is immune. Control efficacy percentages are sourced from NIST SP 800-53 and CIS Control implementation benchmarks.</div>
+        </div>
+      </div>
+      <div class="meth-step">
+        <div class="meth-step-num">05</div>
+        <div class="meth-step-body">
+          <div class="meth-step-title">Show three scenarios, not one number</div>
+          <div class="meth-step-text">Losses are not smooth. Some years are quiet. Some are catastrophic. We model this using a lognormal distribution — the same statistical shape that insurance actuaries use for catastrophe losses — because cyber losses have a long tail: most years cost less than average, but rare years cost far more. The spread of that distribution is calibrated by sector: Fintechs have higher variability (&sigma;=0.95) than County Governments (&sigma;=0.65). This gives you three outputs: your median year, a bad year (75th percentile), and a very bad year (95th percentile — 1 in 20 chance).</div>
+          <div class="meth-formula">95th percentile = exp(ln(EAL) + 1.645 &times; &sigma;) &nbsp;&middot;&nbsp; The stress-test figure for board reporting and insurance sizing.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSUMPTIONS TABLE -->
+    <div class="meth-assumptions">
+      <div class="meth-assump-title">What the model assumes — and where it has limits</div>
+      <div class="meth-assump-sub">Transparency is a requirement, not a disclaimer. Every modelling assumption is listed here.</div>
+      <div class="meth-assump-grid">
+        <div class="meth-assump-row meth-assump-hdr">
+          <div>Assumption</div><div>What it means</div><div>Honest limit</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Frequency from published data</div>
+          <div class="ma-body">Base attack probabilities from Serianu 2023, CBK, and CA Kenya sector reports</div>
+          <div class="ma-caveat">Historical frequency does not guarantee future attack rates. Threat actors evolve.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Severity as % of revenue</div>
+          <div class="ma-body">Impact calibrated as a share of annual revenue — larger organisations face larger absolute losses</div>
+          <div class="ma-caveat">Actual severity depends on systems held, data volume, and attacker sophistication — not size alone.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Sector multipliers</div>
+          <div class="ma-body">Fintechs face 2.4× the baseline frequency; SACCOs 1.8× — from sector incident data</div>
+          <div class="ma-caveat">Calibrated from published sector reports. Will be refined as RETACH engagement data accumulates.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Control efficacy</div>
+          <div class="ma-body">Full MFA reduces risk by 38%; tested backup by 30% — from NIST 800-53 benchmarks</div>
+          <div class="ma-caveat">Actual reduction depends on implementation quality, not just whether a control exists.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Loss distribution shape</div>
+          <div class="ma-body">Lognormal distribution; sector dispersion (&sigma;) calibrated to Serianu and Zurich emerging markets data</div>
+          <div class="ma-caveat">Not derived from RETACH's own claims dataset yet. Improves as the RETACH Risk Ledger&trade; grows.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Single-organisation scope</div>
+          <div class="ma-body">Models your organisation's direct loss exposure</div>
+          <div class="ma-caveat">Does not model supply chain contagion or systemic sector-wide events.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">Point-in-time snapshot</div>
+          <div class="ma-body">Reflects your posture at the time of assessment</div>
+          <div class="ma-caveat">Risk changes as threats evolve and controls are added or removed. Reassess annually.</div>
+        </div>
+        <div class="meth-assump-row">
+          <div class="ma-label">FX rate</div>
+          <div class="ma-body">USD conversion at KES 130</div>
+          <div class="ma-caveat">Exchange rate movements are not modelled. KES figures are primary.</div>
+        </div>
+      </div>
+      <div class="meth-disclaimer">
+        <strong>Disclaimer:</strong> RETACH CRQ outputs are financial planning estimates based on the modelling methodology described above. They are not actuarial certifications, legal opinions, or insurance advice. Figures should be used for internal risk management, board reporting, and informed conversations with insurers and legal counsel — not as binding loss projections. RETACH Digital Ltd is not a licensed insurer, broker, or legal firm. Sector benchmarks sourced from: Serianu Africa Cybersecurity Report 2023 &middot; CBK Cybersecurity Guidelines &middot; Communications Authority of Kenya &middot; ODPC enforcement data &middot; IBM Cost of a Data Breach 2023 &middot; NIST SP 800-53.
+      </div>
+    </div>
+
+    <!-- SOURCES STRIP -->
+    <div class="meth-sources">
+      <div class="meth-sources-label">Model calibration sources</div>
+      <div class="meth-sources-list">
+        <span class="meth-source">Serianu Africa Cybersecurity Report 2023</span>
+        <span class="meth-source">CBK Cybersecurity Guidelines</span>
+        <span class="meth-source">Communications Authority of Kenya</span>
+        <span class="meth-source">ODPC Enforcement Data</span>
+        <span class="meth-source">IBM Cost of a Data Breach 2023</span>
+        <span class="meth-source">NIST SP 800-53</span>
+        <span class="meth-source">Zurich Emerging Markets Cyber Loss Data</span>
+        <span class="meth-source">ISO 27005 Risk Practices</span>
+      </div>
+    </div>
+
+    <div class="meth-cta">
+      <a href="https://crq.retach.io" target="_blank" rel="noopener">Run the CRQ Engine for your organisation &rarr;</a>
+    </div>
+
   </div>
 </section>
 
