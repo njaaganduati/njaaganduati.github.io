@@ -620,14 +620,42 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
     <div class="compare-row">
       <div class="compare-feature">
         <div class="compare-feature-name">Financial risk (EAL in KES)</div>
-        <div class="compare-feature-desc">What these gaps cost if exploited</div>
+        <div class="compare-feature-desc">What these gaps cost — median, 75th, and 95th percentile</div>
       </div>
       <div class="compare-cell free">
         <div class="cell-value locked">Indicative range via CRQ Engine only</div>
       </div>
       <div class="compare-cell paid">
-        <div class="cell-value">Breach cost, ransomware recovery, and business interruption — calculated in KES using Kenya sector data (Serianu 2023 / CBK)</div>
-        <div class="cell-check yes">✓ Organisation-specific EAL</div>
+        <div class="cell-value">Organisation-specific EAL with actuarial-style loss distribution — Expected / Adverse (75th %ile) / Severe (95th %ile) — using Poisson-Lognormal model calibrated to Kenya sector data</div>
+        <div class="cell-check yes">✓ Board and insurance-ready figures</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">Coverage adequacy check</div>
+        <div class="compare-feature-desc">Does your cyber insurance cover your actual tail risk?</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value locked">Not included</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Your modelled 95th percentile loss vs your current or planned coverage limit — gap or surplus stated in KES. Not insurance advice; a planning tool for insurer conversations</div>
+        <div class="cell-check yes">✓ First Africa-calibrated coverage check</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-feature">
+        <div class="compare-feature-name">RTO / RPO gap analysis</div>
+        <div class="compare-feature-desc">Recovery time vs your actual tolerance — in KES per hour</div>
+      </div>
+      <div class="compare-cell free">
+        <div class="cell-value locked">Not included</div>
+      </div>
+      <div class="compare-cell paid">
+        <div class="cell-value">Sector-benchmarked recovery time vs your stated tolerance — gap quantified as daily revenue at risk. Per-service criticality table (core banking, digital services, ERP, OT)</div>
+        <div class="cell-check yes">✓ Required for SASRA / CBK DR planning</div>
       </div>
     </div>
 
@@ -778,21 +806,22 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
         <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem">Cyber Risk Quantification — KES</div>
         <div class="paid-metric-row">
           <div class="paid-metric">
-            <div class="paid-metric-lbl">Breach Cost (EAL)</div>
+            <div class="paid-metric-lbl">Expected Annual Loss (EAL)</div>
             <div class="paid-metric-val red">KES 3.8M</div>
-            <div class="paid-metric-sub">Serianu 2023 benchmark</div>
+            <div class="paid-metric-sub">Median outcome · Serianu 2023</div>
           </div>
           <div class="paid-metric">
-            <div class="paid-metric-lbl">Ransomware Recovery</div>
-            <div class="paid-metric-val amber">KES 2.1M</div>
-            <div class="paid-metric-sub">Based on revenue band</div>
+            <div class="paid-metric-lbl">Adverse Year (75th %ile)</div>
+            <div class="paid-metric-val amber">KES 6.2M</div>
+            <div class="paid-metric-sub">Above-average loss year</div>
           </div>
           <div class="paid-metric">
-            <div class="paid-metric-lbl">DPA Fine Exposure</div>
-            <div class="paid-metric-val amber">KES 4.5M</div>
-            <div class="paid-metric-sub">1% turnover or KES 5M</div>
+            <div class="paid-metric-lbl">Severe Year (95th %ile)</div>
+            <div class="paid-metric-val amber">KES 13.7M</div>
+            <div class="paid-metric-sub">Tail risk · insurance sizing</div>
           </div>
         </div>
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);padding:0.4rem 0.6rem;background:rgba(255,255,255,0.025);border-radius:5px;margin-bottom:0.8rem;line-height:1.6">Actuarial-style loss distribution · Poisson-Lognormal model · σ calibrated to Kenya sector data · <a href="https://retach.tech/#methodology" target="_blank" style="color:var(--green)">Methodology →</a></div>
 
         <!-- Compliance scores -->
         <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;margin-top:0.8rem">Compliance Intelligence</div>
@@ -894,7 +923,9 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
       <ul class="what-list">
         <li><span class="icon">✅</span><span class="included">Everything in the free scanner</span></li>
         <li><span class="icon">✅</span><span class="included">Full findings register — description, evidence, MITRE ATT&CK ref, affected objects</span></li>
-        <li><span class="icon">✅</span><span class="included">Financial risk quantification — breach, ransomware, BI in KES</span></li>
+        <li><span class="icon">✅</span><span class="included">Financial risk quantification — EAL with 75th and 95th percentile loss bands</span></li>
+        <li><span class="icon">✅</span><span class="included">Coverage adequacy check — your tail risk vs your insurance limit in KES</span></li>
+        <li><span class="icon">✅</span><span class="included">RTO / RPO gap — recovery time vs tolerance, daily revenue at risk per service</span></li>
         <li><span class="icon">✅</span><span class="included">Compliance scorecard — DPA 2019, SASRA, CBK, CMCA</span></li>
         <li><span class="icon">✅</span><span class="included">Regulatory fine exposure estimate per gap</span></li>
         <li><span class="icon">✅</span><span class="included">Three-phase remediation roadmap with KES cost estimates</span></li>
@@ -914,7 +945,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
   <p>Most organisations that complete the free scanner book a Health Scan within 2 weeks. The gap between knowing you have a problem and knowing exactly what it costs and how to fix it is where the real value is.</p>
   <div class="mid-cta-price">Health Scan from <strong>KES 45,000</strong> · Delivered in 5 business days</div>
   <a href="/#contact" class="btn-primary">Book Your Health Scan →</a>
-  <div class="cta-sub">Or email: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
+  <div class="cta-sub">Or email: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a> · <a href="https://retach.tech/#methodology">How we calculate your risk →</a></div>
 </div>
 
 <!-- SAMPLE REPORT INTRO -->

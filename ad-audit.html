@@ -504,6 +504,22 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
 }
 /* ─────────────────────────────────────────────────────────────── */
 
+/* ── CRQ Bridge Card ── */
+.crq-bridge{background:rgba(42,122,82,0.06);border:1px solid rgba(42,122,82,0.25);border-radius:10px;padding:1.25rem 1.4rem;margin:1.5rem auto;max-width:900px;display:none}
+.crq-bridge.active{display:block}
+.crq-bridge-eyebrow{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.5rem}
+.crq-bridge-title{font-family:var(--cond);font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:0.35rem}
+.crq-bridge-sub{font-size:0.76rem;color:var(--muted);line-height:1.65;margin-bottom:0.9rem}
+.crq-bridge-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:0.9rem}
+@media(max-width:540px){.crq-bridge-metrics{grid-template-columns:repeat(2,1fr)}}
+.crq-bm{background:var(--surface,#1a1d1a);border:1px solid var(--border,rgba(255,255,255,0.08));border-radius:7px;padding:0.6rem 0.75rem;text-align:center}
+.crq-bm-lbl{font-family:var(--mono);font-size:0.55rem;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.22rem}
+.crq-bm-val{font-family:var(--cond);font-size:1.15rem;font-weight:700}
+.crq-bm-val.crit{color:#e05060} .crq-bm-val.warn{color:#c07818} .crq-bm-val.ok{color:#2a7a52}
+.crq-bridge-actions{display:flex;gap:0.65rem;flex-wrap:wrap;align-items:center}
+.crq-bridge-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;background:#2a7a52;color:#fff;font-family:var(--mono);font-size:0.68rem;font-weight:600;letter-spacing:0.05em;border-radius:6px;text-decoration:none;transition:background 0.15s;white-space:nowrap}
+.crq-bridge-btn:hover{background:#3a9b68}
+.crq-bridge-note{font-size:0.65rem;color:var(--muted);line-height:1.6}
 </style>
 </head>
 <body>
@@ -649,6 +665,23 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
   </div>
 
 </div><!-- /dashboard -->
+
+<!-- CRQ Bridge Card — shown after findings load -->
+<div class="crq-bridge" id="crq-bridge">
+  <div class="crq-bridge-eyebrow">Next step · S.I.N.S. Framework™</div>
+  <div class="crq-bridge-title">Quantify these AD findings in KES</div>
+  <div class="crq-bridge-sub">Your AD audit has identified security gaps across the S.I.N.S. pillars. The RETACH CRQ Engine converts your pillar scores into an Expected Annual Loss in Kenya Shillings — with 75th and 95th percentile loss bands for board and insurance reporting. Use the pre-populated link below to load your scores directly.</div>
+  <div class="crq-bridge-metrics">
+    <div class="crq-bm"><div class="crq-bm-lbl">Critical</div><div class="crq-bm-val crit" id="crq-crit">—</div></div>
+    <div class="crq-bm"><div class="crq-bm-lbl">High</div><div class="crq-bm-val warn" id="crq-high">—</div></div>
+    <div class="crq-bm"><div class="crq-bm-lbl">S¹ Score</div><div class="crq-bm-val" id="crq-s1">—</div></div>
+    <div class="crq-bm"><div class="crq-bm-lbl">S⁴ Score</div><div class="crq-bm-val" id="crq-s4">—</div></div>
+  </div>
+  <div class="crq-bridge-actions">
+    <a id="crq-bridge-link" href="https://crq.retach.io" target="_blank" class="crq-bridge-btn">Open CRQ Engine → Quantify in KES</a>
+    <div class="crq-bridge-note">Pre-populated from your AD pillar scores · Actuarial loss model · Serianu 2023 / CBK data · Methodology: retach.tech/#methodology</div>
+  </div>
+</div>
 
 <script>
 'use strict';
@@ -903,6 +936,39 @@ function renderDashboard() {
   renderDRDY();
   renderFilters();
   renderFindings();
+  renderCRQBridge();
+}
+
+function renderCRQBridge() {
+  const d = G.data;
+  const findings = G.findings;
+  if (!findings.length && !d.pillarScores) return;
+  const bridge = document.getElementById('crq-bridge');
+  bridge.classList.add('active');
+
+  // Counts
+  const crits = findings.filter(f=>f.Severity==='Critical').length;
+  const highs  = findings.filter(f=>f.Severity==='High').length;
+  document.getElementById('crq-crit').textContent = crits;
+  document.getElementById('crq-crit').className = 'crq-bm-val ' + (crits>0?'crit':'ok');
+  document.getElementById('crq-high').textContent = highs;
+  document.getElementById('crq-high').className = 'crq-bm-val ' + (highs>0?'warn':'ok');
+
+  // Use AD pillar scores to build CRQ deep link
+  // AD pillar scores map: S1+S2+S3 → Systems (S¹), I → Infrastructure (S²), GPO → Security (S⁴)
+  const ps = d.pillarScores || {};
+  const sysScore  = Math.round(((ps.S1||50)+(ps.S2||50)+(ps.S3||50))/3);
+  const infraScore = ps.I || 50;
+  const netScore   = ps.S5 || 50; // patch/endpoint as proxy for network posture
+  const secScore   = Math.round(((ps.S4||50)+(ps.GPO||50))/2);
+
+  document.getElementById('crq-s1').textContent = sysScore;
+  document.getElementById('crq-s1').className = 'crq-bm-val ' + (sysScore>=70?'ok':sysScore>=45?'warn':'crit');
+  document.getElementById('crq-s4').textContent = secScore;
+  document.getElementById('crq-s4').className = 'crq-bm-val ' + (secScore>=70?'ok':secScore>=45?'warn':'crit');
+
+  const link = `https://crq.retach.io?s=${sysScore}&i=${infraScore}&n=${netScore}&sec=${secScore}`;
+  document.getElementById('crq-bridge-link').href = link;
 }
 
 // ─── SCORE RINGS ─────────────────────────────────────────────────────────────
