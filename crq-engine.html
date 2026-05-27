@@ -177,6 +177,38 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .ui{font-family:var(--mono);font-size:.58rem;color:var(--gl)}
 .ui::before{content:'✓ '}
 
+/* ── Coverage Adequacy Check ── */
+.cac{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;margin-top:.65rem}
+.cac-hd{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:.4rem;margin-bottom:.85rem}
+.cac-title{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.cac-disclaimer{font-family:var(--mono);font-size:.52rem;color:var(--muted);opacity:.6}
+.cac-input-row{display:flex;align-items:center;gap:.65rem;margin-bottom:.85rem;flex-wrap:wrap}
+.cac-input-label{font-size:.75rem;color:var(--text);flex-shrink:0}
+.cac-input-wrap{display:flex;align-items:center;gap:.4rem;flex:1;min-width:180px}
+.cac-prefix{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.cac-input{background:var(--dark2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.82rem;padding:.45rem .7rem;border-radius:6px;width:140px;outline:none;transition:border-color .15s}
+.cac-input:focus{border-color:var(--gd)}
+.cac-input::placeholder{color:var(--muted);opacity:.5}
+.cac-btn{padding:.45rem .9rem;border:none;border-radius:6px;background:var(--green);color:#fff;font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.05em;cursor:pointer;white-space:nowrap;transition:background .15s;flex-shrink:0}
+.cac-btn:hover{background:var(--gl)}
+.cac-result{display:none}
+.cac-bars{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.75rem}
+@media(max-width:480px){.cac-bars{grid-template-columns:1fr}}
+.cac-bar-item{background:var(--dark2);border-radius:8px;padding:.7rem .85rem;border:1px solid var(--border)}
+.cac-bar-lbl{font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.22rem;color:var(--muted)}
+.cac-bar-val{font-family:var(--cond);font-size:1.15rem;font-weight:800;line-height:1.1}
+.cac-track-wrap{margin:.65rem 0 .5rem;position:relative;height:14px;background:var(--dark2);border-radius:7px;overflow:hidden;border:1px solid var(--border)}
+.cac-track-p95{position:absolute;left:0;top:0;height:100%;border-radius:7px;background:rgba(155,35,53,.35)}
+.cac-track-cov{position:absolute;left:0;top:0;height:100%;border-radius:7px;transition:width .7s ease}
+.cac-track-marker{position:absolute;top:0;bottom:0;width:2px;background:rgba(155,35,53,.8)}
+.cac-verdict{padding:.75rem 1rem;border-radius:8px;font-size:.78rem;line-height:1.65;margin-bottom:.6rem}
+.cac-verdict.adequate{background:rgba(42,122,82,.1);border:1px solid rgba(42,122,82,.3);color:#a8d4b8}
+.cac-verdict.partial{background:rgba(192,120,24,.08);border:1px solid rgba(192,120,24,.25);color:#d4a560}
+.cac-verdict.gap{background:rgba(155,35,53,.1);border:1px solid rgba(155,35,53,.3);color:#e08090}
+.cac-verdict strong{display:block;font-family:var(--cond);font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.cac-actions{font-size:.68rem;color:var(--muted);line-height:1.7;padding:.55rem .75rem;background:rgba(255,255,255,.025);border-radius:5px;margin-bottom:.5rem}
+.cac-legal{font-family:var(--mono);font-size:.55rem;color:var(--muted);opacity:.6;line-height:1.6;margin-top:.55rem}
+
 .hid{display:none!important}
 footer{text-align:center;padding:2rem;font-size:.7rem;color:var(--muted);border-top:1px solid var(--border);margin-top:3rem;position:relative;z-index:1}
 
@@ -410,6 +442,47 @@ footer a{color:var(--gl)}
         <div class="ald-note">Modelling methodology: Poisson arrival frequency per scenario, lognormal severity distribution (σ calibrated to Serianu 2023 Kenya loss data and CBK incident reports). Confidence intervals are actuarial-style estimates — not guarantees. <strong style="color:var(--text)">Use the 95th percentile figure for cyber insurance sizing and board-level stress testing.</strong></div>
       </div>
 
+      </div>
+
+      <!-- Coverage Adequacy Check -->
+      <div class="cac" id="cac-card">
+        <div class="cac-hd">
+          <div class="cac-title">Coverage Adequacy Check</div>
+          <div class="cac-disclaimer">Not insurance advice · Planning tool only</div>
+        </div>
+        <div class="cac-input-row">
+          <div class="cac-input-label">Enter your current or planned cyber cover limit:</div>
+          <div class="cac-input-wrap">
+            <span class="cac-prefix">KES</span>
+            <input class="cac-input" type="number" id="cac-inp" placeholder="e.g. 10000000" min="0" oninput="runCAC()">
+          </div>
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted)">or leave blank if uninsured</div>
+        </div>
+        <div class="cac-result" id="cac-result">
+          <div class="cac-bars">
+            <div class="cac-bar-item">
+              <div class="cac-bar-lbl">Your modelled tail risk (95th %ile)</div>
+              <div class="cac-bar-val" id="cac-p95-val" style="color:#e05060">—</div>
+              <div style="font-size:.62rem;color:var(--muted);margin-top:.15rem">Severe-year loss · 1-in-20 chance</div>
+            </div>
+            <div class="cac-bar-item">
+              <div class="cac-bar-lbl">Your coverage limit</div>
+              <div class="cac-bar-val" id="cac-cov-val" style="color:var(--gl)">—</div>
+              <div style="font-size:.62rem;color:var(--muted);margin-top:.15rem" id="cac-cov-sub">Entered coverage</div>
+            </div>
+          </div>
+          <div class="cac-track-wrap">
+            <div class="cac-track-p95" id="cac-tr-p95" style="width:100%"></div>
+            <div class="cac-track-cov" id="cac-tr-cov" style="width:0%"></div>
+            <div class="cac-track-marker" id="cac-tr-mark" style="left:100%"></div>
+          </div>
+          <div class="cac-verdict" id="cac-verdict"></div>
+          <div class="cac-actions" id="cac-actions"></div>
+          <div class="cac-legal">This check compares your entered coverage limit against your modelled loss distribution. It is a planning tool only — not actuarial certification, legal opinion, or insurance advice. Coverage adequacy depends on policy terms, exclusions, sub-limits, and deductibles not captured here. Discuss findings with your insurer or broker. RETACH Digital Ltd is not a licensed insurer or broker. Available Kenyan cyber insurance providers include APA Insurance, Britam (with Chubb), NCBA CyberGuard, and Zamara.</div>
+        </div>
+        <div id="cac-prompt" style="font-size:.72rem;color:var(--muted);text-align:center;padding:.5rem 0">Enter a coverage limit above to check adequacy against your modelled loss exposure.</div>
+      </div>
+
       <div>
         <div class="tbar">
           <button class="tbtn a" onclick="st('hm',this)">Heatmap</button>
@@ -599,6 +672,76 @@ function calcALD(eal,sec){
   return p;
 }
 
+// ── Coverage Adequacy Check ──────────────────────────────────
+// Stores last computed percentiles so runCAC() can use them on input change
+let _cacPerc={p50:0,p75:0,p95:0};
+
+function runCAC(){
+  const raw=parseFloat(document.getElementById('cac-inp').value);
+  const prompt=document.getElementById('cac-prompt');
+  const result=document.getElementById('cac-result');
+
+  if(!raw||raw<=0||!_cacPerc.p95){
+    result.style.display='none';
+    prompt.style.display='block';
+    return;
+  }
+  prompt.style.display='none';
+  result.style.display='block';
+
+  const cov=Math.round(raw);
+  const p50=_cacPerc.p50, p95=_cacPerc.p95;
+  const mx=Math.max(cov,p95)*1.05;
+  const covPct=Math.min(100,Math.round(cov/mx*100));
+  const p95Pct=Math.round(p95/mx*100);
+
+  // Bar values
+  document.getElementById('cac-p95-val').textContent=fk(p95);
+  document.getElementById('cac-cov-val').textContent=fk(cov);
+
+  // Visual track
+  document.getElementById('cac-tr-p95').style.width=p95Pct+'%';
+  document.getElementById('cac-tr-cov').style.width=covPct+'%';
+  document.getElementById('cac-tr-mark').style.left=p95Pct+'%';
+
+  // Gap arithmetic
+  const gap=p95-cov;
+  const surplus=cov-p95;
+
+  let vClass,vTitle,vBody,actions,covSub;
+
+  if(cov>=p95){
+    // Coverage meets or exceeds tail risk
+    vClass='adequate';
+    vTitle='Coverage appears adequate for your modelled exposure';
+    vBody=`Your coverage limit of ${fk(cov)} meets or exceeds your modelled severe-year loss of ${fk(p95)} (95th percentile). On the basis of this model, your coverage limit is sufficient for a 1-in-20 bad year. Your expected annual loss (median year) is ${fk(p50)}.`;
+    covSub=`Surplus vs tail risk: +${fk(surplus)}`;
+    actions=`Verify that your policy covers business interruption — most Kenyan policies currently cover data breach and system recovery costs only, not lost revenue during downtime. Confirm sub-limits and deductibles with your insurer or broker.`;
+  } else if(cov>=p50){
+    // Covers expected year, not tail
+    vClass='partial';
+    vTitle='Coverage covers a normal year — but not a severe event';
+    vBody=`Your coverage of ${fk(cov)} is above your expected annual loss (${fk(p50)}) but below your modelled severe-year loss of ${fk(p95)}. In a 1-in-20 bad year, you could face an uncovered shortfall of approximately ${fk(gap)}.`;
+    covSub=`Gap to tail risk: ${fk(gap)}`;
+    actions=`Consider whether to increase your coverage limit to ${fk(p95)} or above to close the tail risk gap. Alternatively, review which scenarios drive your 95th percentile (see Scenarios tab) and assess whether controls investment could reduce the tail risk figure itself.`;
+  } else {
+    // Below expected annual loss
+    vClass='gap';
+    vTitle='Coverage is below your expected annual loss';
+    vBody=`Your coverage of ${fk(cov)} is below your modelled expected annual loss of ${fk(p50)}. This means your coverage limit would be exhausted in an average-severity event. Your severe-year exposure is ${fk(p95)} — a gap of ${fk(gap)} above your current limit.`;
+    covSub=`Gap to tail risk: ${fk(gap)}`;
+    actions=`This suggests a significant coverage gap. Review your current cyber insurance policy terms and discuss coverage adequacy with your insurer or broker using the figures above. A RETACH Full Assessment provides the detailed findings documentation that insurers require for accurate underwriting.`;
+  }
+
+  document.getElementById('cac-cov-sub').textContent=covSub;
+  document.getElementById('cac-tr-cov').style.background=vClass==='adequate'?'rgba(42,122,82,.7)':vClass==='partial'?'rgba(192,120,24,.7)':'rgba(155,35,53,.6)';
+
+  const vEl=document.getElementById('cac-verdict');
+  vEl.className='cac-verdict '+vClass;
+  vEl.innerHTML=`<strong>${vTitle}</strong>${vBody}`;
+  document.getElementById('cac-actions').innerHTML=`<strong style="color:var(--text);font-size:.7rem">Next step: </strong>${actions}`;
+}
+
 function calc(){
   const inp=gi(),ss=sins(inp),scs=sc(inp);
   const eal=scs.reduce((a,b)=>a+b.eal,0);
@@ -611,6 +754,7 @@ function calc(){
   const pc2=parseFloat(pct)>10?'r':parseFloat(pct)>5?'a':'g';
 
   const perc=calcALD(eal,inp.sec);
+  _cacPerc=perc;  // make available to Coverage Adequacy Check
 
   document.getElementById('oeal').textContent=fk(eal);
   document.getElementById('oeal').className='mv r';
@@ -635,6 +779,7 @@ function calc(){
   document.getElementById('tcp').classList.add('hid');
   document.getElementById('rw').classList.remove('hid');
   document.getElementById('rw').scrollIntoView({behavior:'smooth',block:'start'});
+  runCAC(); // re-evaluate coverage check with new percentiles
 }
 
 function rHM(scs,eal){
