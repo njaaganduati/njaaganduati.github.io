@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!--
+  RETACH Digital Ltd — docs.html CI Additions
+  =============================================
+  This file contains three ready-to-paste HTML blocks to add to docs.html.
+  Each block is labelled with WHERE to insert it.
+  Styles match existing docs.html design tokens exactly.
+-->
+
+<!-- ═══════════════════════════════════════════════════════════════
+  BLOCK 1: Add to the sidebar navigation <ul> list
+  Insert after the existing "CRQ Terms of Use" <li> item
+════════════════════════════════════════════════════════════════════ -->
+<!--
+<li><a href="#ci-framework">Critical Infrastructure</a></li>
+-->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+  BLOCK 2: New assumptions table row — CI sigma value
+  Insert into the existing assumptions table in the Methodology section,
+  after the "sector multipliers" row.
+════════════════════════════════════════════════════════════════════ -->
+<!--
+<tr>
+  <td>Critical Infrastructure σ</td>
+  <td>Loss dispersion constant (σ) for CI sectors set at 1.10 — above Fintech (0.95), reflecting nation-state threat exposure, OT/IT convergence risk, and mandatory reporting obligations under CMCA 2018/2024 s.18. Sub-sectors: Transport · Energy · Telecoms · Financial MI · Govt Systems · Critical Health.</td>
+  <td>Estimated from Serianu 2023 CI incident data and Zurich emerging markets CI loss data. Will be refined as RETACH Risk Ledger™ CI claims accumulate.</td>
+</tr>
+-->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+  BLOCK 3: Full new section — Critical Infrastructure Framework
+  Insert AFTER the S.I.N.S. Framework Reference section,
+  BEFORE the footer.
+  This is the main substantive addition.
+════════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* CI Section styles — paste into existing <style> block in docs.html */
+.ci-section { padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.07); }
+.ci-header { margin-bottom: 2rem; }
+.ci-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: #c0392b; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.ci-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.75rem; }
+.ci-subtitle { font-size: 0.88rem; color: #7a8a78; line-height: 1.75; max-width: 680px; }
+.ci-penalty-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+@media (max-width: 700px) { .ci-penalty-grid { grid-template-columns: 1fr; } }
+.ci-penalty-card { background: #151814; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 1.1rem 1.2rem; }
+.ci-penalty-card.red { border-color: rgba(155,35,53,0.4); background: rgba(155,35,53,0.06); }
+.ci-penalty-card.amber { border-color: rgba(192,120,24,0.35); background: rgba(192,120,24,0.05); }
+.ci-penalty-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: #7a8a78; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.ci-penalty-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; font-weight: 800; line-height: 1; margin-bottom: 0.3rem; }
+.ci-penalty-value.red { color: #c0392b; }
+.ci-penalty-value.amber { color: #c07818; }
+.ci-penalty-note { font-size: 0.72rem; color: #7a8a78; line-height: 1.6; }
+.ci-sectors-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.82rem; }
+.ci-sectors-table th { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: #7a8a78; letter-spacing: 0.08em; text-transform: uppercase; text-align: left; padding: 0.6rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.ci-sectors-table td { padding: 0.75rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.55; }
+.ci-sectors-table tr:last-child td { border-bottom: none; }
+.ci-sectors-table tr:hover td { background: rgba(42,122,82,0.04); }
+.ci-sector-name { font-weight: 600; color: #e8ebe6; margin-bottom: 0.2rem; }
+.ci-sector-eg { font-size: 0.72rem; color: #7a8a78; }
+.ci-fine-combined { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: #c0392b; font-weight: 600; white-space: nowrap; }
+.ci-fine-breakdown { font-size: 0.65rem; color: #7a8a78; line-height: 1.6; margin-top: 0.2rem; }
+.ci-reg-tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: #3a9b68; background: rgba(42,122,82,0.1); border: 1px solid rgba(42,122,82,0.25); padding: 0.15rem 0.5rem; border-radius: 3px; margin-top: 0.3rem; }
+.ci-checks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0; }
+@media (max-width: 700px) { .ci-checks-grid { grid-template-columns: 1fr; } }
+.ci-check-card { background: #151814; border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 0.9rem 1rem; }
+.ci-check-ref { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; color: #3a9b68; letter-spacing: 0.06em; margin-bottom: 0.35rem; }
+.ci-check-title { font-size: 0.82rem; font-weight: 600; color: #e8ebe6; margin-bottom: 0.25rem; line-height: 1.4; }
+.ci-check-fine { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: #c0392b; }
+.ci-warning-box { background: rgba(155,35,53,0.07); border: 1px solid rgba(155,35,53,0.3); border-radius: 10px; padding: 1.1rem 1.2rem; margin: 1.5rem 0; font-size: 0.82rem; line-height: 1.7; }
+.ci-warning-box strong { color: #c0392b; }
+.ci-note-box { background: rgba(42,122,82,0.06); border: 1px solid rgba(42,122,82,0.2); border-radius: 10px; padding: 1rem 1.2rem; margin: 1.5rem 0; font-size: 0.82rem; color: #7a8a78; line-height: 1.7; }
+.ci-note-box strong { color: #3a9b68; }
+</style>
+
+<!-- ── PASTE THIS SECTION BLOCK INTO docs.html ── -->
+<section id="ci-framework" class="ci-section">
+  <div class="ci-header">
+    <div class="ci-eyebrow">Critical Infrastructure · CMCA 2018/2024 s.18</div>
+    <h2 class="ci-title">Critical Infrastructure Protection<br>and Compliance Framework</h2>
+    <p class="ci-subtitle">Kenya's Computer Misuse and Cybercrimes Act 2018, as amended by the 2024 Cyber Security Regulations, designates specific sectors as critical infrastructure and imposes the highest criminal penalties in Kenyan cyber law on organisations operating within them. The RETACH CRQ Engine models combined DPA + CMCA fine exposure for all CI sectors.</p>
+  </div>
+
+  <!-- Penalty overview cards -->
+  <div class="ci-penalty-grid">
+    <div class="ci-penalty-card red">
+      <div class="ci-penalty-label">CMCA 2018/2024 s.18 — Maximum Fine</div>
+      <div class="ci-penalty-value red">KES 25M</div>
+      <div class="ci-penalty-note">For unauthorised access to, interference with, or sabotage of critical infrastructure systems. Enforced by DCI and NC4 (National Computer and Cyberspace Centre).</div>
+    </div>
+    <div class="ci-penalty-card amber">
+      <div class="ci-penalty-label">DPA 2019 — Maximum Fine (concurrent)</div>
+      <div class="ci-penalty-value amber">KES 5M</div>
+      <div class="ci-penalty-note">Data Protection Act 2019 fines apply to all CI operators that process personal data. Enforced by ODPC. Imposed in addition to, not instead of, CMCA penalties.</div>
+    </div>
+    <div class="ci-penalty-card red">
+      <div class="ci-penalty-label">Combined Regulatory Ceiling</div>
+      <div class="ci-penalty-value red">KES 30M</div>
+      <div class="ci-penalty-note">DPA and CMCA penalties can be imposed simultaneously for the same incident. CMCA s.18 also carries a custodial sentence of up to <strong style="color:#c0392b;">20 years imprisonment.</strong></div>
+    </div>
+  </div>
+
+  <div class="ci-warning-box">
+    <strong>Legal basis:</strong> Computer Misuse and Cybercrimes Act No. 5 of 2018, Section 18 — as amended by the Cyber Security Regulations 2024 (Legal Notice No. __/2024). DPA 2019 applies independently and runs concurrently. An organisation can be prosecuted under both statutes for the same security failure. This is not a planning assumption — it is the current statutory position. Source: Kenya Law · NC4 · ODPC.
+    <br><br>
+    <em style="color:#7a8a78;">This does not constitute legal advice. RETACH recommends validation by a qualified Kenyan advocate for compliance decisions.</em>
+  </div>
+
+  <!-- Sector table -->
+  <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;letter-spacing:0.02em;">Designated Critical Infrastructure Sectors</h3>
+  <p style="font-size:0.8rem;color:#7a8a78;margin-bottom:1rem;line-height:1.6;">The following sectors are classified as critical infrastructure under the CMCA 2018/2024 framework. Each is modelled separately in the RETACH CRQ Engine with a sector-specific lognormal dispersion constant (σ = 1.10) and dual DPA + CMCA fine exposure.</p>
+
+  <table class="ci-sectors-table">
+    <thead>
+      <tr>
+        <th>Sector</th>
+        <th>Example Entities</th>
+        <th>Primary Regulator(s)</th>
+        <th>Max Combined Fine</th>
+        <th>CRQ σ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="ci-sector-name">Transport &amp; Logistics</div><div class="ci-sector-eg">Rail, Port, Aviation, Road</div></td>
+        <td style="color:#7a8a78;font-size:0.78rem;">Kenya Railways · KPA · KAA · SGR</td>
+        <td><span class="ci-reg-tag">NTSA</span> <span class="ci-reg-tag">KeNHA</span> <span class="ci-reg-tag">NC4</span></td>
+        <td><div class="ci-fine-combined">KES 30M</div><div class="ci-fine-breakdown">CMCA: KES 25M + DPA: KES 5M<br>+ up to 20 yrs imprisonment</div></td>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;">1.10</td>
+      </tr>
+      <tr>
+        <td><div class="ci-sector-name">Energy &amp; Utilities</div><div class="ci-sector-eg">Power, Water, Oil &amp; Gas</div></td>
+        <td style="color:#7a8a78;font-size:0.78rem;">KPLC · KETRACO · KEWASCO · KPC</td>
+        <td><span class="ci-reg-tag">ERC</span> <span class="ci-reg-tag">WASREB</span> <span class="ci-reg-tag">NC4</span></td>
+        <td><div class="ci-fine-combined">KES 30M</div><div class="ci-fine-breakdown">Highest consequence category —<br>disruption affects national welfare</div></td>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;">1.10</td>
+      </tr>
+      <tr>
+        <td><div class="ci-sector-name">Telecommunications &amp; ICT</div><div class="ci-sector-eg">Operators, ISPs, Data Centres</div></td>
+        <td style="color:#7a8a78;font-size:0.78rem;">Safaricom · Airtel · Faiba · ISPs</td>
+        <td><span class="ci-reg-tag">CA Kenya</span> <span class="ci-reg-tag">NC4</span></td>
+        <td><div class="ci-fine-combined">KES 30M</div><div class="ci-fine-breakdown">CA Kenya CII Regulations apply<br>in addition to CMCA/DPA</div></td>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;">1.10</td>
+      </tr>
+      <tr>
+        <td><div class="ci-sector-name">Financial Market Infrastructure</div><div class="ci-sector-eg">Stock Exchange, Clearing, Payment Switches</div></td>
+        <td style="color:#7a8a78;font-size:0.78rem;">NSE · CDSC · CBK Clearing · Pesalink</td>
+        <td><span class="ci-reg-tag">CBK</span> <span class="ci-reg-tag">CMA</span> <span class="ci-reg-tag">NC4</span></td>
+        <td><div class="ci-fine-combined">KES 30M</div><div class="ci-fine-breakdown">Systemic risk classification —<br>CBK cybersecurity guidelines apply</div></td>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;">1.10</td>
+      </tr>
+      <tr>
+        <td><div class="ci-sector-name">Government Core Systems</div><div class="ci-sector-eg">Revenue, Identity, Civil Registration</div></td>
+        <td style="color:#7a8a78;font-size:0.78rem;">KRA · NTSA · eCitizen · Huduma · IPRS</td>
+        <td><span class="ci-reg-tag">ICT Authority</span> <span class="ci-reg-tag">NC4</span> <span class="ci-reg-tag">DCI</span></td>
+        <td><div class="ci-fine-combined">KES 30M</div><div class="ci-fine-breakdown">ICT Authority Cybersecurity Guidelines<br>2023 apply to all government systems</div></td>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;">1.10</td>
+      </tr>
+      <tr>
+        <td><div class="ci-sector-name">Critical Health Infrastructure</div><div class="ci-sector-eg">National Hospitals, Blood Services, Supply Chain</div></td>
+        <td style="color:#7a8a78;font-size:0.78rem;">KNH · KEMSA · National Blood Service · MOH</td>
+        <td><span class="ci-reg-tag">MOH</span> <span class="ci-reg-tag">KEMSA Board</span> <span class="ci-reg-tag">NC4</span></td>
+        <td><div class="ci-fine-combined">KES 30M</div><div class="ci-fine-breakdown">Patient safety consequence<br>elevates to CI classification</div></td>
+        <td style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:#3a9b68;">1.10</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- CMCA Compliance Checks -->
+  <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;margin:1.8rem 0 0.5rem;letter-spacing:0.02em;">CMCA Compliance Checks Modelled in the CRQ Engine</h3>
+  <p style="font-size:0.8rem;color:#7a8a78;margin-bottom:1rem;line-height:1.6;">The following controls are assessed in the CRQ Engine compliance module for CI sector organisations. Non-compliance contributes to the regulatory fine exposure figure.</p>
+  <div class="ci-checks-grid">
+    <div class="ci-check-card">
+      <div class="ci-check-ref">CMCA s.18 / CM-CI-01</div>
+      <div class="ci-check-title">Access control and authentication to operational systems documented and enforced</div>
+      <div class="ci-check-fine">Fine exposure: up to KES 5M (CMCA)</div>
+    </div>
+    <div class="ci-check-card">
+      <div class="ci-check-ref">CMCA s.22 / CM-CI-02</div>
+      <div class="ci-check-title">NC4 incident reporting mechanism established and tested</div>
+      <div class="ci-check-fine">Fine exposure: up to KES 5M (CMCA)</div>
+    </div>
+    <div class="ci-check-card">
+      <div class="ci-check-ref">CMCA s.18 / CM-CI-03</div>
+      <div class="ci-check-title">OT/IT separation policy documented — where operational technology is present</div>
+      <div class="ci-check-fine">Fine exposure: up to KES 7M (CMCA)</div>
+    </div>
+    <div class="ci-check-card">
+      <div class="ci-check-ref">ICT Authority / CM-CI-04</div>
+      <div class="ci-check-title">Business Continuity Plan for essential services tested within 12 months</div>
+      <div class="ci-check-fine">Fine exposure: regulatory suspension risk</div>
+    </div>
+    <div class="ci-check-card">
+      <div class="ci-check-ref">CMCA s.7 / CM-CI-05</div>
+      <div class="ci-check-title">Staff offboarding procedure — credential revocation on departure from CI systems</div>
+      <div class="ci-check-fine">Fine exposure: up to KES 7M (CMCA)</div>
+    </div>
+    <div class="ci-check-card">
+      <div class="ci-check-ref">DPA 2019 / CM-CI-06</div>
+      <div class="ci-check-title">ODPC registration as data controller — mandatory for all CI operators processing personal data</div>
+      <div class="ci-check-fine">Fine exposure: up to KES 5M (DPA) — concurrent</div>
+    </div>
+  </div>
+
+  <!-- CRQ Engine sigma note -->
+  <div class="ci-note-box">
+    <strong>CRQ Engine — Critical Infrastructure σ Constant</strong><br>
+    All CI sub-sectors use a lognormal dispersion constant of σ = 1.10 in the RETACH Poisson-Lognormal frequency-severity model. This is the highest σ value in the engine — above Fintech (σ = 0.95) and SACCO DT (σ = 0.82). The elevated constant reflects: (1) nation-state and advanced persistent threat (APT) exposure; (2) OT/IT convergence risk where IT breaches can trigger physical consequences; (3) mandatory incident reporting obligations that increase observable frequency; and (4) high consequence cascading failures (e.g. power grid failure triggering banking downtime).
+    <br><br>
+    Calibration sources: Serianu Africa Cybersecurity Report 2023 (CI chapter) · Zurich Insurance Emerging Markets CI Loss Data · NC4 Kenya Incident Data · ENISA (EU Agency for Cybersecurity) CI Threat Landscape 2023 · IBM Cost of a Data Breach 2023 (critical infrastructure sector).
+    <br><br>
+    <em style="color:#7a8a78;">As with all RETACH σ constants: this is a calibrated estimate pending accumulation of RETACH Risk Ledger™ CI engagement data. It will be refined as CI engagements close.</em>
+  </div>
+
+  <!-- RETACH CI practice note -->
+  <div class="ci-note-box" style="border-color:rgba(42,122,82,0.3);background:rgba(42,122,82,0.06);">
+    <strong>RETACH Critical Infrastructure Practice</strong><br>
+    The RETACH practice includes direct operational security experience inside Kenya's national rail transport system — a CMCA-designated critical infrastructure environment. Engagements delivered included enterprise network security architecture, identity and access management, incident response planning, and business continuity programme development across a geographically distributed, mission-critical estate.
+    <br><br>
+    This practitioner background is the foundation of RETACH's CI security offering — one of the few cybersecurity practices in East Africa with hands-on experience inside a CMCA-classified critical infrastructure organisation.
+    <br><br>
+    <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20would%20like%20to%20discuss%20a%20Critical%20Infrastructure%20Security%20Review." target="_blank" rel="noopener" style="color:#3a9b68;font-weight:600;">Book a Critical Infrastructure Security Review →</a>
+  </div>
+
+</section>
+<!-- ── END CI SECTION BLOCK ── -->
