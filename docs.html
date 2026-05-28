@@ -3,476 +3,1126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RETACH Documentation · docs.retach.io</title>
-<meta name="description" content="RETACH Digital Ltd — methodology documentation, CRQ model assumptions, terms of use, and engagement templates. The S.I.N.S. Framework™ for Digital Resilience.">
-<meta name="robots" content="index, follow">
+<title>RETACH Documentation | S.I.N.S. Framework™ Methodology & Terms</title>
+<meta name="description" content="Methodology, model assumptions, terms of use, and engagement templates for the S.I.N.S. Framework™ for Digital Resilience. RETACH Digital Ltd.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0b0e0b;
-  --dark2:#111310;
-  --card:#161916;
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(42,122,82,0.25);
-  --green:#2a7a52;
-  --gl:#3a9b68;
-  --text:#e8ebe6;
-  --muted:#7a8a78;
-  --amber:#c07818;
-  --red:#9b2335;
-  --mono:'IBM Plex Mono',monospace;
-  --cond:'Barlow Condensed',sans-serif;
-  --body:'Barlow',sans-serif;
+/* ─── TOKENS ─────────────────────────────────────────────────────── */
+:root {
+  --green:      #116b4f;   /* brand doc green */
+  --green-web:  #2a7a52;
+  --green-l:    #1a9068;
+  --green-bg:   #f0f7f4;
+  --green-border: rgba(17,107,79,0.18);
+  --green-mid:  rgba(17,107,79,0.08);
+  --text:       #111814;
+  --body:       #2c3830;
+  --muted:      #556659;
+  --faint:      #8a9e92;
+  --border:     #dce8e2;
+  --bg:         #ffffff;
+  --bg2:        #f7faf8;
+  --bg3:        #eef4f0;
+  --sidebar-w:  260px;
+  --nav-h:      60px;
+  --amber:      #b07010;
+  --red:        #9b2335;
+  --mono:       'IBM Plex Mono', monospace;
+  --cond:       'Barlow Condensed', sans-serif;
+  --body-font:  'Barlow', sans-serif;
 }
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;min-height:100vh}
 
-/* ── NAV ── */
-.sins-nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:rgba(11,14,11,0.95);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(8px)}
-.sins-nav__brand{font-family:var(--cond);font-size:1.2rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:0.04em}
-.sins-nav__brand span{color:var(--gl)}
-.sins-nav__tools{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
-.sins-nav__tools::-webkit-scrollbar{display:none}
-.sins-nav__tool{font-family:var(--mono);font-size:0.65rem;color:var(--muted);text-decoration:none;padding:0 1rem;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
-.sins-nav__tool:hover{color:var(--text)}
-.sins-nav__tool.active{color:var(--gl);border-bottom-color:var(--gl)}
-.sins-nav__right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
-.sins-nav__cta{font-family:var(--mono);font-size:0.62rem;font-weight:600;color:var(--gl);border:1px solid var(--border2);border-radius:5px;padding:.35rem .85rem;text-decoration:none;letter-spacing:.05em;transition:all .15s}
-.sins-nav__cta:hover{background:rgba(42,122,82,0.12);color:var(--gl)}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
-/* ── LAYOUT ── */
-.docs-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 56px);max-width:1200px;margin:0 auto;padding:0 1rem}
-@media(max-width:768px){.docs-layout{grid-template-columns:1fr}.docs-sidebar{display:none}}
+body {
+  font-family: var(--body-font);
+  background: var(--bg);
+  color: var(--body);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* ── SIDEBAR ── */
-.docs-sidebar{padding:2rem 1.5rem 2rem 0;border-right:1px solid var(--border);position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
-.sidebar-section{margin-bottom:2rem}
-.sidebar-label{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;padding-left:0.5rem}
-.sidebar-link{display:block;font-family:var(--mono);font-size:0.68rem;color:var(--muted);text-decoration:none;padding:0.4rem 0.5rem;border-radius:4px;border-left:2px solid transparent;transition:all .12s;line-height:1.4}
-.sidebar-link:hover{color:var(--text);background:rgba(255,255,255,0.03)}
-.sidebar-link.active{color:var(--gl);border-left-color:var(--gl);background:rgba(42,122,82,0.06)}
-.sidebar-link.sub{padding-left:1.1rem;font-size:0.63rem}
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-/* ── MAIN CONTENT ── */
-.docs-main{padding:2.5rem 2rem 4rem}
-.doc-section{margin-bottom:4rem;scroll-margin-top:80px}
+/* ─── TOP NAV ──────────────────────────────────────────────────────── */
+.top-nav {
+  position: sticky;
+  top: 0; z-index: 200;
+  height: var(--nav-h);
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  box-shadow: 0 2px 16px rgba(17,107,79,0.25);
+}
 
-/* ── PAGE HEADER ── */
-.page-header{margin-bottom:3rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
-.page-eyebrow{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gl);margin-bottom:0.5rem}
-.page-title{font-family:var(--cond);font-size:2.2rem;font-weight:800;color:var(--text);line-height:1.1;margin-bottom:0.5rem}
-.page-sub{font-size:0.9rem;color:var(--muted);line-height:1.7;max-width:580px}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+}
+.nav-logo-svg {
+  width: 32px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.nav-wordmark {
+  font-family: var(--cond);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.3);
+  margin: 0 0.75rem;
+}
+.nav-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
 
-/* ── SECTION HEADERS ── */
-.doc-h1{font-family:var(--cond);font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;padding-bottom:0.5rem;border-bottom:2px solid var(--border2)}
-.doc-h2{font-family:var(--cond);font-size:1.15rem;font-weight:700;color:var(--text);margin:1.75rem 0 0.6rem}
-.doc-h3{font-family:var(--mono);font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gl);margin:1.25rem 0 0.4rem}
-.doc-p{font-size:0.88rem;color:#9aaa98;line-height:1.8;margin-bottom:0.85rem}
-.doc-p strong{color:var(--text);font-weight:600}
-.doc-p a{color:var(--gl);text-decoration:none;border-bottom:1px solid rgba(58,155,104,0.3)}
-.doc-p a:hover{border-bottom-color:var(--gl)}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.nav-link {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.12); text-decoration: none; }
+.nav-link.active { color: #fff; background: rgba(255,255,255,0.18); }
+.nav-cta {
+  margin-left: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: #ffffff;
+  color: var(--green);
+  font-family: var(--cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--green-bg); text-decoration: none; }
 
-/* ── FORMULA BLOCK ── */
-.doc-formula{font-family:var(--mono);font-size:0.75rem;color:var(--gl);background:rgba(42,122,82,0.07);border:1px solid rgba(42,122,82,0.18);border-radius:6px;padding:0.7rem 1rem;margin:0.75rem 0;line-height:1.7}
+/* ─── LAYOUT ────────────────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: calc(100vh - var(--nav-h));
+  max-width: 1280px;
+  margin: 0 auto;
+}
 
-/* ── STEP LIST ── */
-.doc-steps{display:flex;flex-direction:column;gap:0;margin-bottom:1rem}
-.doc-step{display:grid;grid-template-columns:48px 1fr;gap:1rem;padding:1.25rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
-.doc-step:last-child{border-bottom:none}
-.doc-step-num{font-family:var(--mono);font-size:0.85rem;font-weight:600;color:rgba(42,122,82,0.45);padding-top:2px}
-.doc-step-title{font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.3rem}
-.doc-step-body{font-size:0.82rem;color:#9aaa98;line-height:1.75}
+/* ─── SIDEBAR ───────────────────────────────────────────────────── */
+.sidebar {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 2rem 0 4rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
 
-/* ── ASSUMPTIONS TABLE ── */
-.assump-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.8rem}
-.assump-table th{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.5rem 0.75rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)}
-.assump-table td{padding:0.65rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:top;line-height:1.6}
-.assump-table tr:last-child td{border-bottom:none}
-.assump-table td:first-child{font-family:var(--mono);font-size:0.68rem;color:var(--gl);font-weight:500;white-space:nowrap}
-.assump-table td:nth-child(2){color:#9aaa98}
-.assump-table td:nth-child(3){color:var(--muted);font-style:italic}
+.sidebar-group {
+  margin-bottom: 1.6rem;
+}
+.sidebar-group-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 0 1.4rem;
+  margin-bottom: 0.4rem;
+}
+.sidebar-link {
+  display: block;
+  padding: 0.48rem 1.4rem 0.48rem 1.6rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+  text-decoration: none;
+  line-height: 1.4;
+}
+.sidebar-link:hover {
+  color: var(--green);
+  background: var(--green-mid);
+  text-decoration: none;
+}
+.sidebar-link.active {
+  color: var(--green);
+  border-left-color: var(--green);
+  background: var(--green-bg);
+  font-weight: 600;
+}
+.sidebar-sub {
+  font-size: 0.78rem;
+  padding: 0.36rem 1.4rem 0.36rem 2.6rem;
+}
 
-/* ── SOURCE TAGS ── */
-.source-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.75rem 0}
-.source-tag{font-family:var(--mono);font-size:0.6rem;color:var(--muted);background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:0.2rem 0.55rem;border-radius:3px}
+/* ─── CONTENT ───────────────────────────────────────────────────── */
+.content {
+  padding: 3rem 3.5rem 6rem;
+  max-width: 780px;
+}
 
-/* ── EULA / TERMS ── */
-.terms-block{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.4rem;margin:1rem 0}
-.terms-block.amber{border-color:rgba(192,120,24,0.25);background:rgba(192,120,24,0.04)}
-.terms-num{font-family:var(--mono);font-size:0.65rem;color:var(--muted);margin-bottom:0.3rem}
-.terms-title{font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
-.terms-body{font-size:0.8rem;color:#9aaa98;line-height:1.75}
+/* Page header */
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--green);
+}
+.page-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.6rem;
+}
+.page-title {
+  font-family: var(--cond);
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.01em;
+}
+.page-lead {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 580px;
+}
 
-/* ── DOCUMENT CARDS ── */
-.doc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:1rem 0}
-.doc-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;display:flex;flex-direction:column;gap:0.65rem;transition:border-color .15s}
-.doc-card:hover{border-color:var(--border2)}
-.doc-card-icon{font-family:var(--mono);font-size:1.4rem;color:var(--gl)}
-.doc-card-title{font-family:var(--cond);font-size:1.05rem;font-weight:700;color:var(--text)}
-.doc-card-desc{font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1}
-.doc-card-meta{font-family:var(--mono);font-size:0.6rem;color:var(--muted)}
-.doc-card-link{display:inline-flex;align-items:center;gap:0.35rem;font-family:var(--mono);font-size:0.65rem;color:var(--gl);text-decoration:none;border:1px solid var(--border2);border-radius:4px;padding:0.3rem 0.65rem;transition:all .15s;align-self:flex-start;margin-top:0.25rem}
-.doc-card-link:hover{background:rgba(42,122,82,0.1)}
-.doc-card-tag{display:inline-block;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.15rem 0.45rem;border-radius:3px;border:1px solid var(--border)}
-.doc-card-tag.internal{color:var(--amber);border-color:rgba(192,120,24,0.3);background:rgba(192,120,24,0.06)}
-.doc-card-tag.public{color:var(--gl);border-color:var(--border2);background:rgba(42,122,82,0.06)}
-.doc-card-tag.coming{color:var(--muted);border-color:var(--border)}
+/* Section headings */
+.doc-section {
+  margin-bottom: 3.5rem;
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}
+.doc-section-title {
+  font-family: var(--cond);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+}
+.doc-section-title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.1em;
+  background: var(--green);
+  border-radius: 2px;
+  margin-right: 0.65rem;
+  vertical-align: text-bottom;
+}
+.doc-subsection-title {
+  font-family: var(--cond);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.03em;
+  margin: 1.8rem 0 0.6rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
 
-/* ── VERSION BADGE ── */
-.version-badge{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.6rem;color:var(--muted);background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:4px;padding:0.25rem 0.6rem;margin-bottom:1.25rem}
-.version-dot{width:6px;height:6px;border-radius:50%;background:var(--gl);flex-shrink:0}
+/* Version badge */
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: 5px;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.version-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.version-text {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--green);
+  letter-spacing: 0.06em;
+}
 
-/* ── CALLOUT ── */
-.doc-callout{padding:0.9rem 1.1rem;border-radius:7px;font-size:0.8rem;line-height:1.65;margin:1rem 0}
-.doc-callout.green{background:rgba(42,122,82,0.08);border:1px solid rgba(42,122,82,0.2);color:#a8d4b8}
-.doc-callout.amber{background:rgba(192,120,24,0.07);border:1px solid rgba(192,120,24,0.22);color:#d4a560}
-.doc-callout strong{display:block;font-family:var(--cond);font-size:0.95rem;margin-bottom:0.25rem}
+/* Body text */
+.doc-p {
+  font-size: 0.95rem;
+  color: var(--body);
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+}
+.doc-p strong { color: var(--text); font-weight: 600; }
 
-/* ── FOOTER ── */
-.docs-footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;font-family:var(--mono);font-size:0.6rem;color:var(--muted);line-height:2}
-.docs-footer a{color:var(--gl);text-decoration:none}
+/* Callout box */
+.callout {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-left: 4px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.2rem;
+  margin: 1.4rem 0;
+}
+.callout-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.callout p {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.7;
+}
+.callout p strong { color: var(--text); }
+
+.callout.amber {
+  background: #fef9f0;
+  border-color: rgba(176,112,16,0.2);
+  border-left-color: var(--amber);
+}
+.callout.amber .callout-label { color: var(--amber); }
+
+/* Formula block */
+.formula-block {
+  background: var(--text);
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
+  margin: 1.4rem 0;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: #a8f0c6;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+}
+
+/* Numbered steps */
+.steps-list {
+  counter-reset: step;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 1.2rem 0 1.6rem;
+}
+.step-item {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  counter-increment: step;
+}
+.step-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-body { padding-top: 4px; }
+.step-title {
+  font-family: var(--cond);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.02em;
+}
+.step-desc {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.7;
+}
+
+/* Assumptions table */
+.assumptions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0 1.6rem;
+  font-size: 0.86rem;
+}
+.assumptions-table thead th {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-bg);
+  padding: 0.65rem 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--green-border);
+}
+.assumptions-table tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.6;
+  color: var(--body);
+}
+.assumptions-table tbody tr:last-child td { border-bottom: none; }
+.assumptions-table tbody tr:hover td { background: var(--bg2); }
+.td-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.td-caveat { color: var(--muted); font-style: italic; font-size: 0.83rem; }
+
+/* Sources strip */
+.sources-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.2rem 0;
+  padding: 1rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.source-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* EULA clauses */
+.clause {
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  background: var(--bg);
+}
+.clause-num {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.clause-title {
+  font-family: var(--cond);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.clause p {
+  font-size: 0.86rem;
+  color: var(--body);
+  line-height: 1.7;
+}
+
+/* Documents / download cards */
+.doc-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+  margin: 1.2rem 0;
+}
+.doc-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.doc-card:hover {
+  border-color: var(--green-border);
+  box-shadow: 0 2px 12px rgba(17,107,79,0.08);
+}
+.doc-card-type {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 0.4rem;
+}
+.doc-card-title {
+  font-family: var(--cond);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.doc-card-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+.doc-card-link {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  letter-spacing: 0.04em;
+}
+.doc-card-link:hover { text-decoration: underline; }
+.doc-card.coming-soon {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* SINS pillar cards */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1.2rem 0;
+}
+.pillar-card {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--green);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  background: var(--bg);
+  position: relative;
+}
+.pillar-letter {
+  font-family: var(--cond);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--green-bg);
+  position: absolute;
+  top: 0.5rem;
+  right: 0.9rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+.pillar-name {
+  font-family: var(--cond);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.15rem;
+}
+.pillar-sub {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.pillar-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* CI Section */
+.ci-sector-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+.ci-sector-row:last-child { border-bottom: none; }
+.ci-sector-name { font-weight: 600; color: var(--text); font-size: 0.88rem; }
+.ci-sector-eg { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+.ci-fine-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--red);
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(155,35,53,0.07);
+  border: 1px solid rgba(155,35,53,0.2);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+/* CTA block */
+.cta-block {
+  background: var(--green);
+  border-radius: 12px;
+  padding: 1.8rem 2rem;
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+.cta-block h3 {
+  font-family: var(--cond);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+.cta-block p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.55;
+}
+.cta-btn {
+  display: inline-block;
+  background: #fff;
+  color: var(--green);
+  font-family: var(--cond);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.cta-btn:hover { background: var(--green-bg); text-decoration: none; }
+
+/* Divider */
+.doc-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+/* Footer */
+.doc-footer {
+  background: var(--green);
+  padding: 2rem 3.5rem;
+  grid-column: 1 / -1;
+}
+.doc-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.doc-footer-brand {
+  font-family: var(--cond);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+.doc-footer-tagline {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+.doc-footer-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.doc-footer-links a {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+}
+.doc-footer-links a:hover { color: #fff; }
+
+/* Scroll spy active state via JS */
+.sidebar-link.spy-active {
+  color: var(--green);
+  border-left-color: var(--green);
+  background: var(--green-bg);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 1rem 0; }
+  .content { padding: 2rem 1.5rem 4rem; }
+  .doc-cards, .pillar-grid { grid-template-columns: 1fr; }
+  .cta-block { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="sins-nav">
-  <a href="https://retach.tech" class="sins-nav__brand">RETACH<span>.</span></a>
-  <div class="sins-nav__tools">
-    <a href="https://retach.tech" class="sins-nav__tool">← retach.tech</a>
-    <a href="https://app.retach.io" class="sins-nav__tool">S.I.N.S. Scanner</a>
-    <a href="https://crq.retach.io" class="sins-nav__tool">CRQ Engine</a>
-    <a href="https://ad-audit.retach.io" class="sins-nav__tool">AD Audit</a>
-    <a href="https://docs.retach.io" class="sins-nav__tool active">Docs</a>
-  </div>
-  <div class="sins-nav__right">
-    <a href="https://retach.tech/#contact" class="sins-nav__cta">Book Assessment</a>
+<!-- ── TOP NAV ────────────────────────────────────────────────────── -->
+<nav class="top-nav">
+  <a href="https://retach.tech" class="nav-brand">
+    <!-- RETACH Symbol SVG -->
+    <svg class="nav-logo-svg" viewBox="1640 1100 1900 1650" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#ffffff" d="M3228.836,1206.723c-55.371,0-103.99,29.221-131.541,73.23h-1139.06l-10.06,9.689c-13.16-73.26-76.66-128.82-153.02-128.82c-85.88,0-155.51,70.301-155.51,157.012c0,74.529,51.42,136.92,120.39,153l-8.19,7.889v1133.99l809.6-575.5v-479.49l-142.061-128h286.09v1152h-65.559l-88.98-89.58c3.209-12.549,4.91-25.719,4.91-39.279c0-86.711-69.631-157.01-155.52-157.01c-85.881,0-155.51,70.299-155.51,157.01c0,86.73,69.629,157.029,155.51,157.029c13.859,0,27.289-1.83,40.078-5.27l136.932,154.449h459.93V1444.604h58.25c27.199,45.629,76.73,76.15,133.32,76.15c85.889,0,155.52-70.301,155.52-157.021C3384.355,1277.023,3314.725,1206.723,3228.836,1206.723z"/>
+    </svg>
+    <span class="nav-wordmark">RETACH</span>
+    <div class="nav-divider"></div>
+    <span class="nav-label">Documentation</span>
+  </a>
+  <div class="nav-links">
+    <a href="https://retach.tech" class="nav-link">← retach.tech</a>
+    <a href="https://app.retach.io" class="nav-link">S.I.N.S. Scanner</a>
+    <a href="https://crq.retach.io" class="nav-link active">CRQ Engine</a>
+    <a href="https://ad-audit.retach.io" class="nav-link">AD Audit</a>
+    <a href="https://wa.me/254767206043" class="nav-cta" target="_blank" rel="noopener">Book Assessment →</a>
   </div>
 </nav>
 
-<!-- LAYOUT -->
-<div class="docs-layout">
+<div class="layout">
 
-  <!-- SIDEBAR -->
-  <aside class="docs-sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Methodology</div>
-      <a href="#methodology" class="sidebar-link active">CRQ Methodology</a>
-      <a href="#model-steps" class="sidebar-link sub">How the model works</a>
-      <a href="#assumptions" class="sidebar-link sub">Assumptions & limits</a>
-      <a href="#sources" class="sidebar-link sub">Calibration sources</a>
+  <!-- ── SIDEBAR ──────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Methodology</div>
+      <a href="#crq-methodology" class="sidebar-link spy-active">CRQ Methodology</a>
+      <a href="#how-model-works" class="sidebar-link sidebar-sub">How the model works</a>
+      <a href="#assumptions" class="sidebar-link sidebar-sub">Assumptions &amp; limits</a>
+      <a href="#calibration" class="sidebar-link sidebar-sub">Calibration sources</a>
     </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Terms of Use</div>
-      <a href="#terms" class="sidebar-link">CRQ Terms & EULA</a>
-      <a href="#terms-outputs" class="sidebar-link sub">Output limitations</a>
-      <a href="#terms-use" class="sidebar-link sub">Permitted use</a>
-      <a href="#terms-liability" class="sidebar-link sub">Liability</a>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Terms of Use</div>
+      <a href="#terms" class="sidebar-link">CRQ Terms &amp; EULA</a>
+      <a href="#output-limits" class="sidebar-link sidebar-sub">Output limitations</a>
+      <a href="#permitted-use" class="sidebar-link sidebar-sub">Permitted use</a>
+      <a href="#liability" class="sidebar-link sidebar-sub">Liability</a>
     </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Documents</div>
-      <a href="#documents" class="sidebar-link">Engagement Templates</a>
-      <a href="#doc-delta" class="sidebar-link sub">Risk Delta Report</a>
-      <a href="#doc-future" class="sidebar-link sub">Coming soon</a>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Documents</div>
+      <a href="#engagement-templates" class="sidebar-link">Engagement Templates</a>
+      <a href="#risk-delta" class="sidebar-link sidebar-sub">Risk Delta Report</a>
+      <a href="#coming-soon-docs" class="sidebar-link sidebar-sub">Coming soon</a>
     </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Framework</div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-group-label">Framework</div>
       <a href="#sins-framework" class="sidebar-link">S.I.N.S. Framework™</a>
+      <a href="#ci-protection" class="sidebar-link sidebar-sub">Critical Infrastructure</a>
     </div>
+
   </aside>
 
-  <!-- MAIN -->
-  <main class="docs-main">
+  <!-- ── CONTENT ──────────────────────────────────────────────────── -->
+  <main class="content">
 
-    <!-- PAGE HEADER -->
+    <!-- Page header -->
     <div class="page-header">
       <div class="page-eyebrow">docs.retach.io</div>
       <h1 class="page-title">RETACH Documentation</h1>
-      <p class="page-sub">Methodology, model assumptions, terms of use, and engagement templates for the S.I.N.S. Framework™ for Digital Resilience.</p>
+      <p class="page-lead">Methodology, model assumptions, terms of use, and engagement templates for the S.I.N.S. Framework™ for Digital Resilience.</p>
     </div>
 
-    <!-- ══ SECTION 1: METHODOLOGY ══════════════════════════════ -->
-    <section class="doc-section" id="methodology">
-      <h2 class="doc-h1">CRQ Methodology</h2>
-      <div class="version-badge"><div class="version-dot"></div>Version 1.1 · May 2026 · RETACH Digital Ltd</div>
-
+    <!-- ══════════════════════════════════════════════════════════════
+         CRQ METHODOLOGY
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="doc-section" id="crq-methodology">
+      <h2 class="doc-section-title">CRQ Methodology</h2>
+      <div class="version-badge">
+        <div class="version-dot"></div>
+        <span class="version-text">Version 1.1 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; RETACH Digital Ltd</span>
+      </div>
       <p class="doc-p">The RETACH Cyber Risk Quantification Engine applies a frequency-severity actuarial model to produce financial loss estimates for organisations assessed under the S.I.N.S. Framework™. This document describes the full methodology — the model steps, the assumptions behind every constant, and the sources used to calibrate them.</p>
 
-      <div class="doc-callout green">
-        <strong>Plain-English Summary</strong>
-        Every number the CRQ Engine produces traces back to a calculation described on this page. We use the same core mathematics as insurance actuaries — Expected Loss = Frequency × Severity — applied to your specific sector, size, and control posture. We then model the distribution of possible outcomes using lognormal statistics to show you not just the average year but a bad year and a very bad year.
+      <div class="callout">
+        <div class="callout-label">Plain-English Summary</div>
+        <p>Every number the CRQ Engine produces traces back to a calculation described on this page. We use the same core mathematics as insurance actuaries — <strong>Expected Loss = Frequency × Severity</strong> — applied to your specific sector, size, and control posture. We then model the distribution of possible outcomes using lognormal statistics to show you not just the average year, but a bad year and a very bad year.</p>
       </div>
+    </section>
 
-      <!-- HOW THE MODEL WORKS -->
-      <h3 class="doc-h2" id="model-steps">How the model works — five steps</h3>
-      <div class="doc-steps">
-        <div class="doc-step">
-          <div class="doc-step-num">01</div>
-          <div>
-            <div class="doc-step-title">Count how often attacks happen (Frequency)</div>
-            <div class="doc-step-body">Base attack probabilities for six scenario types — phishing, ransomware, financial fraud, data breach, business continuity failure, and insider threat — are drawn from published East Africa sector incident data. A sector multiplier adjusts for the relative attack frequency of the assessed organisation's industry: a Fintech faces attacks 2.4× more often than baseline; a SACCO 1.8×. A risk modifier derived from the organisation's control posture (MFA adoption, backup posture, ODPC status, S.I.N.S. score) adjusts the final likelihood downward where controls are in place.</div>
+    <!-- HOW MODEL WORKS -->
+    <section class="doc-section" id="how-model-works">
+      <h2 class="doc-section-title">How the model works — five steps</h2>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title">Count how often attacks happen (Frequency)</div>
+            <div class="step-desc">Base attack probabilities for six scenario types — phishing, ransomware, financial fraud, data breach, business continuity failure, and insider threat — are drawn from published East Africa sector incident data. A sector multiplier adjusts for the relative attack frequency of the assessed organisation's industry: a Fintech faces attacks 2.4× more often than baseline; a SACCO 1.8×. A risk modifier derived from the organisation's control posture (MFA adoption, backup posture, ODPC status, S.I.N.S. score) adjusts the final likelihood downward where controls are in place.</div>
           </div>
-        </div>
-        <div class="doc-step">
-          <div class="doc-step-num">02</div>
-          <div>
-            <div class="doc-step-title">Estimate how much each event costs (Severity)</div>
-            <div class="doc-step-body">Financial impact per event is modelled as a percentage of annual revenue — the most reliable proxy for data volume, transaction scale, and operational complexity. A sector impact multiplier adjusts for the relative cost severity of the assessed sector: Fintechs pay 1.8× more per breach event than baseline, reflecting transaction losses and regulatory penalties. A staff/endpoint scaling factor applies a modest upward adjustment for larger organisations. The same control posture modifier that reduces likelihood also reduces severity.</div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title">Estimate how much each event costs (Severity)</div>
+            <div class="step-desc">Severity is modelled as a percentage of annual revenue, because an organisation's revenue is the most reliable proxy for the scale of data held, transactions processed, and operational complexity. Ransomware typically costs 18% of annual revenue when it hits. A data breach costs 12%. These percentages are calibrated to East Africa incident cost data and validated against IBM Cost of a Data Breach 2023 and Zurich Insurance emerging markets loss data.</div>
           </div>
-        </div>
-        <div class="doc-step">
-          <div class="doc-step-num">03</div>
-          <div>
-            <div class="doc-step-title">Calculate Expected Annual Loss</div>
-            <div class="doc-step-body">Expected Annual Loss per scenario = annual probability × financial impact per event. Total EAL is the sum across all six scenarios. This is textbook actuarial frequency-severity — identical to the formula an insurance underwriter uses to price a premium.</div>
-            <div class="doc-formula">EAL = Σ (Frequency × Severity) across all six S.I.N.S. scenarios</div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title">Multiply: Expected Loss = Frequency × Severity</div>
+            <div class="step-desc">This is the same formula an insurance actuary uses to price a premium. If ransomware has a 30% annual probability and costs KES 9M when it hits, the expected annual loss from ransomware is KES 2.7M. The Engine calculates this for six attack types and sums them. That total is your Expected Annual Loss.</div>
           </div>
-        </div>
-        <div class="doc-step">
-          <div class="doc-step-num">04</div>
-          <div>
-            <div class="doc-step-title">Model the loss distribution (Percentile Bands)</div>
-            <div class="doc-step-body">Losses are not smooth. Some years are quiet; some are catastrophic. The CRQ Engine models this skew using a lognormal distribution — the same statistical shape used by insurers for catastrophe loss modelling — because cyber losses have a long tail. The dispersion parameter (σ) is calibrated by sector: Fintechs have higher variability (σ=0.95) than County Governments (σ=0.65). This produces three outputs: the median year (50th percentile ≈ EAL), an above-average loss year (75th percentile), and a severe event year (95th percentile — a 1-in-20 outcome).</div>
-            <div class="doc-formula">95th percentile = exp(ln(EAL) + 1.645 × σ) · Use for insurance sizing and board stress testing</div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <div class="step-title">Model the distribution (Poisson-Lognormal)</div>
+            <div class="step-desc">The EAL is the mean of a loss distribution, not a guarantee. Real losses follow a lognormal distribution — most years are cheaper than average, but occasionally an event is catastrophic. We use a Poisson-Lognormal model with sector-specific dispersion constants (σ) calibrated from Serianu and Zurich emerging markets data. This gives you the 50th percentile (Expected), 75th percentile (Adverse), and 95th percentile (Severe/Worst-Case) loss figures.</div>
           </div>
-        </div>
-        <div class="doc-step">
-          <div class="doc-step-num">05</div>
-          <div>
-            <div class="doc-step-title">Apply regulatory and coverage outputs</div>
-            <div class="doc-step-body">Regulatory fine exposure is modelled separately from EAL — it is a deterministic calculation based on identified compliance gaps and the applicable penalty schedule (ODPC: up to 5M KES or 1% turnover; SASRA; CBK). The Coverage Adequacy Check compares the organisation's entered coverage limit against the 95th percentile loss figure to identify a gap or surplus — this is a planning tool, not insurance advice. The RTO/RPO Gap module compares stated recovery tolerance against sector-benchmarked recovery time data, quantifying the financial cost of the gap in revenue per hour.</div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <div class="step-title">Add regulatory fine exposure</div>
+            <div class="step-desc">For each sector, applicable Kenyan regulatory frameworks are assessed separately. The Kenya Data Protection Act 2019 (max KES 5M, ODPC) applies universally. Sector-specific regulators — CBK, SASRA, CA Kenya, ICT Authority, NC4 — add additional exposure. For Critical Infrastructure sectors, CMCA 2018/2024 s.18 adds up to KES 25M, creating a combined ceiling of KES 30M. These figures are modelled independently from the EAL and added to produce Total Risk Exposure.</div>
           </div>
-        </div>
+        </li>
+      </ol>
+
+      <div class="formula-block">
+        EAL = Σ (Frequency × Severity) across six S.I.N.S. scenario types<br>
+        Total Risk Exposure = EAL + Regulatory Fine Exposure + Reputational Cost (downtime × revenue/day)
       </div>
+    </section>
 
-      <!-- ASSUMPTIONS -->
-      <h3 class="doc-h2" id="assumptions">Model assumptions and their limits</h3>
-      <p class="doc-p">Every constant in the CRQ Engine is listed here with its source and its honest limitation. This is the complete set of assumptions behind every output the engine produces.</p>
+    <hr class="doc-divider">
 
-      <table class="assump-table">
+    <!-- ASSUMPTIONS -->
+    <section class="doc-section" id="assumptions">
+      <h2 class="doc-section-title">Assumptions &amp; limits</h2>
+      <p class="doc-p">Every modelling assumption is listed here. Where a figure is an estimate rather than an empirical measurement, that is noted explicitly.</p>
+
+      <table class="assumptions-table">
         <thead>
-          <tr><th>Assumption</th><th>What it means</th><th>Honest limit</th></tr>
+          <tr>
+            <th>Assumption</th>
+            <th>What it means</th>
+            <th>Honest limit</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Frequency from published data</td>
-            <td>Base attack probabilities from Serianu 2023, CBK incident data, and Communications Authority of Kenya quarterly sector reports</td>
-            <td>Historical frequency does not guarantee future attack rates. Threat actors evolve. Model will be updated as RETACH engagement data accumulates.</td>
+            <td class="td-label">Frequency from published data</td>
+            <td>Base attack probabilities from Serianu 2023, CBK, and CA Kenya sector reports</td>
+            <td class="td-caveat">Historical frequency does not guarantee future attack rates. Threat actors evolve.</td>
           </tr>
           <tr>
-            <td>Severity as % of revenue</td>
-            <td>Impact calibrated as a share of annual revenue — larger organisations face larger absolute losses per event</td>
-            <td>Actual severity depends on systems held, data volume, and attacker sophistication — not size alone. Organisations with disproportionate data assets relative to revenue may be underestimated.</td>
+            <td class="td-label">Severity as % of revenue</td>
+            <td>Impact calibrated as a share of annual revenue — larger organisations face larger absolute losses</td>
+            <td class="td-caveat">Actual severity depends on systems held, data volume, and attacker sophistication — not size alone.</td>
           </tr>
           <tr>
-            <td>Sector frequency multipliers</td>
-            <td>Fintechs 2.4×, SACCO DT 1.8×, Health 1.6×, SME 1.2× baseline — calibrated from sector incident reports</td>
-            <td>Calibrated from published aggregate sector data. Individual organisations may differ significantly from sector averages. Will be refined as the RETACH Risk Ledger™ grows.</td>
+            <td class="td-label">Sector multipliers</td>
+            <td>Fintechs face 2.4× the baseline frequency; SACCOs 1.8×; Critical Infrastructure 2.5–2.9× — from sector incident data</td>
+            <td class="td-caveat">Calibrated from published sector reports. Refined as RETACH engagement data accumulates.</td>
           </tr>
           <tr>
-            <td>Control efficacy</td>
-            <td>Full MFA: −38% risk. Tested backup: −30%. ODPC registration: −12% fine exposure. All from NIST SP 800-53 benchmarks</td>
-            <td>Actual reduction depends on implementation quality, coverage, and maintenance — not just whether a control exists on paper.</td>
+            <td class="td-label">Control efficacy</td>
+            <td>Full MFA reduces risk by 38%; tested backup by 30% — from NIST 800-53 benchmarks</td>
+            <td class="td-caveat">Actual reduction depends on implementation quality, not just whether a control exists.</td>
           </tr>
           <tr>
-            <td>Loss distribution shape</td>
-            <td>Lognormal distribution; sector dispersion (σ) calibrated to Serianu 2023 and Zurich Insurance emerging markets cyber loss data</td>
-            <td>σ values are calibrated estimates, not derived from RETACH's own claims dataset. The model improves in accuracy as the RETACH Risk Ledger™ accumulates engagement data.</td>
+            <td class="td-label">Loss distribution shape (σ)</td>
+            <td>Lognormal distribution; sector dispersion (σ) calibrated to Serianu and Zurich emerging markets data. CI sectors use σ = 1.10 — the highest constant, reflecting nation-state threat exposure and OT/IT risk.</td>
+            <td class="td-caveat">Not derived from RETACH's own claims dataset yet. Improves as the RETACH Risk Ledger™ grows.</td>
           </tr>
           <tr>
-            <td>RTO sector benchmarks</td>
-            <td>Ransomware recovery times by sector (e.g. SACCO DT: 240h, Fintech: 168h) from Serianu 2023 East Africa recovery data</td>
-            <td>Actual recovery time depends on backup posture, DR plan maturity, and incident response capability — not sector alone.</td>
+            <td class="td-label">Single-organisation scope</td>
+            <td>Models your organisation's direct loss exposure</td>
+            <td class="td-caveat">Does not model supply chain contagion or systemic sector-wide events.</td>
           </tr>
           <tr>
-            <td>Single-organisation scope</td>
-            <td>Models the assessed organisation's direct loss exposure only</td>
-            <td>Does not model supply chain contagion, third-party dependency failures, or systemic sector-wide events (e.g. cloud provider outage affecting multiple clients simultaneously).</td>
+            <td class="td-label">Point-in-time snapshot</td>
+            <td>Reflects your posture at the time of assessment</td>
+            <td class="td-caveat">Risk changes as threats evolve and controls are added or removed. Reassess annually.</td>
           </tr>
           <tr>
-            <td>Point-in-time snapshot</td>
-            <td>All outputs reflect the organisation's posture at the time of assessment</td>
-            <td>Risk changes as the threat landscape evolves, new systems are introduced, and controls are added or degraded. RETACH recommends reassessment annually or after significant infrastructure change.</td>
-          </tr>
-          <tr>
-            <td>Currency conversion</td>
-            <td>USD equivalent shown at a fixed reference rate</td>
-            <td>Exchange rate movements are not modelled. Local currency figures are the primary output. USD equivalents are indicative only.</td>
+            <td class="td-label">FX rate</td>
+            <td>USD conversion at KES 130</td>
+            <td class="td-caveat">Exchange rate movements are not modelled. KES figures are primary.</td>
           </tr>
         </tbody>
       </table>
 
-      <!-- SOURCES -->
-      <h3 class="doc-h2" id="sources">Calibration sources</h3>
-      <p class="doc-p">All frequency, severity, and control efficacy parameters in the CRQ Engine are calibrated from the following published sources. RETACH does not manufacture benchmarks.</p>
-      <div class="source-tags">
+      <div class="callout amber">
+        <div class="callout-label">Disclaimer</div>
+        <p>RETACH CRQ outputs are financial planning estimates based on the modelling methodology described above. They are not actuarial certifications, legal opinions, or insurance advice. Figures should be used for internal risk management, board reporting, and informed conversations with insurers and legal counsel — not as binding loss projections. RETACH Digital Ltd is not a licensed insurer, broker, or legal firm.</p>
+      </div>
+    </section>
+
+    <!-- CALIBRATION SOURCES -->
+    <section class="doc-section" id="calibration">
+      <h2 class="doc-section-title">Calibration sources</h2>
+      <p class="doc-p">The following published sources are used to calibrate sector multipliers, severity percentages, and control efficacy constants in the CRQ Engine.</p>
+      <div class="sources-strip">
         <span class="source-tag">Serianu Africa Cybersecurity Report 2023</span>
-        <span class="source-tag">CBK Cybersecurity Guidelines</span>
-        <span class="source-tag">Communications Authority of Kenya — Quarterly Sector Reports</span>
-        <span class="source-tag">ODPC Enforcement Data</span>
-        <span class="source-tag">IBM Cost of a Data Breach Report 2023</span>
-        <span class="source-tag">NIST SP 800-53 Control Efficacy Benchmarks</span>
-        <span class="source-tag">Zurich Insurance — Emerging Markets Cyber Loss Data</span>
-        <span class="source-tag">ISO 27005:2022 — Information Security Risk Management</span>
-        <span class="source-tag">SASRA Cybersecurity Circular 2022</span>
-        <span class="source-tag">CMCA 2018 (Kenya)</span>
+        <span class="source-tag">CBK Cybersecurity Guidelines 2019</span>
+        <span class="source-tag">Communications Authority of Kenya</span>
+        <span class="source-tag">ODPC Enforcement Data 2022–2026</span>
+        <span class="source-tag">IBM Cost of a Data Breach 2023</span>
+        <span class="source-tag">NIST SP 800-53</span>
+        <span class="source-tag">Zurich Emerging Markets CI Loss Data</span>
+        <span class="source-tag">ISO 27005 Risk Practices</span>
+        <span class="source-tag">ENISA CI Threat Landscape 2023</span>
+        <span class="source-tag">NC4 Kenya Incident Data</span>
+      </div>
+
+      <div class="cta-block">
+        <div>
+          <h3>Run the CRQ Engine for your organisation</h3>
+          <p>See your Expected Annual Loss, 75th and 95th percentile loss bands, and regulatory fine exposure — calibrated to your sector and size.</p>
+        </div>
+        <a href="https://crq.retach.io" target="_blank" rel="noopener" class="cta-btn">Open CRQ Engine →</a>
       </div>
     </section>
 
-    <!-- ══ SECTION 2: TERMS OF USE ══════════════════════════════ -->
+    <hr class="doc-divider">
+
+    <!-- ══════════════════════════════════════════════════════════════
+         TERMS OF USE
+    ═══════════════════════════════════════════════════════════════ -->
     <section class="doc-section" id="terms">
-      <h2 class="doc-h1">CRQ Terms of Use</h2>
-      <div class="version-badge"><div class="version-dot"></div>Effective May 2026 · RETACH Digital Ltd</div>
+      <h2 class="doc-section-title">CRQ Terms &amp; EULA</h2>
+      <p class="doc-p">By using the RETACH CRQ Engine, you agree to the following terms. These terms govern the use of all quantification outputs, reports, and models produced by RETACH Digital Ltd tools.</p>
+    </section>
 
-      <p class="doc-p">These terms govern the use of all outputs produced by the RETACH CRQ Engine, S.I.N.S. Scanner, and associated tools at retach.tech and retach.io. By using these tools, you accept these terms.</p>
-
-      <div class="terms-block amber" id="terms-outputs">
-        <div class="terms-num">1. Nature of outputs</div>
-        <div class="terms-title">CRQ outputs are financial planning estimates — not certifications</div>
-        <div class="terms-body">All figures produced by the RETACH CRQ Engine — including Expected Annual Loss, percentile loss bands, regulatory fine exposure estimates, coverage adequacy checks, and RTO/RPO gap figures — are financial planning estimates based on the actuarial model described in the Methodology section above. They are not: actuarial certifications, legal opinions, insurance advice, regulatory compliance certifications, or binding loss projections. They should be used for internal risk management, board reporting, and informed conversations with insurers, legal counsel, and regulators — not as standalone compliance documents or as the sole basis for insurance purchasing decisions.</div>
+    <section class="doc-section" id="output-limits">
+      <div class="clause">
+        <div class="clause-num">Clause 1 &nbsp;·&nbsp; Output Limitations</div>
+        <div class="clause-title">CRQ outputs are planning estimates, not certifications</div>
+        <p>All figures produced by the RETACH CRQ Engine are financial planning estimates based on the frequency-severity model described in this document. They are not actuarial certifications, insurance valuations, regulatory assessments, or legal opinions. No output constitutes a guarantee of accuracy, completeness, or fitness for any particular purpose.</p>
       </div>
-
-      <div class="terms-block" id="terms-use">
-        <div class="terms-num">2. Permitted use</div>
-        <div class="terms-title">Internal risk management and professional advisory</div>
-        <div class="terms-body">CRQ outputs may be used for: internal board and executive reporting; informing conversations with cyber insurers and brokers; scoping remediation investment decisions; supporting regulatory submissions as supplementary risk evidence. CRQ outputs may not be used for: marketing or advertising claims about security posture without qualification; as the primary basis for public statements about organisational risk; redistribution as standalone certified risk assessments without RETACH engagement.</div>
+      <div class="clause">
+        <div class="clause-num">Clause 2 &nbsp;·&nbsp; No Legal or Insurance Advice</div>
+        <div class="clause-title">RETACH is not a licensed insurer, broker, or legal firm</div>
+        <p>CRQ outputs must not be used as the sole basis for insurance purchasing decisions, legal compliance determinations, or regulatory submissions. Regulatory fine exposure figures are indicative estimates based on publicly available enforcement data, not legal advice. Engage qualified legal counsel and licensed insurance brokers for binding decisions.</p>
       </div>
-
-      <div class="terms-block" id="terms-liability">
-        <div class="terms-num">3. Liability and disclaimer</div>
-        <div class="terms-title">RETACH Digital Ltd is not a licensed insurer, broker, or legal firm</div>
-        <div class="terms-body">RETACH Digital Ltd provides risk quantification and advisory services. We are not a licensed insurer, insurance broker, actuarial firm, or legal firm. Nothing produced by the CRQ Engine constitutes insurance advice, legal advice, or actuarial certification. Actual losses may be higher or lower than modelled figures. RETACH Digital Ltd accepts no liability for decisions made solely on the basis of CRQ Engine outputs without professional engagement. For insurance purchasing decisions, consult a licensed insurance broker. For regulatory compliance, consult qualified legal counsel.</div>
+      <div class="clause" id="permitted-use">
+        <div class="clause-num">Clause 3 &nbsp;·&nbsp; Permitted Use</div>
+        <div class="clause-title">Internal risk management and board reporting</div>
+        <p>CRQ outputs may be used for: internal risk registers, board and executive risk reporting, cyber insurance gap analysis conversations, investment prioritisation for security controls, and general organisational awareness. They may not be reproduced in marketing materials, public filings, or third-party reports without written permission from RETACH Digital Ltd.</p>
       </div>
-
-      <div class="terms-block">
-        <div class="terms-num">4. Data and privacy</div>
-        <div class="terms-title">No client data is stored by the CRQ Engine</div>
-        <div class="terms-body">The RETACH CRQ Engine runs entirely in your browser. No inputs — revenue, staff count, sector, S.I.N.S. scores — are transmitted to or stored by RETACH servers. The OSINT and threat intelligence features make outbound requests to RETACH's API proxy (api.retach.io), which fetches publicly available threat data. No personally identifiable information is required or collected by any RETACH tool. If you choose to engage RETACH for a paid assessment, data handling is governed by the engagement letter issued at the start of that engagement.</div>
+      <div class="clause" id="liability">
+        <div class="clause-num">Clause 4 &nbsp;·&nbsp; Liability</div>
+        <div class="clause-title">Limitation of liability</div>
+        <p>RETACH Digital Ltd is not liable for any direct, indirect, incidental, or consequential loss arising from reliance on CRQ outputs. The user accepts full responsibility for decisions made based on CRQ figures. RETACH's total liability under any engagement is limited to the fees paid for that engagement.</p>
       </div>
-
-      <div class="terms-block">
-        <div class="terms-num">5. Intellectual property</div>
-        <div class="terms-title">S.I.N.S. Framework™ is proprietary to RETACH Digital Ltd</div>
-        <div class="terms-body">The S.I.N.S. Framework™, RETACH CRQ Engine, RETACH Risk Ledger™, and all associated methodology, tooling, and documentation are the intellectual property of RETACH Digital Ltd. Reports and outputs produced from RETACH tools may be used internally. The framework, methodology, and tooling may not be reproduced, resold, or represented as proprietary work of any other party without express written permission from RETACH Digital Ltd.</div>
+      <div class="clause">
+        <div class="clause-num">Clause 5 &nbsp;·&nbsp; Intellectual Property</div>
+        <div class="clause-title">The S.I.N.S. Framework™ and CRQ Engine are proprietary</div>
+        <p>The S.I.N.S. Framework™, RETACH CRQ Engine, and all associated methodology, scoring models, and outputs are the intellectual property of RETACH Digital Ltd. Reverse engineering, reproduction, or commercial use of the methodology without written licence is prohibited.</p>
       </div>
-
-      <div class="terms-block">
-        <div class="terms-num">6. Updates</div>
-        <div class="terms-title">Model and terms updated as data improves</div>
-        <div class="terms-body">The CRQ model, its calibration parameters, and these terms of use are updated periodically as new sector data becomes available and as the RETACH Risk Ledger™ accumulates engagement data. The version and effective date at the top of each section reflects the current version. Significant changes will be noted in the version record.</div>
+      <div class="clause">
+        <div class="clause-num">Clause 6 &nbsp;·&nbsp; Authorisation</div>
+        <div class="clause-title">Engagement authorisation for assessment tools</div>
+        <p>Active assessment tools — including the AD Audit module and Pentest Kit — must only be used under written engagement authorisation. Unauthorised use of these tools against systems you do not own or have explicit permission to assess may violate the Kenya Computer Misuse and Cybercrimes Act 2018 and equivalent legislation in your jurisdiction.</p>
       </div>
     </section>
 
-    <!-- ══ SECTION 3: DOCUMENTS ══════════════════════════════════ -->
-    <section class="doc-section" id="documents">
-      <h2 class="doc-h1">Engagement Templates</h2>
-      <p class="doc-p">Professional templates for RETACH engagements. Internal use and client delivery.</p>
+    <hr class="doc-divider">
 
-      <div class="doc-cards">
+    <!-- ══════════════════════════════════════════════════════════════
+         ENGAGEMENT TEMPLATES
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="doc-section" id="engagement-templates">
+      <h2 class="doc-section-title">Engagement Templates</h2>
+      <p class="doc-p">Standardised deliverable templates used across RETACH engagements. Download and use as the basis for client reporting.</p>
 
-        <div class="doc-card" id="doc-delta">
-          <div class="doc-card-icon">△</div>
-          <div><span class="doc-card-tag internal">Internal · Consultant use</span></div>
-          <div class="doc-card-title">Risk Delta Report Template</div>
-          <div class="doc-card-desc">Engagement close-out document. Shows before/after EAL delta, S.I.N.S. pillar improvements, controls implemented, open items, and ROI statement. Every RETACH engagement closes with this document.</div>
-          <div class="doc-card-meta">Format: .docx · Fonts: Barlow + IBM Plex Mono · Brand-aligned</div>
-          <a href="https://docs.retach.io/RETACH-Risk-Delta-Report-Template.docx" class="doc-card-link" download>⬇ Download template</a>
-        </div>
-
+      <div class="doc-cards" id="risk-delta">
         <div class="doc-card">
-          <div class="doc-card-icon">◈</div>
-          <div><span class="doc-card-tag coming">Coming soon</span></div>
-          <div class="doc-card-title">Engagement Letter Template</div>
-          <div class="doc-card-desc">Standard terms, scope definition, fee structure, and authorisation language for RETACH Health Scan and AD Audit engagements. Required by CMCA 2018 for penetration testing authorisation.</div>
-          <div class="doc-card-meta">Format: .docx · Legal review recommended before use</div>
+          <div class="doc-card-type">Report Template · DOCX</div>
+          <div class="doc-card-title">Risk Delta Report</div>
+          <div class="doc-card-desc">The engagement close-out document. Shows before/after EAL delta, S.I.N.S. pillar breakdown, controls implemented, open items mapped to next service, ROI statement, and CRQ snapshots. Font: Barlow Condensed + IBM Plex Mono.</div>
+          <a href="/RETACH-Risk-Delta-Report-Template.docx" class="doc-card-link">↓ Download template</a>
         </div>
-
-        <div class="doc-card">
-          <div class="doc-card-icon">◉</div>
-          <div><span class="doc-card-tag coming">Coming soon</span></div>
-          <div class="doc-card-title">Health Scan Scope of Work</div>
-          <div class="doc-card-desc">Client-facing scope definition for the RETACH S.I.N.S. Health Scan — what is included, what is not, delivery timeline, and consultant credentials.</div>
-          <div class="doc-card-meta">Format: .docx · Can be co-branded for enterprise clients</div>
+        <div class="doc-card coming-soon" id="coming-soon-docs">
+          <div class="doc-card-type">Coming Soon</div>
+          <div class="doc-card-title">S.I.N.S. Health Scan Report</div>
+          <div class="doc-card-desc">Scored executive report with risk heatmap and 30/60/90-day roadmap template.</div>
+          <span class="doc-card-link">Coming soon</span>
         </div>
-
-        <div class="doc-card">
-          <div class="doc-card-icon">▣</div>
-          <div><span class="doc-card-tag public">Public · Client-facing</span></div>
-          <div class="doc-card-title">CRQ Methodology Note</div>
-          <div class="doc-card-desc">Standalone one-page summary of the RETACH CRQ model for inclusion in proposals and board reports. Cites sources, describes the actuarial approach, references this page.</div>
-          <div class="doc-card-meta">Format: This page · Cite as: docs.retach.io/methodology</div>
-          <a href="#methodology" class="doc-card-link">↑ View methodology</a>
+        <div class="doc-card coming-soon">
+          <div class="doc-card-type">Coming Soon</div>
+          <div class="doc-card-title">AD Audit Executive Summary</div>
+          <div class="doc-card-desc">Active Directory findings report with pillar-by-pillar scoring and remediation priorities.</div>
+          <span class="doc-card-link">Coming soon</span>
         </div>
-
+        <div class="doc-card coming-soon">
+          <div class="doc-card-type">Coming Soon</div>
+          <div class="doc-card-title">Incident Response Plan Template</div>
+          <div class="doc-card-desc">RETACH IRP template — ODPC 72-hour notification procedure included.</div>
+          <span class="doc-card-link">Coming soon</span>
+        </div>
       </div>
     </section>
 
-    <!-- ══ SECTION 4: S.I.N.S. FRAMEWORK ══════════════════════ -->
+    <hr class="doc-divider">
+
+    <!-- ══════════════════════════════════════════════════════════════
+         S.I.N.S. FRAMEWORK
+    ═══════════════════════════════════════════════════════════════ -->
     <section class="doc-section" id="sins-framework">
-      <h2 class="doc-h1">The S.I.N.S. Framework™</h2>
-      <p class="doc-p">The S.I.N.S. Framework™ for Digital Resilience is RETACH's proprietary methodology for structured assessment, quantification, and remediation of digital risk. It organises the complete digital risk surface of an organisation into four pillars, each assessed independently and combined into a composite posture score.</p>
+      <h2 class="doc-section-title">S.I.N.S. Framework™</h2>
+      <p class="doc-p">The S.I.N.S. Framework™ for Digital Resilience is a four-pillar methodology for building organisational resilience against digital risk. It is an implementation alignment layer that translates global standards (ISO 27001, NIST CSF, CIS Controls) into executable programmes for organisations without dedicated security teams.</p>
+      <p class="doc-p">The pillars are sequenced intentionally — each layer depends on the one before it. You cannot meaningfully govern security risks (Security) without knowing what infrastructure you have (Infrastructure). You cannot segment a network (Network) without managing what connects to it (Systems).</p>
 
-      <div class="doc-h2">Four pillars</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin:1rem 0">
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem">
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--gl);font-weight:600;margin-bottom:0.3rem">S¹ · Systems</div>
-          <div style="font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Identity & Access</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.6">Asset inventory, identity governance, MFA, account lifecycle, endpoint control, patch management. Phishing and insider threat EAL.</div>
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <span class="pillar-letter">S</span>
+          <div class="pillar-sub">Layer 1 — Foundation</div>
+          <div class="pillar-name">Systems</div>
+          <div class="pillar-desc">Asset inventory, identity &amp; access management, endpoint configuration, patch management, SharePoint/M365 governance.</div>
         </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem">
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--gl);font-weight:600;margin-bottom:0.3rem">S² · Infrastructure</div>
-          <div style="font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Backup & DR</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.6">Backup posture, DR planning, RTO/RPO, server hardening, cloud configuration. Ransomware and business continuity EAL.</div>
+        <div class="pillar-card">
+          <span class="pillar-letter">I</span>
+          <div class="pillar-sub">Layer 2 — Operational</div>
+          <div class="pillar-name">Infrastructure</div>
+          <div class="pillar-desc">Backup &amp; DR (Veeam, Zerto, Dell EMC), BCP, BIA, RTO/RPO design, server hardening, data centre management.</div>
         </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem">
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--gl);font-weight:600;margin-bottom:0.3rem">S³ · Network</div>
-          <div style="font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Perimeter & Segmentation</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.6">Firewall posture, network segmentation, remote access controls, monitoring and detection. Fraud and lateral movement EAL.</div>
+        <div class="pillar-card">
+          <span class="pillar-letter">N</span>
+          <div class="pillar-sub">Layer 3 — Connectivity</div>
+          <div class="pillar-name">Network</div>
+          <div class="pillar-desc">Firewall policy (Sophos, Meraki/Cisco ASA), Zero Trust (ZTNA), NAC (PacketFence), segmentation, RADIUS, WAF, physical security.</div>
         </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem">
-          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--gl);font-weight:600;margin-bottom:0.3rem">S⁴ · Security</div>
-          <div style="font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.3rem">Governance & Policy</div>
-          <div style="font-size:0.78rem;color:var(--muted);line-height:1.6">IS policy framework, incident response, compliance posture (DPA, SASRA, CBK, CMCA), staff awareness. Regulatory fine and breach EAL.</div>
+        <div class="pillar-card">
+          <span class="pillar-letter">S</span>
+          <div class="pillar-sub">Layer 4 — Governance</div>
+          <div class="pillar-name">Security &amp; Governance</div>
+          <div class="pillar-desc">ISP, IRP, Change Management Policy, Risk Register, DPA compliance, CMCA compliance, awareness training (LMS), PAM (Segura), DAM (Imperva).</div>
         </div>
       </div>
+    </section>
 
-      <div class="doc-callout green" style="margin-top:1.5rem">
-        <strong>The three-stage delivery model</strong>
-        <strong>Assess</strong> — structured review across all four pillars: Health Scan, AD Audit, Pentest, Systems Diagnostic.<br>
-        <strong>Quantify</strong> — financial risk position from the CRQ Engine: EAL, percentile bands, coverage adequacy, RTO/RPO gap.<br>
-        <strong>Remediate</strong> — controls implemented, tools deployed, posture sustained. Every engagement closes with a Risk Delta Report.
+    <!-- CRITICAL INFRASTRUCTURE -->
+    <section class="doc-section" id="ci-protection">
+      <h2 class="doc-section-title">Critical Infrastructure Protection</h2>
+      <p class="doc-p">The RETACH CRQ Engine models organisations in sectors designated as critical infrastructure under applicable law separately from general commercial sectors — with higher frequency multipliers, tighter RTO assumptions, and combined regulatory fine exposure reflecting both data protection and sector-specific cyber legislation.</p>
+      <p class="doc-p">RETACH's practice includes direct operational security experience inside critical national infrastructure — including enterprise network security, identity management, IRP, and BCP delivery in a mission-critical, geographically distributed environment. That practitioner background informs how the framework is calibrated for CI sectors.</p>
+
+      <div class="doc-subsection-title">Designated CI sectors modelled in the CRQ Engine</div>
+      <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:1rem 0;">
+        <div class="ci-sector-row">
+          <div><div class="ci-sector-name">Transport &amp; Logistics</div><div class="ci-sector-eg">Rail · Port · Aviation · Road infrastructure</div></div>
+          <span class="ci-fine-tag">KES 30M combined</span>
+        </div>
+        <div class="ci-sector-row">
+          <div><div class="ci-sector-name">Energy &amp; Utilities</div><div class="ci-sector-eg">Power · Water · Oil &amp; Gas</div></div>
+          <span class="ci-fine-tag">KES 30M combined</span>
+        </div>
+        <div class="ci-sector-row">
+          <div><div class="ci-sector-name">Telecommunications &amp; ICT</div><div class="ci-sector-eg">Operators · ISPs · CA Kenya CII Regulations</div></div>
+          <span class="ci-fine-tag">KES 30M combined</span>
+        </div>
+        <div class="ci-sector-row">
+          <div><div class="ci-sector-name">Financial Market Infrastructure</div><div class="ci-sector-eg">NSE · CBK Clearing · Payment Switches</div></div>
+          <span class="ci-fine-tag">KES 30M combined</span>
+        </div>
+        <div class="ci-sector-row">
+          <div><div class="ci-sector-name">Government Core Systems</div><div class="ci-sector-eg">KRA · NTSA · eCitizen · ICT Authority</div></div>
+          <span class="ci-fine-tag">KES 30M combined</span>
+        </div>
+        <div class="ci-sector-row">
+          <div><div class="ci-sector-name">Critical Health Infrastructure</div><div class="ci-sector-eg">KNH · KEMSA · National Blood Services</div></div>
+          <span class="ci-fine-tag">KES 30M combined</span>
+        </div>
+      </div>
+      <p class="doc-p" style="font-size:0.8rem;color:var(--muted)">Combined fine = DPA 2019 max KES 5M (ODPC) + CMCA 2018/2024 s.18 max KES 25M (NC4/DCI). Both penalties can be imposed simultaneously for the same security failure. CMCA s.18 also carries a custodial sentence of up to 20 years imprisonment. This does not constitute legal advice — validate with qualified Kenyan counsel.</p>
+
+      <div class="cta-block">
+        <div>
+          <h3>Book a Critical Infrastructure Security Review</h3>
+          <p>Delivered by a practitioner with direct CI operational experience. Scope covers CMCA compliance obligations, OT/IT separation, BCP for essential services, and NC4 incident reporting readiness.</p>
+        </div>
+        <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20would%20like%20to%20discuss%20a%20Critical%20Infrastructure%20Security%20Review." target="_blank" rel="noopener" class="cta-btn">Book CI Review →</a>
       </div>
     </section>
 
   </main>
-</div>
 
-<!-- FOOTER -->
-<footer class="docs-footer">
-  <div>RETACH Digital Ltd &nbsp;·&nbsp; <a href="https://retach.tech">retach.tech</a> &nbsp;·&nbsp; info@retach.tech &nbsp;·&nbsp; +254 767 206 043</div>
-  <div>The S.I.N.S. Framework™ for Digital Resilience &nbsp;·&nbsp; docs.retach.io &nbsp;·&nbsp; Version 1.1 · May 2026</div>
-  <div style="margin-top:0.5rem;font-size:0.55rem;opacity:0.6">© 2026 RETACH Digital Ltd. S.I.N.S. Framework™ and RETACH Risk Ledger™ are proprietary to RETACH Digital Ltd. All rights reserved.</div>
+</div><!-- end layout -->
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<footer class="doc-footer">
+  <div class="doc-footer-inner">
+    <div>
+      <div class="doc-footer-brand">RETACH Digital Ltd</div>
+      <div class="doc-footer-tagline">The S.I.N.S. Framework™ for Digital Resilience</div>
+    </div>
+    <div class="doc-footer-links">
+      <a href="https://retach.tech">retach.tech</a>
+      <a href="https://crq.retach.io">CRQ Engine</a>
+      <a href="https://app.retach.io">Free Scanner</a>
+      <a href="mailto:info@retach.tech">info@retach.tech</a>
+    </div>
+  </div>
 </footer>
 
 <script>
-// Active sidebar link on scroll
-const sections = document.querySelectorAll('.doc-section, [id]');
+// ── Scroll spy ─────────────────────────────────────────────────────
+const sections = document.querySelectorAll('.doc-section[id]');
 const links = document.querySelectorAll('.sidebar-link');
 
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      links.forEach(l => l.classList.remove('active'));
-      const active = document.querySelector(`.sidebar-link[href="#${e.target.id}"]`);
-      if (active) active.classList.add('active');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      links.forEach(l => l.classList.remove('spy-active'));
+      const active = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('spy-active');
     }
   });
 }, { rootMargin: '-20% 0px -70% 0px' });
 
-document.querySelectorAll('[id]').forEach(el => obs.observe(el));
+sections.forEach(s => observer.observe(s));
 </script>
 </body>
 </html>
