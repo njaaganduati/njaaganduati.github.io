@@ -482,75 +482,6 @@ nav {
 }
 .cta-sub a { color: var(--green); text-decoration: none; }
 
-/* ─── CRQ BRIDGE CARD ─────────────────────────────────────── */
-.crq-bridge-card {
-  background: linear-gradient(135deg, #0d1a14, #111f18);
-  border: 1px solid rgba(42,122,82,0.4);
-  border-radius: 16px; overflow: hidden;
-  margin-bottom: 1.5rem;
-  display: none;
-}
-.crq-bridge-card.active { display: block; }
-.crq-bridge-header {
-  padding: 1.8rem 2rem 1.2rem;
-  border-bottom: 1px solid rgba(42,122,82,0.15);
-}
-.crq-bridge-label {
-  font-family: var(--mono); font-size: 0.64rem;
-  color: var(--green); letter-spacing: 0.18em;
-  text-transform: uppercase; margin-bottom: 0.6rem;
-}
-.crq-bridge-title {
-  font-family: var(--cond); font-size: 1.6rem;
-  font-weight: 700; color: var(--text);
-  margin-bottom: 0.5rem;
-}
-.crq-bridge-sub {
-  font-size: 0.88rem; color: var(--muted); line-height: 1.6;
-}
-.crq-preview-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0; border-bottom: 1px solid rgba(42,122,82,0.15);
-}
-.crq-metric {
-  padding: 1.2rem 1.5rem;
-  border-right: 1px solid rgba(42,122,82,0.12);
-}
-.crq-metric:last-child { border-right: none; }
-.crq-metric-label {
-  font-family: var(--mono); font-size: 0.62rem;
-  color: var(--muted); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 0.4rem;
-}
-.crq-metric-value {
-  font-family: var(--cond); font-size: 1.3rem;
-  font-weight: 700; color: var(--text);
-}
-.crq-metric-value.red { color: #e05060; }
-.crq-metric-value.amber { color: var(--amber); }
-.crq-metric-range {
-  font-family: var(--mono); font-size: 0.65rem;
-  color: var(--muted); margin-top: 0.2rem;
-}
-.crq-bridge-actions {
-  padding: 1.4rem 2rem;
-  display: flex; align-items: center; gap: 1.5rem;
-  flex-wrap: wrap;
-}
-.btn-crq-primary {
-  display: inline-block;
-  background: var(--green); color: #fff;
-  font-family: var(--cond); font-size: 1rem;
-  font-weight: 700; letter-spacing: 0.05em;
-  padding: 0.8rem 2rem; border-radius: 8px;
-  text-decoration: none; white-space: nowrap;
-  transition: all 0.2s;
-}
-.btn-crq-primary:hover { background: var(--green-l); transform: translateY(-1px); }
-.crq-bridge-note {
-  font-size: 0.78rem; color: var(--muted); line-height: 1.5;
-}
-
 /* scanning animation */
 #scanning-overlay {
   display: none;
@@ -905,7 +836,7 @@ nav {
   <div id="contact-gate">
     <div class="gate-header">
       <h2>Almost there — your score is ready</h2>
-      <p>Two more details help us benchmark your score against Kenyan sector peers and generate an accurate risk exposure estimate.</p>
+      <p>Enter your details to receive your personalised S.I.N.S. score and finding report.</p>
     </div>
     <div class="gate-form">
       <div class="form-row">
@@ -927,46 +858,28 @@ nav {
           <label>Organisation Type</label>
           <select id="f-type">
             <option value="">Select type…</option>
-            <option value="sacco_dt">SACCO (Deposit Taking)</option>
-            <option value="sacco_ndt">SACCO (Non-Deposit Taking)</option>
-            <option value="sme_small">SME (1–50 staff)</option>
-            <option value="sme_mid">SME (51–200 staff)</option>
-            <option value="healthcare">Healthcare / Clinic</option>
-            <option value="ngo">NGO / INGO</option>
-            <option value="education">School / University</option>
-            <option value="fintech">Fintech</option>
-            <option value="bank">Financial Institution / Bank</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Annual Revenue (KES) — Approximate</label>
-          <select id="f-rev">
-            <option value="">Select range…</option>
-            <option value="1">Under KES 5M</option>
-            <option value="2">KES 5M – 20M</option>
-            <option value="3">KES 20M – 100M</option>
-            <option value="4">KES 100M – 500M</option>
-            <option value="5">KES 500M – 2B</option>
-            <option value="6">Over KES 2B</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Number of Staff</label>
-          <select id="f-staff">
-            <option value="">Select range…</option>
-            <option value="1">1–10</option>
-            <option value="2">11–50</option>
-            <option value="3">51–200</option>
-            <option value="4">201–500</option>
-            <option value="5">500+</option>
+            <option>SACCO (Deposit Taking)</option>
+            <option>SACCO (Non-Deposit Taking)</option>
+            <option>SME (1–50 staff)</option>
+            <option>SME (51–200 staff)</option>
+            <option>Healthcare / Clinic</option>
+            <option>NGO / INGO</option>
+            <option>School / University</option>
+            <option>Financial Institution</option>
+            <optgroup label="── Critical Infrastructure (CMCA 2018/2024 s.18) ──">
+              <option>CI — Transport &amp; Logistics (Rail, Port, Aviation)</option>
+              <option>CI — Energy &amp; Utilities (Power, Water, Oil &amp; Gas)</option>
+              <option>CI — Telecommunications &amp; ICT Infrastructure</option>
+              <option>CI — Financial Market Infrastructure</option>
+              <option>CI — Government Core Systems</option>
+              <option>CI — Critical Health Infrastructure</option>
+            </optgroup>
+            <option>Other</option>
           </select>
         </div>
       </div>
       <button class="gate-cta" onclick="showResults()">View My S.I.N.S. Score →</button>
-      <p class="gate-note">Results appear instantly. Used only to benchmark your score and size remediation costs. RETACH may follow up — no spam.</p>
+      <p class="gate-note">Your results appear instantly. RETACH may contact you about a follow-up assessment. No spam.</p>
     </div>
   </div>
 
@@ -1003,25 +916,10 @@ nav {
 
     <div class="pillar-scores" id="pillar-scores"></div>
     <div class="findings-card" id="findings-card"></div>
-
-    <!-- CRQ BRIDGE CARD -->
-    <div class="crq-bridge-card" id="crq-bridge">
-      <div class="crq-bridge-header">
-        <div class="crq-bridge-label">CRQ ENGINE™ · PREMIUM</div>
-        <div class="crq-bridge-title">What does this risk cost your organisation?</div>
-        <div class="crq-bridge-sub">Your S.I.N.S. score maps to a financial exposure range. The CRQ Engine converts your gaps into Kenya-benchmarked KES figures — Expected Annual Loss with 75th and 95th percentile loss bands — using a Poisson-Lognormal actuarial model calibrated to Serianu 2023 and CBK sector data.</div>
-      </div>
-      <div class="crq-preview-row" id="crq-preview-row"></div>
-      <div class="crq-bridge-actions">
-        <a id="crq-deeplink" href="https://crq.retach.io" target="_blank" class="btn-crq-primary">Run Full CRQ Analysis →</a>
-        <div class="crq-bridge-note">Pre-loads your S.I.N.S. scores. Add revenue, staff count and sector for full financial quantification. <a href="https://retach.tech/#methodology" target="_blank" style="color:var(--green)">How we calculate your risk →</a></div>
-      </div>
-    </div>
-
     <div class="results-cta">
       <h2>Your next step is clear.</h2>
       <p id="cta-copy">A full S.I.N.S. Health Scan maps every gap found above to a prioritised remediation plan — with fixed timelines and costs. No surprises.</p>
-      <div class="cta-price">Full Health Scan from <strong>KES 45,000</strong> · Delivered in 5 days</div>
+      <div class="cta-price">Full Health Scan from <strong>KES 32,500</strong> · Delivered in 5 days</div>
       <a href="/#contact" class="btn-cta-large">Book Your Health Scan →</a>
       <div class="cta-sub">Or email us directly: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
     </div>
@@ -1050,63 +948,7 @@ let currentSection = 0;
 // scoring: yes=10, partial=5, no=0
 function score(val) { return val==='yes'?10:val==='partial'?5:0; }
 
-// ─── CRQ BRIDGE ─────────────────────────────────────────────
-function buildCRQBridge(pillarScores, overall, sector, rev, staff) {
-  // Kenya EAL benchmarks by risk band (KES millions) — Serianu 2023 / CBK
-  const ealBands = {
-    high:   { breach: [2.5, 12], ransomware: [1.5, 8],  fine: [0.5, 5]  },
-    medium: { breach: [0.8, 4],  ransomware: [0.5, 3],  fine: [0.1, 2]  },
-    low:    { breach: [0.2, 1.5],ransomware: [0.1, 0.8],fine: [0.05, 0.5] },
-  };
-  const band = overall < 40 ? 'high' : overall < 70 ? 'medium' : 'low';
-  const b = ealBands[band];
-
-  // Revenue multiplier — larger org = larger exposure
-  const revMult = rev ? [0.5,0.8,1.0,1.4,2.0,3.0][parseInt(rev)-1] || 1 : 1;
-
-  const fmtKES = (val) => {
-    if (val >= 1000) return `KES ${(val/1000).toFixed(1)}B`;
-    if (val >= 1)    return `KES ${val.toFixed(0)}M`;
-    return `KES ${(val*1000).toFixed(0)}K`;
-  };
-  const range = (arr) => `${fmtKES(arr[0]*revMult)} – ${fmtKES(arr[1]*revMult)}`;
-
-  document.getElementById('crq-preview-row').innerHTML = `
-    <div class="crq-metric">
-      <div class="crq-metric-label">Breach Cost Exposure</div>
-      <div class="crq-metric-value red">${fmtKES(b.breach[1]*revMult)}</div>
-      <div class="crq-metric-range">Range: ${range(b.breach)}</div>
-    </div>
-    <div class="crq-metric">
-      <div class="crq-metric-label">Ransomware Recovery</div>
-      <div class="crq-metric-value amber">${fmtKES(b.ransomware[1]*revMult)}</div>
-      <div class="crq-metric-range">Range: ${range(b.ransomware)}</div>
-    </div>
-    <div class="crq-metric">
-      <div class="crq-metric-label">Regulatory Fine (DPA)</div>
-      <div class="crq-metric-value amber">${fmtKES(b.fine[1]*revMult)}</div>
-      <div class="crq-metric-range">Up to KES 5M or 1% turnover</div>
-    </div>
-  `;
-
-  // Build deep-link to CRQ Engine with scores pre-loaded
-  const ps = pillarScores;
-  const sScore = Math.round(ps.s  * 2 / 10); // 0–10 slider scale
-  const iScore = Math.round(ps.i  * 2 / 10);
-  const nScore = Math.round(ps.n  * 2 / 10);
-  const secScore = Math.round(ps.sec * 2 / 10);
-  const sectorMap = {sacco_dt:'SACCO',sacco_ndt:'SACCO',fintech:'Fintech',bank:'Banking',healthcare:'Healthcare',ngo:'NGO',education:'Education',sme_small:'SME',sme_mid:'SME',other:'SME'};
-  const sectorParam = sectorMap[sector] || 'SME';
-  const revMap = {1:'5',2:'50',3:'300',4:'1000',5:'3000',6:'10000'};
-  const revParam = revMap[rev] || '';
-  const staffMap = {1:'5',2:'25',3:'100',4:'350',5:'750'};
-  const staffParam = staffMap[staff] || '';
-
-  const deepLink = `https://crq.retach.io?s=${sScore}&i=${iScore}&n=${nScore}&sec=${secScore}&sector=${sectorParam}${revParam?'&rev='+revParam:''}${staffParam?'&staff='+staffParam:''}`;
-  document.getElementById('crq-deeplink').href = deepLink;
-  document.getElementById('crq-bridge').classList.add('active');
-}
-
+// ─── ANSWER ─────────────────────────────────────────────────
 function answer(qid, val, btn) {
   answers[qid] = val;
   // deselect siblings
@@ -1167,8 +1009,6 @@ function showResults() {
   const name = document.getElementById('f-name').value.trim() || 'there';
   const org  = document.getElementById('f-org').value.trim();
   const type = document.getElementById('f-type').value;
-  const rev  = document.getElementById('f-rev').value;
-  const staff = document.getElementById('f-staff').value;
 
   // hide gate, show scanning
   document.getElementById('contact-gate').classList.remove('active');
@@ -1177,7 +1017,7 @@ function showResults() {
 
   setTimeout(() => {
     document.getElementById('scanning-overlay').classList.remove('active');
-    buildResults(name, org, type, rev, staff);
+    buildResults(name, org, type);
     document.getElementById('results-panel').classList.add('active');
     currentSection = 5;
     updateProgress();
@@ -1185,7 +1025,7 @@ function showResults() {
   }, 2400);
 }
 
-function buildResults(name, org, type, rev, staff) {
+function buildResults(name, org, type) {
   // pillar scores
   const pillarScores = {};
   sections.forEach(sec => {
@@ -1301,9 +1141,6 @@ function buildResults(name, org, type, rev, staff) {
   }
 
   document.getElementById('findings-card').innerHTML = findingsHTML;
-
-  // ─── CRQ BRIDGE ─────────────────────────────────────────────
-  buildCRQBridge(pillarScores, overall, type, rev, staff);
 }
 </script>
 </body>
