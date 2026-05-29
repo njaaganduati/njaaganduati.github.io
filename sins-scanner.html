@@ -67,6 +67,7 @@ nav {
   font-size: 1.3rem; font-weight: 700;
   color: var(--text); text-decoration: none; letter-spacing: 0.06em;
 }
+.nav-brand{display:inline-flex;align-items:center;gap:0.5rem}.nav-logo{width:26px;height:26px;flex-shrink:0}.nav-logo path{fill:var(--text)}
 .nav-brand span { color: var(--green); }
 .nav-badge {
   font-family: var(--mono);
@@ -535,13 +536,54 @@ nav {
   .pillar-scores { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
+
+/* ════ RETACH LIGHT THEME — docs/CRQ aligned (light surface · green nav · dark instruments) ════ */
+:root{
+  --green:#116b4f;--green-l:#2a7a52;--green-d:#0c4a36;
+  --red:#9b2335;--amber:#b5740f;
+  --bg:#eef2ee;--card:#ffffff;--dark2:#e7ece7;
+  --border:rgba(16,40,28,0.12);--border2:rgba(42,122,82,0.28);
+  --text:#10231a;--muted:#566b5d;
+}
+body{background:var(--bg);color:var(--text)}
+nav{background:#116b4f!important;border-bottom:1px solid #0c4a36!important;backdrop-filter:none!important}
+.nav-brand{color:#fff!important}.nav-brand span{color:#bfe3d0!important}
+.nav-logo path{fill:#fff!important}
+.nav-badge{color:#bfe3d0!important;border-color:rgba(255,255,255,.3)!important}
+.nav-back{color:rgba(255,255,255,.85)!important}.nav-back:hover{color:#fff!important}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#eef5f0 55%,#e1ede6 100%)}
+.hero-sub,.hero-meta{color:var(--muted)}
+.scanner-wrap,.questions-list,.question-item{background:transparent}
+.question-item{border-color:var(--border)}
+.opt{background:#fff;border:1px solid var(--border);color:var(--muted)}
+.opt:hover{border-color:var(--green);color:var(--text)}
+.form-group input,.form-group select{background:#fff;border:1px solid var(--border);color:var(--text)}
+.form-group select option{background:#fff;color:var(--text)}
+.pillar-tab,.tabs,.pillar-nav{border-color:var(--border)}
+.findings-card,.pillar-scores{background:#fff;border:1px solid var(--border)}
+/* ── DARK INSTRUMENT: the score readout (mirrors CRQ KPI cards) ── */
+.results-hero{background:#0b1f17;border:1px solid #0c4a36;border-radius:16px;padding:2rem 1.5rem;color:#eaf3ee}
+.results-hero .score-number{color:#fff}
+.results-hero .score-label{color:#9fb6a8}
+.results-hero .score-verdict{color:#eaf3ee}
+.results-hero .score-summary{color:#9fb6a8}
+.score-ring-bg{stroke:rgba(255,255,255,0.10)!important}
+.results-cta{background:#fff;border:1px solid var(--border)}
+.results-cta h2{color:var(--text)}
+.cta-price{color:var(--text)}
+footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
+
+/* fix: disabled buttons must be light-on-light readable */
+.btn-primary:disabled{background:#dde5df!important;color:#8a9a8c!important;border:1px solid var(--border)!important}
+.btn-ghost{color:var(--muted)!important;border:1px solid var(--border)!important}
+.btn-ghost:hover{color:var(--text)!important;border-color:var(--green)!important}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-brand">RETACH<span>.</span></a>
+  <a href="/" class="nav-brand"><svg class="nav-logo" viewBox="1640 1100 1900 1650" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3228.836,1206.723c-55.371,0-103.99,29.221-131.541,73.23h-1139.06l-10.06,9.689c-13.16-73.26-76.66-128.82-153.02-128.82c-85.88,0-155.51,70.301-155.51,157.012c0,74.529,51.42,136.92,120.39,153l-8.19,7.889v1133.99l809.6-575.5v-479.49l-142.061-128h286.09v1152h-65.559l-88.98-89.58c3.209-12.549,4.91-25.719,4.91-39.279c0-86.711-69.631-157.01-155.52-157.01c-85.881,0-155.51,70.299-155.51,157.01c0,86.73,69.629,157.029,155.51,157.029c13.859,0,27.289-1.83,40.078-5.27l136.932,154.449h459.93V1444.604h58.25c27.199,45.629,76.73,76.15,133.32,76.15c85.889,0,155.52-70.301,155.52-157.021C3384.355,1277.023,3314.725,1206.723,3228.836,1206.723z M1792.595,1401.094c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66s85.83,38.801,85.83,86.66C1878.425,1362.293,1839.995,1401.094,1792.595,1401.094z M2267.045,2018.514l-355.08,260.549v-800.959l31.72-31.721l323.36,288.609V2018.514z M2397.765,2536.123c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66c47.401,0,85.831,38.801,85.831,86.66C2483.596,2497.322,2445.166,2536.123,2397.765,2536.123z M3226.275,1446.992c-47.4,0-85.82-38.799-85.82-86.648c0-47.861,38.42-86.66,85.82-86.66s85.83,38.799,85.83,86.66C3312.105,1408.193,3273.676,1446.992,3226.275,1446.992z"/></svg>RETACH</a>
   <span class="nav-badge">S.I.N.S. Scanner™</span>
   <a href="/" class="nav-back">← Back to site</a>
 </nav>
@@ -919,7 +961,7 @@ nav {
     <div class="results-cta">
       <h2>Your next step is clear.</h2>
       <p id="cta-copy">A full S.I.N.S. Health Scan maps every gap found above to a prioritised remediation plan — with fixed timelines and costs. No surprises.</p>
-      <div class="cta-price">Full Health Scan from <strong>KES 32,500</strong> · Delivered in 5 days</div>
+      <div class="cta-price">Full Health Scan <strong>KES 45,000</strong> <span style="opacity:.7;font-weight:400">(≈ USD 150)</span> · Delivered in 5 days</div>
       <a href="/#contact" class="btn-cta-large">Book Your Health Scan →</a>
       <div class="cta-sub">Or email us directly: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
     </div>

@@ -179,6 +179,138 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .hid{display:none!important}
 footer{text-align:center;padding:2rem;font-size:.7rem;color:var(--muted);border-top:1px solid var(--border);margin-top:3rem;position:relative;z-index:1}
 footer a{color:var(--gl)}
+
+/* ════ RETACH CRQ — LIGHT REPORT THEME · green nav · dark instrument panels ════ */
+:root{--green:#116b4f;--gl:#2a7a52;--gd:#0c4a36;--red:#9b2335;--amber:#b5740f;--rl:#c0392b;--bg:#eef2ee;--card:#ffffff;--dark2:#e7ece7;--border:rgba(16,40,28,0.12);--b2:rgba(42,122,82,0.28);--text:#10231a;--muted:#566b5d;}
+body{background:var(--bg);color:var(--text)}
+.pb{background:#0c4a36;border-bottom:1px solid rgba(255,255,255,.08)}
+.pb-t{color:#bfe3d0}.pb-badge{background:#2a7a52;color:#fff}.pb a{color:#bfe3d0!important}
+nav{background:#116b4f;border-bottom:1px solid #0c4a36;backdrop-filter:none}
+.nb{color:#fff;display:flex;align-items:center;gap:.55rem}
+.nb-symbol{width:30px;height:30px;flex-shrink:0}
+nav .nb-symbol path{fill:#ffffff}
+.nb-word{font-family:var(--cond);font-size:1.3rem;font-weight:800;letter-spacing:.08em;color:#fff}
+.nl a{color:rgba(255,255,255,.82)}.nl a:hover{color:#fff}
+.ncta{color:#fff;border-color:rgba(255,255,255,.5)}.ncta:hover{background:rgba(255,255,255,.14)}
+.hero{background:linear-gradient(135deg,#ffffff 0%,#eef5f0 55%,#e1ede6 100%);border-bottom:1px solid var(--border)}
+.heyebrow{color:var(--green)}h1 em{color:var(--green)}
+.hpill{color:var(--muted);border-color:var(--border);background:#fff}
+.panel{background:#fff;box-shadow:0 1px 3px rgba(16,40,28,.06),0 10px 30px rgba(16,40,28,.05)}
+.pt{color:var(--text)}
+.tf.n::before{color:rgba(16,40,28,.20)}.tf.lk{color:rgba(16,40,28,.30)}
+.orow{border-bottom:1px solid var(--border)}
+.tbtn{border-right:1px solid var(--border);color:var(--muted)}
+.tbtn.a{background:rgba(42,122,82,.09)}
+select,.fi{background:#fff;border:1px solid var(--border);color:var(--text)}
+.onote{background:rgba(42,122,82,.06);border:1px solid var(--b2);color:var(--muted)}
+footer{border-top:1px solid var(--border)}
+.ubtn:hover{transform:translateY(-1px)}
+.instrument{--text:#eaf3ee;--muted:#9fb6a8;--card:#11281e;--dark2:#0b1f17;--border:rgba(255,255,255,.08);--b2:rgba(74,170,120,.3);background:#0b1f17;border:1px solid #0c4a36;border-radius:12px}
+.mr.instrument{padding:1rem;gap:.65rem}
+.hm-wrap.instrument{padding:1rem}
+.instrument .mc{background:#13291f;border:1px solid rgba(255,255,255,.07)}
+.instrument .mc.hl{background:rgba(192,57,43,.16);border-color:rgba(192,57,43,.45)}
+.instrument .mc.am{background:rgba(181,116,15,.16);border-color:rgba(181,116,15,.42)}
+.instrument .mv{color:#eaf3ee}.instrument .mv.r{color:#ff6b6b}.instrument .mv.a{color:#f0a93a}.instrument .mv.g{color:#5fcf95}
+.instrument .ml,.instrument .msub{color:#9fb6a8}
+.instrument .hm-y,.instrument .hm-x{color:#9fb6a8}
+.rw-stat{background:rgba(155,35,53,.09)}
+
+/* ── Ransomware intel card ── */
+.rw-card{background:rgba(155,35,53,.07);border:1px solid rgba(155,35,53,.3);border-radius:8px;padding:.9rem 1rem;margin-bottom:.9rem}
+.rw-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.55rem;gap:.75rem;flex-wrap:wrap}
+.rw-card-title{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#e05060;display:flex;align-items:center;gap:.4rem}
+.rw-card-title::before{content:'⚠';font-size:.7rem}
+.rw-badge{font-family:var(--mono);font-size:.54rem;letter-spacing:.06em;padding:.15rem .5rem;border-radius:3px;font-weight:600;background:rgba(155,35,53,.25);color:#e05060;border:1px solid rgba(155,35,53,.3)}
+.rw-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.6rem}
+.rw-stat{background:rgba(0,0,0,.2);border-radius:6px;padding:.5rem .65rem;text-align:center}
+.rw-stat-n{font-family:var(--cond);font-size:1.35rem;font-weight:800;color:#e05060;line-height:1}
+.rw-stat-l{font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-top:.2rem;line-height:1.3}
+.rw-victim-row{display:flex;align-items:center;gap:.55rem;padding:.35rem 0;border-bottom:1px solid rgba(155,35,53,.12);font-size:.72rem}
+.rw-victim-row:last-child{border-bottom:none}
+.rw-vname{flex:1;color:var(--text);font-weight:500}
+.rw-vdate{font-family:var(--mono);font-size:.58rem;color:var(--muted);white-space:nowrap}
+.rw-vgroup{font-family:var(--mono);font-size:.56rem;padding:.1rem .4rem;border-radius:3px;background:rgba(155,35,53,.15);color:#e05060;white-space:nowrap}
+.rw-lock-row{display:flex;align-items:center;gap:.65rem;padding:.55rem .75rem;background:rgba(155,35,53,.08);border:1px dashed rgba(155,35,53,.25);border-radius:6px;margin-top:.55rem}
+.rw-lock-icon{font-size:1.1rem;flex-shrink:0}
+.rw-lock-text{flex:1;font-size:.7rem;color:var(--muted);line-height:1.5}
+.rw-lock-text strong{color:var(--text)}
+.rw-lock-btn{font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.04em;padding:.38rem .8rem;border-radius:5px;background:rgba(155,35,53,.3);color:#e05060;border:1px solid rgba(155,35,53,.4);cursor:pointer;white-space:nowrap;text-decoration:none;transition:all .15s}
+.rw-lock-btn:hover{background:rgba(155,35,53,.45);color:#fff}
+
+/* ── Gated HIBP card ── */
+.hibp-gate{background:rgba(192,120,24,.06);border:1px solid rgba(192,120,24,.3);border-radius:8px;padding:.9rem 1rem;margin-top:.75rem}
+.hibp-gate-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.hibp-gate-icon{font-size:1rem}
+.hibp-gate-title{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#d48b1a}
+.hibp-blur{font-family:var(--cond);font-size:2rem;font-weight:800;color:#d48b1a;filter:blur(5px);user-select:none;letter-spacing:.05em;line-height:1;margin:.3rem 0}
+.hibp-sub{font-size:.7rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem}
+.hibp-sub strong{color:var(--text)}
+.hibp-items{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.65rem}
+.hibp-item{font-family:var(--mono);font-size:.6rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.hibp-item::before{content:'🔒';font-size:.6rem}
+.hibp-cta{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.hibp-cta-btn{font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.04em;padding:.45rem 1rem;border-radius:6px;background:var(--amber);color:#fff;text-decoration:none;border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.hibp-cta-btn:hover{background:#d48b1a;color:#fff}
+.hibp-cta-note{font-family:var(--mono);font-size:.54rem;color:var(--muted);line-height:1.5}
+
+/* ── Threat intel loading state ── */
+.rw-loading{text-align:center;padding:1rem;font-family:var(--mono);font-size:.65rem;color:var(--muted);animation:pulse 1.2s ease-in-out infinite}
+
+/* ── S.I.N.S. KRI Register ── */
+.kri-subh{font-family:var(--cond);font-size:1rem;font-weight:700;color:var(--text);margin:1rem 0 .55rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.kri-subh:first-child{margin-top:0}
+.kri-subh-note{font-family:var(--mono);font-size:.55rem;font-weight:400;color:var(--muted);letter-spacing:.04em}
+.kri-banner{background:linear-gradient(135deg,#0b1f17,#11281e);border:1px solid #0c4a36;border-radius:12px;padding:1rem 1.15rem;margin-bottom:.9rem;color:#eaf3ee}
+.kri-banner-t{font-family:var(--cond);font-size:1.15rem;font-weight:800;letter-spacing:.03em;color:#fff;margin-bottom:.4rem}
+.kri-banner-d{font-size:.76rem;line-height:1.7;color:#cfe0d6}
+.kri-banner-d strong{color:#fff}
+.kri-legend{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:.7rem;padding-top:.65rem;border-top:1px solid rgba(255,255,255,.1)}
+.kri-leg{font-family:var(--mono);font-size:.58rem;color:#cfe0d6;display:flex;align-items:center;gap:.4rem;letter-spacing:.03em}
+.kri-pill{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;color:#fff;font-family:var(--cond);font-weight:800;font-size:.72rem;flex-shrink:0}
+.kri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:.4rem}
+.kri-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:.8rem .9rem}
+.kri-l{font-family:var(--mono);font-size:.55rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.kri-v{font-family:var(--cond);font-size:1.5rem;font-weight:800;line-height:1.05;margin:.25rem 0 .2rem;color:var(--text)}
+.kri-v.r{color:#c0392b}.kri-v.a{color:var(--amber)}.kri-v.g{color:var(--green)}
+.kri-d{font-size:.66rem;color:var(--muted);line-height:1.5;margin-bottom:.4rem}
+.kri-src{font-family:var(--mono);font-size:.5rem;color:#8a9a88;letter-spacing:.04em;border-top:1px solid var(--border);padding-top:.35rem}
+.kri-thead-legend{display:flex;gap:1rem;margin-bottom:.4rem;font-family:var(--mono);font-size:.56rem;color:var(--muted)}
+.kri-thead-legend span{display:flex;align-items:center;gap:.3rem}
+.kr-dot{width:8px;height:8px;border-radius:2px;display:inline-block}
+.kr-dot.g{background:var(--green)}.kr-dot.a{background:var(--amber)}.kr-dot.r{background:#c0392b}
+.kri-tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;margin-bottom:.8rem;background:#fff}
+.kri-tbl{width:100%;border-collapse:collapse;min-width:760px}
+.kri-tbl th{font-family:var(--mono);font-size:.54rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#116b4f;padding:.55rem .6rem;text-align:left;white-space:nowrap}
+.kri-tbl td{padding:.55rem .6rem;border-bottom:1px solid var(--border);vertical-align:top;font-size:.72rem;color:var(--text)}
+.kri-tbl tr:last-child td{border-bottom:none}
+.kri-tbl tbody tr:nth-child(even){background:#f6f9f6}
+.kr-n{font-family:var(--mono);font-size:.62rem;color:var(--muted);width:24px}
+.kr-kri{max-width:230px}
+.kr-kri strong{display:block;font-weight:600;line-height:1.4;color:var(--text)}
+.kr-cat{display:block;font-family:var(--mono);font-size:.52rem;color:var(--muted);letter-spacing:.03em;margin-top:.15rem;text-transform:uppercase}
+.kr-pn{font-size:.6rem;color:var(--muted);margin-left:.4rem;white-space:nowrap}
+.kr-std{white-space:nowrap}
+.kr-nist{display:block;font-family:var(--mono);font-size:.58rem;color:var(--green);font-weight:600}
+.kr-iso{display:block;font-family:var(--mono);font-size:.54rem;color:var(--muted);margin-top:.12rem}
+.kr-thr{white-space:nowrap}
+.kr-thr span{font-family:var(--mono);font-size:.58rem;padding:.08rem .35rem;border-radius:3px;margin-right:.2rem}
+.kr-g{background:rgba(42,122,82,.12);color:#0c4a36}
+.kr-a{background:rgba(181,116,15,.14);color:#8a5709}
+.kr-r{background:rgba(192,57,43,.12);color:#9b2335}
+.kr-own{font-size:.64rem;color:var(--muted);white-space:nowrap}
+.kr-freq{font-family:var(--mono);font-size:.58rem;color:var(--text);white-space:nowrap}
+.kri-threat{background:#f4f7f4;border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;margin-bottom:.7rem}
+.kri-tv{font-size:.78rem;color:var(--text);line-height:1.9}
+.kri-tv-tag{font-family:var(--mono);font-size:.55rem;font-weight:600;letter-spacing:.05em;padding:.12rem .5rem;border-radius:3px;margin-right:.45rem;text-transform:uppercase}
+.kri-tv-tag.mostfreq{background:rgba(192,120,24,.14);color:#9a5d0c;border:1px solid rgba(192,120,24,.3)}
+.kri-tv-tag.mostdmg{background:rgba(155,35,53,.12);color:#9b2335;border:1px solid rgba(155,35,53,.28)}
+.kri-tv-p{font-family:var(--mono);font-size:.62rem;color:var(--muted)}
+.kri-ci{background:rgba(155,35,53,.06);border:1px solid rgba(155,35,53,.25);border-radius:10px;padding:.85rem 1rem;margin-bottom:.7rem}
+.kri-foot{font-size:.62rem;color:var(--muted);line-height:1.6;margin-top:.2rem}
+.kri-foot a{color:var(--gl)}
+@media(max-width:640px){.kri-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.kri-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -192,7 +324,12 @@ footer a{color:var(--gl)}
 </div>
 
 <nav>
-  <a href="/" class="nb">RE<em>TACH</em></a>
+  <a href="/" class="nb">
+    <svg class="nb-symbol" viewBox="1640 1100 1900 1650" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3228.836,1206.723c-55.371,0-103.99,29.221-131.541,73.23h-1139.06l-10.06,9.689c-13.16-73.26-76.66-128.82-153.02-128.82c-85.88,0-155.51,70.301-155.51,157.012c0,74.529,51.42,136.92,120.39,153l-8.19,7.889v1133.99l809.6-575.5v-479.49l-142.061-128h286.09v1152h-65.559l-88.98-89.58c3.209-12.549,4.91-25.719,4.91-39.279c0-86.711-69.631-157.01-155.52-157.01c-85.881,0-155.51,70.299-155.51,157.01c0,86.73,69.629,157.029,155.51,157.029c13.859,0,27.289-1.83,40.078-5.27l136.932,154.449h459.93V1444.604h58.25c27.199,45.629,76.73,76.15,133.32,76.15c85.889,0,155.52-70.301,155.52-157.021C3384.355,1277.023,3314.725,1206.723,3228.836,1206.723z M1792.595,1401.094c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66s85.83,38.801,85.83,86.66C1878.425,1362.293,1839.995,1401.094,1792.595,1401.094z M2267.045,2018.514l-355.08,260.549v-800.959l31.72-31.721l323.36,288.609V2018.514z M2397.765,2536.123c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66c47.401,0,85.831,38.801,85.831,86.66C2483.596,2497.322,2445.166,2536.123,2397.765,2536.123z M3226.275,1446.992c-47.4,0-85.82-38.799-85.82-86.648c0-47.861,38.42-86.66,85.82-86.66s85.83,38.799,85.83,86.66C3312.105,1408.193,3273.676,1446.992,3226.275,1446.992z"/>
+    </svg>
+    <span class="nb-word">RETACH</span>
+  </a>
   <div class="nl">
     <a href="/">Home</a>
     <a href="/sins-scanner.html">Free Scanner</a>
@@ -309,7 +446,7 @@ footer a{color:var(--gl)}
     </div>
 
     <div id="rw" class="hid">
-      <div class="mr">
+      <div class="mr instrument">
         <div class="mc hl"><div class="ml">Expected Annual Loss</div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
         <div class="mc am"><div class="ml">Worst-Case Event</div><div class="mv a" id="owc">—</div><div class="msub">95th percentile</div></div>
         <div class="mc"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
@@ -320,17 +457,22 @@ footer a{color:var(--gl)}
 
       <div>
         <div class="tbar">
-          <button class="tbtn a" onclick="st('hm',this)">Heatmap</button>
+          <button class="tbtn a" onclick="st('kri',this);renderKRI()">Key Risk Indicators</button>
+          <button class="tbtn" onclick="st('hm',this)">Heatmap</button>
           <button class="tbtn" onclick="st('sc',this)">Scenarios</button>
-          <button class="tbtn" onclick="st('os',this)">OSINT Scan</button>
+          <button class="tbtn" id="os-tab-btn" onclick="st('os',this);loadRWIntel()">OSINT + Intel</button>
           <button class="tbtn" onclick="st('ct',this)">Controls</button>
           <button class="tbtn" onclick="st('rm',this)">Roadmap</button>
           <button class="tbtn" onclick="st('bm',this)">Benchmark</button>
         </div>
         <div class="tcont">
-          <div class="tpane a" id="tp-hm">
+          <div class="tpane a" id="tp-kri">
+            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Sector risk baselines from published industry data — the starting point for every RETACH engagement. Refines to your organisation once you calculate.</p>
+            <div id="krio"></div>
+          </div>
+          <div class="tpane" id="tp-hm">
             <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Likelihood (cols) × Impact (rows). Darker = higher combined risk. Scenario codes plotted by calculated EAL and likelihood.</p>
-            <div class="hm-wrap">
+            <div class="hm-wrap instrument">
               <div class="hm-yl"><div class="hm-y">Critical</div><div class="hm-y">High</div><div class="hm-y">Medium</div><div class="hm-y">Low</div><div class="hm-y">Minimal</div></div>
               <div class="hm-main">
                 <div class="hm-xl"><div class="hm-x">Rare</div><div class="hm-x">Unlikely</div><div class="hm-x">Possible</div><div class="hm-x">Likely</div><div class="hm-x">Almost certain</div></div>
@@ -350,8 +492,33 @@ footer a{color:var(--gl)}
           </div>
 
           <div class="tpane" id="tp-os">
+            <!-- ── Threat Intel Feed (loads on tab open) ── -->
+            <div id="rw-intel-wrap">
+              <div class="rw-loading" id="rw-loading">⬤ Loading live ransomware threat intelligence…</div>
+              <div id="rw-intel" style="display:none"></div>
+            </div>
+            <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin:.85rem 0 .45rem;padding-top:.75rem;border-top:1px solid var(--border)">Domain Surface Scan</div>
             <div class="oi-row"><input type="text" class="fi" id="od" placeholder="e.g. company.co.ke" style="flex:1;margin-bottom:0"><button class="oscan-btn" id="osb" onclick="runOS()">Scan Domain →</button></div>
             <div id="oor"><div style="text-align:center;padding:1.5rem .5rem;font-size:.8rem;color:var(--muted);line-height:1.8"><strong style="color:var(--text);display:block;margin-bottom:.35rem">Live OSINT Pre-Assessment</strong>Enter a domain above to run real DNS, SSL, and breach checks.<br>Results feed directly into your EAL model likelihood scores.</div></div>
+            <!-- ── Gated HIBP card (always visible) ── -->
+            <div class="hibp-gate" id="hibp-gate-card">
+              <div class="hibp-gate-head">
+                <span class="hibp-gate-icon">🔐</span>
+                <span class="hibp-gate-title">Credential &amp; Dark Web Exposure</span>
+              </div>
+              <div class="hibp-blur" id="hibp-blur-num">██ accounts</div>
+              <div class="hibp-sub">Employee credentials from your domain may be circulating in breach databases and criminal marketplaces. <strong>RETACH checks HIBP, DeHashed, and dark web sources as part of every paid assessment.</strong></div>
+              <div class="hibp-items">
+                <div class="hibp-item">Exact count of breached employee accounts</div>
+                <div class="hibp-item">Breach source, date, and data types exposed</div>
+                <div class="hibp-item">Named dark web marketplace mentions</div>
+                <div class="hibp-item">Ransomware actor targeting intel for your sector</div>
+              </div>
+              <div class="hibp-cta">
+                <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20want%20a%20dark%20web%20and%20credential%20sweep%20for%20my%20domain." target="_blank" class="hibp-cta-btn">Unlock in Health Scan →</a>
+                <div class="hibp-cta-note">Included in every Health Scan from KES 45,000<br>Powered by HIBP · DeHashed · RETACH threat intelligence</div>
+              </div>
+            </div>
           </div>
 
           <div class="tpane" id="tp-ct">
@@ -380,7 +547,7 @@ footer a{color:var(--gl)}
   </div>
 </div>
 
-<footer>© 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience<br><span style="font-size:.6rem">CRQ model: ISO 27005 risk practices. Benchmarks: Serianu 2023 · CA Kenya · CBK · ODPC. All figures are planning estimates.</span></footer>
+<footer>© 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience<br><span style="font-size:.6rem">CRQ methodology, calibration sources &amp; terms of use — see <a href="https://retach.tech/docs.html#terms" style="color:var(--gl)">CRQ Terms &amp; EULA →</a>. All figures are planning estimates.</span></footer>
 
 <script>
 const KR=130;
@@ -427,7 +594,7 @@ function fk(v){if(v>=1e9)return'KES '+(v/1e9).toFixed(1)+'B';if(v>=1e6)return'KE
 function fu(v){return'≈ USD '+(v/KR).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 function ul(id,v){document.getElementById(id).textContent=v}
 function tog(g,btn){document.querySelectorAll(`[data-g="${g}"]`).forEach(b=>b.classList.remove('on'));btn.classList.add('on');TS[g]=btn.dataset.v;onIC()}
-function onIC(){}
+function onIC(){renderKRI();}
 function gi(){
   return{
     sec:document.getElementById('i-sec').value,
@@ -506,6 +673,7 @@ function calc(){
   rCT(eal);
   rRM(inp,ss);
   rBM(eal,s);
+  renderKRI();
 
   document.getElementById('tcp').classList.add('hid');
   document.getElementById('rw').classList.remove('hid');
@@ -679,6 +847,272 @@ function upd(id,r){
   if(p.get('sector'))document.getElementById('i-sec').value=p.get('sector');
   if(p.has('s')||p.has('sector'))setTimeout(calc,400);
 })();
+
+/* ════ Ransomware Threat Intelligence (api.retach.io · ransomware.live) ════ */
+/* ── Region → ransomware.live country codes ── */
+const RW_COUNTRIES={
+  kenya:    ['KEN'],
+  eastafrica:['KEN','TZA','UGA','RWA','ETH'],
+  global:   [] // uses /recentvictims endpoint instead
+};
+
+/* ── Sector label map for victim matching ── */
+const SECT_LABELS={
+  sacco:'financial',saccondt:'financial',fintech:'financial',
+  sme:'business',health:'healthcare',govt:'government',ngo:'ngo',school:'education',
+  ci_transport:'transport',ci_energy:'energy',ci_telecoms:'telecom',ci_finance:'financial',ci_govt:'government',ci_health:'healthcare'
+};
+
+/* ── Ransomware intel state ── */
+let rwLoaded=false;
+let rwLoadedRegion='';
+
+function getCRQRegion(){
+  // Read from the region toggle if it exists (crq-engine region selector)
+  const rt=document.querySelector('.region-btn.on');
+  if(rt)return rt.dataset.region||'kenya';
+  return'kenya'; // default
+}
+
+function getCurrentSector(){
+  return document.getElementById('i-sec')?.value||'sme';
+}
+
+async function loadRWIntel(){
+  if(rwLoaded&&rwLoadedRegion===getCRQRegion())return;
+  const wrap=document.getElementById('rw-intel');
+  const loading=document.getElementById('rw-loading');
+  const region=getCRQRegion();
+  const sector=getCurrentSector();
+  const sectorLabel=SECT_LABELS[sector]||'';
+
+  try{
+    let victims=[];
+    const countries=RW_COUNTRIES[region]||['KEN'];
+
+    if(region==='global'){
+      // Use recent victims feed, filter by sector keyword
+      const r=await fetch(API+'/api/osint/ransomware/region/global',{signal:AbortSignal.timeout(12000)});
+      const data=await r.json();
+      victims=(data.victims||[]).filter(v=>{
+        const desc=(v.description||v.activity||'').toLowerCase();
+        return!sectorLabel||desc.includes(sectorLabel)||desc.includes('financial')||desc.includes('bank');
+      }).slice(0,15);
+    } else {
+      // Fetch each country and merge
+      const r=await fetch(API+'/api/osint/ransomware/region/'+region+(sectorLabel?'?sector='+sectorLabel:''),{signal:AbortSignal.timeout(12000)});
+      const data=await r.json();
+      victims=(data.victims||[]);
+    }
+
+    // Sort by date descending
+    victims.sort((a,b)=>new Date(b.attackdate||b.published||b.date||0)-new Date(a.attackdate||a.published||a.date||0));
+
+    // Count by sector for stats
+    const total=victims.length;
+    const last90=victims.filter(v=>{
+      const d=new Date(v.attackdate||v.published||v.date||0);
+      return(Date.now()-d.getTime())<90*86400000;
+    });
+    const groups=[...new Set(victims.slice(0,20).map(v=>v.group||v.threat_actor||'Unknown'))];
+    const topGroup=groups[0]||'Unknown';
+
+    // Build sector-matched count
+    const sectorMatch=sectorLabel?victims.filter(v=>{
+      const desc=(v.description||v.sector||v.title||'').toLowerCase();
+      return desc.includes(sectorLabel);
+    }).length:0;
+
+    // Region label
+    const regionLabels={kenya:'Kenya',eastafrica:'East Africa',global:'Global'};
+    const rLabel=regionLabels[region]||'Kenya';
+
+    // Build public victim list (show last 5, max — public data only)
+    const showList=victims.slice(0,5);
+
+    const html=`
+    <div class="rw-card">
+      <div class="rw-card-head">
+        <div class="rw-card-title">Live Ransomware Threat Intelligence — ${rLabel}</div>
+        <span class="rw-badge">ransomware.live · Live data</span>
+      </div>
+      <div class="rw-stat-row">
+        <div class="rw-stat">
+          <div class="rw-stat-n">${total}</div>
+          <div class="rw-stat-l">Confirmed victims<br>${rLabel} (all time)</div>
+        </div>
+        <div class="rw-stat">
+          <div class="rw-stat-n">${last90.length}</div>
+          <div class="rw-stat-l">Incidents in<br>last 90 days</div>
+        </div>
+        <div class="rw-stat">
+          <div class="rw-stat-n">${sectorMatch||'—'}</div>
+          <div class="rw-stat-l">In your sector<br>(${SECT_LABELS[sector]||'general'})</div>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">
+        Most active threat actors in region
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem">
+        ${groups.slice(0,5).map((g,i)=>`<span style="font-family:var(--mono);font-size:.58rem;padding:.15rem .5rem;border-radius:3px;background:rgba(155,35,53,${0.35-i*0.04});color:#e05060;border:1px solid rgba(155,35,53,.25)">${g}</span>`).join('')}
+      </div>
+      ${showList.length?`
+      <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">Recent confirmed victims (public record)</div>
+      <div>
+        ${showList.map(v=>{
+          const name=v.victim||v.name||'Undisclosed';
+          const grp=v.group||v.threat_actor||'Unknown';
+          const date=v.attackdate||v.published||v.date||'';
+          const dateStr=date?new Date(date).toLocaleDateString('en-KE',{month:'short',year:'numeric'}):'';
+          return`<div class="rw-victim-row">
+            <div class="rw-vname">${name}</div>
+            ${dateStr?`<div class="rw-vdate">${dateStr}</div>`:''}
+            <div class="rw-vgroup">${grp}</div>
+          </div>`;
+        }).join('')}
+      </div>`:''}
+      <div class="rw-lock-row">
+        <div class="rw-lock-icon">🔒</div>
+        <div class="rw-lock-text">
+          <strong>Is your organisation on this list?</strong><br>
+          RETACH runs a full name-match and sector attribution check — including dark web forums and private threat intel feeds — as part of every Health Scan.
+        </div>
+        <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20want%20to%20check%20if%20my%20organisation%20appears%20in%20ransomware%20or%20breach%20data." target="_blank" class="rw-lock-btn">Check My Org →</a>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:.54rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Source: ransomware.live public database · Data reflects publicly disclosed victims only · Actual incident counts are higher · Updated every 6 hours · <a href="https://ransomware.live" target="_blank" style="color:var(--gl)">ransomware.live</a></p>`;
+
+    wrap.innerHTML=html;
+    wrap.style.display='block';
+    loading.style.display='none';
+    rwLoaded=true;
+    rwLoadedRegion=region;
+
+  }catch(err){
+    loading.innerHTML=`<div style="padding:.75rem;background:rgba(192,120,24,.06);border:1px solid rgba(192,120,24,.2);border-radius:6px;font-size:.7rem;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Threat intel temporarily unavailable.</strong><br>ransomware.live API may be unreachable. RETACH runs a manual threat intel sweep in every paid assessment regardless of API availability.</div>`;
+    loading.style.animation='none';
+    loading.style.opacity='1';
+  }
+}
+
+/* ════ S.I.N.S. KRI Register — vCISO retainer artifact ════
+   The S.I.N.S. Framework sits atop NIST CSF 2.0 and ISO/IEC 27005,
+   translating them into a sector-specific, monitored control register.
+   Each indicator is mapped to its S.I.N.S. pillar and the underlying standard. */
+const SINS_P={
+  S:{ltr:'S',name:'Systems',layer:'Layer 1 · Foundation',c:'#116b4f'},
+  I:{ltr:'I',name:'Infrastructure',layer:'Layer 2 · Operational',c:'#2a7a52'},
+  N:{ltr:'N',name:'Network',layer:'Layer 3 · Connectivity',c:'#4a6b7a'},
+  G:{ltr:'S',name:'Security & Governance',layer:'Layer 4 · Governance',c:'#9b2335'}
+};
+/* row: [kri, category, pillarKey, NIST CSF 2.0, ISO/IEC ref, green, amber, red, owner, cadence] */
+const KRI_BASE=[
+ ['Privileged accounts with MFA enabled','Access control','S','PR.AA','27001 A.5.17 · A.8.5','100%','90–99%','<90%','Identity & Access Mgr','Monthly'],
+ ['Default / unchanged admin accounts on critical systems','Credential hygiene','S','PR.AA','A.8.2 · A.5.17','0','1','≥2','IAM Manager','Monthly'],
+ ['Terminated staff with active access > 24h','Identity lifecycle','S','PR.AA','A.5.18','0','1','≥2','IAM Manager','Weekly'],
+ ['Critical assets without endpoint detection / monitoring','Visibility & monitoring','S','DE.CM','A.8.16','0%','1–5%','>5%','SOC Manager','Weekly'],
+ ['Critical systems with unpatched critical vulns > 30 days','Vulnerability mgmt','I','ID.RA · PR.PS','A.8.8','≤5%','5–15%','>15%','Infrastructure Sec','Weekly'],
+ ['Critical systems without tested backup / unknown RTO','Resilience & recovery','I','PR.DS · RC.RP','A.8.13','0%','1–10%','>10%','Infrastructure / BCP','Monthly'],
+ ['Critical systems without current IR runbooks','Incident preparedness','I','RS.MA','A.5.24 · A.5.29','≤5%','5–15%','>15%','Incident Response Lead','Quarterly'],
+ ['Critical networks with segmentation in place','Network architecture','N','PR.IR','A.8.22','≥95%','80–94%','<80%','Network Architect','Quarterly'],
+ ['Unauthorized remote-access sessions','Unauthorized access','N','DE.CM · PR.AA','A.8.20 · A.8.21','0','1','≥2','Network / SOC','Weekly'],
+ ['Critical cyber incidents per quarter','Incident frequency','G','DE.AE · RS.MA','A.5.24 · A.5.25','0','1','≥2','CISO','Monthly'],
+ ['Mean time to detect (MTTD) — critical systems','Detection capability','G','DE.AE · DE.CM','A.5.24','≤4h','4–24h','>24h','SOC Manager','Monthly'],
+ ['Mean time to contain (MTTC) — critical systems','Response capability','G','RS.MI','A.5.26','≤2h','2–4h','>4h','Incident Response Lead','Monthly'],
+ ['Phishing click rate (simulated)','Human risk / awareness','G','PR.AT','A.6.3','≤2%','2–5%','>5%','Awareness Lead','Quarterly'],
+ ['Third-party vendors with outdated security assessment > 12m','Supply-chain risk','G','GV.SC · ID.RA','A.5.19–A.5.22','≤10%','10–25%','>25%','Third-Party Risk Mgr','Quarterly'],
+ ['Unresolved high/critical audit findings > 90 days','Compliance & audit','G','GV.OV · ID.IM','A.5.35 · A.5.36','0','1–3','≥4','GRC Manager / CISO','Monthly']
+];
+const KRI_OT=[
+ ['OT/ICS systems with unpatched critical vulns > 30 days','OT vulnerability mgmt','I','ID.RA · PR.PS','A.8.8 · IEC 62443','≤5%','5–15%','>15%','OT Security Manager','Weekly'],
+ ['OT networks segmented from IT (Purdue model)','OT segmentation','N','PR.IR','A.8.22 · IEC 62443-3-3','≥95%','80–94%','<80%','OT Network Architect','Quarterly'],
+ ['Unauthorized remote access to OT/ICS environments','OT unauthorized access','N','DE.CM · PR.AA','A.8.20','0','1','≥2','OT Security Manager','Weekly'],
+ ['NC4 incident-reporting readiness (CMCA s.18)','Regulatory readiness','G','GV.OC · GV.RM','CMCA 2018/2024','Compliant','Partial','Not ready','CISO / GRC','Quarterly']
+];
+const KRI_FIN=[
+ ['Payment-channel fraud / M-Pesa transaction anomalies actioned','Transaction fraud','S','DE.AE · DE.CM','A.8.16 · CBK Guidelines','<24h','24–72h','>72h','Fraud / SOC','Monthly'],
+ ['ODPC data-processor registration current','Regulatory readiness','G','GV.OC','DPA 2019','Current','Renewal due','Lapsed / none','DPO / GRC','Quarterly']
+];
+const KRI_HEALTH=[
+ ['Patient-data access logging & periodic review','Data protection','S','DE.CM · PR.AA','A.8.15 · A.5.34','100%','90–99%','<90%','DPO / SOC','Monthly']
+];
+const KRI_GOVT=[
+ ['Public-facing API / integration exposure reviewed','Attack surface','N','ID.RA · PR.IR','A.8.22 · A.8.26','≤30d','30–90d','>90d','Network / Security','Quarterly']
+];
+function kriRegister(secKey){
+  let rows=KRI_BASE.slice();
+  if(secKey.indexOf('ci_')===0) rows=rows.concat(KRI_OT);
+  if(secKey==='sacco'||secKey==='saccondt'||secKey==='fintech'||secKey==='ci_finance') rows=rows.concat(KRI_FIN);
+  if(secKey==='health'||secKey==='ci_health') rows=rows.concat(KRI_HEALTH);
+  if(secKey==='govt'||secKey==='ci_govt') rows=rows.concat(KRI_GOVT);
+  return rows;
+}
+
+function renderKRI(){
+  var sel=document.getElementById('i-sec'); if(!sel)return;
+  var s=SECTS[sel.value]; if(!s)return;
+  var box=document.getElementById('krio'); if(!box)return;
+  var rev=(parseFloat(document.getElementById('irev').value)||50)*1e6;
+  var costLo=Math.round(rev*s.bch[0]/100), costHi=Math.round(rev*s.bch[1]/100);
+  var byL=SCS.slice().sort(function(a,b){return b.bL-a.bL;})[0];
+  var byI=SCS.slice().sort(function(a,b){return b.bI-a.bI;})[0];
+  var fineCeil=s.ci?(s.rF_dpa+s.rF_cmca):s.rF;
+  var fineDesc=s.ci?'DPA 2019 (KES 5M) + CMCA s.18 (KES 25M) — both apply simultaneously'
+    :(s.rF?(s.sa?'DPA 2019 (ODPC) + SASRA oversight':'DPA 2019 (ODPC) maximum'):'No direct statutory data-protection fine');
+  var sigma=s.ci?'1.10 · Severe':(sel.value==='fintech'?'0.95 · High':(sel.value==='govt'?'0.65 · Lower':'~0.7–0.85 · Standard'));
+
+  /* ── Framing banner — S.I.N.S. atop established standards ── */
+  var banner='<div class="kri-banner">'
+    +'<div class="kri-banner-t">S.I.N.S. KRI Register™ · '+s.n+'</div>'
+    +'<div class="kri-banner-d">The operational core of a RETACH <strong>vCISO retainer</strong>. The <strong>S.I.N.S. Framework</strong> sits atop <strong>NIST CSF 2.0</strong> and <strong>ISO/IEC 27005</strong> — translating these global standards into a sector-specific, continuously-monitored control register. Every indicator below is mapped to its S.I.N.S. pillar and the underlying standard.</div>'
+    +'<div class="kri-legend">'+Object.keys(SINS_P).map(function(k){var p=SINS_P[k];return '<span class="kri-leg"><span class="kri-pill" style="background:'+p.c+'">'+p.ltr+'</span>'+p.name+'</span>';}).join('')+'</div>'
+    +'</div>';
+
+  /* ── Sector risk profile (calibrated baseline data) ── */
+  var kri=[
+    {l:'Sector Threat Frequency',v:s.bF.toFixed(1)+'×',t:(s.bF>=2.5?'r':s.bF>=1.5?'a':'g'),d:'annual attack frequency vs baseline org',src:'Serianu 2023 · CA Kenya'},
+    {l:'Impact Severity Index',v:s.iM.toFixed(1)+'×',t:(s.iM>=1.8?'r':s.iM>=1.3?'a':'g'),d:'relative loss magnitude per incident',src:'IBM 2023 · Zurich EM'},
+    {l:'Typical Incident Cost',v:s.bch[0]+'–'+s.bch[1]+'%',t:'a',d:'of revenue · '+fk(costLo)+' – '+fk(costHi)+' at current input',src:'IBM Cost of a Data Breach 2023'},
+    {l:'Regulatory Fine Ceiling',v:fk(fineCeil),t:(s.ci?'r':(s.rF?'a':'g')),d:fineDesc,src:'DPA 2019 · CMCA 2018/2024'},
+    {l:'Baseline Recovery Time',v:s.rto+' days',t:(s.rto>14?'r':s.rto>9?'a':'g'),d:'median ransomware recovery window',src:'Serianu · CBK incident data'},
+    {l:'Loss Dispersion (σ)',v:sigma,t:(s.ci?'r':'a'),d:'lognormal tail width — higher = more catastrophic-year risk',src:'CRQ methodology'}
+  ];
+  var cards='<div class="kri-subh">Sector Risk Profile · calibrated baseline</div><div class="kri-grid">'+kri.map(function(k){
+    return '<div class="kri-card"><div class="kri-l">'+k.l+'</div><div class="kri-v '+k.t+'">'+k.v+'</div><div class="kri-d">'+k.d+'</div><div class="kri-src">'+k.src+'</div></div>';
+  }).join('')+'</div>';
+
+  /* ── The register table ── */
+  var reg=kriRegister(sel.value);
+  var trows=reg.map(function(r,i){
+    var p=SINS_P[r[2]];
+    return '<tr>'
+      +'<td class="kr-n">'+(i+1)+'</td>'
+      +'<td class="kr-kri"><strong>'+r[0]+'</strong><span class="kr-cat">'+r[1]+'</span></td>'
+      +'<td><span class="kri-pill" style="background:'+p.c+'" title="'+p.name+' — '+p.layer+'">'+p.ltr+'</span><span class="kr-pn">'+p.name+'</span></td>'
+      +'<td class="kr-std"><span class="kr-nist">'+r[3]+'</span><span class="kr-iso">ISO '+r[4]+'</span></td>'
+      +'<td class="kr-thr"><span class="kr-g">'+r[5]+'</span><span class="kr-a">'+r[6]+'</span><span class="kr-r">'+r[7]+'</span></td>'
+      +'<td class="kr-own">'+r[8]+'</td>'
+      +'<td class="kr-freq">'+r[9]+'</td>'
+      +'</tr>';
+  }).join('');
+  var table='<div class="kri-subh">S.I.N.S. KRI Register · '+reg.length+' indicators<span class="kri-subh-note">mapped to NIST CSF 2.0 · ISO/IEC 27001:2022 · 27005</span></div>'
+    +'<div class="kri-thead-legend"><span><span class="kr-dot g"></span>Green target</span><span><span class="kr-dot a"></span>Amber — review</span><span><span class="kr-dot r"></span>Red — escalate</span></div>'
+    +'<div class="kri-tbl-wrap"><table class="kri-tbl"><thead><tr>'
+    +'<th>#</th><th>Key Risk Indicator</th><th>S.I.N.S. Pillar</th><th>Standard mapping</th><th>Threshold · G / A / R</th><th>Suggested owner</th><th>Cadence</th>'
+    +'</tr></thead><tbody>'+trows+'</tbody></table></div>';
+
+  /* ── Threat vectors ── */
+  var threat='<div class="kri-threat"><div class="kri-l" style="margin-bottom:.4rem">Dominant threat vectors — '+s.n+'</div>'
+    +'<div class="kri-tv"><span class="kri-tv-tag mostfreq">Most frequent</span> '+byL.n+' <span class="kri-tv-p">('+Math.round(byL.bL*100)+'% base annual likelihood · '+byL.p+')</span></div>'
+    +'<div class="kri-tv"><span class="kri-tv-tag mostdmg">Most damaging</span> '+byI.n+' <span class="kri-tv-p">(impact weight '+byI.bI.toFixed(2)+' · '+byI.p+')</span></div></div>';
+
+  var ciPanel=s.ci?'<div class="kri-ci"><div class="kri-l" style="color:#c0392b;margin-bottom:.35rem">⚠ Critical Infrastructure — regulatory oversight</div><div style="font-size:.74rem;line-height:1.7;color:var(--text)">Designated sector: <strong>'+s.ciLabel+'</strong>. Oversight: <strong>'+s.ciReg+'</strong>.<br>'+s.ciNote+'</div></div>':'';
+
+  var foot='<p class="kri-foot"><strong>Productisation note:</strong> thresholds shown are RETACH baseline starting points calibrated from published industry data; they are tuned to each organisation during vCISO onboarding and reviewed against live posture at the stated cadence. Full methodology, calibration sources &amp; terms: <a href="https://retach.tech/docs.html#terms" target="_blank">CRQ Terms &amp; EULA →</a></p>';
+
+  box.innerHTML=banner+cards+table+threat+ciPanel+foot;
+}
+try{renderKRI();}catch(e){}
 </script>
 </body>
 </html>
