@@ -520,15 +520,19 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
 .crq-bridge-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;background:#2a7a52;color:#fff;font-family:var(--mono);font-size:0.68rem;font-weight:600;letter-spacing:0.05em;border-radius:6px;text-decoration:none;transition:background 0.15s;white-space:nowrap}
 .crq-bridge-btn:hover{background:#3a9b68}
 .crq-bridge-note{font-size:0.65rem;color:var(--muted);line-height:1.6}
+
+.sins-nav__brand{display:flex;align-items:center;gap:.55rem}
+.nav-logo{width:28px;height:28px;flex-shrink:0}
+.nav-logo path{fill:currentColor}
+.nav-word{font-family:var(--cond,inherit);font-size:1.3rem;font-weight:800;letter-spacing:.06em}
 </style>
 </head>
 <body>
 <nav class="sins-nav">
-  <a href="https://retach.tech" class="sins-nav__brand">RETACH<span>.</span></a>
+  <a href="https://retach.tech" class="sins-nav__brand"><svg class="nav-logo" viewBox="1640 1100 1900 1650" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3228.836,1206.723c-55.371,0-103.99,29.221-131.541,73.23h-1139.06l-10.06,9.689c-13.16-73.26-76.66-128.82-153.02-128.82c-85.88,0-155.51,70.301-155.51,157.012c0,74.529,51.42,136.92,120.39,153l-8.19,7.889v1133.99l809.6-575.5v-479.49l-142.061-128h286.09v1152h-65.559l-88.98-89.58c3.209-12.549,4.91-25.719,4.91-39.279c0-86.711-69.631-157.01-155.52-157.01c-85.881,0-155.51,70.299-155.51,157.01c0,86.73,69.629,157.029,155.51,157.029c13.859,0,27.289-1.83,40.078-5.27l136.932,154.449h459.93V1444.604h58.25c27.199,45.629,76.73,76.15,133.32,76.15c85.889,0,155.52-70.301,155.52-157.021C3384.355,1277.023,3314.725,1206.723,3228.836,1206.723z M1792.595,1401.094c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66s85.83,38.801,85.83,86.66C1878.425,1362.293,1839.995,1401.094,1792.595,1401.094z M2267.045,2018.514l-355.08,260.549v-800.959l31.72-31.721l323.36,288.609V2018.514z M2397.765,2536.123c-47.4,0-85.82-38.801-85.82-86.65c0-47.859,38.42-86.66,85.82-86.66c47.401,0,85.831,38.801,85.831,86.66C2483.596,2497.322,2445.166,2536.123,2397.765,2536.123z M3226.275,1446.992c-47.4,0-85.82-38.799-85.82-86.648c0-47.861,38.42-86.66,85.82-86.66s85.83,38.799,85.83,86.66C3312.105,1408.193,3273.676,1446.992,3226.275,1446.992z"/></svg><span class="nav-word">RETACH</span></a>
   <div class="sins-nav__tools" id="navTools">
     <a href="https://retach.tech/sins-scanner.html" class="sins-nav__tool" data-page="scanner">S.I.N.S. Scanner</a>
     <a href="https://retach.tech/ad-audit.html" class="sins-nav__tool active" data-page="ad-audit">AD Audit</a>
-    <a href="https://retach.tech/systems-diagnostic.html" class="sins-nav__tool" data-page="diagnostic">Systems Diagnostic</a>
     <a href="https://retach.tech/pentest-kit.html" class="sins-nav__tool" data-page="pentest">Pentest Kit</a>
   </div>
   <div class="sins-nav__right">
@@ -678,7 +682,7 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
     <div class="crq-bm"><div class="crq-bm-lbl">S⁴ Score</div><div class="crq-bm-val" id="crq-s4">—</div></div>
   </div>
   <div class="crq-bridge-actions">
-    <a id="crq-bridge-link" href="https://crq.retach.io" target="_blank" class="crq-bridge-btn">Open CRQ Engine → Quantify in KES</a>
+    <a id="crq-bridge-link" href="https://retach.tech/crq-engine.html" target="_blank" class="crq-bridge-btn">Open CRQ Engine → Quantify in KES</a>
     <div class="crq-bridge-note">Pre-populated from your AD pillar scores · Actuarial loss model · Serianu 2023 / CBK data · Methodology: retach.tech/#methodology</div>
   </div>
 </div>
@@ -967,7 +971,7 @@ function renderCRQBridge() {
   document.getElementById('crq-s4').textContent = secScore;
   document.getElementById('crq-s4').className = 'crq-bm-val ' + (secScore>=70?'ok':secScore>=45?'warn':'crit');
 
-  const link = `https://crq.retach.io?s=${sysScore}&i=${infraScore}&n=${netScore}&sec=${secScore}`;
+  const link = `https://retach.tech/crq-engine.html?s=${sysScore}&i=${infraScore}&n=${netScore}&sec=${secScore}`;
   document.getElementById('crq-bridge-link').href = link;
 }
 
@@ -1296,5 +1300,10 @@ function resetPortal() {
   });
 })();
 </script>
+
+<footer style="text-align:center;padding:2rem 1rem;font-size:.7rem;color:#7a8a78;border-top:1px solid rgba(255,255,255,.08);margin-top:1rem;position:relative;z-index:1">
+  &copy; 2026 RETACH Digital Ltd &middot; <a href="https://retach.tech" style="color:#3a9b68">retach.tech</a> &middot; The S.I.N.S. Framework&trade; for Digital Resilience<br>
+  <span style="font-size:.6rem">AD pillar scores mapped to CRQ model via ISO 27005 / NIST CSF. All EAL figures are planning estimates.</span>
+</footer>
 </body>
 </html>
