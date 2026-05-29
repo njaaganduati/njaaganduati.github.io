@@ -20,7 +20,7 @@ a{color:var(--gl);text-decoration:none}
 .pb-t{font-family:var(--mono);font-size:.62rem;color:var(--gl);letter-spacing:.08em}
 .pb-badge{font-family:var(--mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;color:#fff;background:var(--green);padding:.22rem .75rem;border-radius:3px;text-transform:uppercase}
 
-nav{position:sticky;top:0;z-index:100;background:rgba(14,16,13,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+nav{position:sticky;top:0;z-index:100;background:var(--green);border-bottom:1px solid var(--gd);padding:.7rem 1.5rem;display:flex;align-items:center;gap:.6rem}
 .nb{font-family:var(--cond);font-size:1.25rem;font-weight:800;letter-spacing:.06em;color:var(--text);text-decoration:none}
 .nb em{color:var(--green);font-style:normal}
 .nl{display:flex;align-items:center;gap:1.2rem}
@@ -311,6 +311,20 @@ footer{border-top:1px solid var(--border)}
 .kri-foot a{color:var(--gl)}
 @media(max-width:640px){.kri-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.kri-grid{grid-template-columns:1fr 1fr}}
+
+.nb{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+.nb-symbol{width:30px;height:30px;flex-shrink:0}
+.nb-symbol path{fill:#fff}
+.nb,.nb span,.nb em{color:#fff!important}
+.nl{margin-left:auto}
+.nl a{color:#dff0e6!important}
+.nl a:hover{color:#fff!important}
+.ncta{color:#fff!important;border-color:rgba(255,255,255,.45)!important}
+.ncta:hover{background:#fff!important;color:var(--gd)!important}
+
+.tpane{overflow-x:auto}
+.tpane table{min-width:380px}
+@media(max-width:600px){.nl{gap:.7rem}.nl a:not(.ncta){display:none}nav{padding:.7rem 1rem}}
 </style>
 </head>
 <body>
