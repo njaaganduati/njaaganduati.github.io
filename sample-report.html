@@ -11,11 +11,11 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#2a7a52;--gl:#3a9b68;--gd:#1e5a3c;
-  --red:#9b2335;--amber:#c07818;
-  --bg:#0e100d;--card:#151814;--dark2:#1a1d19;
-  --border:rgba(255,255,255,0.07);--border2:rgba(42,122,82,0.3);
-  --text:#e8ebe6;--muted:#7a8a78;
+  --green:#146B4E;--gl:#2E9E6B;--gd:#0E4D38;
+  --red:#9E1B23;--amber:#C9912E;
+  --bg:#111315;--card:#181B1E;--dark2:#1F2327;
+  --border:rgba(255,255,255,0.07);--border2:rgba(20,107,78,0.3);
+  --text:#e8ebe6;--muted:#9AA2AA;
   --mono:'IBM Plex Mono',monospace;
   --cond:'Barlow Condensed',sans-serif;
   --body:'Barlow','Segoe UI',sans-serif;
@@ -25,8 +25,8 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:1
 a{color:var(--gl);text-decoration:none}
 body::before{
   content:'';position:fixed;inset:0;
-  background-image:linear-gradient(rgba(42,122,82,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(42,122,82,0.025) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(20,107,78,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,107,78,0.025) 1px,transparent 1px);
   background-size:40px 40px;pointer-events:none;z-index:0;
 }
 
@@ -83,7 +83,7 @@ nav{
   padding:0.8rem 2rem;border-radius:8px;text-decoration:none;
   transition:all 0.2s;background:transparent;
 }
-.btn-ghost:hover{background:rgba(42,122,82,0.08);color:var(--gl)}
+.btn-ghost:hover{background:rgba(20,107,78,0.08);color:var(--gl)}
 
 /* ── COMPARISON SECTION ───────────────────────────────────── */
 .compare-section{
@@ -105,14 +105,14 @@ nav{
 .tier-hdr{padding:1.4rem 1.8rem;display:flex;flex-direction:column;gap:0.3rem;border-right:1px solid var(--border)}
 .tier-hdr:last-child{border-right:none}
 .tier-hdr.free{background:rgba(255,255,255,0.02)}
-.tier-hdr.paid{background:rgba(42,122,82,0.08)}
+.tier-hdr.paid{background:rgba(20,107,78,0.08)}
 .tier-badge{
   font-family:var(--mono);font-size:0.6rem;font-weight:600;
   letter-spacing:0.12em;text-transform:uppercase;
   padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;align-self:flex-start;
 }
 .badge-free{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
-.badge-paid{background:rgba(42,122,82,0.15);color:var(--gl);border:1px solid var(--border2)}
+.badge-paid{background:rgba(20,107,78,0.15);color:var(--gl);border:1px solid var(--border2)}
 .tier-hdr-name{font-family:var(--cond);font-size:1.3rem;font-weight:700}
 .tier-hdr-sub{font-size:0.78rem;color:var(--muted)}
 .tier-hdr-price{font-family:var(--mono);font-size:0.78rem;color:var(--green);margin-top:0.3rem}
@@ -140,7 +140,7 @@ nav{
 }
 .compare-cell:last-child{border-right:none}
 .compare-cell.free{background:transparent}
-.compare-cell.paid{background:rgba(42,122,82,0.04)}
+.compare-cell.paid{background:rgba(20,107,78,0.04)}
 .cell-value{font-size:0.85rem;color:var(--text);line-height:1.5}
 .cell-value.na{color:var(--muted);font-style:italic}
 .cell-value.locked{
@@ -178,18 +178,18 @@ nav{
   padding:0.18rem 0.5rem;border-radius:3px;
 }
 .panel-header .badge.free{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
-.panel-header .badge.paid{background:rgba(42,122,82,0.15);color:var(--gl);border:1px solid var(--border2)}
+.panel-header .badge.paid{background:rgba(20,107,78,0.15);color:var(--gl);border:1px solid var(--border2)}
 .panel-header h3{font-family:var(--cond);font-size:1.1rem;font-weight:700}
 .panel-body{padding:1.5rem}
 .panel.free-panel{background:var(--card)}
-.panel.paid-panel{background:linear-gradient(135deg,#0d1a11,#111f18);border-color:rgba(42,122,82,0.25)}
+.panel.paid-panel{background:linear-gradient(135deg,#0d1a11,#111f18);border-color:rgba(20,107,78,0.25)}
 
 /* Free score mock */
 .mock-score-ring-wrap{position:relative;width:120px;height:120px;margin:0 auto 1rem}
 .mock-score-ring{width:120px;height:120px;transform:rotate(-90deg)}
 .mock-score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.mock-score-num{font-family:var(--cond);font-size:2rem;font-weight:800;color:#c07818;line-height:1}
-.mock-verdict{font-family:var(--cond);font-size:1.1rem;font-weight:700;color:#c07818;text-align:center;margin-bottom:0.3rem}
+.mock-score-num{font-family:var(--cond);font-size:2rem;font-weight:800;color:#C9912E;line-height:1}
+.mock-verdict{font-family:var(--cond);font-size:1.1rem;font-weight:700;color:#C9912E;text-align:center;margin-bottom:0.3rem}
 .mock-summary{font-size:0.78rem;color:var(--muted);text-align:center;line-height:1.5;margin-bottom:1rem}
 .mock-pillar-bars{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem}
 .mock-bar-row{display:flex;align-items:center;gap:0.6rem}
@@ -206,9 +206,9 @@ nav{
   font-family:var(--mono);font-size:0.58rem;font-weight:600;
   padding:0.15rem 0.4rem;border-radius:3px;letter-spacing:0.06em;
 }
-.tag-crit{background:rgba(155,35,53,0.2);color:#e05060;border:1px solid rgba(155,35,53,0.3)}
-.tag-med{background:rgba(192,120,24,0.12);color:#c07818;border:1px solid rgba(192,120,24,0.3)}
-.tag-ok{background:rgba(42,122,82,0.1);color:var(--gl);border:1px solid var(--border2)}
+.tag-crit{background:rgba(158,27,35,0.2);color:#E0555F;border:1px solid rgba(158,27,35,0.3)}
+.tag-med{background:rgba(201,145,46,0.12);color:#C9912E;border:1px solid rgba(201,145,46,0.3)}
+.tag-ok{background:rgba(20,107,78,0.1);color:var(--gl);border:1px solid var(--border2)}
 .mock-finding{
   padding:0.5rem 0;border-bottom:1px solid var(--border);
   display:flex;gap:0.5rem;align-items:flex-start;
@@ -245,20 +245,20 @@ nav{
   font-family:var(--mono);font-size:0.62rem;color:var(--green);
   letter-spacing:0.08em;margin-top:0.2rem;
   border:1px solid var(--border2);padding:0.25rem 0.7rem;border-radius:4px;
-  text-decoration:none;background:rgba(42,122,82,0.08);
+  text-decoration:none;background:rgba(20,107,78,0.08);
 }
 
 /* Paid panel elements */
 .paid-metric-row{
   display:grid;grid-template-columns:repeat(3,1fr);
-  gap:0;border:1px solid rgba(42,122,82,0.2);
+  gap:0;border:1px solid rgba(20,107,78,0.2);
   border-radius:10px;overflow:hidden;margin-bottom:1rem;
 }
-.paid-metric{padding:0.9rem 1rem;border-right:1px solid rgba(42,122,82,0.15)}
+.paid-metric{padding:0.9rem 1rem;border-right:1px solid rgba(20,107,78,0.15)}
 .paid-metric:last-child{border-right:none}
 .paid-metric-lbl{font-family:var(--mono);font-size:0.58rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.3rem}
 .paid-metric-val{font-family:var(--cond);font-size:1.3rem;font-weight:700}
-.paid-metric-val.red{color:#e05060}
+.paid-metric-val.red{color:#E0555F}
 .paid-metric-val.amber{color:var(--amber)}
 .paid-metric-val.green{color:var(--gl)}
 .paid-metric-sub{font-family:var(--mono);font-size:0.6rem;color:var(--muted);margin-top:0.15rem}
@@ -297,9 +297,9 @@ nav{
   display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);font-size:0.62rem;font-weight:600;margin-top:1px;
 }
-.dot-red{background:rgba(155,35,53,0.2);color:#e05060;border:1px solid rgba(155,35,53,0.3)}
-.dot-amber{background:rgba(192,120,24,0.12);color:var(--amber);border:1px solid rgba(192,120,24,0.3)}
-.dot-green{background:rgba(42,122,82,0.12);color:var(--gl);border:1px solid var(--border2)}
+.dot-red{background:rgba(158,27,35,0.2);color:#E0555F;border:1px solid rgba(158,27,35,0.3)}
+.dot-amber{background:rgba(201,145,46,0.12);color:var(--amber);border:1px solid rgba(201,145,46,0.3)}
+.dot-green{background:rgba(20,107,78,0.12);color:var(--gl);border:1px solid var(--border2)}
 .roadmap-content{}
 .roadmap-window{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:0.15rem}
 .roadmap-items{font-size:0.78rem;color:var(--muted);line-height:1.6}
@@ -316,8 +316,8 @@ nav{
   border-radius:12px;padding:1.4rem 1.6rem;
 }
 .what-card.paid-what{
-  background:rgba(42,122,82,0.06);
-  border-color:rgba(42,122,82,0.25);
+  background:rgba(20,107,78,0.06);
+  border-color:rgba(20,107,78,0.25);
 }
 .what-card-header{
   display:flex;align-items:center;gap:0.7rem;
@@ -379,17 +379,17 @@ nav{
   padding:0 2rem 1.5rem;
 }
 .sample-label-inner{
-  background:rgba(192,120,24,0.08);
-  border:1px solid rgba(192,120,24,0.25);
+  background:rgba(201,145,46,0.08);
+  border:1px solid rgba(201,145,46,0.25);
   border-radius:10px;padding:1rem 1.5rem;
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;
 }
 .sample-label-text{
-  font-family:var(--mono);font-size:0.68rem;color:#c07818;letter-spacing:0.08em;
+  font-family:var(--mono);font-size:0.68rem;color:#C9912E;letter-spacing:0.08em;
 }
 .sample-label-cta{
   font-family:var(--mono);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;
-  color:#fff;background:#9b2335;border:none;padding:0.4rem 1rem;border-radius:3px;
+  color:#fff;background:#9E1B23;border:none;padding:0.4rem 1rem;border-radius:3px;
   cursor:pointer;white-space:nowrap;text-decoration:none;
 }
 .sample-label-cta:hover{background:#b82a40;color:#fff}
@@ -406,8 +406,8 @@ nav{
 }
 .report-hero::before{
   content:'';position:absolute;inset:0;
-  background-image:linear-gradient(rgba(42,122,82,0.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(42,122,82,0.04) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(20,107,78,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,107,78,0.04) 1px,transparent 1px);
   background-size:32px 32px;pointer-events:none;
 }
 .hero-label{
@@ -446,24 +446,24 @@ nav{
 /* PILLAR RINGS */
 .rings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
 .score-ring-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1rem;text-align:center;transition:border-color 0.2s}
-.score-ring-item:hover{border-color:rgba(42,122,82,0.3)}
+.score-ring-item:hover{border-color:rgba(20,107,78,0.3)}
 .ring-svg{width:100px;height:100px;margin:0 auto 0.7rem;display:block}
 .ring-label{font-size:0.7rem;color:var(--muted);line-height:1.4;margin-bottom:0.3rem}
 .ring-verdict{font-size:0.65rem;font-family:var(--mono);letter-spacing:0.06em;font-weight:600}
 
 /* DRS */
 .drs-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
-.drs-score-big{font-family:var(--cond);font-size:3.5rem;font-weight:800;line-height:1;color:#c07818}
-.drs-band{font-family:var(--mono);font-size:0.72rem;color:#c07818;letter-spacing:0.08em;margin-top:0.2rem}
+.drs-score-big{font-family:var(--cond);font-size:3.5rem;font-weight:800;line-height:1;color:#C9912E}
+.drs-band{font-family:var(--mono);font-size:0.72rem;color:#C9912E;letter-spacing:0.08em;margin-top:0.2rem}
 .drs-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-top:0.6rem;max-width:500px}
 
 /* FILTER */
 .filter-bar{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
 .filter-label{font-size:0.75rem;color:var(--muted);margin-right:0.2rem;font-family:var(--mono)}
 .filter-btn{padding:0.3rem 0.85rem;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:0.72rem;cursor:pointer;transition:all 0.15s;font-family:var(--mono);letter-spacing:0.04em}
-.filter-btn:hover,.filter-btn.active{border-color:var(--green);color:var(--gl);background:rgba(42,122,82,0.08)}
-.filter-btn[data-sev="Critical"].active{border-color:#9b2335;color:#e05060;background:rgba(155,35,53,0.1)}
-.filter-btn[data-sev="High"].active{border-color:#c07818;color:#d48b1a;background:rgba(192,120,24,0.1)}
+.filter-btn:hover,.filter-btn.active{border-color:var(--green);color:var(--gl);background:rgba(20,107,78,0.08)}
+.filter-btn[data-sev="Critical"].active{border-color:#9E1B23;color:#E0555F;background:rgba(158,27,35,0.1)}
+.filter-btn[data-sev="High"].active{border-color:#C9912E;color:#D4A53A;background:rgba(201,145,46,0.1)}
 
 /* FINDINGS TABLE */
 .findings-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
@@ -506,14 +506,14 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
 .signoff-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
 .signoff-field{border-bottom:1px solid rgba(255,255,255,0.12);padding-bottom:0.5rem;margin-top:1.5rem}
 .signoff-field-label{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:1.5rem}
-.disclaimer{font-size:0.72rem;color:var(--muted);line-height:1.6;background:rgba(155,35,53,0.06);border:1px solid rgba(155,35,53,0.2);border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}
-.disclaimer strong{color:#e05060}
+.disclaimer{font-size:0.72rem;color:var(--muted);line-height:1.6;background:rgba(158,27,35,0.06);border:1px solid rgba(158,27,35,0.2);border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}
+.disclaimer strong{color:#E0555F}
 
 /* FOOTER */
 .report-footer{margin:3rem 2.5rem 0;padding:1.5rem 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;color:var(--muted);flex-wrap:wrap;gap:0.5rem}
 .footer-brand{font-family:var(--mono);letter-spacing:0.06em;margin-bottom:0.2rem}
 .footer-brand em{color:var(--green);font-style:normal}
-.confidential{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:#9b2335;border:1px solid rgba(155,35,53,0.3);padding:0.25rem 0.6rem;border-radius:3px}
+.confidential{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:#9E1B23;border:1px solid rgba(158,27,35,0.3);padding:0.25rem 0.6rem;border-radius:3px}
 
 @media print{
   nav,.sample-label-inner,.filter-bar,.compare-section,.deep-section,.what-section,.mid-cta,.sample-label-bar,.page-hero{display:none}
@@ -754,7 +754,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
         <div class="mock-score-ring-wrap">
           <svg class="mock-score-ring" viewBox="0 0 120 120">
             <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
-            <circle cx="60" cy="60" r="52" fill="none" stroke="#c07818" stroke-width="10"
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#C9912E" stroke-width="10"
               stroke-linecap="round" stroke-dasharray="163 327"/>
           </svg>
           <div class="mock-score-center">
@@ -765,10 +765,10 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
         <div class="mock-verdict">Significant Gaps</div>
         <div class="mock-summary">Your organisation has some controls in place but significant gaps across multiple pillars — representing real operational and compliance risk.</div>
         <div class="mock-pillar-bars">
-          <div class="mock-bar-row"><div class="mock-bar-label">Systems</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:40%;background:#c07818"></div></div><div class="mock-bar-pct">40</div></div>
-          <div class="mock-bar-row"><div class="mock-bar-label">Infrastructure</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:30%;background:#9b2335"></div></div><div class="mock-bar-pct">30</div></div>
-          <div class="mock-bar-row"><div class="mock-bar-label">Network</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:50%;background:#c07818"></div></div><div class="mock-bar-pct">50</div></div>
-          <div class="mock-bar-row"><div class="mock-bar-label">Security</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:20%;background:#9b2335"></div></div><div class="mock-bar-pct">20</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Systems</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:40%;background:#C9912E"></div></div><div class="mock-bar-pct">40</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Infrastructure</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:30%;background:#9E1B23"></div></div><div class="mock-bar-pct">30</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Network</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:50%;background:#C9912E"></div></div><div class="mock-bar-pct">50</div></div>
+          <div class="mock-bar-row"><div class="mock-bar-label">Security</div><div class="mock-bar-track"><div class="mock-bar-fill" style="width:20%;background:#9E1B23"></div></div><div class="mock-bar-pct">20</div></div>
         </div>
         <div class="mock-findings-header">Critical findings <span class="mock-tag tag-crit">5 items</span></div>
         <div class="mock-finding"><span>🔴</span><div><strong>Infrastructure: No backup procedure</strong><span>This gap represents immediate operational risk and should be prioritised.</span></div></div>
@@ -780,9 +780,9 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
           <div class="locked-content">
             <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem">Estimated financial exposure</div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem">
-              <div style="background:rgba(155,35,53,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 4M</div><div style="font-size:0.65rem;color:var(--muted)">Breach cost</div></div>
-              <div style="background:rgba(192,120,24,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 2M</div><div style="font-size:0.65rem;color:var(--muted)">Ransomware</div></div>
-              <div style="background:rgba(192,120,24,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 5M</div><div style="font-size:0.65rem;color:var(--muted)">DPA fine</div></div>
+              <div style="background:rgba(158,27,35,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 4M</div><div style="font-size:0.65rem;color:var(--muted)">Breach cost</div></div>
+              <div style="background:rgba(201,145,46,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 2M</div><div style="font-size:0.65rem;color:var(--muted)">Ransomware</div></div>
+              <div style="background:rgba(201,145,46,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 5M</div><div style="font-size:0.65rem;color:var(--muted)">DPA fine</div></div>
             </div>
             <div style="margin-top:0.5rem;font-size:0.7rem;color:var(--muted)">Compliance score · Regulatory exposure · Remediation roadmap</div>
           </div>
@@ -829,15 +829,15 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
         <div style="background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:8px;padding:0.8rem 1rem;margin-bottom:0.8rem">
           <div class="compliance-row">
             <div><div class="compliance-framework">Kenya DPA 2019 (ODPC)</div><div class="compliance-status">3 of 8 controls met · 5 gaps</div></div>
-            <div class="compliance-score" style="color:#9b2335">38%</div>
+            <div class="compliance-score" style="color:#9E1B23">38%</div>
           </div>
           <div class="compliance-row">
             <div><div class="compliance-framework">SASRA Circular 2022</div><div class="compliance-status">4 of 10 controls met · 6 gaps</div></div>
-            <div class="compliance-score" style="color:#c07818">40%</div>
+            <div class="compliance-score" style="color:#C9912E">40%</div>
           </div>
           <div class="compliance-row">
             <div><div class="compliance-framework">CBK Cybersecurity 2019</div><div class="compliance-status">5 of 9 controls met · 4 gaps</div></div>
-            <div class="compliance-score" style="color:#c07818">56%</div>
+            <div class="compliance-score" style="color:#C9912E">56%</div>
           </div>
         </div>
 
@@ -918,7 +918,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
     </div>
     <div class="what-card paid-what">
       <div class="what-card-header">
-        <span class="badge paid" style="font-family:var(--mono);font-size:0.58rem;font-weight:600;padding:0.18rem 0.5rem;border-radius:3px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(42,122,82,0.15);color:var(--gl);border:1px solid var(--border2)">Health Scan · From KES 45,000</span>
+        <span class="badge paid" style="font-family:var(--mono);font-size:0.58rem;font-weight:600;padding:0.18rem 0.5rem;border-radius:3px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(20,107,78,0.15);color:var(--gl);border:1px solid var(--border2)">Health Scan · From KES 45,000</span>
         <div class="what-card-title">What you get when you engage</div>
       </div>
       <ul class="what-list">
@@ -1007,9 +1007,9 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
       <div class="exec-cell"><div class="exec-label">Lead consultant</div><div class="exec-value">Paul N. Nduati, CISSP · CASP+</div></div>
     </div>
     <div class="exec-row">
-      <div class="exec-score-card"><div class="exec-label">Overall posture</div><div class="exec-score" style="color:#c07818">42 / 100</div><div class="exec-verdict" style="color:#c07818">Significant Gaps</div></div>
-      <div class="exec-score-card"><div class="exec-label">Critical findings</div><div class="exec-score" style="color:#9b2335">4</div><div class="exec-verdict">Immediate action required</div></div>
-      <div class="exec-score-card"><div class="exec-label">High findings</div><div class="exec-score" style="color:#c07818">7</div><div class="exec-verdict">Remediate within 7 days</div></div>
+      <div class="exec-score-card"><div class="exec-label">Overall posture</div><div class="exec-score" style="color:#C9912E">42 / 100</div><div class="exec-verdict" style="color:#C9912E">Significant Gaps</div></div>
+      <div class="exec-score-card"><div class="exec-label">Critical findings</div><div class="exec-score" style="color:#9E1B23">4</div><div class="exec-verdict">Immediate action required</div></div>
+      <div class="exec-score-card"><div class="exec-label">High findings</div><div class="exec-score" style="color:#C9912E">7</div><div class="exec-verdict">Remediate within 7 days</div></div>
       <div class="exec-score-card"><div class="exec-label">Total findings</div><div class="exec-score">19</div><div class="exec-verdict">Across all pillars</div></div>
     </div>
   </div>
@@ -1019,16 +1019,16 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
 <div class="report-section" style="margin-top:2rem">
   <div class="section-header"><div class="section-label">Section 2</div><div class="section-title">S.I.N.S. pillar scores</div></div>
   <div class="rings-grid">
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#3a9b68" stroke-width="8" stroke-linecap="round" stroke-dasharray="198 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">70</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">I — Infrastructure Health</div><div class="ring-verdict" style="color:#3a9b68">Adequate</div></div>
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S¹ — Identity &amp; Access</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#9b2335" stroke-width="8" stroke-linecap="round" stroke-dasharray="57 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">20</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S² — Credential &amp; Kerberos</div><div class="ring-verdict" style="color:#9b2335">High Risk</div></div>
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="113 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">40</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S³ — Delegation Paths</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="141 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">50</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁴ — Persistence &amp; GPO</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#9b2335" stroke-width="8" stroke-linecap="round" stroke-dasharray="76 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">27</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁵ — Detection Readiness</div><div class="ring-verdict" style="color:#9b2335">High Risk</div></div>
-    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#c07818" stroke-width="8" stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text><text x="50" y="60" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁴+S⁵ — GPO Governance</div><div class="ring-verdict" style="color:#c07818">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#2E9E6B" stroke-width="8" stroke-linecap="round" stroke-dasharray="198 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">70</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">I — Infrastructure Health</div><div class="ring-verdict" style="color:#2E9E6B">Adequate</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#C9912E" stroke-width="8" stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S¹ — Identity &amp; Access</div><div class="ring-verdict" style="color:#C9912E">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#9E1B23" stroke-width="8" stroke-linecap="round" stroke-dasharray="57 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">20</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S² — Credential &amp; Kerberos</div><div class="ring-verdict" style="color:#9E1B23">High Risk</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#C9912E" stroke-width="8" stroke-linecap="round" stroke-dasharray="113 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">40</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S³ — Delegation Paths</div><div class="ring-verdict" style="color:#C9912E">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#C9912E" stroke-width="8" stroke-linecap="round" stroke-dasharray="141 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">50</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁴ — Persistence &amp; GPO</div><div class="ring-verdict" style="color:#C9912E">Gaps</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#9E1B23" stroke-width="8" stroke-linecap="round" stroke-dasharray="76 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">27</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁵ — Detection Readiness</div><div class="ring-verdict" style="color:#9E1B23">High Risk</div></div>
+    <div class="score-ring-item"><svg viewBox="0 0 100 100" class="ring-svg"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/><circle cx="50" cy="50" r="45" fill="none" stroke="#C9912E" stroke-width="8" stroke-linecap="round" stroke-dasharray="127 283" transform="rotate(-90 50 50)"/><text x="50" y="46" text-anchor="middle" fill="#e8ebe6" font-size="18" font-weight="700" font-family="monospace">45</text><text x="50" y="60" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">/ 100</text></svg><div class="ring-label">S⁴+S⁵ — GPO Governance</div><div class="ring-verdict" style="color:#C9912E">Gaps</div></div>
   </div>
   <div class="drs-card" style="margin-top:1rem">
-    <div class="drs-dial"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="#c07818" stroke-width="10" stroke-linecap="round" stroke-dasharray="101 314" transform="rotate(-90 60 60)"/><text x="60" y="56" text-anchor="middle" fill="#e8ebe6" font-size="20" font-weight="700" font-family="monospace">32</text><text x="60" y="70" text-anchor="middle" fill="#7a8a78" font-size="9" font-family="sans-serif">DRS / 100</text></svg></div>
+    <div class="drs-dial"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="#C9912E" stroke-width="10" stroke-linecap="round" stroke-dasharray="101 314" transform="rotate(-90 60 60)"/><text x="60" y="56" text-anchor="middle" fill="#e8ebe6" font-size="20" font-weight="700" font-family="monospace">32</text><text x="60" y="70" text-anchor="middle" fill="#9AA2AA" font-size="9" font-family="sans-serif">DRS / 100</text></svg></div>
     <div class="drs-info">
       <div class="exec-label" style="margin-bottom:0.3rem">Detection Readiness Score (DRS)</div>
       <div class="drs-score-big">32 / 100</div>
@@ -1054,8 +1054,8 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
     <table id="findings-table">
       <thead><tr><th>Severity</th><th>Check ID</th><th>Finding</th><th>Pillar</th><th>Affected</th><th>Date</th></tr></thead>
       <tbody id="findings-tbody">
-        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd0')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S2-KERB-001</code></td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9E1B23;background:rgba(158,27,35,0.1)" onclick="toggleDetail('fd0')">
+          <td><span class="sev-badge" style="background:#9E1B23">🔴 Critical</span></td><td class="check-cell"><code>S2-KERB-001</code></td>
           <td class="title-cell">Kerberoastable service accounts detected <span class="expand-hint">▼ expand</span></td>
           <td class="pillar-cell">S² — Credential</td><td class="count-cell">6</td><td class="date-cell">2026-05-15</td>
         </tr>
@@ -1068,8 +1068,8 @@ svc_reports         HTTP/reports.alpha-inv.co.ke     945 days
 helpdesk_admin      HTTP/helpdesk.alpha-inv.co.ke    388 days
 svc_monitoring      WSMAN/mon01.alpha-inv.co.ke      721 days</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Audit each SPN — remove any that are not actively required.<br>2. Migrate all service accounts to Group Managed Service Accounts (gMSA).<br>3. For accounts that cannot use gMSA: reset passwords to 25+ character random strings immediately and enforce AES-only Kerberos encryption.<br>4. Enable "Protected Users" security group for all service accounts where possible.<br><br>Priority order: svc_sql and svc_backup first (oldest passwords, highest-privilege services).</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1558.003 · CIS Control 5.4</span><span>Detected: 2026-05-15 09:14:22</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd1')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S2-ASRP-001</code></td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9E1B23;background:rgba(158,27,35,0.1)" onclick="toggleDetail('fd1')">
+          <td><span class="sev-badge" style="background:#9E1B23">🔴 Critical</span></td><td class="check-cell"><code>S2-ASRP-001</code></td>
           <td class="title-cell">AS-REP roastable accounts — pre-auth disabled <span class="expand-hint">▼ expand</span></td>
           <td class="pillar-cell">S² — Credential</td><td class="count-cell">3</td><td class="date-cell">2026-05-15</td>
         </tr>
@@ -1079,8 +1079,8 @@ legacy_app_svc      True      2023-11-04
 testuser_old        True      2022-08-17
 api_connector       True      2024-02-09</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Enable Kerberos pre-authentication on all 3 accounts immediately.<br>2. Reset passwords to 25+ character random strings.<br>3. Disable legacy_app_svc and testuser_old if no longer required.<br><br>This can be remediated in under 30 minutes.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1558.004 · MS-KILE RFC 4120</span><span>Detected: 2026-05-15 09:16:07</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd2')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S1-PRIV-003</code></td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9E1B23;background:rgba(158,27,35,0.1)" onclick="toggleDetail('fd2')">
+          <td><span class="sev-badge" style="background:#9E1B23">🔴 Critical</span></td><td class="check-cell"><code>S1-PRIV-003</code></td>
           <td class="title-cell">Domain Admins group contains 11 members — excessive privilege <span class="expand-hint">▼ expand</span></td>
           <td class="pillar-cell">S¹ — Identity</td><td class="count-cell">11</td><td class="date-cell">2026-05-15</td>
         </tr>
@@ -1091,8 +1091,8 @@ legacy_admin, test_admin, mary.infra, peter.sec
 
 Stale (>90 days no logon): svc_deploy, legacy_admin, test_admin</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Remove all 11 accounts from Domain Admins.<br>2. Re-add only 2–3 named individuals who require DA privileges for day-to-day operations.<br>3. Disable svc_deploy, legacy_admin, and test_admin immediately — investigate before deletion.<br>4. Use just-in-time (JIT) privilege escalation for temporary DA access via PAM tools.<br>5. Enable DA logon auditing (Event ID 4672).</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1078.002 · CIS Control 5.4 · MS Security Baseline</span><span>Detected: 2026-05-15 10:02:14</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9b2335;background:rgba(155,35,53,0.1)" onclick="toggleDetail('fd3')">
-          <td><span class="sev-badge" style="background:#9b2335">🔴 Critical</span></td><td class="check-cell"><code>S5-AUD-001</code></td>
+        <tr class="finding-row" data-sev="Critical" style="border-left:3px solid #9E1B23;background:rgba(158,27,35,0.1)" onclick="toggleDetail('fd3')">
+          <td><span class="sev-badge" style="background:#9E1B23">🔴 Critical</span></td><td class="check-cell"><code>S5-AUD-001</code></td>
           <td class="title-cell">Advanced audit policy not configured — no privileged activity logging <span class="expand-hint">▼ expand</span></td>
           <td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td>
         </tr>
@@ -1104,15 +1104,15 @@ Logon/Logoff       : Not Configured
 Privilege Use      : Not Configured
 Policy Change      : Not Configured</pre></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Deploy Advanced Audit Policy via GPO (Computer Config → Windows Settings → Security Settings → Advanced Audit Policy).<br>2. Enable at minimum: Account Logon (Success+Failure), Account Management (Success), Privilege Use (Success), DS Access (Success), Policy Change (Success+Failure).<br>3. Set Security event log to minimum 512 MB and configure log forwarding to SIEM or centralised collector.<br>4. Required for SASRA and CBK compliance. Estimated effort: 4 hours.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1562.002 · CIS Control 8 · SASRA Circular 2022</span><span>Detected: 2026-05-16 08:45:00</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="High" style="border-left:3px solid #c07818" onclick="toggleDetail('fd4')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td><td class="check-cell"><code>S1-STALE-001</code></td>
+        <tr class="finding-row" data-sev="High" style="border-left:3px solid #C9912E" onclick="toggleDetail('fd4')">
+          <td><span class="sev-badge" style="background:#C9912E">🟠 High</span></td><td class="check-cell"><code>S1-STALE-001</code></td>
           <td class="title-cell">47 enabled user accounts — no logon in 90+ days <span class="expand-hint">▼ expand</span></td>
           <td class="pillar-cell">S¹ — Identity</td><td class="count-cell">47</td><td class="date-cell">2026-05-15</td>
         </tr>
         <tr class="finding-detail" id="fd4" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">47 enabled Active Directory accounts have not logged on in over 90 days. Stale accounts represent a persistent attack surface — they are valid credential targets for password spraying, credential stuffing, and Kerberoasting. Former employees, contractors, and decommissioned service accounts are common causes.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Export the list and cross-reference with HR active employee records.<br>2. Disable (do not delete) all accounts with no business justification within 7 days.<br>3. Review and disable/delete within 30 days after confirming no service dependency.<br>4. Implement a quarterly stale account review process. Estimated effort: 3–4 hours.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1078 · CIS Control 5.3 · Kenya DPA — Data Minimisation</span><span>Detected: 2026-05-15 09:30:00</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="High" style="border-left:3px solid #c07818" onclick="toggleDetail('fd5')">
-          <td><span class="sev-badge" style="background:#c07818">🟠 High</span></td><td class="check-cell"><code>S2-PWD-001</code></td>
+        <tr class="finding-row" data-sev="High" style="border-left:3px solid #C9912E" onclick="toggleDetail('fd5')">
+          <td><span class="sev-badge" style="background:#C9912E">🟠 High</span></td><td class="check-cell"><code>S2-PWD-001</code></td>
           <td class="title-cell">Default domain password policy — minimum 7 characters, no complexity <span class="expand-hint">▼ expand</span></td>
           <td class="pillar-cell">S² — Credential</td><td class="count-cell">All users</td><td class="date-cell">2026-05-15</td>
         </tr>
@@ -1148,10 +1148,10 @@ Reversible Enc.   : Disabled</pre></div></div><div><div class="detail-section"><
         <tr class="finding-row" data-sev="Medium" onclick="toggleDetail('fd10')"><td><span class="sev-badge" style="background:#555">🟡 Medium</span></td><td class="check-cell"><code>S5-EVTLOG-001</code></td><td class="title-cell">Security event log size insufficient — 20 MB on both DCs <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td></tr>
         <tr class="finding-detail" id="fd10" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">The Security event log on both domain controllers is configured to 20 MB with "overwrite events as needed". At current event volumes, logs are being overwritten within 24–48 hours. This makes forensic investigation of incidents impossible and violates SASRA record-keeping requirements.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Set Security log size to minimum 1 GB on each DC via GPO (Computer Config → Windows Settings → Security Settings → Event Log).<br>2. Configure log forwarding to a centralised SIEM or Windows Event Collector immediately.<br>3. Retain security logs for minimum 12 months per SASRA requirements.<br>Estimated effort: 1 hour.</div></div></div></div><div class="detail-footer"><span>Reference: SASRA Circular 2022 · CIS Control 8.2 · NIST SP 800-92</span><span>Detected: 2026-05-16 09:00:00</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="Low" onclick="toggleDetail('fd11')"><td><span class="sev-badge" style="background:#1e5a3c">ℹ Low</span></td><td class="check-cell"><code>S1-PRIV-004</code></td><td class="title-cell">Protected Users security group not utilised for privileged accounts <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S¹ — Identity</td><td class="count-cell">All DAs</td><td class="date-cell">2026-05-15</td></tr>
+        <tr class="finding-row" data-sev="Low" onclick="toggleDetail('fd11')"><td><span class="sev-badge" style="background:#0E4D38">ℹ Low</span></td><td class="check-cell"><code>S1-PRIV-004</code></td><td class="title-cell">Protected Users security group not utilised for privileged accounts <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S¹ — Identity</td><td class="count-cell">All DAs</td><td class="date-cell">2026-05-15</td></tr>
         <tr class="finding-detail" id="fd11" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">No accounts are members of the Protected Users security group. This group prevents: NTLM authentication, DES and RC4 Kerberos encryption, unconstrained delegation use, and TGT renewal beyond 4 hours — significantly hardening privileged accounts against credential theft.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">Add all Domain Admins and sensitive service accounts to the Protected Users security group. Test in a lab environment first — Protected Users restrictions may break legacy applications that rely on NTLM or RC4 Kerberos. Estimated effort: 2–4 hours including testing.</div></div></div></div><div class="detail-footer"><span>Reference: MS KB2871997 · MITRE ATT&CK T1558</span><span>Detected: 2026-05-15 11:00:00</span></div></div></td></tr>
 
-        <tr class="finding-row" data-sev="Low" onclick="toggleDetail('fd12')"><td><span class="sev-badge" style="background:#1e5a3c">ℹ Low</span></td><td class="check-cell"><code>S5-LDAP-001</code></td><td class="title-cell">LDAP signing not required — LDAP relay possible <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td></tr>
+        <tr class="finding-row" data-sev="Low" onclick="toggleDetail('fd12')"><td><span class="sev-badge" style="background:#0E4D38">ℹ Low</span></td><td class="check-cell"><code>S5-LDAP-001</code></td><td class="title-cell">LDAP signing not required — LDAP relay possible <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S⁵ — Detection</td><td class="count-cell">2 DCs</td><td class="date-cell">2026-05-16</td></tr>
         <tr class="finding-detail" id="fd12" style="display:none"><td colspan="6"><div class="detail-block"><div class="detail-cols"><div><div class="detail-section"><div class="detail-label">Description</div><div class="detail-text">LDAP signing is not required on the domain controllers. This enables LDAP relay attacks where an attacker with network access can relay LDAP authentication to the DC to perform privileged operations, including adding computer objects to the domain or modifying ACLs.</div></div></div><div><div class="detail-section"><div class="detail-label">Remediation</div><div class="detail-text remediation-text">1. Set "Domain controller: LDAP server signing requirements" to "Require signing" via GPO.<br>2. Set "Network security: LDAP client signing requirements" to "Require signing" on all domain members.<br>3. Test all LDAP-dependent applications before enforcing — some legacy apps use unsigned LDAP.<br>Estimated effort: 2–3 hours including application testing.</div></div></div></div><div class="detail-footer"><span>Reference: MITRE ATT&CK T1557 · MS ADV190023</span><span>Detected: 2026-05-16 09:30:00</span></div></div></td></tr>
 
         <tr class="finding-row" data-sev="Info" onclick="toggleDetail('fd13')"><td><span class="sev-badge" style="background:#333;color:var(--muted)">ℹ Info</span></td><td class="check-cell"><code>S1-ASSET-001</code></td><td class="title-cell">19 computer objects inactive for 180+ days — clean-up recommended <span class="expand-hint">▼ expand</span></td><td class="pillar-cell">S¹ — Identity</td><td class="count-cell">19</td><td class="date-cell">2026-05-15</td></tr>
@@ -1166,7 +1166,7 @@ Reversible Enc.   : Disabled</pre></div></div><div><div class="detail-section"><
   <div class="section-header"><div class="section-label">Section 4</div><div class="section-title">Remediation roadmap</div></div>
   <div class="roadmap-grid">
     <div class="roadmap-card">
-      <div class="roadmap-window" style="color:#9b2335">Phase 1 · Days 0–7 · Critical</div>
+      <div class="roadmap-window" style="color:#9E1B23">Phase 1 · Days 0–7 · Critical</div>
       <h4>Immediate Actions</h4>
       <ul class="roadmap-list">
         <li>Enable Kerberos pre-auth on 3 AS-REP accounts</li>
@@ -1176,7 +1176,7 @@ Reversible Enc.   : Disabled</pre></div></div><div><div class="detail-section"><
       </ul>
     </div>
     <div class="roadmap-card">
-      <div class="roadmap-window" style="color:#c07818">Phase 2 · Days 8–30 · High</div>
+      <div class="roadmap-window" style="color:#C9912E">Phase 2 · Days 8–30 · High</div>
       <h4>Priority Remediation</h4>
       <ul class="roadmap-list">
         <li>Migrate service accounts to gMSA</li>
@@ -1188,7 +1188,7 @@ Reversible Enc.   : Disabled</pre></div></div><div><div class="detail-section"><
       </ul>
     </div>
     <div class="roadmap-card">
-      <div class="roadmap-window" style="color:#3a9b68">Phase 3 · Days 31–90 · Systematic</div>
+      <div class="roadmap-window" style="color:#2E9E6B">Phase 3 · Days 31–90 · Systematic</div>
       <h4>Structural Improvements</h4>
       <ul class="roadmap-list">
         <li>Remove unconstrained delegation — APP01, LEGACY-SRV</li>
