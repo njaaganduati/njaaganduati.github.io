@@ -11,19 +11,19 @@
 <style>
 /* ─── TOKENS ─────────────────────────────────────────────── */
 :root {
-  --green:   #2a7a52;
-  --green-l: #3a9b68;
-  --green-d: #1e5a3c;
-  --dark:    #111310;
-  --dark2:   #1a1d19;
-  --red:     #9b2335;
-  --amber:   #c07818;
-  --bg:      #0e100d;
-  --card:    #151814;
+  --green:   #146B4E;
+  --green-l: #2E9E6B;
+  --green-d: #0E4D38;
+  --dark:    #111315;
+  --dark2:   #1F2327;
+  --red:     #9E1B23;
+  --amber:   #C9912E;
+  --bg:      #111315;
+  --card:    #181B1E;
   --border:  rgba(255,255,255,0.07);
-  --border2: rgba(42,122,82,0.3);
+  --border2: rgba(20,107,78,0.3);
   --text:    #e8ebe6;
-  --muted:   #7a8a78;
+  --muted:   #9AA2AA;
   --mono:    'IBM Plex Mono', monospace;
   --cond:    'Barlow Condensed', sans-serif;
   --body:    'Barlow', sans-serif;
@@ -46,8 +46,8 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(42,122,82,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42,122,82,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(20,107,78,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,107,78,0.03) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
@@ -140,7 +140,7 @@ nav {
   height: 100%; background: var(--green);
   border-radius: 2px;
   transition: width 0.4s ease;
-  box-shadow: 0 0 12px rgba(42,122,82,0.6);
+  box-shadow: 0 0 12px rgba(20,107,78,0.6);
 }
 .progress-labels {
   display: flex; justify-content: space-between;
@@ -230,19 +230,19 @@ nav {
 .opt:hover { border-color: var(--green); color: var(--text); }
 .opt.selected-yes {
   border-color: var(--green);
-  background: rgba(42,122,82,0.12);
+  background: rgba(20,107,78,0.12);
   color: var(--green);
   font-weight: 600;
 }
 .opt.selected-partial {
   border-color: var(--amber);
-  background: rgba(192,120,24,0.1);
+  background: rgba(201,145,46,0.1);
   color: var(--amber);
   font-weight: 600;
 }
 .opt.selected-no {
   border-color: var(--red);
-  background: rgba(155,35,53,0.1);
+  background: rgba(158,27,35,0.1);
   color: #d44;
   font-weight: 600;
 }
@@ -314,7 +314,7 @@ nav {
 .form-group input:focus, .form-group select:focus {
   border-color: var(--green);
 }
-.form-group select option { background: #1a1d19; }
+.form-group select option { background: #1F2327; }
 .gate-cta {
   width: 100%; margin-top: 0.5rem;
   padding: 0.9rem; font-size: 1rem;
@@ -437,9 +437,9 @@ nav {
   padding: 0.2rem 0.5rem; border-radius: 3px;
   font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
 }
-.tag-critical { background: rgba(155,35,53,0.2); color: #e05; border: 1px solid rgba(155,35,53,0.3); }
-.tag-medium { background: rgba(192,120,24,0.15); color: var(--amber); border: 1px solid rgba(192,120,24,0.3); }
-.tag-low { background: rgba(42,122,82,0.15); color: var(--green); border: 1px solid var(--border2); }
+.tag-critical { background: rgba(158,27,35,0.2); color: #e05; border: 1px solid rgba(158,27,35,0.3); }
+.tag-medium { background: rgba(201,145,46,0.15); color: var(--amber); border: 1px solid rgba(201,145,46,0.3); }
+.tag-low { background: rgba(20,107,78,0.15); color: var(--green); border: 1px solid var(--border2); }
 .finding-row {
   padding: 0.9rem 1.5rem;
   border-bottom: 1px solid var(--border);
@@ -477,7 +477,7 @@ nav {
   text-decoration: none; border: none; cursor: pointer;
   transition: all 0.2s;
 }
-.btn-cta-large:hover { background: var(--green-l); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(42,122,82,0.3); }
+.btn-cta-large:hover { background: var(--green-l); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(20,107,78,0.3); }
 .cta-sub {
   margin-top: 0.8rem; font-size: 0.8rem; color: var(--muted);
 }
@@ -539,10 +539,10 @@ nav {
 
 /* ════ RETACH LIGHT THEME — docs/CRQ aligned (light surface · green nav · dark instruments) ════ */
 :root{
-  --green:#116b4f;--green-l:#2a7a52;--green-d:#0c4a36;
-  --red:#9b2335;--amber:#b5740f;
+  --green:#116b4f;--green-l:#146B4E;--green-d:#0c4a36;
+  --red:#9E1B23;--amber:#C9912E;
   --bg:#eef2ee;--card:#ffffff;--dark2:#e7ece7;
-  --border:rgba(16,40,28,0.12);--border2:rgba(42,122,82,0.28);
+  --border:rgba(16,40,28,0.12);--border2:rgba(20,107,78,0.28);
   --text:#10231a;--muted:#566b5d;
 }
 body{background:var(--bg);color:var(--text)}
@@ -1083,7 +1083,7 @@ function buildResults(name, org, type) {
   const circumference = 2 * Math.PI * 70; // ≈ 439.8
   const offset = circumference * (1 - overall / 100);
   const ringEl = document.getElementById('ring-fill');
-  const color = overall >= 70 ? '#2a7a52' : overall >= 40 ? '#c07818' : '#9b2335';
+  const color = overall >= 70 ? '#146B4E' : overall >= 40 ? '#C9912E' : '#9E1B23';
   ringEl.style.stroke = color;
 
   setTimeout(() => {
@@ -1134,7 +1134,7 @@ function buildResults(name, org, type) {
   pillarGrid.innerHTML = '';
   sections.forEach(sec => {
     const pct = Math.round(pillarScores[sec] * 2); // 0-100
-    const barColor = pct >= 70 ? '#2a7a52' : pct >= 40 ? '#c07818' : '#9b2335';
+    const barColor = pct >= 70 ? '#146B4E' : pct >= 40 ? '#C9912E' : '#9E1B23';
     pillarGrid.innerHTML += `
       <div class="pillar-score-card">
         <div class="psc-header">
