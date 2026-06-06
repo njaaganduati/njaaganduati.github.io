@@ -11,23 +11,23 @@
 <style>
 /* ─── TOKENS ──────────────────────────────────────────────────────── */
 :root {
-  --green:   #2a7a52;
-  --green-l: #3a9b68;
-  --green-d: #1e5a3c;
-  --dark:    #111310;
-  --dark2:   #1a1d19;
-  --red:     #9b2335;
-  --red-l:   rgba(155,35,53,0.15);
-  --amber:   #c07818;
-  --amber-l: rgba(192,120,24,0.12);
+  --green:   #146B4E;
+  --green-l: #2E9E6B;
+  --green-d: #0E4D38;
+  --dark:    #111315;
+  --dark2:   #1F2327;
+  --red:     #9E1B23;
+  --red-l:   rgba(158,27,35,0.15);
+  --amber:   #C9912E;
+  --amber-l: rgba(201,145,46,0.12);
   --blue:    #1a5f8a;
-  --bg:      #0e100d;
-  --card:    #141713;
-  --card2:   #181c17;
+  --bg:      #111315;
+  --card:    #181B1E;
+  --card2:   #1F2327;
   --border:  rgba(255,255,255,0.07);
-  --border2: rgba(42,122,82,0.25);
+  --border2: rgba(20,107,78,0.25);
   --text:    #e8ebe6;
-  --muted:   #7a8a78;
+  --muted:   #9AA2AA;
   --mono:    'IBM Plex Mono', monospace;
   --cond:    'Barlow Condensed', sans-serif;
   --body:    'Barlow', sans-serif;
@@ -47,8 +47,8 @@ body{
 body::before{
   content:'';position:fixed;inset:0;
   background-image:
-    linear-gradient(rgba(42,122,82,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(42,122,82,0.025) 1px,transparent 1px);
+    linear-gradient(rgba(20,107,78,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,107,78,0.025) 1px,transparent 1px);
   background-size:40px 40px;
   pointer-events:none;z-index:0;
 }
@@ -109,11 +109,11 @@ nav{
   border:2px dashed var(--border2);border-radius:16px;
   padding:2.5rem 2rem;cursor:pointer;
   transition:border-color 0.2s,background 0.2s;
-  background:rgba(42,122,82,0.03);
+  background:rgba(20,107,78,0.03);
   position:relative;
 }
 .drop-zone:hover,.drop-zone.drag-over{
-  border-color:var(--green);background:rgba(42,122,82,0.07);
+  border-color:var(--green);background:rgba(20,107,78,0.07);
 }
 .drop-icon{
   width:48px;height:48px;margin:0 auto 1rem;
@@ -160,8 +160,8 @@ nav{
   transform:translateX(-50%);z-index:300;
   background:#1a0a0d;border:1px solid var(--red);
   border-radius:8px;padding:0.8rem 1.2rem;
-  font-size:0.82rem;color:#e05060;max-width:480px;text-align:center;
-  box-shadow:0 4px 24px rgba(155,35,53,0.3);
+  font-size:0.82rem;color:#E0555F;max-width:480px;text-align:center;
+  box-shadow:0 4px 24px rgba(158,27,35,0.3);
 }
 
 /* ─── DASHBOARD ───────────────────────────────────────────────────── */
@@ -293,10 +293,10 @@ nav{
   color:var(--muted);font-size:0.72rem;cursor:pointer;
   transition:all 0.12s;font-family:var(--body);
 }
-.filter-btn:hover{border-color:var(--green);color:var(--green);background:rgba(42,122,82,0.06)}
-.filter-btn.active{border-color:var(--green);color:var(--green);background:rgba(42,122,82,0.1)}
-.filter-btn.f-crit.active{border-color:var(--red);color:#e05060;background:var(--red-l)}
-.filter-btn.f-high.active{border-color:var(--amber);color:#d48b1a;background:var(--amber-l)}
+.filter-btn:hover{border-color:var(--green);color:var(--green);background:rgba(20,107,78,0.06)}
+.filter-btn.active{border-color:var(--green);color:var(--green);background:rgba(20,107,78,0.1)}
+.filter-btn.f-crit.active{border-color:var(--red);color:#E0555F;background:var(--red-l)}
+.filter-btn.f-high.active{border-color:var(--amber);color:#D4A53A;background:var(--amber-l)}
 
 .search-input{
   margin-left:auto;padding:0.3rem 0.8rem;border-radius:6px;
@@ -330,17 +330,17 @@ th{
 }
 .finding-row:last-child{border-bottom:none}
 .finding-row:hover{background:rgba(255,255,255,0.02)}
-.finding-row.expanded{background:rgba(42,122,82,0.04)}
+.finding-row.expanded{background:rgba(20,107,78,0.04)}
 td{padding:0.6rem 0.85rem;vertical-align:middle}
 .sev-pill{
   display:inline-flex;align-items:center;gap:0.3rem;
   font-size:0.62rem;font-weight:600;padding:0.18rem 0.5rem;
   border-radius:3px;white-space:nowrap;font-family:var(--mono);
 }
-.pill-Critical{background:var(--red-l);color:#e05060;border:1px solid rgba(155,35,53,0.3)}
-.pill-High    {background:var(--amber-l);color:#d48b1a;border:1px solid rgba(192,120,24,0.3)}
-.pill-Medium  {background:rgba(58,155,104,0.1);color:#3a9b68;border:1px solid rgba(42,122,82,0.25)}
-.pill-Low     {background:rgba(42,122,82,0.07);color:#2a7a52;border:1px solid rgba(42,122,82,0.15)}
+.pill-Critical{background:var(--red-l);color:#E0555F;border:1px solid rgba(158,27,35,0.3)}
+.pill-High    {background:var(--amber-l);color:#D4A53A;border:1px solid rgba(201,145,46,0.3)}
+.pill-Medium  {background:rgba(46,158,107,0.1);color:#2E9E6B;border:1px solid rgba(20,107,78,0.25)}
+.pill-Low     {background:rgba(20,107,78,0.07);color:#146B4E;border:1px solid rgba(20,107,78,0.15)}
 .pill-Info    {background:rgba(255,255,255,0.03);color:var(--muted);border:1px solid var(--border)}
 
 .check-id{font-family:var(--mono);font-size:0.68rem;color:var(--muted)}
@@ -425,7 +425,7 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
   background: rgba(14,16,13,0.95);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(42,122,82,0.2);
+  border-bottom: 1px solid rgba(20,107,78,0.2);
   padding: 0 2rem;
   height: 56px;
   display: flex; align-items: center; justify-content: space-between;
@@ -437,7 +437,7 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
   color: #e8ebe6; text-decoration: none;
   letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
 }
-.sins-nav__brand span { color: #2a7a52; }
+.sins-nav__brand span { color: #146B4E; }
 .sins-nav__tools {
   display: flex; align-items: center; gap: 0;
   overflow-x: auto; scrollbar-width: none;
@@ -449,15 +449,15 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.7rem; font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase;
-  color: #7a8a78; text-decoration: none;
+  color: #9AA2AA; text-decoration: none;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
   transition: color 0.18s, border-color 0.18s;
 }
 .sins-nav__tool:hover { color: #e8ebe6; }
 .sins-nav__tool.active {
-  color: #3a9b68;
-  border-bottom-color: #2a7a52;
+  color: #2E9E6B;
+  border-bottom-color: #146B4E;
 }
 .sins-nav__right {
   display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
@@ -466,13 +466,13 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.68rem; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: #2a7a52; text-decoration: none;
-  border: 1px solid rgba(42,122,82,0.5);
+  color: #146B4E; text-decoration: none;
+  border: 1px solid rgba(20,107,78,0.5);
   padding: 0.35rem 0.85rem; border-radius: 3px;
   white-space: nowrap;
   transition: background 0.18s, color 0.18s;
 }
-.sins-nav__cta:hover { background: rgba(42,122,82,0.12); color: #3a9b68; }
+.sins-nav__cta:hover { background: rgba(20,107,78,0.12); color: #2E9E6B; }
 .sins-nav__burger {
   display: none; flex-direction: column;
   justify-content: center; align-items: center;
@@ -481,7 +481,7 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
 }
 .sins-nav__burger span {
   display: block; width: 18px; height: 2px;
-  background: #7a8a78; border-radius: 2px;
+  background: #9AA2AA; border-radius: 2px;
   transition: transform 0.2s, opacity 0.2s;
 }
 .sins-nav__burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
@@ -493,19 +493,19 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
     display: none; position: absolute;
     top: 56px; left: 0; right: 0;
     background: rgba(14,16,13,0.98);
-    border-bottom: 1px solid rgba(42,122,82,0.2);
+    border-bottom: 1px solid rgba(20,107,78,0.2);
     flex-direction: column; gap: 0; padding: 0.5rem 0;
   }
   .sins-nav__tools.open { display: flex; }
   .sins-nav__tool { height: 44px; padding: 0 1.5rem; border-bottom: none; border-left: 2px solid transparent; font-size: 0.72rem; }
-  .sins-nav__tool.active { border-left-color: #2a7a52; border-bottom-color: transparent; }
+  .sins-nav__tool.active { border-left-color: #146B4E; border-bottom-color: transparent; }
   .sins-nav__cta { display: none; }
   .sins-nav__burger { display: flex; }
 }
 /* ─────────────────────────────────────────────────────────────── */
 
 /* ── CRQ Bridge Card ── */
-.crq-bridge{background:rgba(42,122,82,0.06);border:1px solid rgba(42,122,82,0.25);border-radius:10px;padding:1.25rem 1.4rem;margin:1.5rem auto;max-width:900px;display:none}
+.crq-bridge{background:rgba(20,107,78,0.06);border:1px solid rgba(20,107,78,0.25);border-radius:10px;padding:1.25rem 1.4rem;margin:1.5rem auto;max-width:900px;display:none}
 .crq-bridge.active{display:block}
 .crq-bridge-eyebrow{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.5rem}
 .crq-bridge-title{font-family:var(--cond);font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:0.35rem}
@@ -515,10 +515,10 @@ td{padding:0.6rem 0.85rem;vertical-align:middle}
 .crq-bm{background:var(--surface,#1a1d1a);border:1px solid var(--border,rgba(255,255,255,0.08));border-radius:7px;padding:0.6rem 0.75rem;text-align:center}
 .crq-bm-lbl{font-family:var(--mono);font-size:0.55rem;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.22rem}
 .crq-bm-val{font-family:var(--cond);font-size:1.15rem;font-weight:700}
-.crq-bm-val.crit{color:#e05060} .crq-bm-val.warn{color:#c07818} .crq-bm-val.ok{color:#2a7a52}
+.crq-bm-val.crit{color:#E0555F} .crq-bm-val.warn{color:#C9912E} .crq-bm-val.ok{color:#146B4E}
 .crq-bridge-actions{display:flex;gap:0.65rem;flex-wrap:wrap;align-items:center}
-.crq-bridge-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;background:#2a7a52;color:#fff;font-family:var(--mono);font-size:0.68rem;font-weight:600;letter-spacing:0.05em;border-radius:6px;text-decoration:none;transition:background 0.15s;white-space:nowrap}
-.crq-bridge-btn:hover{background:#3a9b68}
+.crq-bridge-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;background:#146B4E;color:#fff;font-family:var(--mono);font-size:0.68rem;font-weight:600;letter-spacing:0.05em;border-radius:6px;text-decoration:none;transition:background 0.15s;white-space:nowrap}
+.crq-bridge-btn:hover{background:#2E9E6B}
 .crq-bridge-note{font-size:0.65rem;color:var(--muted);line-height:1.6}
 
 .sins-nav__brand{display:flex;align-items:center;gap:.55rem}
@@ -706,13 +706,13 @@ const SEV_ORDER  = { Critical:0, High:1, Medium:2, Low:3, Info:4 };
 const SEV_EMOJI  = { Critical:'🔴', High:'🟠', Medium:'🟡', Low:'🟢', Info:'⚪' };
 
 const PILLAR_META = {
-  I:   { label:'Infrastructure', color:'#3a9b68' },
-  S1:  { label:'Identity',       color:'#2a7a52' },
-  S2:  { label:'Credentials',    color:'#1e5a3c' },
-  S3:  { label:'Delegation',     color:'#2a7a52' },
-  S4:  { label:'Persistence',    color:'#9b2335' },
-  GPO: { label:'GPO Governance', color:'#c07818' },
-  S5:  { label:'Detection',      color:'#3a9b68' },
+  I:   { label:'Infrastructure', color:'#2E9E6B' },
+  S1:  { label:'Identity',       color:'#146B4E' },
+  S2:  { label:'Credentials',    color:'#0E4D38' },
+  S3:  { label:'Delegation',     color:'#146B4E' },
+  S4:  { label:'Persistence',    color:'#9E1B23' },
+  GPO: { label:'GPO Governance', color:'#C9912E' },
+  S5:  { label:'Detection',      color:'#2E9E6B' },
 };
 
 // Key used in pillarScores → pilar meta key
@@ -916,17 +916,17 @@ function renderDashboard() {
     </div>
     <div class="summary-card">
       <div class="sc-label">🔴 Critical</div>
-      <div class="sc-val" style="color:#e05060">${fs.critical||0}</div>
+      <div class="sc-val" style="color:#E0555F">${fs.critical||0}</div>
       <div class="sc-sub">Immediate action</div>
     </div>
     <div class="summary-card">
       <div class="sc-label">🟠 High</div>
-      <div class="sc-val" style="color:#d48b1a">${fs.high||0}</div>
+      <div class="sc-val" style="color:#D4A53A">${fs.high||0}</div>
       <div class="sc-sub">Within 7 days</div>
     </div>
     <div class="summary-card">
       <div class="sc-label">🟡 Medium</div>
-      <div class="sc-val" style="color:#3a9b68">${fs.medium||0}</div>
+      <div class="sc-val" style="color:#2E9E6B">${fs.medium||0}</div>
       <div class="sc-sub">Within 30 days</div>
     </div>
     <div class="summary-card">
@@ -986,7 +986,7 @@ function renderRings() {
   }
 
   container.innerHTML = Object.entries(scores).map(([k,score]) => {
-    const meta    = PILLAR_META[k] || { label:k, color:'#3a9b68' };
+    const meta    = PILLAR_META[k] || { label:k, color:'#2E9E6B' };
     const pct     = Math.max(0, Math.min(100, Math.round(score)));
     const circ    = 2 * Math.PI * 40; // r=40
     const dash    = (pct / 100) * circ;
@@ -1042,9 +1042,9 @@ function renderDRDY() {
   const gap   = circ - dash;
   const color = scoreColor(score);
 
-  const bandBg = score >= 80 ? 'rgba(42,122,82,0.15)'
-               : score >= 60 ? 'rgba(192,120,24,0.12)'
-               : 'rgba(155,35,53,0.15)';
+  const bandBg = score >= 80 ? 'rgba(20,107,78,0.15)'
+               : score >= 60 ? 'rgba(201,145,46,0.12)'
+               : 'rgba(158,27,35,0.15)';
   const bandColor = color;
 
   const compHtml = Object.entries(comps).map(([k,v]) => {
@@ -1246,12 +1246,12 @@ function toggleRow(i) {
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 function scoreColor(s) {
-  if (s >= 70) return '#3a9b68';
-  if (s >= 40) return '#c07818';
-  return '#e05060';
+  if (s >= 70) return '#2E9E6B';
+  if (s >= 40) return '#C9912E';
+  return '#E0555F';
 }
 function sevBorderColor(sev) {
-  return { Critical:'#9b2335', High:'#c07818', Medium:'#3a9b68', Low:'#2a7a52', Info:'rgba(255,255,255,0.1)' }[sev] || 'transparent';
+  return { Critical:'#9E1B23', High:'#C9912E', Medium:'#2E9E6B', Low:'#146B4E', Info:'rgba(255,255,255,0.1)' }[sev] || 'transparent';
 }
 function esc(s) {
   if (s == null) return '';
@@ -1301,8 +1301,8 @@ function resetPortal() {
 })();
 </script>
 
-<footer style="text-align:center;padding:2rem 1rem;font-size:.7rem;color:#7a8a78;border-top:1px solid rgba(255,255,255,.08);margin-top:1rem;position:relative;z-index:1">
-  &copy; 2026 RETACH Digital Ltd &middot; <a href="https://retach.tech" style="color:#3a9b68">retach.tech</a> &middot; The S.I.N.S. Framework&trade; for Digital Resilience<br>
+<footer style="text-align:center;padding:2rem 1rem;font-size:.7rem;color:#9AA2AA;border-top:1px solid rgba(255,255,255,.08);margin-top:1rem;position:relative;z-index:1">
+  &copy; 2026 RETACH Digital Ltd &middot; <a href="https://retach.tech" style="color:#2E9E6B">retach.tech</a> &middot; The S.I.N.S. Framework&trade; for Digital Resilience<br>
   <span style="font-size:.6rem">AD pillar scores mapped to CRQ model via ISO 27005 / NIST CSF. All EAL figures are planning estimates.</span>
 </footer>
 </body>
