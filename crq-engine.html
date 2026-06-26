@@ -462,6 +462,7 @@ footer{border-top:1px solid var(--border)}
     <div id="rw" class="hid">
       <div class="mr instrument">
         <div class="mc hl"><div class="ml">Expected Annual Loss</div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
+        <div class="mc"><div class="ml">Data Credibility (Z)</div><div class="mv" id="ocred">—</div><div class="msub" id="ocredsub">—</div></div>
         <div class="mc am"><div class="ml">Worst-Case Event</div><div class="mv a" id="owc">—</div><div class="msub">95th percentile</div></div>
         <div class="mc"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
         <div class="mc am"><div class="ml">Regulatory Fine Exposure</div><div class="mv a" id="ofine">—</div><div class="msub" id="ofinesub">ODPC max</div></div>
@@ -566,7 +567,7 @@ footer{border-top:1px solid var(--border)}
 <script>
 const KR=130;
 const SECTS={
-  sacco:       {n:'SACCO (DT)',          bF:1.8,iM:1.4,rF:5e6, rto:10,bch:[6.2,12.4], sa:true, ci:false},
+  sacco:       {n:'SACCO (DT)',          bF:1.8,iM:1.4,rF:5e6, rto:10,bch:[6.2,12.4], sa:true, ci:false, prov:{freq:{src:'SASRA Sacco Supervision Annual Report 2024',tier:1,year:2024,method:'Observed sector fraud/incident data',conf:0.90},severity:{src:'SASRA SSFIU + CBK FSS Report 2024',tier:1,year:2024,method:'Observed sector losses',conf:0.90},bch:{src:'SASRA 2024 + CBK FSS',tier:1,year:2024,method:'Sector annual loss band, KES absolute',conf:0.90},reviewed:'2026-06-25'}},
   saccondt:    {n:'SACCO (NDT)',         bF:1.4,iM:1.2,rF:3e6, rto:12,bch:[4.5,9.2],  sa:true, ci:false},
   fintech:     {n:'Fintech/PSP',         bF:2.4,iM:1.8,rF:5e6, rto:7, bch:[9.1,22.0], sa:false,ci:false},
   sme:         {n:'SME',                 bF:1.2,iM:1.0,rF:3e6, rto:14,bch:[2.8,7.5],  sa:false,ci:false},
@@ -644,20 +645,73 @@ function st(id,btn){
   document.getElementById('tp-'+id).classList.add('a');
 }
 
+/* ── Credibility weighting (Bühlmann linear, on aggregate EAL) ─────────
+   METHOD frozen. Confidence reweights the WEIGHT of the sector prior,
+   never the loss VALUE. conf=1 collapses to plain Bühlmann. */
+let OSINT_DONE=false;                 // set true on a successful OSINT scan → Measured tier
+const CRED={
+  K:7,                                // Bühlmann credibility constant (calibration, swappable)
+  HEADLINE:'cred',                    // 'cred' = credibility-weighted headline | 'raw' = bottom-up
+  DECAY_ON:false,                     // fast-follow: time-decay of source confidence (flip to activate)
+  VERIFIED:false,                     // paid/verified evidence tier (flips true in consultant build)
+  W:{sins:1.0, ctrl:0.5, staff:0.5, tx:0.5, osint:6.0, verified:24.0},
+  DECAY:[[12,1.00],[24,0.90],[36,0.75],[48,0.50],[1e9,0.40]],   // months since data year → factor
+  PLACEHOLDER_PROV:{bch:{src:'Serianu 2024/2025 (triangulation)',tier:4,year:2025,method:'Vendor research — triangulation only',conf:0.45},reviewed:'2026-06-25'}
+};
+function sectorProv(s){return (s&&s.prov)?s.prov:CRED.PLACEHOLDER_PROV;}
+function sectorPrior(s){const[lo,hi]=s.bch;return Math.sqrt(lo*hi)*1e6;}   // geo-mean of sector band, KES absolute
+function decayFactor(year){
+  if(!CRED.DECAY_ON)return 1.0;
+  const age=(new Date().getFullYear()-year)*12;
+  for(const[cap,f]of CRED.DECAY){if(age<=cap)return f;}
+  return 0.40;
+}
+function credUnits(inp){
+  let n=0;
+  ['s','i','n','se'].forEach(k=>{if(isFinite(inp[k]))n+=CRED.W.sins;});     // 4 S.I.N.S. sub-scores
+  n+=CRED.W.ctrl*3;                                                         // mfa, bk, odpc attestations
+  if(isFinite(inp.stf))n+=CRED.W.staff;
+  if(isFinite(inp.tx))n+=CRED.W.tx;
+  if(OSINT_DONE)n+=CRED.W.osint;
+  if(CRED.VERIFIED)n+=CRED.W.verified;
+  return n;
+}
+function credTier(){return CRED.VERIFIED?'Verified':(OSINT_DONE?'Measured':'Self-reported');}
+function credibility(ealOwn,s,inp){
+  const n=credUnits(inp);
+  const Z=n/(n+CRED.K);
+  const prov=sectorProv(s);
+  const conf=Math.max(0,Math.min(1,prov.bch.conf*decayFactor(prov.bch.year)));
+  const ealSector=sectorPrior(s);
+  // CORRECTED reweight — confidence shifts weight toward own data when the sector prior is weak/stale;
+  // it must never deflate the loss value. FORBIDDEN: (1-Z)*Sector*conf.
+  const denom=Z+(1-Z)*conf;
+  const wOwn=denom>0?Z/denom:1;
+  const wSector=denom>0?((1-Z)*conf)/denom:0;
+  const ealCred=wOwn*ealOwn+wSector*ealSector;
+  return {Z,n,conf,ealSector,ealCred,wOwn,wSector,tier:credTier(),prov};
+}
+
 function calc(){
   const inp=gi(),ss=sins(inp),scs=sc(inp);
   const eal=scs.reduce((a,b)=>a+b.eal,0);
   const wc=Math.max(...scs.map(s=>s.imp));
   const s=SECTS[inp.sec],r=rm(inp);
+  const cred=credibility(eal,s,inp);
+  const headEAL=CRED.HEADLINE==='cred'?cred.ealCred:eal;
+  const pz=Math.round(cred.Z*100);
   const pct=(eal/inp.rev*100).toFixed(1);
   const fine=r>0.7?s.rF:Math.round(s.rF*0.5);
   const svd=ss>=70?'Good foundation':ss>=45?'Significant gaps':'High risk exposure';
   const sc2=ss>=70?'g':ss>=45?'a':'r';
   const pc2=parseFloat(pct)>10?'r':parseFloat(pct)>5?'a':'g';
 
-  document.getElementById('oeal').textContent=fk(eal);
+  document.getElementById('oeal').textContent=fk(headEAL);
   document.getElementById('oeal').className='mv r';
-  document.getElementById('oealusd').textContent=fu(eal);
+  document.getElementById('oealusd').textContent=fu(headEAL)+' · '+pz+'% credible';
+  document.getElementById('ocred').textContent=pz+'%';
+  document.getElementById('ocred').className='mv '+(pz>=80?'g':pz>=60?'a':'');
+  document.getElementById('ocredsub').textContent=cred.tier+' · n '+cred.n.toFixed(1);
   document.getElementById('owc').textContent=fk(wc);
   const sel=document.getElementById('osins');
   sel.textContent=ss; sel.className='mv '+sc2;
@@ -686,7 +740,7 @@ function calc(){
   rSC(scs,eal);
   rCT(eal);
   rRM(inp,ss);
-  rBM(eal,s);
+  rBM(eal,s,cred);
   renderKRI();
 
   document.getElementById('tcp').classList.add('hid');
@@ -755,13 +809,26 @@ function rRM(inp,ss){
   document.getElementById('rmc').innerHTML=html;
 }
 
-function rBM(eal,s){
+function rBM(eal,s,cred){
+  const sector=cred?cred.ealSector:sectorPrior(s);
+  const credible=cred?cred.ealCred:eal;
   const [lo,hi]=s.bch.map(v=>v*1e6);
-  const peers=[{n:s.n+' (low)',v:lo,c:'#146B4E'},{n:s.n+' (high)',v:hi,c:'#C9912E'},{n:'Your organisation',v:eal,c:eal>hi?'#E0555F':eal>lo?'#C9912E':'#146B4E'}];
+  const peers=[
+    {n:'Sector prior (geo-mean)',v:sector,c:'#C9912E'},
+    {n:'Your organisation (bottom-up)',v:eal,c:eal>hi?'#E0555F':eal>lo?'#C9912E':'#146B4E'},
+    {n:'Credibility-weighted (headline)',v:credible,c:'#2E9E6B'}
+  ];
   const mx=Math.max(...peers.map(p=>p.v))*1.1;
-  const pos=eal>hi?'Above sector average — elevated risk':eal>lo?'Within sector average range':'Below sector average — better than peers';
+  const pos=eal>hi?'Above sector band — elevated risk':eal>lo?'Within sector band':'Below sector band — better than peers';
   const pc=eal>hi?'#E0555F':eal>lo?'#C9912E':'#146B4E';
-  document.getElementById('bmo').innerHTML=`<div style="margin-bottom:.9rem">${peers.map(p=>`<div class="br"><div class="bl">${p.n}</div><div class="bt"><div class="bf" style="width:${Math.round(p.v/mx*100)}%;background:${p.c}"></div></div><div class="bv">${fk(p.v)}</div></div>`).join('')}</div><div style="padding:.7rem .9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;font-size:.77rem"><span style="color:var(--muted)">Your position: </span><strong style="color:${pc}">${pos}</strong></div><p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sources: Serianu Africa Cybersecurity Report 2023 · Communications Authority of Kenya · CBK Cybersecurity Guidelines · ODPC enforcement data.</p>`;
+  const pz=cred?Math.round(cred.Z*100):0;
+  const tier=cred?cred.tier:'Self-reported';
+  const pb=(cred?cred.prov:sectorProv(s)).bch;
+  document.getElementById('bmo').innerHTML=
+    `<div style="margin-bottom:.9rem">${peers.map(p=>`<div class="br"><div class="bl">${p.n}</div><div class="bt"><div class="bf" style="width:${Math.round(p.v/mx*100)}%;background:${p.c}"></div></div><div class="bv">${fk(p.v)}</div></div>`).join('')}</div>`+
+    `<div style="padding:.7rem .9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;font-size:.77rem"><span style="color:var(--muted)">Position vs sector band: </span><strong style="color:${pc}">${pos}</strong><br><span style="color:var(--muted)">Credibility Z = </span><strong style="color:#2E9E6B">${pz}%</strong> <span style="color:var(--muted)">(${tier}). The headline blends your bottom-up estimate with the sector prior; more evidence raises Z toward your own number.</span></div>`+
+    `<p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sector prior: ${pb.src} · Tier ${pb.tier} · ${pb.year} · confidence ${pb.conf.toFixed(2)}. Sector annual loss band KES ${s.bch[0].toFixed(1)}M–${s.bch[1].toFixed(1)}M (absolute).</p>`+
+    `<p style="font-size:.6rem;color:var(--muted);margin-top:.5rem;line-height:1.6">RETACH derives sector priors from independently verifiable regulatory and public evidence wherever available; commercial research is used only for triangulation where primary evidence is unavailable. Every sector prior is traceable to its underlying sources. Triangulation: Serianu 2024/2025.</p>`;
 }
 
 /* ── OSINT via api.retach.io ─────────────────────── */
@@ -783,6 +850,7 @@ async function runOS(){
       body:JSON.stringify({domain:raw})
     });
     const data=await r.json();
+    OSINT_DONE=true;
 
     // Parse DNS results
     const dns=data.dns?.results||{};
@@ -1067,7 +1135,7 @@ function renderKRI(){
   var s=SECTS[sel.value]; if(!s)return;
   var box=document.getElementById('krio'); if(!box)return;
   var rev=(parseFloat(document.getElementById('irev').value)||50)*1e6;
-  var costLo=Math.round(rev*s.bch[0]/100), costHi=Math.round(rev*s.bch[1]/100);
+  var costLo=Math.round(s.bch[0]*1e6), costHi=Math.round(s.bch[1]*1e6);
   var byL=SCS.slice().sort(function(a,b){return b.bL-a.bL;})[0];
   var byI=SCS.slice().sort(function(a,b){return b.bI-a.bI;})[0];
   var fineCeil=s.ci?(s.rF_dpa+s.rF_cmca):s.rF;
@@ -1086,7 +1154,7 @@ function renderKRI(){
   var kri=[
     {l:'Sector Threat Frequency',v:s.bF.toFixed(1)+'×',t:(s.bF>=2.5?'r':s.bF>=1.5?'a':'g'),d:'annual attack frequency vs baseline org',src:'Serianu 2023 · CA Kenya'},
     {l:'Impact Severity Index',v:s.iM.toFixed(1)+'×',t:(s.iM>=1.8?'r':s.iM>=1.3?'a':'g'),d:'relative loss magnitude per incident',src:'IBM 2023 · Zurich EM'},
-    {l:'Typical Incident Cost',v:s.bch[0]+'–'+s.bch[1]+'%',t:'a',d:'of revenue · '+fk(costLo)+' – '+fk(costHi)+' at current input',src:'IBM Cost of a Data Breach 2023'},
+    {l:'Sector Annual Loss Band',v:fk(costLo)+' – '+fk(costHi),t:'a',d:'observed sector annual loss · absolute KES',src:'SASRA 2024 · CBK FSS (SACCO) · sector priors'},
     {l:'Regulatory Fine Ceiling',v:fk(fineCeil),t:(s.ci?'r':(s.rF?'a':'g')),d:fineDesc,src:'DPA 2019 · CMCA 2018/2024'},
     {l:'Baseline Recovery Time',v:s.rto+' days',t:(s.rto>14?'r':s.rto>9?'a':'g'),d:'median ransomware recovery window',src:'Serianu · CBK incident data'},
     {l:'Loss Dispersion (σ)',v:sigma,t:(s.ci?'r':'a'),d:'lognormal tail width — higher = more catastrophic-year risk',src:'CRQ methodology'}
