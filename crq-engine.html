@@ -460,8 +460,9 @@ footer{border-top:1px solid var(--border)}
     </div>
 
     <div id="rw" class="hid">
+      <div id="csbanner" class="hid" style="background:rgba(201,145,46,.1);border:1px solid rgba(201,145,46,.45);border-radius:8px;padding:.7rem 1rem;margin-bottom:1rem;font-family:var(--mono);font-size:.62rem;line-height:1.6;color:#D4A53A">⚠ Illustrative — not calibrated for client delivery. This sector uses placeholder benchmark data (tier 4); figures are indicative only and must not be used in a client report.</div>
       <div class="mr instrument">
-        <div class="mc hl"><div class="ml">Expected Annual Loss</div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
+        <div class="mc hl"><div class="ml">Expected Annual Loss<span id="osectag" style="font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.06em;color:var(--gl);background:rgba(46,158,107,.12);padding:.12rem .4rem;border-radius:3px;margin-left:.45rem;vertical-align:middle"></span></div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
         <div class="mc"><div class="ml">Data Credibility (Z)</div><div class="mv" id="ocred">—</div><div class="msub" id="ocredsub">—</div></div>
         <div class="mc am"><div class="ml">Worst-Case Event</div><div class="mv a" id="owc">—</div><div class="msub">95th percentile</div></div>
         <div class="mc"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
@@ -703,13 +704,14 @@ function calc(){
   const cred=credibility(eal,s,inp);
   const headEAL=CRED.HEADLINE==='cred'?cred.ealCred:eal;
   const pz=Math.round(cred.Z*100);
-  const pct=(eal/inp.rev*100).toFixed(1);
+  const pct=(headEAL/inp.rev*100).toFixed(1);
   const fine=r>0.7?s.rF:Math.round(s.rF*0.5);
   const svd=ss>=70?'Good foundation':ss>=45?'Significant gaps':'High risk exposure';
   const sc2=ss>=70?'g':ss>=45?'a':'r';
   const pc2=parseFloat(pct)>10?'r':parseFloat(pct)>5?'a':'g';
 
   document.getElementById('oeal').textContent=fk(headEAL);
+  document.getElementById('osectag').textContent=s.n;
   document.getElementById('oeal').className='mv r';
   document.getElementById('oealusd').textContent=fu(headEAL)+' · '+pz+'% credible';
   document.getElementById('ocred').textContent=pz+'%';
@@ -749,6 +751,8 @@ function calc(){
   document.getElementById('tcp').classList.add('hid');
   document.getElementById('rw').classList.remove('hid');
   document.getElementById('rw').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('csbanner').className=(s.clientSafe===true)?'hid':'';
+  // TODO[clientSafe export gate]: when a client PDF/export feature ships, also disable it here when s.clientSafe!==true.
 }
 
 function rHM(scs,eal){
