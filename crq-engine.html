@@ -567,7 +567,7 @@ footer{border-top:1px solid var(--border)}
 <script>
 const KR=130;
 const SECTS={
-  sacco:       {n:'SACCO (DT)',          bF:1.8,iM:1.4,rF:5e6, rto:10,bch:[6.2,12.4], sa:true, ci:false, prov:{freq:{src:'SASRA Sacco Supervision Annual Report 2024',tier:1,year:2024,method:'Observed sector fraud/incident data',conf:0.90},severity:{src:'SASRA SSFIU + CBK FSS Report 2024',tier:1,year:2024,method:'Observed sector losses',conf:0.90},bch:{src:'SASRA 2024 + CBK FSS',tier:1,year:2024,method:'Sector annual loss band, KES absolute',conf:0.90},reviewed:'2026-06-25'}},
+  sacco:       {n:'SACCO (DT)',          bF:1.8,iM:1.4,rF:5e6, rto:10,bch:[5,18], sa:true, ci:false, clientSafe:true, prov:{freq:{src:'SASRA SSFIU criminal-case series 2021–2024 (17→24→23→29)',geo:'local',tier:2,year:2024,method:'sector serious-fraud case counts, rising trend',conf:0.72},severity:{src:'In-window SACCO incidents (Mwietheri 2025/26 ~KES 8.9M) x-checked vs SSFIU 2021/22 sector total KES 118.1M',geo:'local',tier:2,year:2024,method:'per-org loss central cluster, tail to Lognormal',conf:0.68},bch:{src:'Per-target-DT-SACCO band; SASRA 2023 concentration (53 SACCOs=73% assets); SSFIU 2024 freq; sector total 5-yr x-check',geo:'local',tier:2,year:2024,method:'per-org central band, tail excluded',conf:0.70},reviewed:'2026-06-28'}},
   saccondt:    {n:'SACCO (NDT)',         bF:1.4,iM:1.2,rF:3e6, rto:12,bch:[4.5,9.2],  sa:true, ci:false},
   fintech:     {n:'Fintech/PSP',         bF:2.4,iM:1.8,rF:5e6, rto:7, bch:[9.1,22.0], sa:false,ci:false},
   sme:         {n:'SME',                 bF:1.2,iM:1.0,rF:3e6, rto:14,bch:[2.8,7.5],  sa:false,ci:false},
@@ -656,10 +656,13 @@ const CRED={
   VERIFIED:false,                     // paid/verified evidence tier (flips true in consultant build)
   W:{sins:1.0, ctrl:0.5, staff:0.5, tx:0.5, osint:6.0, verified:24.0},
   DECAY:[[12,1.00],[24,0.90],[36,0.75],[48,0.50],[1e9,0.40]],   // months since data year → factor
-  PLACEHOLDER_PROV:{bch:{src:'Serianu 2024/2025 (triangulation)',tier:4,year:2025,method:'Vendor research — triangulation only',conf:0.45},reviewed:'2026-06-25'}
+  PLACEHOLDER_PROV:{bch:{src:'Serianu 2024/2025 (triangulation)',geo:'regional',tier:4,year:2025,method:'Vendor research — triangulation only',conf:0.45},reviewed:'2026-06-25'}
 };
 function sectorProv(s){return (s&&s.prov)?s.prov:CRED.PLACEHOLDER_PROV;}
 function sectorPrior(s){const[lo,hi]=s.bch;return Math.sqrt(lo*hi)*1e6;}   // geo-mean of sector band, KES absolute
+// decayFactor = formal expression of the recency rule (recent>3yr>5yr). Calibrate rate to policy +
+// enable only after model-validation/backtesting roadmap item proves decayed fit > flat fit on EA data.
+// Method-adjacent -> frozen until then.
 function decayFactor(year){
   if(!CRED.DECAY_ON)return 1.0;
   const age=(new Date().getFullYear()-year)*12;
