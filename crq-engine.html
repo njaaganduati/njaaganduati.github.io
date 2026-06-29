@@ -831,10 +831,12 @@ function rBM(eal,s,cred){
   const pz=cred?Math.round(cred.Z*100):0;
   const tier=cred?cred.tier:'Self-reported';
   const pb=(cred?cred.prov:sectorProv(s)).bch;
+  const geoMap={local:'Local (KE/EA)',regional:'Regional (Africa)',global:'Global benchmark'};
+  const geoLbl=geoMap[pb.geo]||pb.geo||'—';
   document.getElementById('bmo').innerHTML=
     `<div style="margin-bottom:.9rem">${peers.map(p=>`<div class="br"><div class="bl">${p.n}</div><div class="bt"><div class="bf" style="width:${Math.round(p.v/mx*100)}%;background:${p.c}"></div></div><div class="bv">${fk(p.v)}</div></div>`).join('')}</div>`+
     `<div style="padding:.7rem .9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;font-size:.77rem"><span style="color:var(--muted)">Position vs sector band: </span><strong style="color:${pc}">${pos}</strong><br><span style="color:var(--muted)">Credibility Z = </span><strong style="color:#2E9E6B">${pz}%</strong> <span style="color:var(--muted)">(${tier}). The headline blends your bottom-up estimate with the sector prior; more evidence raises Z toward your own number.</span></div>`+
-    `<p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sector prior: ${pb.src} · Tier ${pb.tier} · ${pb.year} · confidence ${pb.conf.toFixed(2)}. Sector annual loss band KES ${s.bch[0].toFixed(1)}M–${s.bch[1].toFixed(1)}M (absolute).</p>`+
+    `<p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sector prior: ${pb.src} · ${geoLbl} · Tier ${pb.tier} · ${pb.year} · confidence ${pb.conf.toFixed(2)}. Sector annual loss band KES ${s.bch[0].toFixed(1)}M–${s.bch[1].toFixed(1)}M (absolute).</p>`+
     `<p style="font-size:.6rem;color:var(--muted);margin-top:.5rem;line-height:1.6">RETACH derives sector priors from independently verifiable regulatory and public evidence wherever available; commercial research is used only for triangulation where primary evidence is unavailable. Every sector prior is traceable to its underlying sources. Triangulation: Serianu 2024/2025.</p>`;
 }
 
