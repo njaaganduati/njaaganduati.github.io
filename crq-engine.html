@@ -394,9 +394,9 @@ footer{border-top:1px solid var(--border)}
             <option value="ci_health">CI — Critical Health Infrastructure (KNH, KEMSA)</option>
           </optgroup>
         </select>
-        <div class="sg"><div class="st"><span class="sn">Annual Revenue / Budget</span><span class="sv" id="lrev">KES 50M</span></div><input type="range" min="1" max="200" value="50" step="1" id="irev" oninput="ul('lrev',fk(this.value*1e6));onIC()"></div>
-        <div class="sg"><div class="st"><span class="sn">Staff / Endpoints</span><span class="sv" id="lstf">50 people</span></div><input type="range" min="5" max="500" value="50" step="5" id="istf" oninput="ul('lstf',this.value+' people');onIC()"></div>
-        <div class="sg"><div class="st"><span class="sn">Monthly Digital Transactions</span><span class="sv" id="ltx">5,000 / mo</span></div><input type="range" min="0" max="100" value="5" step="1" id="itx" oninput="ul('ltx',(this.value*1000).toLocaleString()+' / mo');onIC()"></div>
+        <div class="sg"><div class="st"><span class="sn">Annual Revenue / Turnover / Budget</span><span class="sv" id="lrev">KES 50.0M</span></div><input type="text" class="fi" inputmode="decimal" value="50" id="irev" style="margin-bottom:0" oninput="ul('lrev',fk((+this.value||0)*1e6));onIC()"><div style="font-size:.6rem;color:var(--muted);margin-top:.35rem;line-height:1.4">Figure in KES millions — e.g. <b>50</b> = KES 50M. Use turnover (SME/fintech), total assets (SACCO) or annual budget (NGO/govt).</div></div>
+        <div class="sg"><div class="st"><span class="sn">Staff / Endpoints</span><span class="sv" id="lstf">50 people</span></div><input type="text" class="fi" inputmode="numeric" value="50" id="istf" style="margin-bottom:0" oninput="ul('lstf',(+this.value||0).toLocaleString()+' people');onIC()"></div>
+        <div class="sg"><div class="st"><span class="sn">Monthly Digital Transactions</span><span class="sv" id="ltx">5,000 / mo</span></div><input type="text" class="fi" inputmode="numeric" value="5" id="itx" style="margin-bottom:0" oninput="ul('ltx',((+this.value||0)*1000).toLocaleString()+' / mo');onIC()"><div style="font-size:.6rem;color:var(--muted);margin-top:.35rem;line-height:1.4">Figure in thousands — e.g. <b>5</b> = 5,000 / mo.</div></div>
 
         <div class="sdiv">S.I.N.S. Posture (from scanner or estimate)</div>
         <div class="sg"><div class="st"><span class="sn">S¹ — Systems (Identity & Access)</span><span class="sv" id="ls">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="is" oninput="ul('ls',this.value+' / 100');onIC()"></div>
@@ -635,7 +635,7 @@ function rm(inp){
 }
 function sc(inp){
   const s=SECTS[inp.sec],r=rm(inp);
-  return SCS.map(d=>({...d,lh:Math.min(0.97,d.bL*s.bF*r),imp:inp.rev*d.bI*s.iM*(1+inp.stf/600)*r}))
+  return SCS.map(d=>({...d,lh:Math.min(0.97,d.bL*s.bF*r),imp:inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*r}))
     .map(d=>({...d,lh:Math.round(d.lh*100),imp:Math.round(d.imp),eal:Math.round(d.lh/100*Math.round(d.imp))}))
     .sort((a,b)=>b.eal-a.eal)
 }
