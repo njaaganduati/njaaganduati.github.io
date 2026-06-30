@@ -396,7 +396,6 @@ footer{border-top:1px solid var(--border)}
         </select>
         <div class="sg"><div class="st"><span class="sn">Annual Revenue / Turnover / Budget</span><span class="sv" id="lrev">KES 50.0M</span></div><input type="text" class="fi" inputmode="decimal" value="50" id="irev" style="margin-bottom:0" oninput="ul('lrev',fk((+this.value||0)*1e6));onIC()"><div style="font-size:.6rem;color:var(--muted);margin-top:.35rem;line-height:1.4">Figure in KES millions — e.g. <b>50</b> = KES 50M. Use turnover (SME/fintech), total assets (SACCO) or annual budget (NGO/govt).</div></div>
         <div class="sg"><div class="st"><span class="sn">Staff / Endpoints</span><span class="sv" id="lstf">50 people</span></div><input type="text" class="fi" inputmode="numeric" value="50" id="istf" style="margin-bottom:0" oninput="ul('lstf',(+this.value||0).toLocaleString()+' people');onIC()"></div>
-        <div class="sg"><div class="st"><span class="sn">Monthly Digital Transactions</span><span class="sv" id="ltx">5,000 / mo</span></div><input type="text" class="fi" inputmode="numeric" value="5" id="itx" style="margin-bottom:0" oninput="ul('ltx',((+this.value||0)*1000).toLocaleString()+' / mo');onIC()"><div style="font-size:.6rem;color:var(--muted);margin-top:.35rem;line-height:1.4">Figure in thousands — e.g. <b>5</b> = 5,000 / mo.</div></div>
 
         <div class="sdiv">S.I.N.S. Posture (from scanner or estimate)</div>
         <div class="sg"><div class="st"><span class="sn">S¹ — Systems (Identity & Access)</span><span class="sv" id="ls">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="is" oninput="ul('ls',this.value+' / 100');onIC()"></div>
@@ -616,7 +615,6 @@ function gi(){
     sec:document.getElementById('i-sec').value,
     rev:parseFloat(document.getElementById('irev').value)*1e6,
     stf:parseFloat(document.getElementById('istf').value),
-    tx:parseFloat(document.getElementById('itx').value)*1e3,
     s:parseFloat(document.getElementById('is').value),
     i:parseFloat(document.getElementById('ii').value),
     n:parseFloat(document.getElementById('in2').value),
@@ -655,7 +653,7 @@ const CRED={
   HEADLINE:'cred',                    // 'cred' = credibility-weighted headline | 'raw' = bottom-up
   DECAY_ON:false,                     // fast-follow: time-decay of source confidence (flip to activate)
   VERIFIED:false,                     // paid/verified evidence tier (flips true in consultant build)
-  W:{sins:1.0, ctrl:0.5, staff:0.5, tx:0.5, osint:6.0, verified:24.0},
+  W:{sins:1.0, ctrl:0.5, staff:0.5, osint:6.0, verified:24.0},
   DECAY:[[12,1.00],[24,0.90],[36,0.75],[48,0.50],[1e9,0.40]],   // months since data year → factor
   PLACEHOLDER_PROV:{bch:{src:'Serianu 2024/2025 (triangulation)',geo:'regional',tier:4,year:2025,method:'Vendor research — triangulation only',conf:0.45},reviewed:'2026-06-25'}
 };
@@ -675,7 +673,6 @@ function credUnits(inp){
   ['s','i','n','se'].forEach(k=>{if(isFinite(inp[k]))n+=CRED.W.sins;});     // 4 S.I.N.S. sub-scores
   n+=CRED.W.ctrl*3;                                                         // mfa, bk, odpc attestations
   if(isFinite(inp.stf))n+=CRED.W.staff;
-  if(isFinite(inp.tx))n+=CRED.W.tx;
   if(OSINT_DONE)n+=CRED.W.osint;
   if(CRED.VERIFIED)n+=CRED.W.verified;
   return n;
