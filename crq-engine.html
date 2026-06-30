@@ -624,16 +624,30 @@ function gi(){
 }
 function sins(inp){return Math.round((inp.s+inp.i+inp.n+inp.se)/4)}
 function rm(inp){
-  let m=1.0;
-  m*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;
-  m*=inp.bk?.70:1.0;
-  m*=inp.odpc?.88:1.0;
-  m*=(1.85-sins(inp)/100*1.70);
-  return Math.max(0.12,m)
+  const ss=sins(inp);
+  // ── FREQUENCY modifier (likelihood axis) ── MFA + SINS posture only
+  let rF=1.0;
+  rF*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;   // MFA -> frequency (creds = 22% top initial vector, Verizon 2025 DBIR)
+  rF*=(1.85-ss/100*1.70);                                  // SINS posture -> frequency
+  rF=Math.max(0.15,rF);
+  // ── Control-maturity proxy (Regulatory Fine card discount ONLY; never applied to EAL) ──
+  // reproduces the legacy combined modifier so the separate fine card is byte-unchanged
+  let rC=1.0;
+  rC*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;
+  rC*=inp.bk?.70:1.0;
+  rC*=inp.odpc?.88:1.0;
+  rC*=(1.85-ss/100*1.70);
+  return {rF,rC:Math.max(0.12,rC)};
 }
 function sc(inp){
-  const s=SECTS[inp.sec],r=rm(inp);
-  return SCS.map(d=>({...d,lh:Math.min(0.97,d.bL*s.bF*r),imp:inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*r}))
+  const s=SECTS[inp.sec],{rF}=rm(inp);
+  return SCS.map(d=>{
+    // ── SEVERITY modifiers (impact axis) ── scenario-scoped, not flat
+    let rS=1.0;
+    if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=.60;     // tested backup/RTO-RPO -> -40% severity, availability scenarios only (Sophos SoR 2025: intact vs compromised backups ~8x recovery cost)
+    if(inp.odpc&&d.id==='breach')rS*=.93;                  // ODPC programme -> -7% severity, privacy scenario only (IBM CoDB 2025: containment-time delta)
+    return {...d,lh:Math.min(0.97,d.bL*s.bF*rF),imp:inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS};
+  })
     .map(d=>({...d,lh:Math.round(d.lh*100),imp:Math.round(d.imp),eal:Math.round(d.lh/100*Math.round(d.imp))}))
     .sort((a,b)=>b.eal-a.eal)
 }
@@ -697,7 +711,7 @@ function calc(){
   const inp=gi(),ss=sins(inp),scs=sc(inp);
   const eal=scs.reduce((a,b)=>a+b.eal,0);
   const wc=Math.max(...scs.map(s=>s.imp));
-  const s=SECTS[inp.sec],r=rm(inp);
+  const s=SECTS[inp.sec],r=rm(inp).rC;
   const cred=credibility(eal,s,inp);
   const headEAL=CRED.HEADLINE==='cred'?cred.ealCred:eal;
   const pz=Math.round(cred.Z*100);
