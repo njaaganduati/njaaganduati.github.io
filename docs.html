@@ -34,7 +34,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
 body {
   font-family: var(--body-font);
@@ -42,6 +42,7 @@ body {
   color: var(--body);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a { color: var(--green); text-decoration: none; }
@@ -126,6 +127,30 @@ a:hover { text-decoration: underline; }
   white-space: nowrap;
 }
 .nav-cta:hover { background: var(--green-bg); text-decoration: none; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ─── LAYOUT ────────────────────────────────────────────────────── */
 .layout {
@@ -470,7 +495,7 @@ a:hover { text-decoration: underline; }
 /* Documents / download cards */
 .doc-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap: 0.9rem;
   margin: 1.2rem 0;
 }
@@ -526,7 +551,7 @@ a:hover { text-decoration: underline; }
 /* SINS pillar cards */
 .pillar-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap: 0.75rem;
   margin: 1.2rem 0;
 }
@@ -697,7 +722,30 @@ a:hover { text-decoration: underline; }
   .content { padding: 2rem 1.5rem 4rem; }
   .doc-cards, .pillar-grid { grid-template-columns: 1fr; }
   .cta-block { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: absolute;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--green);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+    display: flex;
+  }
+  .nav-links.open { max-height: 400px; }
+  .nav-link, .nav-cta {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    margin-left: 0;
+  }
 }
 </style>
 </head>
@@ -714,14 +762,36 @@ a:hover { text-decoration: underline; }
     <div class="nav-divider"></div>
     <span class="nav-label">Documentation</span>
   </a>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="https://retach.tech" class="nav-link">← retach.tech</a>
     <a href="https://app.retach.io" class="nav-link">S.I.N.S. Scanner</a>
     <a href="https://crq.retach.io" class="nav-link active">CRQ Engine</a>
     <a href="https://ad-audit.retach.io" class="nav-link">AD Audit</a>
     <a href="https://wa.me/254767206043" class="nav-cta" target="_blank" rel="noopener">Book Assessment →</a>
   </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<script>
+  (function(){
+    var btn = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if(!btn||!links) return;
+    btn.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      });
+    });
+  })();
+</script>
 
 <div class="layout">
 
