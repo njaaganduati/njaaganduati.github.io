@@ -625,20 +625,36 @@ function gi(){
   }
 }
 function sins(inp){return Math.round((inp.s+inp.i+inp.n+inp.se)/4)}
+// ── CTRL — control-efficacy coefficients, tagged provenance ───────────
+// Same {v,src,geo,tier,year,conf} shape as LAMBDA_KE (below). Promotes
+// previously-bare literals to visible, auditable sourcing. Values UNCHANGED
+// from the prior build — this is a provenance refactor only, no re-fit.
+// Slots directly into future RETACH-measured Risk Delta data via Bühlmann
+// blending: replace .v with an n-weighted blend of this prior and observed
+// engagement deltas, no new math required.
+const CTRL={
+  MFA_FULL:   {v:.62, src:'Verizon 2025 DBIR (compromised credentials ~22% of initial-vector breaches); corroborated by arXiv:2305.00945 MFA-efficacy study (different denominator — blocked-login-attempts, not breach frequency — additive evidence, not a swap-in)', geo:'global', tier:2, year:2025, conf:0.35},
+  MFA_PARTIAL:{v:.82, src:'Verizon 2025 DBIR (credentials ~22% of initial-vector breaches) — partial-adoption discount is a RETACH-derived midpoint between full-MFA and no-MFA, not independently sourced', geo:'global', tier:2, year:2025, conf:0.25},
+  ACADEMY:    {v:0.95,src:'Verizon 2025 DBIR (phishing ~16% initial vector) x KnowBe4 Phishing Industry Benchmarking (proof-of-program effect)', geo:'global', tier:2, year:2025, conf:0.35},
+  BACKUP_SEV: {v:.60, src:'Sophos State of Ransomware 2025 (intact vs compromised backups — ~8x recovery-cost differential)', geo:'global', tier:3, year:2025, conf:0.30},
+  BACKUP_FINECARD:{v:.70,src:'Legacy control-maturity proxy — preserved for regulatory fine-card continuity only (never applied to EAL); see BACKUP_SEV for the sourced severity multiplier', geo:'n/a', tier:5, year:2025, conf:0.15},
+  ODPC_SEV:   {v:.93, src:'IBM Cost of a Data Breach 2025 (containment-time-to-cost delta, programme-level response maturity)', geo:'global', tier:2, year:2025, conf:0.35},
+  ODPC_FINE:  {v:.88, src:'RETACH policy assumption — full ODPC programme vs registration-only differentiates fine-mitigation likelihood; not externally sourced, pending regulator enforcement-pattern data', geo:'n/a', tier:5, year:2026, conf:0.20}
+};
 function rm(inp){
   const ss=sins(inp);
   // ── FREQUENCY modifier (likelihood axis) ── MFA + SINS posture only
   let rF=1.0;
-  rF*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;   // MFA -> frequency (creds = 22% top initial vector, Verizon 2025 DBIR)
+  rF*=inp.mfa==='full'?CTRL.MFA_FULL.v:inp.mfa==='partial'?CTRL.MFA_PARTIAL.v:1.0;   // MFA -> frequency
   rF*=(1.85-ss/100*1.70);                                  // SINS posture -> frequency
-  rF*=inp.academy?0.95:1.0;                                // RETACH Academy -> frequency (Verizon 2025 DBIR phishing 16% initial vector x KnowBe4 PPP; global/tier-2/conf 0.35)
+  rF*=inp.academy?CTRL.ACADEMY.v:1.0;                       // RETACH Academy -> frequency
   rF=Math.max(0.15,rF);
   // ── Control-maturity proxy (Regulatory Fine card discount ONLY; never applied to EAL) ──
   // reproduces the legacy combined modifier so the separate fine card is byte-unchanged
   let rC=1.0;
-  rC*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;
-  rC*=inp.bk?.70:1.0;
-  rC*=inp.odpc==='programme'?.88:1.0;                     // fine-card discount now requires full programme, not just registration
+  rC*=inp.mfa==='full'?CTRL.MFA_FULL.v:inp.mfa==='partial'?CTRL.MFA_PARTIAL.v:1.0;
+  rC*=inp.bk?CTRL.BACKUP_FINECARD.v:1.0;
+  rC*=inp.odpc==='programme'?CTRL.ODPC_FINE.v:1.0;          // fine-card discount now requires full programme, not just registration
   rC*=(1.85-ss/100*1.70);
   return {rF,rC:Math.max(0.12,rC)};
 }
@@ -661,8 +677,8 @@ function sc(inp){
     const lam=LAMBDA_KE.v*s.bF*w*rF;                       // Poisson rate for this scenario (freq axis)
     // ── SEVERITY (Lognormal median) — scenario-scoped control multipliers ──
     let rS=1.0;
-    if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=.60;     // tested backup/RTO-RPO -> -40% severity, availability scenarios only (Sophos SoR 2025: intact vs compromised backups ~8x recovery cost)
-    if(inp.odpc==='programme'&&d.id==='breach')rS*=.93;    // ODPC programme -> -7% severity, privacy scenario only (IBM CoDB 2025: containment-time delta)
+if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=CTRL.BACKUP_SEV.v;  // tested backup/RTO-RPO -> severity, availability scenarios only
+    if(inp.odpc==='programme'&&d.id==='breach')rS*=CTRL.ODPC_SEV.v;   // ODPC programme -> severity, privacy scenario only
     const med=inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS;  // Lognormal median severity
     const esev=med*k;                                      // mean severity = median * exp(sigma^2/2)
     const m2=med*med*Math.exp(2*sg*sg);                    // E[X^2] — for aggregate variance (compound Poisson)
