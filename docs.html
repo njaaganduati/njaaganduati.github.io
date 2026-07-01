@@ -795,28 +795,28 @@ a:hover { text-decoration: underline; }
           <div class="step-num">01</div>
           <div class="step-body">
             <div class="step-title">Count how often attacks happen (Frequency)</div>
-            <div class="step-desc">Base attack probabilities for six scenario types — phishing, ransomware, financial fraud, data breach, business continuity failure, and insider threat — are drawn from published East Africa sector incident data. A sector multiplier adjusts for the relative attack frequency of the assessed organisation's industry: a Fintech faces attacks 2.4× more often than baseline; a SACCO 1.8×. A risk modifier derived from the organisation's control posture (MFA adoption, backup posture, ODPC status, S.I.N.S. score) adjusts the final likelihood downward where controls are in place.</div>
+            <div class="step-desc">Frequency is modelled as a Poisson process — the standard actuarial way to count how many events happen per year. A national base rate (λ = 0.462 incidents/organisation/year) comes from the Serianu Africa Cybersecurity Report 2024/25 (37% of surveyed Kenyan organisations reported at least one incident that year). This base rate is adjusted by a sector multiplier (a Fintech faces attacks 2.4× more often than baseline; a SACCO 1.8×), split across six S.I.N.S. scenario types by relative frequency, then reduced by a control-posture modifier — MFA adoption, backup posture, ODPC status, RETACH Academy enrolment, and overall S.I.N.S. score — where controls are in place.</div>
           </div>
         </li>
         <li class="step-item">
           <div class="step-num">02</div>
           <div class="step-body">
             <div class="step-title">Estimate how much each event costs (Severity)</div>
-            <div class="step-desc">Severity is modelled as a percentage of annual revenue, because an organisation's revenue is the most reliable proxy for the scale of data held, transactions processed, and operational complexity. Ransomware typically costs 18% of annual revenue when it hits. A data breach costs 12%. These percentages are calibrated to East Africa incident cost data and validated against IBM Cost of a Data Breach 2023 and Zurich Insurance emerging markets loss data.</div>
+            <div class="step-desc">Severity is modelled as a percentage of annual revenue, because an organisation's revenue is the most reliable proxy for the scale of data held, transactions processed, and operational complexity. Ransomware typically costs 18% of annual revenue when it hits. A data breach costs 12%. These percentages are calibrated to East Africa incident cost data and validated against IBM Cost of a Data Breach 2025 and Zurich Insurance emerging markets loss data.</div>
           </div>
         </li>
         <li class="step-item">
           <div class="step-num">03</div>
           <div class="step-body">
             <div class="step-title">Multiply: Expected Loss = Frequency × Severity</div>
-            <div class="step-desc">This is the same formula an insurance actuary uses to price a premium. If ransomware has a 30% annual probability and costs KES 9M when it hits, the expected annual loss from ransomware is KES 2.7M. The Engine calculates this for six attack types and sums them. That total is your Expected Annual Loss.</div>
+            <div class="step-desc">This is the same formula an insurance actuary uses to price a premium. If ransomware has a Poisson rate of λ = 0.3 events/year and costs KES 9M on average when it hits, the expected annual loss from ransomware is KES 2.7M (the likelihood shown on-screen is P(at least one event this year) = 1 − e<sup>−λ</sup> ≈ 26%, not a flat annual probability). The Engine calculates this for six attack types and sums them. That total is your Expected Annual Loss.</div>
           </div>
         </li>
         <li class="step-item">
           <div class="step-num">04</div>
           <div class="step-body">
             <div class="step-title">Model the distribution (Poisson-Lognormal)</div>
-            <div class="step-desc">The EAL is the mean of a loss distribution, not a guarantee. Real losses follow a lognormal distribution — most years are cheaper than average, but occasionally an event is catastrophic. We use a Poisson-Lognormal model with sector-specific dispersion constants (σ) calibrated from Serianu and Zurich emerging markets data. This gives you the 50th percentile (Expected), 75th percentile (Adverse), and 95th percentile (Severe/Worst-Case) loss figures.</div>
+            <div class="step-desc">The EAL is the mean of a loss distribution, not a guarantee. Real losses follow a lognormal distribution — most years are cheaper than average, but occasionally an event is catastrophic. We use a compound Poisson-Lognormal model with sector-specific dispersion constants (σ) calibrated from Serianu and Zurich emerging markets data. The 75th and 95th percentile bands are derived by moment-matching the aggregate loss distribution across all six scenarios to a single lognormal curve, centred on the credibility-weighted headline EAL — an analytical (closed-form) method, not a Monte Carlo simulation; full Monte Carlo simulation is reserved for the paid tier. This gives you the mean (Expected), 75th percentile (Adverse), and 95th percentile (Severe/Worst-Case) loss figures.</div>
           </div>
         </li>
         <li class="step-item">
@@ -852,7 +852,7 @@ a:hover { text-decoration: underline; }
         <tbody>
           <tr>
             <td class="td-label">Frequency from published data</td>
-            <td>Base attack probabilities from Serianu 2023, CBK, and CA Kenya sector reports</td>
+            <td>National Poisson base rate from Serianu 2024/25 (37% incident prevalence, converted to a rate); sector multipliers from CBK and CA Kenya sector reports</td>
             <td class="td-caveat">Historical frequency does not guarantee future attack rates. Threat actors evolve.</td>
           </tr>
           <tr>
@@ -867,7 +867,7 @@ a:hover { text-decoration: underline; }
           </tr>
           <tr>
             <td class="td-label">Control efficacy</td>
-            <td>Full MFA reduces risk by 38%; tested backup by 30% — from NIST 800-53 benchmarks</td>
+            <td>Full MFA reduces attack frequency by 38% (Verizon 2025 DBIR, corroborated by arXiv:2305.00945); tested backup reduces ransomware/DR severity by 40% (Sophos State of Ransomware 2025); an ODPC compliance programme reduces breach severity by 7% (IBM Cost of a Data Breach 2025)</td>
             <td class="td-caveat">Actual reduction depends on implementation quality, not just whether a control exists.</td>
           </tr>
           <tr>
@@ -904,11 +904,13 @@ a:hover { text-decoration: underline; }
       <h2 class="doc-section-title">Calibration sources</h2>
       <p class="doc-p">The following published sources are used to calibrate sector multipliers, severity percentages, and control efficacy constants in the CRQ Engine.</p>
       <div class="sources-strip">
-        <span class="source-tag">Serianu Africa Cybersecurity Report 2023</span>
+        <span class="source-tag">Serianu Africa Cybersecurity Report 2024/25</span>
         <span class="source-tag">CBK Cybersecurity Guidelines 2019</span>
         <span class="source-tag">Communications Authority of Kenya</span>
         <span class="source-tag">ODPC Enforcement Data 2022–2026</span>
-        <span class="source-tag">IBM Cost of a Data Breach 2023</span>
+        <span class="source-tag">IBM Cost of a Data Breach 2025</span>
+        <span class="source-tag">Verizon 2025 DBIR</span>
+        <span class="source-tag">Sophos State of Ransomware 2025</span>
         <span class="source-tag">NIST SP 800-53</span>
         <span class="source-tag">Zurich Emerging Markets CI Loss Data</span>
         <span class="source-tag">ISO 27005 Risk Practices</span>
