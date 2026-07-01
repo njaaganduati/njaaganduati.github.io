@@ -463,7 +463,7 @@ footer{border-top:1px solid var(--border)}
       <div class="mr instrument">
         <div class="mc hl"><div class="ml">Expected Annual Loss<span id="osectag" style="font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.06em;color:var(--gl);background:rgba(46,158,107,.12);padding:.12rem .4rem;border-radius:3px;margin-left:.45rem;vertical-align:middle"></span></div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
         <div class="mc"><div class="ml">Data Credibility (Z)</div><div class="mv" id="ocred">—</div><div class="msub" id="ocredsub">—</div></div>
-        <div class="mc am"><div class="ml">Worst-Case Event</div><div class="mv a" id="owc">—</div><div class="msub">95th percentile</div></div>
+        <div class="mc am"><div class="ml">Severe-Year Loss</div><div class="mv a" id="owc">—</div><div class="msub" id="owcsub">95th-percentile annual loss</div></div>
         <div class="mc"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
         <div class="mc am"><div class="ml">Regulatory Fine Exposure</div><div class="mv a" id="ofine">—</div><div class="msub" id="ofinesub">ODPC max</div></div>
         <div class="mc"><div class="ml">Risk as % of Revenue</div><div class="mv" id="opct">—</div><div class="msub">EAL / annual revenue</div></div>
@@ -502,7 +502,7 @@ footer{border-top:1px solid var(--border)}
           </div>
 
           <div class="tpane" id="tp-sc">
-            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">EAL = Likelihood × Financial Impact. Sorted by EAL. Likelihood = annual probability of occurrence given your control posture.</p>
+            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">EAL = modelled frequency (Poisson λ) × severity (Lognormal), per scenario, summed. Likelihood = probability of ≥1 event this year given your control posture. Sorted by EAL.</p>
             <table><thead><tr><th>Scenario</th><th>Pillar</th><th>Likelihood</th><th style="text-align:right">EAL / yr</th></tr></thead><tbody id="sctb"></tbody></table>
           </div>
 
@@ -639,17 +639,34 @@ function rm(inp){
   rC*=(1.85-ss/100*1.70);
   return {rF,rC:Math.max(0.12,rC)};
 }
+// ── λ_KE — national all-sector frequency base (Poisson rate) ──────────
+// Serianu Africa Cybersecurity Report 2024/25 (KE survey, n=280): 37% of
+// orgs reported >=1 incident in the year. Prevalence is NOT a rate — convert
+// under Poisson: lambda = -ln(1 - 0.37) = 0.462 incidents/org/yr.
+// All-sector base: sector bF applies ON TOP; never used flat.
+const LAMBDA_KE={v:0.462,src:'Serianu 2024/25 KE survey (n=280, 37% incident prevalence; prevalence->rate via Poisson)',geo:'local',tier:3,year:2025,conf:0.50};
+// Relative per-scenario frequency weights = existing bL shape normalised to
+// sum 1 (expert-judgment prior; each upgradable to a sourced local share).
+const SUM_BL=SCS.reduce((a,d)=>a+d.bL,0);
+// Sector loss-dispersion sigma (Lognormal tail width) — mirrors KRI display.
+function sig(inp){const s=SECTS[inp.sec];return s.ci?1.10:inp.sec==='fintech'?0.95:inp.sec==='govt'?0.65:0.80;}
+const Z75=0.6744898,Z95=1.6448536;   // standard-normal quantiles for loss bands
 function sc(inp){
-  const s=SECTS[inp.sec],{rF}=rm(inp);
+  const s=SECTS[inp.sec],{rF}=rm(inp),sg=sig(inp),k=Math.exp(sg*sg/2); // median->mean factor
   return SCS.map(d=>{
-    // ── SEVERITY modifiers (impact axis) ── scenario-scoped, not flat
+    const w=d.bL/SUM_BL;                                   // relative frequency weight (normalised prior)
+    const lam=LAMBDA_KE.v*s.bF*w*rF;                       // Poisson rate for this scenario (freq axis)
+    // ── SEVERITY (Lognormal median) — scenario-scoped control multipliers ──
     let rS=1.0;
     if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=.60;     // tested backup/RTO-RPO -> -40% severity, availability scenarios only (Sophos SoR 2025: intact vs compromised backups ~8x recovery cost)
     if(inp.odpc&&d.id==='breach')rS*=.93;                  // ODPC programme -> -7% severity, privacy scenario only (IBM CoDB 2025: containment-time delta)
-    return {...d,lh:Math.min(0.97,d.bL*s.bF*rF),imp:inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS};
-  })
-    .map(d=>({...d,lh:Math.round(d.lh*100),imp:Math.round(d.imp),eal:Math.round(d.lh/100*Math.round(d.imp))}))
-    .sort((a,b)=>b.eal-a.eal)
+    const med=inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS;  // Lognormal median severity
+    const esev=med*k;                                      // mean severity = median * exp(sigma^2/2)
+    const m2=med*med*Math.exp(2*sg*sg);                    // E[X^2] — for aggregate variance (compound Poisson)
+    const eal=lam*esev;                                    // scenario EAL = lambda * mean severity
+    const lh=Math.round(100*(1-Math.exp(-lam)));           // likelihood = P(>=1 event this year), Poisson
+    return {...d,lam,med,esev,m2,imp:Math.round(esev),eal:Math.round(eal),lh};
+  }).sort((a,b)=>b.eal-a.eal);
 }
 function st(id,btn){
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('a'));
@@ -710,10 +727,19 @@ function credibility(ealOwn,s,inp){
 function calc(){
   const inp=gi(),ss=sins(inp),scs=sc(inp);
   const eal=scs.reduce((a,b)=>a+b.eal,0);
-  const wc=Math.max(...scs.map(s=>s.imp));
   const s=SECTS[inp.sec],r=rm(inp).rC;
   const cred=credibility(eal,s,inp);
   const headEAL=CRED.HEADLINE==='cred'?cred.ealCred:eal;
+  // ── Aggregate annual-loss distribution (compound Poisson–Lognormal) ──
+  // Moment-match to a single Lognormal for p75/p95 loss bands: transparent,
+  // auditable, no simulation. Monte Carlo reserved for the paid tier.
+  // Bands are centred on the credibility-weighted headline (headEAL).
+  const aggMean=scs.reduce((a,d)=>a+d.lam*d.esev,0);        // = eal (bottom-up mean)
+  const aggVar =scs.reduce((a,d)=>a+d.lam*d.m2,0);          // Var = Σ λ·E[X²] (compound Poisson)
+  const sA=Math.sqrt(Math.log(1+aggVar/((aggMean*aggMean)||1)));
+  const muA=Math.log((headEAL)||1)-sA*sA/2;
+  const p75=Math.exp(muA+Z75*sA), p95=Math.exp(muA+Z95*sA);
+  const wc=p95;
   const pz=Math.round(cred.Z*100);
   const pct=(headEAL/inp.rev*100).toFixed(1);
   const fine=r>0.7?s.rF:Math.round(s.rF*0.5);
@@ -729,6 +755,7 @@ function calc(){
   document.getElementById('ocred').className='mv '+(pz>=80?'g':pz>=60?'a':'');
   document.getElementById('ocredsub').textContent=cred.tier+' · n '+cred.n.toFixed(1);
   document.getElementById('owc').textContent=fk(wc);
+  document.getElementById('owcsub').textContent='p95 · typical bad year (p75) '+fk(p75);
   const sel=document.getElementById('osins');
   sel.textContent=ss; sel.className='mv '+sc2;
   document.getElementById('osinsvd').textContent=svd;
