@@ -20,8 +20,8 @@
   --cond:'Barlow Condensed',sans-serif;
   --body:'Barlow','Segoe UI',sans-serif;
 }
-html{scroll-behavior:smooth}
-body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 5rem}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 5rem;overflow-x:hidden}
 a{color:var(--gl);text-decoration:none}
 body::before{
   content:'';position:fixed;inset:0;
@@ -160,7 +160,7 @@ nav{
   max-width:1200px;margin:0 auto;
   padding:0 2rem 3.5rem;
 }
-.deep-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.deep-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem}
 
 /* Free panel */
 .panel{
@@ -250,7 +250,7 @@ nav{
 
 /* Paid panel elements */
 .paid-metric-row{
-  display:grid;grid-template-columns:repeat(3,1fr);
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:0;border:1px solid rgba(20,107,78,0.2);
   border-radius:10px;overflow:hidden;margin-bottom:1rem;
 }
@@ -310,7 +310,7 @@ nav{
   max-width:1200px;margin:0 auto;
   padding:0 2rem 3.5rem;
 }
-.what-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.what-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;margin-top:1.5rem}
 .what-card{
   background:var(--card);border:1px solid var(--border);
   border-radius:12px;padding:1.4rem 1.6rem;
@@ -434,7 +434,7 @@ nav{
 
 /* EXEC SUMMARY */
 .exec-summary{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.exec-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.exec-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--border)}
 .exec-row:last-child{border-bottom:none}
 .exec-cell,.exec-score-card{padding:1.3rem 1.5rem;border-right:1px solid var(--border)}
 .exec-cell:last-child,.exec-score-card:last-child{border-right:none}
@@ -484,7 +484,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
 /* FINDING DETAIL */
 .finding-detail td{padding:0}
 .detail-block{background:rgba(0,0,0,0.35);border-top:1px solid var(--border2);padding:1.4rem 1.8rem}
-.detail-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.detail-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.5rem}
 .detail-section{margin-bottom:1rem}
 .detail-label{font-family:var(--mono);font-size:0.58rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem}
 .detail-text{font-size:0.82rem;line-height:1.65;color:var(--muted)}
@@ -493,7 +493,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
 .detail-footer{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--muted);font-family:var(--mono);border-top:1px solid var(--border);padding-top:0.6rem;margin-top:0.8rem;flex-wrap:wrap;gap:0.3rem}
 
 /* ROADMAP */
-.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
 .roadmap-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem}
 .roadmap-window{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;font-weight:600}
 .roadmap-card h4{font-family:var(--cond);font-size:1.1rem;font-weight:700;margin-bottom:0.7rem}
@@ -503,7 +503,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
 .roadmap-list li::before{content:'→';color:var(--green);flex-shrink:0;font-family:var(--mono)}
 
 /* SIGN-OFF */
-.signoff-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.signoff-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem}
 .signoff-field{border-bottom:1px solid rgba(255,255,255,0.12);padding-bottom:0.5rem;margin-top:1.5rem}
 .signoff-field-label{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:1.5rem}
 .disclaimer{font-size:0.72rem;color:var(--muted);line-height:1.6;background:rgba(158,27,35,0.06);border:1px solid rgba(158,27,35,0.2);border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}
@@ -527,9 +527,9 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
   .compare-feature{border-bottom:1px solid var(--border)}
   .deep-grid{grid-template-columns:1fr}
   .what-grid{grid-template-columns:1fr}
-  .paid-metric-row{grid-template-columns:1fr 1fr}
-  .exec-row{grid-template-columns:1fr 1fr}
-  .rings-grid{grid-template-columns:repeat(2,1fr)}
+  .paid-metric-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .exec-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .rings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .roadmap-grid{grid-template-columns:1fr}
   .signoff-card{grid-template-columns:1fr}
   .detail-cols{grid-template-columns:1fr}
@@ -779,7 +779,7 @@ code{font-family:var(--mono);font-size:0.7rem;background:rgba(255,255,255,0.05);
         <div class="locked-block">
           <div class="locked-content">
             <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem">Estimated financial exposure</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:0.5rem">
               <div style="background:rgba(158,27,35,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 4M</div><div style="font-size:0.65rem;color:var(--muted)">Breach cost</div></div>
               <div style="background:rgba(201,145,46,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 2M</div><div style="font-size:0.65rem;color:var(--muted)">Ransomware</div></div>
               <div style="background:rgba(201,145,46,0.1);border-radius:6px;padding:0.6rem;text-align:center"><div style="font-size:1.1rem;font-weight:700">KES 5M</div><div style="font-size:0.65rem;color:var(--muted)">DPA fine</div></div>
