@@ -677,7 +677,7 @@ function sc(inp){
     const lam=LAMBDA_KE.v*s.bF*w*rF;                       // Poisson rate for this scenario (freq axis)
     // ── SEVERITY (Lognormal median) — scenario-scoped control multipliers ──
     let rS=1.0;
-if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=CTRL.BACKUP_SEV.v;  // tested backup/RTO-RPO -> severity, availability scenarios only
+    if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=CTRL.BACKUP_SEV.v;  // tested backup/RTO-RPO -> severity, availability scenarios only
     if(inp.odpc==='programme'&&d.id==='breach')rS*=CTRL.ODPC_SEV.v;   // ODPC programme -> severity, privacy scenario only
     const med=inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS;  // Lognormal median severity
     const esev=med*k;                                      // mean severity = median * exp(sigma^2/2)
