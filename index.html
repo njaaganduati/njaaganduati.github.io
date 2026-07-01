@@ -1797,7 +1797,7 @@
         <div class="meth-step-num">03</div>
         <div class="meth-step-body">
           <div class="meth-step-title">Multiply: Expected Loss = Frequency × Severity</div>
-          <div class="meth-step-text">This is the same formula an insurance actuary uses to price a premium. If ransomware has a 30% annual probability of hitting your organisation and costs KES 9M when it does, your expected annual loss from ransomware is KES 2.7M. We calculate this for six attack types and sum them. That total is your Expected Annual Loss — what you should expect to lose, on average, in any given year.</div>
+          <div class="meth-step-text">This is the same actuarial principle used to price an insurance premium — but frequency isn’t a probability capped at 100%, it’s a rate. A scenario expected once every four years has a frequency of 0.25, not “25%,” because it could in principle happen more than once in a year. Severity is drawn from a lognormal distribution rather than a single figure, because most years cost less than average and rare years cost far more — collapsing that into one number would hide exactly the risk you’re trying to price. If ransomware has an annual frequency of 0.25 and a typical severity of KES 9M when it hits, its expected loss for the year is KES 2.25M. We run this for six attack types — phishing, ransomware, fraud, data breach, business continuity failure, insider threat — and sum them. That total is your Expected Annual Loss — what you should expect to lose, on average, in any given year.</div>
           <div class="meth-formula">EAL = &Sigma; (Frequency &times; Severity) across all six S.I.N.S. scenarios</div>
         </div>
       </div>
