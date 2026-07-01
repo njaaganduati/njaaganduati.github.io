@@ -408,8 +408,10 @@ footer{border-top:1px solid var(--border)}
         <div class="tr"><button class="tb" data-g="mfa" data-v="none" onclick="tog('mfa',this)">None</button><button class="tb on" data-g="mfa" data-v="partial" onclick="tog('mfa',this)">Partial</button><button class="tb" data-g="mfa" data-v="full" onclick="tog('mfa',this)">All staff</button></div>
         <label class="fl">Backup tested in last 90 days?</label>
         <div class="tr"><button class="tb on" data-g="bk" data-v="no" onclick="tog('bk',this)">No</button><button class="tb" data-g="bk" data-v="yes" onclick="tog('bk',this)">Yes</button></div>
-        <label class="fl">ODPC Registered?</label>
-        <div class="tr"><button class="tb on" data-g="odpc" data-v="no" onclick="tog('odpc',this)">No</button><button class="tb" data-g="odpc" data-v="yes" onclick="tog('odpc',this)">Yes</button></div>
+        <label class="fl">ODPC Compliance Status</label>
+        <div class="tr"><button class="tb on" data-g="odpc" data-v="none" onclick="tog('odpc',this)">None</button><button class="tb" data-g="odpc" data-v="registered" onclick="tog('odpc',this)">Registered</button><button class="tb" data-g="odpc" data-v="programme" onclick="tog('odpc',this)">Programme</button></div>
+        <label class="fl">Security Awareness Training (RETACH Academy)?</label>
+        <div class="tr"><button class="tb on" data-g="academy" data-v="no" onclick="tog('academy',this)">No</button><button class="tb" data-g="academy" data-v="yes" onclick="tog('academy',this)">Yes</button></div>
 
         <button class="cbtn" onclick="calc()">Calculate Risk Exposure →</button>
       </div>
@@ -603,7 +605,7 @@ const CTRLS=[
   {n:'Staff phishing simulation',                  rd:.12,ef:'Medium',cs:'KES 15–30K',    mt:'Reduces click rate avg 60% over 12 months'},
   {n:'ODPC registration & DPA policy',             rd:.08,ef:'Low',   cs:'KES 5–10K',     mt:'Eliminates KES 5M fine exposure'},
 ];
-const TS={mfa:'partial',bk:'no',odpc:'no'};
+const TS={mfa:'partial',bk:'no',odpc:'none',academy:'no'};
 
 function fk(v){if(v>=1e9)return'KES '+(v/1e9).toFixed(1)+'B';if(v>=1e6)return'KES '+(v/1e6).toFixed(1)+'M';if(v>=1e3)return'KES '+(v/1e3).toFixed(0)+'K';return'KES '+Math.round(v)}
 function fu(v){return'≈ USD '+(v/KR).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
@@ -619,7 +621,7 @@ function gi(){
     i:parseFloat(document.getElementById('ii').value),
     n:parseFloat(document.getElementById('in2').value),
     se:parseFloat(document.getElementById('isec2').value),
-    mfa:TS.mfa,bk:TS.bk==='yes',odpc:TS.odpc==='yes'
+    mfa:TS.mfa,bk:TS.bk==='yes',odpc:TS.odpc,academy:TS.academy==='yes'
   }
 }
 function sins(inp){return Math.round((inp.s+inp.i+inp.n+inp.se)/4)}
@@ -629,13 +631,14 @@ function rm(inp){
   let rF=1.0;
   rF*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;   // MFA -> frequency (creds = 22% top initial vector, Verizon 2025 DBIR)
   rF*=(1.85-ss/100*1.70);                                  // SINS posture -> frequency
+  rF*=inp.academy?0.95:1.0;                                // RETACH Academy -> frequency (Verizon 2025 DBIR phishing 16% initial vector x KnowBe4 PPP; global/tier-2/conf 0.35)
   rF=Math.max(0.15,rF);
   // ── Control-maturity proxy (Regulatory Fine card discount ONLY; never applied to EAL) ──
   // reproduces the legacy combined modifier so the separate fine card is byte-unchanged
   let rC=1.0;
   rC*=inp.mfa==='full'?.62:inp.mfa==='partial'?.82:1.0;
   rC*=inp.bk?.70:1.0;
-  rC*=inp.odpc?.88:1.0;
+  rC*=inp.odpc==='programme'?.88:1.0;                     // fine-card discount now requires full programme, not just registration
   rC*=(1.85-ss/100*1.70);
   return {rF,rC:Math.max(0.12,rC)};
 }
@@ -659,7 +662,7 @@ function sc(inp){
     // ── SEVERITY (Lognormal median) — scenario-scoped control multipliers ──
     let rS=1.0;
     if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=.60;     // tested backup/RTO-RPO -> -40% severity, availability scenarios only (Sophos SoR 2025: intact vs compromised backups ~8x recovery cost)
-    if(inp.odpc&&d.id==='breach')rS*=.93;                  // ODPC programme -> -7% severity, privacy scenario only (IBM CoDB 2025: containment-time delta)
+    if(inp.odpc==='programme'&&d.id==='breach')rS*=.93;    // ODPC programme -> -7% severity, privacy scenario only (IBM CoDB 2025: containment-time delta)
     const med=inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS;  // Lognormal median severity
     const esev=med*k;                                      // mean severity = median * exp(sigma^2/2)
     const m2=med*med*Math.exp(2*sg*sg);                    // E[X^2] — for aggregate variance (compound Poisson)
@@ -703,6 +706,7 @@ function credUnits(inp){
   let n=0;
   ['s','i','n','se'].forEach(k=>{if(isFinite(inp[k]))n+=CRED.W.sins;});     // 4 S.I.N.S. sub-scores
   n+=CRED.W.ctrl*3;                                                         // mfa, bk, odpc attestations
+  if(inp.odpc!=='none')n+=CRED.W.ctrl;                                        // ODPC registered/programme -> extra credibility (disclosed compliance state)
   if(isFinite(inp.stf))n+=CRED.W.staff;
   if(OSINT_DONE)n+=CRED.W.osint;
   if(CRED.VERIFIED)n+=CRED.W.verified;
@@ -825,7 +829,7 @@ function rCT(eal){
 }
 
 function rRM(inp,ss){
-  const nm=inp.mfa==='none',nb=!inp.bk,no=!inp.odpc,lw=ss<45;
+  const nm=inp.mfa==='none',nb=!inp.bk,no=inp.odpc==='none',lw=ss<45;
   const s=SECTS[inp.sec];
   const isCI=s&&s.ci;
 
