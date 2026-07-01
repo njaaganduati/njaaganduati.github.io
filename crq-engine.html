@@ -92,6 +92,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .mc.hl{border-color:rgba(158,27,35,.4);background:rgba(158,27,35,.06)}
 .mc.am{border-color:rgba(201,145,46,.35);background:rgba(201,145,46,.05)}
 .mc.gn{border-color:rgba(20,107,78,.35);background:rgba(20,107,78,.05)}
+.mc.st{border-color:rgba(74,79,85,.5);background:rgba(74,79,85,.08)}
 .ml{font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
 .mv{font-family:var(--cond);font-size:1.6rem;font-weight:800;line-height:1;color:var(--text)}
 .mv.r{color:#E0555F} .mv.a{color:var(--amber)} .mv.g{color:var(--gl)}
@@ -211,6 +212,7 @@ footer{border-top:1px solid var(--border)}
 .instrument .mc{background:#13291f;border:1px solid rgba(255,255,255,.07)}
 .instrument .mc.hl{background:rgba(192,57,43,.16);border-color:rgba(192,57,43,.45)}
 .instrument .mc.am{background:rgba(181,116,15,.16);border-color:rgba(181,116,15,.42)}
+.instrument .mc.st{background:rgba(120,128,138,.14);border-color:rgba(120,128,138,.4)}
 .instrument .mv{color:#eaf3ee}.instrument .mv.r{color:#ff6b6b}.instrument .mv.a{color:#f0a93a}.instrument .mv.g{color:#5fcf95}
 .instrument .ml,.instrument .msub{color:#9fb6a8}
 .instrument .hm-y,.instrument .hm-x{color:#9fb6a8}
@@ -462,14 +464,15 @@ footer{border-top:1px solid var(--border)}
 
     <div id="rw" class="hid">
       <div id="csbanner" class="hid" style="background:rgba(201,145,46,.1);border:1px solid rgba(201,145,46,.45);border-radius:8px;padding:.7rem 1rem;margin-bottom:1rem;font-family:var(--mono);font-size:.62rem;line-height:1.6;color:#D4A53A">⚠ Illustrative — not calibrated for client delivery. This sector uses placeholder benchmark data (tier 4); figures are indicative only and must not be used in a client report.</div>
+      <p style="font-size:.72rem;color:var(--muted);margin-bottom:.75rem;line-height:1.6">These seven numbers answer one question: <strong style="color:var(--text)">what could a bad year cost you, and how confident are we in that number?</strong> The three highlighted tiles are loss figures in KES; the rest give you context on how that number was built.</p>
       <div class="mr instrument">
         <div class="mc hl"><div class="ml">Expected Annual Loss<span id="osectag" style="font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.06em;color:var(--gl);background:rgba(46,158,107,.12);padding:.12rem .4rem;border-radius:3px;margin-left:.45rem;vertical-align:middle"></span></div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
-        <div class="mc"><div class="ml">Data Credibility (Z)</div><div class="mv" id="ocred">—</div><div class="msub" id="ocredsub">—</div></div>
+        <div class="mc st"><div class="ml">Data Credibility (Z)</div><div class="mv" id="ocred">—</div><div class="msub" id="ocredsub">—</div></div>
         <div class="mc am"><div class="ml">Severe-Year Loss</div><div class="mv a" id="owc">—</div><div class="msub" id="owcsub">95th-percentile annual loss</div></div>
-        <div class="mc"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
+        <div class="mc st"><div class="ml">S.I.N.S. Score</div><div class="mv" id="osins">—</div><div class="msub" id="osinsvd">—</div></div>
         <div class="mc am"><div class="ml">Regulatory Fine Exposure</div><div class="mv a" id="ofine">—</div><div class="msub" id="ofinesub">ODPC max</div></div>
-        <div class="mc"><div class="ml">Risk as % of Revenue</div><div class="mv" id="opct">—</div><div class="msub">EAL / annual revenue</div></div>
-        <div class="mc"><div class="ml">Est. Recovery Time</div><div class="mv" id="ort">—</div><div class="msub">downtime, ransomware event</div></div>
+        <div class="mc st"><div class="ml">Risk as % of Revenue</div><div class="mv" id="opct">—</div><div class="msub">EAL / annual revenue</div></div>
+        <div class="mc st"><div class="ml">Est. Recovery Time</div><div class="mv" id="ort">—</div><div class="msub">downtime, ransomware event</div></div>
       </div>
 
       <div>
@@ -509,6 +512,7 @@ footer{border-top:1px solid var(--border)}
           </div>
 
           <div class="tpane" id="tp-os">
+            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Live, unauthenticated checks against your own public-facing footprint — DNS, SSL, and known ransomware activity. Results feed into your Attack Surface Score, which nudges how <em>often</em> an incident is expected — not how badly it would hurt if one happened.</p>
             <!-- ── Threat Intel Feed (loads on tab open) ── -->
             <div id="rw-intel-wrap">
               <div class="rw-loading" id="rw-loading">⬤ Loading live ransomware threat intelligence…</div>
@@ -544,6 +548,7 @@ footer{border-top:1px solid var(--border)}
           </div>
 
           <div class="tpane" id="tp-rm">
+            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Your top EAL-reducing actions, grouped into a 30/60/90-day sequence. Work top-to-bottom within each window for the fastest risk reduction per KES spent.</p>
             <div class="rm-cols" id="rmc"></div>
           </div>
 
@@ -975,7 +980,7 @@ function shell(d){
     {id:'hibp', lb:'Domain breach data',           det:'Checks known credential exposure'},
     {id:'sh',   lb:'Open ports & services',        det:'Shodan InternetDB via api.retach.io'},
   ];
-  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.io):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
+  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div style="font-size:.62rem;color:var(--muted);margin-top:.25rem;line-height:1.5">Lower is better. This score reflects how exposed you are to opportunistic scanning — it nudges how <em>often</em> an incident is likely, not how badly it would hurt if one happened.</div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.io):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
 }
 
 function upd(id,r){
