@@ -97,6 +97,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .ml{font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
 .mv{font-family:var(--cond);font-size:1.6rem;font-weight:800;line-height:1;color:var(--text)}
 .mv.r{color:#E0555F} .mv.a{color:var(--amber)} .mv.g{color:var(--gl)}
+.ctx-note{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gl);border-radius:8px;padding:.75rem 1.1rem;margin-bottom:1rem;transition:border-color .2s}
+.ctx-note p{font-size:.72rem;color:var(--muted);line-height:1.6;margin:0}
+.ctx-note p strong{color:var(--text)}
+.ctx-note.tier-placeholder{border-left-color:var(--amber)}
+.ctx-note .caveat{color:var(--amber);font-style:italic}
 .msub{font-size:.65rem;color:var(--muted);margin-top:.22rem}
 
 .tbar{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--card);border-radius:12px 12px 0 0;overflow:hidden}
@@ -465,8 +470,9 @@ footer{border-top:1px solid var(--border)}
     </div>
 
     <div id="rw" class="hid">
-      <div id="csbanner" class="hid" style="background:rgba(201,145,46,.1);border:1px solid rgba(201,145,46,.45);border-radius:8px;padding:.7rem 1rem;margin-bottom:1rem;font-family:var(--mono);font-size:.62rem;line-height:1.6;color:var(--amber)">⚠ Illustrative — not calibrated for client delivery. This sector uses placeholder benchmark data (tier 4); figures are indicative only and must not be used in a client report.</div>
-      <p style="font-size:.72rem;color:var(--muted);margin-bottom:.75rem;line-height:1.6">These seven numbers answer one question: <strong style="color:var(--text)">what could a bad year cost you, and how confident are we in that number?</strong> The three highlighted tiles are loss figures in KES; the rest give you context on how that number was built.</p>
+      <div id="ctxnote" class="ctx-note">
+        <p id="ctxnote-text">These seven numbers answer one question: <strong>what could a bad year cost you, and how confident are we in that number?</strong> The three highlighted tiles are loss figures in KES; the rest give you context on how that number was built.</p>
+      </div>
       <div class="mr instrument">
         <div class="mc hl"><div class="ml">Expected Annual Loss<span id="osectag" style="font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.06em;color:var(--gl);background:rgba(46,158,107,.12);padding:.12rem .4rem;border-radius:3px;margin-left:.45rem;vertical-align:middle"></span></div><div class="mv r" id="oeal">—</div><div class="msub" id="oealusd">—</div></div>
         <div class="mc st"><div class="ml">Data Credibility (Z)</div><div class="mv" id="ocred">—</div><div class="msub" id="ocredsub">—</div></div>
@@ -816,7 +822,11 @@ function calc(){
   document.getElementById('tcp').classList.add('hid');
   document.getElementById('rw').classList.remove('hid');
   document.getElementById('rw').scrollIntoView({behavior:'smooth',block:'start'});
-  document.getElementById('csbanner').className=(s.clientSafe===true)?'hid':'';
+  const isPlaceholder=(s.clientSafe!==true);
+  document.getElementById('ctxnote').className='ctx-note'+(isPlaceholder?' tier-placeholder':'');
+  document.getElementById('ctxnote-text').innerHTML=
+    `These seven numbers answer one question: <strong>what could a bad year cost you, and how confident are we in that number?</strong> The three highlighted tiles are loss figures in KES; the rest give you context on how that number was built.`+
+    (isPlaceholder?` <span class="caveat">This sector currently uses placeholder benchmark data (tier 4) — figures are indicative only and must not be used in a client report.</span>`:'');
   // TODO[clientSafe export gate]: when a client PDF/export feature ships, also disable it here when s.clientSafe!==true.
 }
 
