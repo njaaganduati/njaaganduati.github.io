@@ -42,8 +42,8 @@ h1 em{color:var(--green);font-style:normal}
 .hpill{font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;color:var(--muted);border:1px solid var(--border);padding:.22rem .65rem;border-radius:3px}
 .hpill.a{color:var(--gl);border-color:var(--gd)}
 
-.wrap{max-width:1120px;margin:0 auto;padding:1.5rem 2rem;display:grid;grid-template-columns:320px 1fr;gap:1.25rem;position:relative;z-index:1}
-@media(max-width:840px){.wrap{grid-template-columns:1fr;padding:1rem}}
+.wrap{max-width:1120px;margin:0 auto;padding:1.5rem 2rem;display:grid;grid-template-columns:320px minmax(0,1fr);gap:1.25rem;position:relative;z-index:1}
+@media(max-width:840px){.wrap{grid-template-columns:minmax(0,1fr);padding:1rem}}
 
 .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .ph{padding:.9rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
