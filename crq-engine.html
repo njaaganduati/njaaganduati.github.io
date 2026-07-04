@@ -616,11 +616,11 @@ const SECTS={
 };
 const SCS=[
   {id:'phish', n:'Phishing & account compromise',    p:'S¹ Systems',       bL:.85,bI:.04},
-  {id:'ransom',n:'Ransomware & operational downtime', p:'S² Infrastructure',bL:.55,bI:.18},
-  {id:'fraud', n:'Payment fraud & M-Pesa abuse',     p:'S¹/S³ Systems/Net',bL:.65,bI:.06},
-  {id:'breach',n:'Data breach & ODPC liability',     p:'S⁴ Security',      bL:.45,bI:.12},
-  {id:'dr',    n:'Business continuity failure',      p:'S² Infrastructure',bL:.40,bI:.22},
-  {id:'ins',   n:'Insider threat / privilege abuse', p:'S¹ Systems',       bL:.35,bI:.09},
+  {id:'ransom',n:'Ransomware & operational downtime', p:'S² Infrastructure',bL:.37,bI:.18},
+  {id:'fraud', n:'Payment fraud & M-Pesa abuse',     p:'S¹/S³ Systems/Net',bL:.60,bI:.06},
+  {id:'breach',n:'Data breach & ODPC liability',     p:'S⁴ Security',      bL:.69,bI:.12},
+  {id:'dr',    n:'Business continuity failure',      p:'S² Infrastructure',bL:.44,bI:.22},
+  {id:'ins',   n:'Insider threat / privilege abuse', p:'S¹ Systems',       bL:.30,bI:.09},
 ];
 const CTRLS=[
   {n:'Multi-Factor Authentication (MFA)',         rd:.28,ef:'Low',   cs:'KES 0–15K/yr',  mt:'Applies to all account-based scenarios'},
@@ -692,8 +692,17 @@ function rm(inp){
 // under Poisson: lambda = -ln(1 - 0.37) = 0.462 incidents/org/yr.
 // All-sector base: sector bF applies ON TOP; never used flat.
 const LAMBDA_KE={v:0.462,src:'Serianu 2024/25 KE survey (n=280, 37% incident prevalence; prevalence->rate via Poisson)',geo:'local',tier:3,year:2025,conf:0.50};
-// Relative per-scenario frequency weights = existing bL shape normalised to
-// sum 1 (expert-judgment prior; each upgradable to a sourced local share).
+// Relative per-scenario frequency weights = bL shape normalised to sum 1.
+// UPGRADED 2026-07-04: ransom/fraud/breach/dr/ins are now a 50/50 RETACH
+// policy blend of the prior expert-judgment shape and Serianu 2024/25
+// "Top Risk Scenarios — Africa" regional table (5-economy model, p.33-34),
+// crosswalked from 10 outcome categories onto RETACH's 6 SCS types.
+// phish is UNCHANGED — deliberately kept pure expert-judgment, since the
+// sourced table is an outcome taxonomy (what kind of unauthorised action
+// occurred), not a vector taxonomy (how the attacker got in); phishing as
+// an initial vector already feeds into the sourced fraud/breach shares
+// upstream, so blending a vector-level figure in here would double-count.
+const BL_BLEND_PROV={v:0.50,src:'50/50 blend: RETACH expert-judgment prior + Serianu 2024/25 Africa "Top Risk Scenarios" regional table (5-economy model, not Kenya-only)',geo:'regional',tier:3,year:2025,method:'RETACH policy blend — equal weight pending own claims data; applies to ransom/fraud/breach/dr/ins only, not phish',conf:0.35};
 const SUM_BL=SCS.reduce((a,d)=>a+d.bL,0);
 // Sector loss-dispersion sigma (Lognormal tail width) — mirrors KRI display.
 function sig(inp){const s=SECTS[inp.sec];return s.ci?1.10:inp.sec==='fintech'?0.95:inp.sec==='govt'?0.65:0.80;}
