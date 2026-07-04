@@ -309,6 +309,18 @@ footer{border-top:1px solid var(--border)}
 .kr-r{background:rgba(192,57,43,.12);color:#9E1B23}
 .kr-own{font-size:.64rem;color:var(--muted);white-space:nowrap}
 .kr-freq{font-family:var(--mono);font-size:.58rem;color:var(--text);white-space:nowrap}
+@media(max-width:600px){
+.kri-thead-legend{flex-wrap:wrap;gap:.5rem 1rem}
+.kri-tbl-wrap{overflow-x:visible;border:none;background:transparent;margin-bottom:.6rem}
+.kri-tbl{min-width:0}
+.kri-tbl thead{display:none}
+.kri-tbl,.kri-tbl tbody,.kri-tbl tr,.kri-tbl td{display:block;width:100%}
+.kri-tbl tbody tr{background:#fff;border:1px solid var(--border);border-radius:10px;padding:.7rem .8rem;margin-bottom:.6rem}
+.kri-tbl tbody tr:nth-child(even){background:#fff}
+.kri-tbl td{border-bottom:none;padding:.28rem 0}
+.kri-tbl td.kr-n{display:none}
+.kri-tbl td:before{content:attr(data-label);display:block;font-family:var(--mono);font-size:.5rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem}
+}
 .kri-threat{background:#f4f7f4;border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;margin-bottom:.7rem}
 .kri-tv{font-size:.78rem;color:var(--text);line-height:1.9}
 .kri-tv-tag{font-family:var(--mono);font-size:.55rem;font-weight:600;letter-spacing:.05em;padding:.12rem .5rem;border-radius:3px;margin-right:.45rem;text-transform:uppercase}
@@ -1253,12 +1265,12 @@ function renderKRI(){
     var p=SINS_P[r[2]];
     return '<tr>'
       +'<td class="kr-n">'+(i+1)+'</td>'
-      +'<td class="kr-kri"><strong>'+r[0]+'</strong><span class="kr-cat">'+r[1]+'</span></td>'
-      +'<td><span class="kri-pill" style="background:'+p.c+'" title="'+p.name+' — '+p.layer+'">'+p.ltr+'</span><span class="kr-pn">'+p.name+'</span></td>'
-      +'<td class="kr-std"><span class="kr-nist">'+r[3]+'</span><span class="kr-iso">ISO '+r[4]+'</span></td>'
-      +'<td class="kr-thr"><span class="kr-g">'+r[5]+'</span><span class="kr-a">'+r[6]+'</span><span class="kr-r">'+r[7]+'</span></td>'
-      +'<td class="kr-own">'+r[8]+'</td>'
-      +'<td class="kr-freq">'+r[9]+'</td>'
+      +'<td class="kr-kri" data-label="Key Risk Indicator"><strong>'+r[0]+'</strong><span class="kr-cat">'+r[1]+'</span></td>'
+      +'<td data-label="S.I.N.S. Pillar"><span class="kri-pill" style="background:'+p.c+'" title="'+p.name+' — '+p.layer+'">'+p.ltr+'</span><span class="kr-pn">'+p.name+'</span></td>'
+      +'<td class="kr-std" data-label="Standard mapping"><span class="kr-nist">'+r[3]+'</span><span class="kr-iso">ISO '+r[4]+'</span></td>'
+      +'<td class="kr-thr" data-label="Threshold · G / A / R"><span class="kr-g">'+r[5]+'</span><span class="kr-a">'+r[6]+'</span><span class="kr-r">'+r[7]+'</span></td>'
+      +'<td class="kr-own" data-label="Suggested owner">'+r[8]+'</td>'
+      +'<td class="kr-freq" data-label="Cadence">'+r[9]+'</td>'
       +'</tr>';
   }).join('');
   var table='<div class="kri-subh">S.I.N.S. KRI Register · '+reg.length+' indicators<span class="kri-subh-note">mapped to NIST CSF 2.0 · ISO/IEC 27001:2022 · 27005</span></div>'
