@@ -918,4 +918,387 @@ function rBM(eal,s,cred){
   const peers=[
     {n:'Sector prior (geo-mean)',v:sector,c:'#C9912E'},
     {n:'Your organisation (bottom-up)',v:eal,c:eal>hi?'#E0555F':eal>lo?'#C9912E':'#146B4E'},
-    {n:'Credibility-weighted (headline)',v:cr
+    {n:'Credibility-weighted (headline)',v:credible,c:'#2E9E6B'}
+  ];
+  const mx=Math.max(...peers.map(p=>p.v))*1.1;
+  const pos=eal>hi?'Above sector band — elevated risk':eal>lo?'Within sector band':'Below sector band — better than peers';
+  const pc=eal>hi?'#E0555F':eal>lo?'#C9912E':'#146B4E';
+  const pz=cred?Math.round(cred.Z*100):0;
+  const tier=cred?cred.tier:'Self-reported';
+  const pb=(cred?cred.prov:sectorProv(s)).bch;
+  const geoMap={local:'Local (KE/EA)',regional:'Regional (Africa)',global:'Global benchmark'};
+  const geoLbl=geoMap[pb.geo]||pb.geo||'—';
+  document.getElementById('bmo').innerHTML=
+    `<div style="margin-bottom:.9rem">${peers.map(p=>`<div class="br"><div class="bl">${p.n}</div><div class="bt"><div class="bf" style="width:${Math.round(p.v/mx*100)}%;background:${p.c}"></div></div><div class="bv">${fk(p.v)}</div></div>`).join('')}</div>`+
+    `<div style="padding:.7rem .9rem;background:var(--dark2);border:1px solid var(--border);border-radius:8px;font-size:.77rem"><span style="color:var(--muted)">Position vs sector band: </span><strong style="color:${pc}">${pos}</strong><br><span style="color:var(--muted)">Credibility Z = </span><strong style="color:#2E9E6B">${pz}%</strong> <span style="color:var(--muted)">(${tier}). The headline blends your bottom-up estimate with the sector prior; more evidence raises Z toward your own number.</span></div>`+
+    `<p style="font-size:.62rem;color:var(--muted);margin-top:.65rem;line-height:1.6">Sector prior: ${pb.src} · ${geoLbl} · Tier ${pb.tier} · ${pb.year} · confidence ${pb.conf.toFixed(2)}. Sector annual loss band KES ${s.bch[0].toFixed(1)}M–${s.bch[1].toFixed(1)}M (absolute).</p>`+
+    `<p style="font-size:.6rem;color:var(--muted);margin-top:.5rem;line-height:1.6">RETACH derives sector priors from independently verifiable regulatory and public evidence wherever available; commercial research is used only for triangulation where primary evidence is unavailable. Every sector prior is traceable to its underlying sources. Triangulation: Serianu 2024/2025.</p>`;
+}
+
+/* ── OSINT via api.retach.io ─────────────────────── */
+const API='https://api.retach.io';
+
+async function runOS(){
+  const raw=document.getElementById('od').value.trim().toLowerCase().replace(/^https?:\/\//,'').replace(/\/.*/,'');
+  if(!raw||raw.length<4||!raw.includes('.')){alert('Please enter a valid domain e.g. company.co.ke');return}
+  const btn=document.getElementById('osb');
+  btn.disabled=true;btn.textContent='Scanning…';
+  document.getElementById('oor').innerHTML=shell(raw);
+  const R={};
+
+  // Single composite call to the API
+  try{
+    const r=await fetch(`${API}/api/osint/full`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({domain:raw})
+    });
+    const data=await r.json();
+    OSINT_DONE=true;
+
+    // Parse DNS results
+    const dns=data.dns?.results||{};
+    R.mx=parseMX(dns.mx);upd('oc-mx',R.mx);
+    R.spf=parseSPF(dns.spf);upd('oc-spf',R.spf);
+    R.dmarc=parseDMARC(dns.dmarc);upd('oc-dmarc',R.dmarc);
+    R.dkim=parseDKIM(dns.dkim);upd('oc-dkim',R.dkim);
+    R.a=parseA(dns.a);upd('oc-a',R.a);
+
+    // SSL
+    R.ssl=parseSSL(data.ssl);upd('oc-ssl',R.ssl);
+
+    // HIBP placeholder
+    R.hibp={st:'warn',lb:'HIBP: verify at haveibeenpwned.com',ext:'Domain owner verification required — RETACH runs live in paid assessment'};
+    upd('oc-hibp',R.hibp);
+
+    // Shodan
+    R.sh=parseShodan(data.shodan);upd('oc-sh',R.sh);
+
+  }catch(e){
+    // Fallback: mark all as warn
+    ['mx','spf','dmarc','dkim','ssl','a','hibp','sh'].forEach(k=>{
+      R[k]={st:'warn',lb:'API unavailable',ext:'Check api.retach.io/health'};
+      upd('oc-'+k,R[k]);
+    });
+  }
+
+  const vals=Object.values(R);
+  const ok=vals.filter(v=>v&&v.st==='ok').length;
+  const sc=Math.round(ok/vals.length*100);
+  const sf=document.getElementById('osf');
+  if(sf){sf.style.width=sc+'%';sf.style.background=sc>=70?'#146B4E':sc>=45?'#C9912E':'#E0555F'}
+  const sv=document.getElementById('osv');
+  if(sv)sv.textContent=sc+'/100 exposure score';
+  btn.disabled=false;btn.textContent='Scan Again →';
+}
+
+// Parsers — convert API response to display objects
+function parseMX(mx){if(!mx)return{st:'warn',lb:'Check failed'};return mx.found?{st:'ok',lb:`${mx.count} MX record(s)`,ext:mx.records.join(' · ')}:{st:'critical',lb:'No MX records',ext:'Domain cannot receive email'};}
+function parseSPF(spf){if(!spf)return{st:'warn',lb:'Check failed'};if(!spf.found)return{st:'critical',lb:'No SPF record',ext:'Domain can be spoofed — phishing risk HIGH'};return{st:spf.strict?'ok':'warn',lb:spf.strict?'SPF: -all (strict)':'SPF: ~all (soft)',ext:(spf.record||'').substring(0,90)};}
+function parseDMARC(d){if(!d)return{st:'warn',lb:'Check failed'};if(!d.found)return{st:'critical',lb:'No DMARC record',ext:'Email spoofing not blocked — add DMARC p=reject'};const p=d.policy||'none';return{st:p==='reject'?'ok':p==='quarantine'?'warn':'critical',lb:`DMARC: p=${p}`,ext:p==='reject'?'Strong enforcement':p==='quarantine'?'Partial — upgrade to p=reject':'No enforcement'};}
+function parseDKIM(k){if(!k)return{st:'warn',lb:'Check failed'};return k.found?{st:'ok',lb:`DKIM found (${k.selector})`,ext:`Selector: ${k.selector}._domainkey`}:{st:'warn',lb:'DKIM: not detected',ext:'Common selectors not found'};}
+function parseA(a){if(!a)return{st:'warn',lb:'Check failed'};return a.found?{st:'ok',lb:`Resolves → ${a.ip}`,ext:'IP confirmed'}:{st:'warn',lb:'No A record',ext:'Domain may not resolve'};}
+function parseSSL(ssl){if(!ssl||!ssl.found)return{st:'warn',lb:'SSL: no cert data',ext:'crt.sh lookup — check manually at crt.sh'};if(ssl.expired)return{st:'critical',lb:'SSL EXPIRED',ext:`Expired — browsers show security error`};if(ssl.daysLeft<30)return{st:'warn',lb:`SSL expires in ${ssl.daysLeft} days`,ext:`Issuer: ${ssl.issuer}`};return{st:'ok',lb:`SSL valid (${ssl.daysLeft} days)`,ext:`Issuer: ${ssl.issuer}`};}
+function parseShodan(sh){if(!sh||!sh.found)return{st:'ok',lb:'No Shodan data yet',ext:'New IP — Shodan indexes within 1–7 days'};const ports=sh.ports||[];const vulns=sh.vulns||[];if(vulns.length)return{st:'critical',lb:`${vulns.length} CVE(s) detected`,ext:`Ports: ${ports.join(', ')} · CVEs: ${vulns.slice(0,3).join(', ')}`};if(ports.length){const risky=ports.filter(p=>[21,23,25,110,135,139,445,3389,5900,8080,8443].includes(p));if(risky.length)return{st:'warn',lb:`${risky.length} risky port(s): ${risky.join(', ')}`,ext:`All ports: ${ports.join(', ')}`};return{st:'warn',lb:`${ports.length} open port(s)`,ext:`Ports: ${ports.join(', ')}`};}return{st:'ok',lb:'Minimal exposure',ext:'No open ports or CVEs in Shodan'};}
+
+function shell(d){
+  const cks=[
+    {id:'mx',   lb:'MX records',                  det:'Domain mail routing records'},
+    {id:'spf',  lb:'SPF record (sender policy)',   det:'Prevents email spoofing'},
+    {id:'dmarc',lb:'DMARC policy (enforcement)',   det:'p=reject blocks spoofed delivery'},
+    {id:'dkim', lb:'DKIM (signing key)',            det:'Email cryptographic signature'},
+    {id:'ssl',  lb:'SSL/TLS certificate',          det:'Expiry and issuer check via crt.sh'},
+    {id:'a',    lb:'Domain resolves (A record)',   det:'IP address lookup'},
+    {id:'hibp', lb:'Domain breach data',           det:'Checks known credential exposure'},
+    {id:'sh',   lb:'Open ports & services',        det:'Shodan InternetDB via api.retach.io'},
+  ];
+  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div style="font-size:.62rem;color:var(--muted);margin-top:.25rem;line-height:1.5">Lower is better. This score reflects how exposed you are to opportunistic scanning — it nudges how <em>often</em> an incident is likely, not how badly it would hurt if one happened.</div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.io):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
+}
+
+function upd(id,r){
+  const el=document.getElementById(id);
+  if(!el||!r)return;
+  const tc=r.st==='ok'?'tc-ok':r.st==='warn'?'tc-w':'tc-c';
+  el.innerHTML=`<span class="otag ${tc}" title="${r.ext||''}">${r.lb}</span>`;
+  if(r.ext){const row=document.getElementById('orow-'+id.replace('oc-',''));if(row){const d=row.querySelector('.od');if(d)d.textContent=r.ext}}
+}
+
+/* URL param pre-load from scanner */
+(function(){
+  const p=new URLSearchParams(window.location.search);
+  if(p.get('s')){document.getElementById('is').value=p.get('s');ul('ls',p.get('s')+' / 100')}
+  if(p.get('i')){document.getElementById('ii').value=p.get('i');ul('li',p.get('i')+' / 100')}
+  if(p.get('n')){document.getElementById('in2').value=p.get('n');ul('ln',p.get('n')+' / 100')}
+  if(p.get('sec')){document.getElementById('isec2').value=p.get('sec');ul('lsec2',p.get('sec')+' / 100')}
+  if(p.get('sector'))document.getElementById('i-sec').value=p.get('sector');
+  if(p.has('s')||p.has('sector'))setTimeout(calc,400);
+})();
+
+/* ════ Ransomware Threat Intelligence (api.retach.io · ransomware.live) ════ */
+/* ── Region → ransomware.live country codes ── */
+const RW_COUNTRIES={
+  kenya:    ['KEN'],
+  eastafrica:['KEN','TZA','UGA','RWA','ETH'],
+  global:   [] // uses /recentvictims endpoint instead
+};
+
+/* ── Sector label map for victim matching ── */
+const SECT_LABELS={
+  sacco:'financial',saccondt:'financial',fintech:'financial',
+  sme:'business',health:'healthcare',govt:'government',ngo:'ngo',school:'education',
+  ci_transport:'transport',ci_energy:'energy',ci_telecoms:'telecom',ci_finance:'financial',ci_govt:'government',ci_health:'healthcare'
+};
+
+/* ── Ransomware intel state ── */
+let rwLoaded=false;
+let rwLoadedRegion='';
+
+function getCRQRegion(){
+  // Read from the region toggle if it exists (crq-engine region selector)
+  const rt=document.querySelector('.region-btn.on');
+  if(rt)return rt.dataset.region||'kenya';
+  return'kenya'; // default
+}
+
+function getCurrentSector(){
+  return document.getElementById('i-sec')?.value||'sme';
+}
+
+async function loadRWIntel(){
+  if(rwLoaded&&rwLoadedRegion===getCRQRegion())return;
+  const wrap=document.getElementById('rw-intel');
+  const loading=document.getElementById('rw-loading');
+  const region=getCRQRegion();
+  const sector=getCurrentSector();
+  const sectorLabel=SECT_LABELS[sector]||'';
+
+  try{
+    let victims=[];
+    const countries=RW_COUNTRIES[region]||['KEN'];
+
+    if(region==='global'){
+      // Use recent victims feed, filter by sector keyword
+      const r=await fetch(API+'/api/osint/ransomware/region/global',{signal:AbortSignal.timeout(12000)});
+      const data=await r.json();
+      victims=(data.victims||[]).filter(v=>{
+        const desc=(v.description||v.activity||'').toLowerCase();
+        return!sectorLabel||desc.includes(sectorLabel)||desc.includes('financial')||desc.includes('bank');
+      }).slice(0,15);
+    } else {
+      // Fetch each country and merge
+      const r=await fetch(API+'/api/osint/ransomware/region/'+region+(sectorLabel?'?sector='+sectorLabel:''),{signal:AbortSignal.timeout(12000)});
+      const data=await r.json();
+      victims=(data.victims||[]);
+    }
+
+    // Sort by date descending
+    victims.sort((a,b)=>new Date(b.attackdate||b.published||b.date||0)-new Date(a.attackdate||a.published||a.date||0));
+
+    // Count by sector for stats
+    const total=victims.length;
+    const last90=victims.filter(v=>{
+      const d=new Date(v.attackdate||v.published||v.date||0);
+      return(Date.now()-d.getTime())<90*86400000;
+    });
+    const groups=[...new Set(victims.slice(0,20).map(v=>v.group||v.threat_actor||'Unknown'))];
+    const topGroup=groups[0]||'Unknown';
+
+    // Build sector-matched count
+    const sectorMatch=sectorLabel?victims.filter(v=>{
+      const desc=(v.description||v.sector||v.title||'').toLowerCase();
+      return desc.includes(sectorLabel);
+    }).length:0;
+
+    // Region label
+    const regionLabels={kenya:'Kenya',eastafrica:'East Africa',global:'Global'};
+    const rLabel=regionLabels[region]||'Kenya';
+
+    // Build public victim list (show last 5, max — public data only)
+    const showList=victims.slice(0,5);
+
+    const html=`
+    <div class="rw-card">
+      <div class="rw-card-head">
+        <div class="rw-card-title">Live Ransomware Threat Intelligence — ${rLabel}</div>
+        <span class="rw-badge">ransomware.live · Live data</span>
+      </div>
+      <div class="rw-stat-row">
+        <div class="rw-stat">
+          <div class="rw-stat-n">${total}</div>
+          <div class="rw-stat-l">Confirmed victims<br>${rLabel} (all time)</div>
+        </div>
+        <div class="rw-stat">
+          <div class="rw-stat-n">${last90.length}</div>
+          <div class="rw-stat-l">Incidents in<br>last 90 days</div>
+        </div>
+        <div class="rw-stat">
+          <div class="rw-stat-n">${sectorMatch||'—'}</div>
+          <div class="rw-stat-l">In your sector<br>(${SECT_LABELS[sector]||'general'})</div>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">
+        Most active threat actors in region
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem">
+        ${groups.slice(0,5).map((g,i)=>`<span style="font-family:var(--mono);font-size:.58rem;padding:.15rem .5rem;border-radius:3px;background:rgba(158,27,35,${0.35-i*0.04});color:#E0555F;border:1px solid rgba(158,27,35,.25)">${g}</span>`).join('')}
+      </div>
+      ${showList.length?`
+      <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">Recent confirmed victims (public record)</div>
+      <div>
+        ${showList.map(v=>{
+          const name=v.victim||v.name||'Undisclosed';
+          const grp=v.group||v.threat_actor||'Unknown';
+          const date=v.attackdate||v.published||v.date||'';
+          const dateStr=date?new Date(date).toLocaleDateString('en-KE',{month:'short',year:'numeric'}):'';
+          return`<div class="rw-victim-row">
+            <div class="rw-vname">${name}</div>
+            ${dateStr?`<div class="rw-vdate">${dateStr}</div>`:''}
+            <div class="rw-vgroup">${grp}</div>
+          </div>`;
+        }).join('')}
+      </div>`:''}
+      <div class="rw-lock-row">
+        <div class="rw-lock-icon">🔒</div>
+        <div class="rw-lock-text">
+          <strong>Is your organisation on this list?</strong><br>
+          RETACH runs a full name-match and sector attribution check — including dark web forums and private threat intel feeds — as part of every Health Scan.
+        </div>
+        <a href="https://wa.me/254767206043?text=Hi%20RETACH%2C%20I%20want%20to%20check%20if%20my%20organisation%20appears%20in%20ransomware%20or%20breach%20data." target="_blank" class="rw-lock-btn">Check My Org →</a>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:.54rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Source: ransomware.live public database · Data reflects publicly disclosed victims only · Actual incident counts are higher · Updated every 6 hours · <a href="https://ransomware.live" target="_blank" style="color:var(--gl)">ransomware.live</a></p>`;
+
+    wrap.innerHTML=html;
+    wrap.style.display='block';
+    loading.style.display='none';
+    rwLoaded=true;
+    rwLoadedRegion=region;
+
+  }catch(err){
+    loading.innerHTML=`<div style="padding:.75rem;background:rgba(201,145,46,.06);border:1px solid rgba(201,145,46,.2);border-radius:6px;font-size:.7rem;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Threat intel temporarily unavailable.</strong><br>ransomware.live API may be unreachable. RETACH runs a manual threat intel sweep in every paid assessment regardless of API availability.</div>`;
+    loading.style.animation='none';
+    loading.style.opacity='1';
+  }
+}
+
+/* ════ S.I.N.S. KRI Register — vCISO retainer artifact ════
+   The S.I.N.S. Framework sits atop NIST CSF 2.0 and ISO/IEC 27005,
+   translating them into a sector-specific, monitored control register.
+   Each indicator is mapped to its S.I.N.S. pillar and the underlying standard. */
+const SINS_P={
+  S:{ltr:'S',name:'Systems',layer:'Layer 1 · Foundation',c:'#116b4f'},
+  I:{ltr:'I',name:'Infrastructure',layer:'Layer 2 · Operational',c:'#146B4E'},
+  N:{ltr:'N',name:'Network',layer:'Layer 3 · Connectivity',c:'#4a6b7a'},
+  G:{ltr:'S',name:'Security & Governance',layer:'Layer 4 · Governance',c:'#9E1B23'}
+};
+/* row: [kri, category, pillarKey, NIST CSF 2.0, ISO/IEC ref, green, amber, red, owner, cadence] */
+const KRI_BASE=[
+ ['Privileged accounts with MFA enabled','Access control','S','PR.AA','27001 A.5.17 · A.8.5','100%','90–99%','<90%','Identity & Access Mgr','Monthly'],
+ ['Default / unchanged admin accounts on critical systems','Credential hygiene','S','PR.AA','A.8.2 · A.5.17','0','1','≥2','IAM Manager','Monthly'],
+ ['Terminated staff with active access > 24h','Identity lifecycle','S','PR.AA','A.5.18','0','1','≥2','IAM Manager','Weekly'],
+ ['Critical assets without endpoint detection / monitoring','Visibility & monitoring','S','DE.CM','A.8.16','0%','1–5%','>5%','SOC Manager','Weekly'],
+ ['Critical systems with unpatched critical vulns > 30 days','Vulnerability mgmt','I','ID.RA · PR.PS','A.8.8','≤5%','5–15%','>15%','Infrastructure Sec','Weekly'],
+ ['Critical systems without tested backup / unknown RTO','Resilience & recovery','I','PR.DS · RC.RP','A.8.13','0%','1–10%','>10%','Infrastructure / BCP','Monthly'],
+ ['Critical systems without current IR runbooks','Incident preparedness','I','RS.MA','A.5.24 · A.5.29','≤5%','5–15%','>15%','Incident Response Lead','Quarterly'],
+ ['Critical networks with segmentation in place','Network architecture','N','PR.IR','A.8.22','≥95%','80–94%','<80%','Network Architect','Quarterly'],
+ ['Unauthorized remote-access sessions','Unauthorized access','N','DE.CM · PR.AA','A.8.20 · A.8.21','0','1','≥2','Network / SOC','Weekly'],
+ ['Critical cyber incidents per quarter','Incident frequency','G','DE.AE · RS.MA','A.5.24 · A.5.25','0','1','≥2','CISO','Monthly'],
+ ['Mean time to detect (MTTD) — critical systems','Detection capability','G','DE.AE · DE.CM','A.5.24','≤4h','4–24h','>24h','SOC Manager','Monthly'],
+ ['Mean time to contain (MTTC) — critical systems','Response capability','G','RS.MI','A.5.26','≤2h','2–4h','>4h','Incident Response Lead','Monthly'],
+ ['Phishing click rate (simulated)','Human risk / awareness','G','PR.AT','A.6.3','≤2%','2–5%','>5%','Awareness Lead','Quarterly'],
+ ['Third-party vendors with outdated security assessment > 12m','Supply-chain risk','G','GV.SC · ID.RA','A.5.19–A.5.22','≤10%','10–25%','>25%','Third-Party Risk Mgr','Quarterly'],
+ ['Unresolved high/critical audit findings > 90 days','Compliance & audit','G','GV.OV · ID.IM','A.5.35 · A.5.36','0','1–3','≥4','GRC Manager / CISO','Monthly']
+];
+const KRI_OT=[
+ ['OT/ICS systems with unpatched critical vulns > 30 days','OT vulnerability mgmt','I','ID.RA · PR.PS','A.8.8 · IEC 62443','≤5%','5–15%','>15%','OT Security Manager','Weekly'],
+ ['OT networks segmented from IT (Purdue model)','OT segmentation','N','PR.IR','A.8.22 · IEC 62443-3-3','≥95%','80–94%','<80%','OT Network Architect','Quarterly'],
+ ['Unauthorized remote access to OT/ICS environments','OT unauthorized access','N','DE.CM · PR.AA','A.8.20','0','1','≥2','OT Security Manager','Weekly'],
+ ['NC4 incident-reporting readiness (CMCA s.18)','Regulatory readiness','G','GV.OC · GV.RM','CMCA 2018/2024','Compliant','Partial','Not ready','CISO / GRC','Quarterly']
+];
+const KRI_FIN=[
+ ['Payment-channel fraud / M-Pesa transaction anomalies actioned','Transaction fraud','S','DE.AE · DE.CM','A.8.16 · CBK Guidelines','<24h','24–72h','>72h','Fraud / SOC','Monthly'],
+ ['ODPC data-processor registration current','Regulatory readiness','G','GV.OC','DPA 2019','Current','Renewal due','Lapsed / none','DPO / GRC','Quarterly']
+];
+const KRI_HEALTH=[
+ ['Patient-data access logging & periodic review','Data protection','S','DE.CM · PR.AA','A.8.15 · A.5.34','100%','90–99%','<90%','DPO / SOC','Monthly']
+];
+const KRI_GOVT=[
+ ['Public-facing API / integration exposure reviewed','Attack surface','N','ID.RA · PR.IR','A.8.22 · A.8.26','≤30d','30–90d','>90d','Network / Security','Quarterly']
+];
+function kriRegister(secKey){
+  let rows=KRI_BASE.slice();
+  if(secKey.indexOf('ci_')===0) rows=rows.concat(KRI_OT);
+  if(secKey==='sacco'||secKey==='saccondt'||secKey==='fintech'||secKey==='ci_finance') rows=rows.concat(KRI_FIN);
+  if(secKey==='health'||secKey==='ci_health') rows=rows.concat(KRI_HEALTH);
+  if(secKey==='govt'||secKey==='ci_govt') rows=rows.concat(KRI_GOVT);
+  return rows;
+}
+
+function renderKRI(){
+  var sel=document.getElementById('i-sec'); if(!sel)return;
+  var s=SECTS[sel.value]; if(!s)return;
+  var box=document.getElementById('krio'); if(!box)return;
+  var rev=(parseFloat(document.getElementById('irev').value)||50)*1e6;
+  var costLo=Math.round(s.bch[0]*1e6), costHi=Math.round(s.bch[1]*1e6);
+  var byL=SCS.slice().sort(function(a,b){return b.bL-a.bL;})[0];
+  var byI=SCS.slice().sort(function(a,b){return b.bI-a.bI;})[0];
+  var fineCeil=s.ci?(s.rF_dpa+s.rF_cmca):s.rF;
+  var fineDesc=s.ci?'DPA 2019 (KES 5M) + CMCA s.18 (KES 25M) — both apply simultaneously'
+    :(s.rF?(s.sa?'DPA 2019 (ODPC) + SASRA oversight':'DPA 2019 (ODPC) maximum'):'No direct statutory data-protection fine');
+  var sigma=s.ci?'1.10 · Severe':(sel.value==='fintech'?'0.95 · High':(sel.value==='govt'?'0.65 · Lower':'~0.7–0.85 · Standard'));
+
+  /* ── Framing banner — S.I.N.S. atop established standards ── */
+  var banner='<div class="kri-banner">'
+    +'<div class="kri-banner-t">S.I.N.S. KRI Register™ · '+s.n+'</div>'
+    +'<div class="kri-banner-d">The operational core of a RETACH <strong>vCISO retainer</strong>. The <strong>S.I.N.S. Framework</strong> sits atop <strong>NIST CSF 2.0</strong> and <strong>ISO/IEC 27005</strong> — translating these global standards into a sector-specific, continuously-monitored control register. Every indicator below is mapped to its S.I.N.S. pillar and the underlying standard.</div>'
+    +'<div class="kri-legend">'+Object.keys(SINS_P).map(function(k){var p=SINS_P[k];return '<span class="kri-leg"><span class="kri-pill" style="background:'+p.c+'">'+p.ltr+'</span>'+p.name+'</span>';}).join('')+'</div>'
+    +'</div>';
+
+  /* ── Sector risk profile (calibrated baseline data) ── */
+  var kri=[
+    {l:'Sector Threat Frequency',v:s.bF.toFixed(1)+'×',t:(s.bF>=2.5?'r':s.bF>=1.5?'a':'g'),d:'annual attack frequency vs baseline org',src:'Serianu 2023 · CA Kenya'},
+    {l:'Impact Severity Index',v:s.iM.toFixed(1)+'×',t:(s.iM>=1.8?'r':s.iM>=1.3?'a':'g'),d:'relative loss magnitude per incident',src:'IBM 2023 · Zurich EM'},
+    {l:'Sector Annual Loss Band',v:fk(costLo)+' – '+fk(costHi),t:'a',d:'observed sector annual loss · absolute KES',src:'SASRA 2024 · CBK FSS (SACCO) · sector priors'},
+    {l:'Regulatory Fine Ceiling',v:fk(fineCeil),t:(s.ci?'r':(s.rF?'a':'g')),d:fineDesc,src:'DPA 2019 · CMCA 2018/2024'},
+    {l:'Baseline Recovery Time',v:s.rto+' days',t:(s.rto>14?'r':s.rto>9?'a':'g'),d:'median ransomware recovery window',src:'Serianu · CBK incident data'},
+    {l:'Loss Dispersion (σ)',v:sigma,t:(s.ci?'r':'a'),d:'lognormal tail width — higher = more catastrophic-year risk',src:'CRQ methodology'}
+  ];
+  var cards='<div class="kri-subh">Sector Risk Profile · calibrated baseline</div><div class="kri-grid">'+kri.map(function(k){
+    return '<div class="kri-card"><div class="kri-l">'+k.l+'</div><div class="kri-v '+k.t+'">'+k.v+'</div><div class="kri-d">'+k.d+'</div><div class="kri-src">'+k.src+'</div></div>';
+  }).join('')+'</div>';
+
+  /* ── The register table ── */
+  var reg=kriRegister(sel.value);
+  var trows=reg.map(function(r,i){
+    var p=SINS_P[r[2]];
+    return '<tr>'
+      +'<td class="kr-n">'+(i+1)+'</td>'
+      +'<td class="kr-kri" data-label="Key Risk Indicator"><strong>'+r[0]+'</strong><span class="kr-cat">'+r[1]+'</span></td>'
+      +'<td data-label="S.I.N.S. Pillar"><span class="kri-pill" style="background:'+p.c+'" title="'+p.name+' — '+p.layer+'">'+p.ltr+'</span><span class="kr-pn">'+p.name+'</span></td>'
+      +'<td class="kr-std" data-label="Standard mapping"><span class="kr-nist">'+r[3]+'</span><span class="kr-iso">ISO '+r[4]+'</span></td>'
+      +'<td class="kr-thr" data-label="Threshold · G / A / R"><span class="kr-g">'+r[5]+'</span><span class="kr-a">'+r[6]+'</span><span class="kr-r">'+r[7]+'</span></td>'
+      +'<td class="kr-own" data-label="Suggested owner">'+r[8]+'</td>'
+      +'<td class="kr-freq" data-label="Cadence">'+r[9]+'</td>'
+      +'</tr>';
+  }).join('');
+  var table='<div class="kri-subh">S.I.N.S. KRI Register · '+reg.length+' indicators<span class="kri-subh-note">mapped to NIST CSF 2.0 · ISO/IEC 27001:2022 · 27005</span></div>'
+    +'<div class="kri-thead-legend"><span><span class="kr-dot g"></span>Green target</span><span><span class="kr-dot a"></span>Amber — review</span><span><span class="kr-dot r"></span>Red — escalate</span></div>'
+    +'<div class="kri-tbl-wrap"><table class="kri-tbl"><thead><tr>'
+    +'<th>#</th><th>Key Risk Indicator</th><th>S.I.N.S. Pillar</th><th>Standard mapping</th><th>Threshold · G / A / R</th><th>Suggested owner</th><th>Cadence</th>'
+    +'</tr></thead><tbody>'+trows+'</tbody></table></div>';
+
+  /* ── Threat vectors ── */
+  var threat='<div class="kri-threat"><div class="kri-l" style="margin-bottom:.4rem">Dominant threat vectors — '+s.n+'</div>'
+    +'<div class="kri-tv"><span class="kri-tv-tag mostfreq">Most frequent</span> '+byL.n+' <span class="kri-tv-p">('+Math.round(byL.bL*100)+'% base annual likelihood · '+byL.p+')</span></div>'
+    +'<div class="kri-tv"><span class="kri-tv-tag mostdmg">Most damaging</span> '+byI.n+' <span class="kri-tv-p">(impact weight '+byI.bI.toFixed(2)+' · '+byI.p+')</span></div></div>';
+
+  var ciPanel=s.ci?'<div class="kri-ci"><div class="kri-l" style="color:#E0555F;margin-bottom:.35rem">⚠ Critical Infrastructure — regulatory oversight</div><div style="font-size:.74rem;line-height:1.7;color:var(--text)">Designated sector: <strong>'+s.ciLabel+'</strong>. Oversight: <strong>'+s.ciReg+'</strong>.<br>'+s.ciNote+'</div></div>':'';
+
+  var foot='<p class="kri-foot"><strong>Productisation note:</strong> thresholds shown are RETACH baseline starting points calibrated from published industry data; they are tuned to each organisation during vCISO onboarding and reviewed against live posture at the stated cadence. Full methodology, calibration sources &amp; terms: <a href="https://retach.tech/docs.html#terms" target="_blank">CRQ Terms &amp; EULA →</a></p>';
+
+  box.innerHTML=banner+cards+table+threat+ciPanel+foot;
+}
+try{renderKRI();}catch(e){}
+</script>
+</body>
+</html>
