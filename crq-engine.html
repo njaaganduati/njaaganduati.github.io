@@ -935,8 +935,8 @@ function rBM(eal,s,cred){
     `<p style="font-size:.6rem;color:var(--muted);margin-top:.5rem;line-height:1.6">RETACH derives sector priors from independently verifiable regulatory and public evidence wherever available; commercial research is used only for triangulation where primary evidence is unavailable. Every sector prior is traceable to its underlying sources. Triangulation: Serianu 2024/2025.</p>`;
 }
 
-/* ── OSINT via api.retach.io ─────────────────────── */
-const API='https://api.retach.io';
+/* ── OSINT via api.retach.tech ─────────────────────── */
+const API='https://api.retach.tech';
 
 async function runOS(){
   const raw=document.getElementById('od').value.trim().toLowerCase().replace(/^https?:\/\//,'').replace(/\/.*/,'');
@@ -977,7 +977,7 @@ async function runOS(){
   }catch(e){
     // Fallback: mark all as warn
     ['mx','spf','dmarc','dkim','ssl','a','hibp','sh'].forEach(k=>{
-      R[k]={st:'warn',lb:'API unavailable',ext:'Check api.retach.io/health'};
+      R[k]={st:'warn',lb:'API unavailable',ext:'Check api.retach.tech/health'};
       upd('oc-'+k,R[k]);
     });
   }
@@ -1010,9 +1010,9 @@ function shell(d){
     {id:'ssl',  lb:'SSL/TLS certificate',          det:'Expiry and issuer check via crt.sh'},
     {id:'a',    lb:'Domain resolves (A record)',   det:'IP address lookup'},
     {id:'hibp', lb:'Domain breach data',           det:'Checks known credential exposure'},
-    {id:'sh',   lb:'Open ports & services',        det:'Shodan InternetDB via api.retach.io'},
+    {id:'sh',   lb:'Open ports & services',        det:'Shodan InternetDB via api.retach.tech'},
   ];
-  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div style="font-size:.62rem;color:var(--muted);margin-top:.25rem;line-height:1.5">Lower is better. This score reflects how exposed you are to opportunistic scanning — it nudges how <em>often</em> an incident is likely, not how badly it would hurt if one happened.</div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.io):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
+  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div style="font-size:.62rem;color:var(--muted);margin-top:.25rem;line-height:1.5">Lower is better. This score reflects how exposed you are to opportunistic scanning — it nudges how <em>often</em> an incident is likely, not how badly it would hurt if one happened.</div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.tech):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
 }
 
 function upd(id,r){
@@ -1034,7 +1034,7 @@ function upd(id,r){
   if(p.has('s')||p.has('sector'))setTimeout(calc,400);
 })();
 
-/* ════ Ransomware Threat Intelligence (api.retach.io · ransomware.live) ════ */
+/* ════ Ransomware Threat Intelligence (api.retach.tech · ransomware.live) ════ */
 /* ── Region → ransomware.live country codes ── */
 const RW_COUNTRIES={
   kenya:    ['KEN'],
