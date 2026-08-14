@@ -59,21 +59,21 @@
   <changefreq>monthly</changefreq>
   <priority>0.9</priority>
 </url>
-<!-- Insights articles -->
+<!-- Tools (added 2026-08-14) --><url><loc>https://retach.tech/crq-engine.html</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url><url><loc>https://retach.tech/kenya-digital-risk-index.html</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url><url><loc>https://retach.tech/sample-report.html</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url><url><loc>https://retach.tech/docs.html</loc><lastmod>2026-08-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 <url>
-  <loc>https://retach.tech/insights/sacco-cybersecurity-2025.html</loc>
+  <loc>https://retach.tech/insights/kenya-dpa-compliance-guide.html</loc>
   <lastmod>2025-05-21</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>
 </url>
 <url>
-  <loc>https://retach.tech/insights/sasra-compliance-guide.html</loc>
+  <loc>https://retach.tech/insights/sins-framework-introduction.html</loc>
   <lastmod>2025-05-21</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>
 </url>
 <url>
-  <loc>https://retach.tech/insights/backup-dr-kenya.html</loc>
+  <loc>https://retach.tech/insights/sme-security-audit-failures.html</loc>
   <lastmod>2025-05-21</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>
