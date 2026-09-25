@@ -871,58 +871,7 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
     </div>
     <div class="card-footer">
       <button class="btn btn-ghost" onclick="prevSection(3)">← Back</button>
-      <button class="btn btn-primary" id="next-3" onclick="showContactGate()" disabled>Get My Results →</button>
-    </div>
-  </div>
-
-  <!-- CONTACT GATE -->
-  <div id="contact-gate">
-    <div class="gate-header">
-      <h2>Almost there — your score is ready</h2>
-      <p>Enter your details to receive your personalised S.I.N.S. score and finding report.</p>
-    </div>
-    <div class="gate-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="f-name" placeholder="Your name">
-        </div>
-        <div class="form-group">
-          <label>Organisation</label>
-          <input type="text" id="f-org" placeholder="Company or SACCO name">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="f-email" placeholder="you@organisation.co.ke">
-        </div>
-        <div class="form-group">
-          <label>Organisation Type</label>
-          <select id="f-type">
-            <option value="">Select type…</option>
-            <option>SACCO (Deposit Taking)</option>
-            <option>SACCO (Non-Deposit Taking)</option>
-            <option>SME (1–50 staff)</option>
-            <option>SME (51–200 staff)</option>
-            <option>Healthcare / Clinic</option>
-            <option>NGO / INGO</option>
-            <option>School / University</option>
-            <option>Financial Institution</option>
-            <optgroup label="── Critical Infrastructure (CMCA 2018/2024 s.18) ──">
-              <option>CI — Transport &amp; Logistics (Rail, Port, Aviation)</option>
-              <option>CI — Energy &amp; Utilities (Power, Water, Oil &amp; Gas)</option>
-              <option>CI — Telecommunications &amp; ICT Infrastructure</option>
-              <option>CI — Financial Market Infrastructure</option>
-              <option>CI — Government Core Systems</option>
-              <option>CI — Critical Health Infrastructure</option>
-            </optgroup>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-      <button class="gate-cta" onclick="showResults()">View My S.I.N.S. Score →</button>
-      <p class="gate-note">Your results appear instantly. RETACH may contact you about a follow-up assessment. No spam.</p>
+      <button class="btn btn-primary" id="next-3" onclick="showResults()" disabled>Get My Results →</button>
     </div>
   </div>
 
@@ -965,6 +914,7 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
       <div class="cta-price">Health Scan from <strong>KES 45,000</strong> <span style="opacity:.7;font-weight:400">(≈ USD 350)</span> · Up to 25 staff, 1 site · Delivered in 5 business days · Valid to 31 March 2027</div>
       <a href="/#contact" class="btn-cta-large">Book Your Health Scan →</a>
       <div class="cta-sub">Or email us directly: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
+      <div class="cta-sub" style="margin-top:.75rem;opacity:.8">Your answers were scored in your browser. Nothing you entered was sent to RETACH.</div>
     </div>
 
   </div>
@@ -1029,14 +979,6 @@ function prevSection(idx) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function showContactGate() {
-  document.getElementById('section-3').classList.remove('active');
-  document.getElementById('contact-gate').classList.add('active');
-  currentSection = 4;
-  updateProgress();
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
 // ─── PROGRESS ────────────────────────────────────────────────
 function updateProgress() {
   const pct = Math.min(100, (currentSection / 4) * 100);
@@ -1049,18 +991,15 @@ function updateProgress() {
 
 // ─── RESULTS ─────────────────────────────────────────────────
 function showResults() {
-  const name = document.getElementById('f-name').value.trim() || 'there';
-  const org  = document.getElementById('f-org').value.trim();
-  const type = document.getElementById('f-type').value;
 
   // hide gate, show scanning
-  document.getElementById('contact-gate').classList.remove('active');
+  document.getElementById('section-3').classList.remove('active');
   document.getElementById('scanning-overlay').classList.add('active');
   window.scrollTo({top: 0, behavior: 'smooth'});
 
   setTimeout(() => {
     document.getElementById('scanning-overlay').classList.remove('active');
-    buildResults(name, org, type);
+    buildResults('', '', '');
     document.getElementById('results-panel').classList.add('active');
     currentSection = 5;
     updateProgress();
