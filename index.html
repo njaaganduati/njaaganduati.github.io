@@ -134,7 +134,7 @@
     --green-dark: #1e5e3e;
     --green-bg: #f0f8f4;
     --gray: #6b6b6b;
-    --gray-mid: #888888;
+    --gray-mid: #6b6b6b;
     --gray-light: #f5f5f3;
     --gray-border: #e0e0dc;
     --red: #9E1B23;
@@ -2244,18 +2244,6 @@
       }
     });
   });
-
-  function submitForm() {
-    var name = document.getElementById('fname').value;
-    var email = document.getElementById('femail').value;
-    var service = document.getElementById('fservice').value;
-    if (!name || !email || !service) {
-      alert('Please fill in your name, email, and service interest.');
-      return;
-    }
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').classList.add('show');
-  }
 
   window.addEventListener('scroll', function() {
     var nav = document.querySelector('nav');
