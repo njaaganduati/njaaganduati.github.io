@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vCISO Engagement Documents | RETACH Digital</title>
+<meta name="description" content="The Master Engagement Framework, Mutual NDA and SOW template that govern every RETACH Virtual CISO engagement. Review our terms before we talk.">
+<link rel="canonical" href="https://retach.tech/engagement-documents.html">
+<meta property="og:title" content="vCISO Engagement Documents | RETACH Digital">
+<meta property="og:description" content="The Framework, NDA and SOW template behind every RETACH Virtual CISO engagement.">
+<meta property="og:url" content="https://retach.tech/engagement-documents.html">
+<meta property="og:image" content="https://retach.tech/og-image.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root {
+    --black: #111315; --green: #146B4E; --green-dark: #0f5540; --green-light: #3a9a67;
+    --steel: #4A4F55; --gray: #4f555b; --gray-mid: #767d84; --gray-border: #e0e0dc;
+    --white: #ffffff; --off-white: #fafaf8; --green-tint: #eef5f1;
+    --page-bg: var(--off-white); --surface: var(--white); --text: var(--black); --text-sub: var(--gray);
+    --hero-bg: var(--black); --hero-text: var(--white); --hero-sub: #c9ccd0;
+    --nav-bg: var(--white); --border: var(--gray-border); --logo-fill: #111315;
+    --mono-tint-bg: var(--green-tint); --mono-tint-text: var(--green-dark);
+  }
+  html[data-theme="dark"] {
+    --page-bg: #0c0e10; --surface: #16191c; --text: #eceeef; --text-sub: #a7adb3;
+    --hero-bg: #05070a; --hero-text: #ffffff; --hero-sub: #a7adb3;
+    --nav-bg: #0c0e10; --border: #262b30; --logo-fill: #eceeef;
+    --mono-tint-bg: #10221b; --mono-tint-text: #6fce9e; --gray-mid: #8a9096;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--page-bg); color: var(--text); line-height: 1.65; transition: background .15s, color .15s; }
+  nav { padding: 24px 4vw; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--nav-bg); gap: 16px; }
+  .nav-logo svg { height: 26px; width: auto; display: block; }
+  .nav-logo svg path, .nav-logo svg polygon { fill: var(--logo-fill) !important; }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-back { font-size: 14px; font-weight: 600; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .nav-back:hover { text-decoration: underline; }
+  .theme-toggle { display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-sub); background: transparent; border: 1px solid var(--border); padding: 7px 12px; cursor: pointer; border-radius: 3px; }
+  .theme-toggle:hover { border-color: var(--green); color: var(--green); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--green-light); outline-offset: 2px; }
+  .hero-band { background: var(--hero-bg); color: var(--hero-text); }
+  header.hero { padding: 64px 4vw 52px; max-width: 960px; margin: 0 auto; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--green-light); margin-bottom: 14px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: clamp(34px, 6vw, 52px); line-height: 1.05; letter-spacing: -.02em; margin-bottom: 18px; }
+  .lead { font-size: 17px; color: var(--hero-sub); max-width: 680px; }
+  .rule { width: 72px; height: 3px; background: var(--green); margin-top: 28px; }
+  main { max-width: 960px; margin: 0 auto; padding: 48px 4vw 72px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; }
+  .sub { color: var(--text-sub); margin-bottom: 24px; max-width: 700px; }
+  .flow { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; margin-bottom: 36px; }
+  .flow span { background: var(--mono-tint-bg); color: var(--mono-tint-text); padding: 6px 10px; border: 1px solid var(--border); }
+  .flow i { font-style: normal; color: var(--gray-mid); }
+  .doc { display: grid; grid-template-columns: 64px 1fr; gap: 20px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--green); padding: 26px 26px 22px; margin-bottom: 18px; }
+  .doc-num { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 34px; color: var(--green); line-height: 1; }
+  .doc h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 6px; }
+  .doc p { font-size: 15px; color: var(--text-sub); margin-bottom: 12px; }
+  .doc-meta { display: flex; gap: 14px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-mid); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+  .doc-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-block; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 14px; padding: 10px 18px; text-decoration: none; border: 1px solid var(--green); min-height: 44px; line-height: 22px; }
+  .btn-primary { background: var(--green); color: var(--white); }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-ghost { color: var(--green); background: transparent; }
+  .btn-ghost:hover { background: var(--mono-tint-bg); }
+  .btn:focus-visible, summary:focus-visible { outline: 2px solid var(--green-light); outline-offset: 2px; }
+  .hash { margin-top: 14px; font-size: 12px; color: var(--gray-mid); }
+  .hash summary { cursor: pointer; font-family: 'IBM Plex Mono', monospace; }
+  .hash code { display: block; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; word-break: break-all; color: var(--text-sub); }
+  .modules { margin: 44px 0 0; }
+  .mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-top: 16px; }
+  .mod { background: var(--surface); border: 1px solid var(--border); padding: 14px 16px; font-size: 14px; }
+  .mod b { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--green); letter-spacing: .1em; margin-bottom: 4px; }
+  .note { margin-top: 40px; background: var(--mono-tint-bg); border-left: 3px solid var(--green); padding: 18px 22px; font-size: 14px; color: var(--text-sub); }
+  .note strong { color: var(--mono-tint-text); }
+  .note a { color: var(--green); }
+  .cta { margin-top: 40px; background: var(--hero-bg); color: var(--hero-text); padding: 30px 28px; display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .cta h2 { color: var(--hero-text); margin: 0 0 4px; }
+  .cta p { color: var(--hero-sub); font-size: 15px; }
+  footer { padding: 24px 4vw; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-mid); border-top: 1px solid var(--border); }
+  footer a { color: var(--gray-mid); }
+  @media (max-width: 600px) {
+    .doc { grid-template-columns: 1fr; gap: 6px; padding: 22px 18px 18px; }
+    .doc-num { font-size: 26px; }
+    header.hero { padding: 44px 4vw 40px; }
+    .btn { flex: 1 1 auto; text-align: center; }
+    nav { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  
+  <a href="/" class="nav-logo" aria-label="RETACH Digital home">
+    <svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#111315" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#111315" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#111315" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#111315" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#111315" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#111315" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#111315" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg>
+  </a>
+  <a href="/" class="nav-back">&larr; retach.tech</a>
+
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark and light theme">
+    <span id="themeToggleLabel">Dark</span>
+  </button>
+</nav>
+
+<div class="hero-band">
+<header class="hero">
+  <div class="eyebrow">Virtual CISO &middot; Engagement documents</div>
+  <h1>vCISO Engagement Documents</h1>
+  <p class="lead">The three documents behind every RETACH Virtual CISO engagement, published so you can read our terms before we talk. There's no sign-up and no email gate.</p>
+  <div class="rule"></div>
+</header>
+</div>
+
+<main>
+  <h2>How they fit together</h2>
+  <p class="sub">The Framework sets the relationship. The NDA protects both sides from the first conversation. Each piece of work then runs under its own SOW, with a fixed scope and a fixed fee.</p>
+  <div class="flow" aria-label="Document order"><span>01 Framework</span><i>&rarr;</i><span>02 Mutual NDA</span><i>&rarr;</i><span>03 SOW per engagement</span></div>
+
+  <article class="doc">
+    <div class="doc-num">01</div>
+    <div class="doc-body">
+      <h3>Master Engagement Framework</h3>
+      <p>The umbrella agreement for a vCISO relationship: governance, roles and RACI, the operating model and cadence, escalation, reporting, and the commercial and legal terms every engagement sits under.</p>
+      <div class="doc-meta"><span>PDF</span><span>7 pages</span><span>137 KB</span><span>Version 1.0</span></div>
+      <div class="doc-actions">
+        <a class="btn btn-primary" href="/assets/docs/vciso/RETACH-vCISO-Engagement-Framework-v1.0.pdf" target="_blank" rel="noopener">View PDF</a>
+        <a class="btn btn-ghost" href="/assets/docs/vciso/RETACH-vCISO-Engagement-Framework-v1.0.pdf" download>Download</a>
+      </div>
+      <details class="hash"><summary>SHA-256 checksum</summary><code>2f725abb99849e95bed0aea60049842bc8ac5ddb33fa3852737328a4bc29f739</code></details>
+    </div>
+  </article>
+
+  <article class="doc">
+    <div class="doc-num">02</div>
+    <div class="doc-body">
+      <h3>Mutual Non-Disclosure Agreement</h3>
+      <p>Mutual confidentiality before any information changes hands, including security-specific clauses on credentials, findings and vulnerability handling, and data-processing terms under Kenya&rsquo;s Data Protection Act, 2019.</p>
+      <div class="doc-meta"><span>PDF</span><span>7 pages</span><span>104 KB</span><span>Version 1.0</span></div>
+      <div class="doc-actions">
+        <a class="btn btn-primary" href="/assets/docs/vciso/RETACH-Mutual-NDA-v1.0.pdf" target="_blank" rel="noopener">View PDF</a>
+        <a class="btn btn-ghost" href="/assets/docs/vciso/RETACH-Mutual-NDA-v1.0.pdf" download>Download</a>
+      </div>
+      <details class="hash"><summary>SHA-256 checksum</summary><code>4428cef61654aae7ae6c0a2991bc6e7da2ca6a930f8d32d476936caab22e5cf5</code></details>
+    </div>
+  </article>
+
+  <article class="doc">
+    <div class="doc-num">03</div>
+    <div class="doc-body">
+      <h3>Scope of Services / SOW Template</h3>
+      <p>The per-engagement statement of work for a fixed-scope vCISO engagement: modules selected, deliverables, timeline, fixed fee, rules of engagement, acceptance and change control.</p>
+      <div class="doc-meta"><span>PDF</span><span>15 pages</span><span>256 KB</span><span>Version 1.0</span></div>
+      <div class="doc-actions">
+        <a class="btn btn-primary" href="/assets/docs/vciso/RETACH-SOW-Fixed-Scope-Template-v1.0.pdf" target="_blank" rel="noopener">View PDF</a>
+        <a class="btn btn-ghost" href="/assets/docs/vciso/RETACH-SOW-Fixed-Scope-Template-v1.0.pdf" download>Download</a>
+      </div>
+      <details class="hash"><summary>SHA-256 checksum</summary><code>1020b741581d93af000370e61ec806ffa5102cfac497daf108ab76cfaaf17c95</code></details>
+    </div>
+  </article>
+
+  <section class="modules" aria-labelledby="mods">
+    <h2 id="mods">Fixed-scope modules in the SOW</h2>
+    <p class="sub">Choose one or more. Each module has its own deliverables, duration and fee, all delivered through the S.I.N.S. Framework&trade;.</p>
+    <div class="mod-grid">
+      <div class="mod"><b>M1</b>Security Audit (Digital Resilience Assessment)</div>
+      <div class="mod"><b>M2</b>ISO/IEC 27001:2022 Readiness</div>
+      <div class="mod"><b>M3</b>Security Policy Build</div>
+      <div class="mod"><b>M4</b>Board Security Roadmap</div>
+      <div class="mod"><b>M5</b>Post-Incident Review</div>
+    </div>
+  </section>
+
+  <div class="note"><strong>Templates for reference.</strong> These are RETACH's standard templates, version 1.0. Final terms are agreed, completed and signed for each client, and nothing here is binding until both parties sign. They aren't legal advice, so please review them with your own adviser. Questions? Email <a href="mailto:info@retach.tech">info@retach.tech</a>.</div>
+
+  <div class="cta">
+    <div>
+      <h2>Ready to scope an engagement?</h2>
+      <p>Pick your modules and request a fixed-fee quote.</p>
+    </div>
+    <a class="btn btn-primary" href="https://erp.retach.tech/all-products?field_filters=%7B%22item_group%22%3A%5B%22Virtual%20CISO%22%5D%7D">View vCISO services &amp; request a quote &rarr;</a>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 RETACH Digital Ltd &middot; <a href="/">retach.tech</a> &middot; <a href="/privacy.html">Privacy</a> &middot; The S.I.N.S. Framework&trade; for Digital Resilience
+</footer>
+
+<script>
+(function(){
+  var btn = document.getElementById('themeToggle');
+  var label = document.getElementById('themeToggleLabel');
+  function sync(){
+    var t = document.documentElement.getAttribute('data-theme') || 'light';
+    label.textContent = t === 'dark' ? 'Light' : 'Dark';
+  }
+  sync();
+  btn.addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('retach-theme', next); } catch(e) {}
+    sync();
+  });
+})();
+</script>
+
+</body>
+</html>
