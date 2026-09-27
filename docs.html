@@ -12,6 +12,15 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
 <style>
 /* ─── TOKENS ─────────────────────────────────────────────────────── */
 :root {
@@ -38,6 +47,34 @@
   --body-font:  'IBM Plex Sans', sans-serif;
 }
 
+[data-theme="dark"] {
+  --text:       #e8ebe6;
+  --body:       #cbd3ce;
+  --muted:      #9AA2AA;
+  --faint:      #7d8b85;
+  --border:     rgba(255,255,255,0.12);
+  --bg:         #111315;
+  --bg2:        #181B1E;
+  --bg3:        #1f2327;
+  --amber:      #d9a54a;
+  --red:        #e0555f;
+}
+[data-theme="dark"] .content,
+[data-theme="dark"] .sidebar {
+  --green:        #2E9E6B;
+  --green-web:    #2E9E6B;
+  --green-l:      #3fb87d;
+  --green-bg:     rgba(46,158,107,0.14);
+  --green-border: rgba(46,158,107,0.3);
+  --green-mid:    rgba(46,158,107,0.12);
+}
+[data-theme="dark"] .formula-block { background: #05070a; }
+[data-theme="dark"] .callout.amber { background: rgba(217,165,74,0.12); border-color: rgba(217,165,74,0.32); }
+
+.theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border-radius:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;padding:0.4rem 0.8rem;line-height:1.4}
+.theme-toggle:hover{background:rgba(255,255,255,.2)}
+.theme-toggle:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
@@ -48,6 +85,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: background 0.2s, color 0.2s;
 }
 
 a { color: var(--green); text-decoration: none; }
@@ -723,13 +761,15 @@ a:hover { text-decoration: underline; }
     display: flex;
   }
   .nav-links.open { max-height: 400px; }
-  .nav-link, .nav-cta {
+  .nav-link, .nav-cta, .theme-toggle {
     width: 100%;
     padding: 0.9rem 1.5rem;
     border-radius: 0;
     border-bottom: 1px solid rgba(255,255,255,0.12);
     margin-left: 0;
+    background: transparent;
   }
+  .theme-toggle { justify-content: flex-start; }
 }
 </style>
 </head>
@@ -748,6 +788,7 @@ a:hover { text-decoration: underline; }
     <a href="https://app.retach.io" class="nav-link">S.I.N.S. Scanner</a>
     <a href="https://crq.retach.io" class="nav-link active">CRQ Engine</a>
     <a href="https://ad-audit.retach.io" class="nav-link">Identity &amp; Access</a>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
     <a href="https://erp.retach.tech/request-quote/new?product=Digital%20Resilience%20Assessment%20-%20Small%20(from)" class="nav-cta" target="_blank" rel="noopener">Request a Quote →</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1168,5 +1209,6 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(s => observer.observe(s));
 </script>
+<script src="/assets/theme-toggle.js" defer></script>
 </body>
 </html>

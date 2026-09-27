@@ -126,6 +126,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
 <style>
   :root {
     --black: #111315;
@@ -142,6 +151,42 @@
     --off-white: #fafaf8;
   }
 
+  /* ─── DARK THEME (content pages only; hero-right/#contact/footer/founder/hiw/methodology/flagship bands stay permanently dark) ─── */
+  [data-theme="dark"] nav,
+  [data-theme="dark"] .mobile-nav,
+  [data-theme="dark"] .hero-left,
+  [data-theme="dark"] #about,
+  [data-theme="dark"] #framework,
+  [data-theme="dark"] #services,
+  [data-theme="dark"] #tools,
+  [data-theme="dark"] #blog {
+    --black: #e8ebe6;
+    --gray: #9AA2AA;
+    --gray-mid: #9AA2AA;
+    --gray-light: #1b1e21;
+    --gray-border: rgba(255,255,255,0.14);
+    --off-white: #111315;
+    --green: #2E9E6B;
+    --green-dark: #45b781;
+    --green-bg: rgba(46,158,107,0.14);
+  }
+  [data-theme="dark"] nav { background: rgba(10,12,10,0.96); }
+  [data-theme="dark"] #about,
+  [data-theme="dark"] .framework-card,
+  [data-theme="dark"] #services,
+  [data-theme="dark"] .blog-card {
+    background: #181B1E;
+  }
+  [data-theme="dark"] .context-box { background: #05070a; color: #e8ebe6; }
+  [data-theme="dark"] .framework-positioning { background: #05070a; }
+  [data-theme="dark"] .blog-card-img { background: #05070a; }
+  [data-theme="dark"] .nav-logo svg path,
+  [data-theme="dark"] .nav-logo svg polygon { fill: var(--black) !important; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(127,127,127,.08);border:1px solid rgba(127,127,127,.35);color:inherit;padding:6px 12px;line-height:1.4}
+  .theme-toggle:hover{border-color:#146B4E}
+  .theme-toggle:focus-visible{outline:2px solid #146B4E;outline-offset:2px}
+  .mobile-nav .theme-toggle{width:fit-content;margin-top:4px}
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
@@ -153,7 +198,9 @@
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background 0.2s, color 0.2s;
   }
+  [data-theme="dark"] body { background: #111315; color: #e8ebe6; }
 
   /* ─── NAVIGATION ─── */
   nav {
@@ -1507,6 +1554,7 @@
     <li><a href="#blog">Insights</a></li>
     <li><a href="https://erp.retach.tech/all-products">Get a Quote</a></li>
     <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+    <li><button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button></li>
   </ul>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1520,6 +1568,7 @@
   <a href="#services" onclick="toggleMenu()">Services</a>
   <a href="#blog" onclick="toggleMenu()">Insights</a>
   <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
 </div>
 
 <!-- HERO -->
@@ -2249,12 +2298,14 @@
 
   window.addEventListener('scroll', function() {
     var nav = document.querySelector('nav');
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (window.scrollY > 40) {
-      nav.style.borderBottomColor = 'rgba(0,0,0,0.1)';
+      nav.style.borderBottomColor = isDark ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.1)';
     } else {
-      nav.style.borderBottomColor = '#e0e0dc';
+      nav.style.borderBottomColor = isDark ? 'rgba(255,255,255,0.14)' : '#e0e0dc';
     }
   });
 </script>
+<script src="/assets/theme-toggle.js" defer></script>
 </body>
 </html>
