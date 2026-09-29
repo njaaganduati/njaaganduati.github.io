@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request a Quote | RETACH Digital</title>
+<meta name="description" content="Request a quote from RETACH Digital for security assessments, network and infrastructure work, partner licences and vCISO services.">
+<link rel="canonical" href="https://retach.tech/quote.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root {
+    --black: #111315; --green: #146B4E; --green-dark: #0f5540;
+    --gray: #4f555b; --gray-mid: #767d84; --gray-border: #e0e0dc;
+    --white: #ffffff; --off-white: #fafaf8; --green-tint: #eef5f1; --red: #9b2335;
+  }
+  [data-theme="dark"] {
+    --black: #e8ebe6; --green: #2E9E6B; --green-dark: #45b781;
+    --gray: #9AA2AA; --gray-mid: #9AA2AA; --gray-border: rgba(255,255,255,0.12);
+    --white: #16191c; --off-white: #111315; --green-tint: rgba(46,158,107,0.12); --red: #e5717f;
+  }
+  [data-theme="dark"] .nav-logo svg path,
+  [data-theme="dark"] .nav-logo svg polygon { fill: var(--black) !important; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(127,127,127,.08);border:1px solid rgba(127,127,127,.35);color:inherit;padding:6px 12px;line-height:1.4}
+  .theme-toggle:hover{border-color:#146B4E}
+  .theme-toggle:focus-visible{outline:2px solid #146B4E;outline-offset:2px}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--off-white); color: var(--black); line-height: 1.65; transition: background 0.2s, color 0.2s; }
+  nav { padding: 24px 4vw; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--gray-border); background: var(--white); }
+  .nav-logo svg { height: 26px; width: auto; display: block; }
+  .nav-back { font-size: 14px; font-weight: 600; color: var(--green); text-decoration: none; white-space: nowrap; margin-left: 16px; }
+  .nav-back:hover { text-decoration: underline; }
+  header.hero { padding: 56px 4vw 24px; max-width: 880px; margin: 0 auto; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: clamp(34px, 6vw, 52px); line-height: 1.05; letter-spacing: -.02em; margin-bottom: 18px; }
+  .lead { margin-top: 12px; font-size: 17px; color: var(--gray); max-width: 680px; }
+  main { max-width: 880px; margin: 0 auto; padding: 8px 4vw 72px; }
+  .card { background: var(--white); border: 1px solid var(--gray-border); border-top: 4px solid var(--green); padding: 32px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+  .full { grid-column: 1 / -1; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .card { padding: 22px 18px; } header.hero { padding-top: 36px; } }
+  .field[hidden] { display: none; }
+  label.lbl { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray); margin-bottom: 8px; }
+  label.lbl .req { color: var(--green); }
+  input[type=text], input[type=email], input[type=tel], input[type=number], select, textarea {
+    width: 100%; font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; padding: 12px 14px; border: 1px solid var(--gray-mid); border-radius: 2px; background: var(--white); color: var(--black); }
+  textarea { min-height: 96px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--green); outline-offset: 0; border-color: var(--green); }
+  [aria-invalid="true"] { border-color: var(--red) !important; }
+  .err { color: var(--red); font-size: 13px; margin-top: 6px; min-height: 0; }
+  .hint { color: var(--gray); font-size: 13px; margin-top: 6px; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.5; }
+  .consent input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--green); }
+  .consent a, .hint a, .alt a { color: var(--green); }
+  .btn { font-family: 'IBM Plex Sans', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; background: var(--green); color: #fff; border: none; padding: 16px 36px; border-radius: 2px; cursor: pointer; transition: background .2s; }
+  .btn:hover { background: var(--green-dark); }
+  [data-theme="dark"] .btn { color: #0b0d0e; }
+  .btn:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+  .btn[disabled] { opacity: .55; cursor: not-allowed; }
+  @media (max-width: 640px) { .btn { width: 100%; } }
+  .status { font-size: 15px; margin-top: 16px; min-height: 22px; }
+  .status.err-msg { color: var(--red); }
+  .done { text-align: left; }
+  .done h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 28px; margin-bottom: 10px; }
+  .done p { margin-bottom: 10px; }
+  .alt { font-size: 14px; color: var(--gray); margin-top: 18px; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  footer { padding: 24px 4vw; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gray-mid); border-top: 1px solid var(--gray-border); }
+  footer a { color: var(--gray-mid); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo" aria-label="RETACH Digital home">
+    <svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#111315" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#111315" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#111315" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#111315" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#111315" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#111315" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#111315" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg>
+  </a>
+  <div class="nav-right">
+    <a href="/" class="nav-back">&larr; retach.tech</a>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Request a quote</div>
+  <h1>Tell us what you need.</h1>
+  <p class="lead">Tell us about your organisation and what you would like quoted. We prepare each quotation from your answers. Fields marked * are required.</p>
+</header>
+
+<main>
+<div class="card" id="cardWrap">
+<form id="quoteForm" novalidate>
+  <div class="grid">
+    <div class="field full">
+      <label class="lbl" for="product">Product or service <span class="req">*</span></label>
+      <select id="product" name="product" required><option value="">Select&hellip;</option><option value="S.I.N.S. Health Scan - Small">S.I.N.S. Health Scan - Small</option><option value="S.I.N.S. Health Scan - Standard">S.I.N.S. Health Scan - Standard</option><option value="Digital Resilience Assessment - Small (from)">Digital Resilience Assessment - Small (from)</option><option value="Digital Resilience Assessment - Standard (from)">Digital Resilience Assessment - Standard (from)</option><option value="Full CRQ Assessment (from)">Full CRQ Assessment (from)</option><option value="Network segmentation review and remediation">Network segmentation review and remediation</option><option value="Structured cabling">Structured cabling</option><option value="Network deployment and redesign">Network deployment and redesign</option><option value="Network maintenance">Network maintenance</option><option value="MFA implementation">MFA implementation</option><option value="Backup and DR with tested restore">Backup and DR with tested restore</option><option value="Vulnerability management">Vulnerability management</option><option value="Patch management">Patch management</option><option value="Server hardening and cloud posture">Server hardening and cloud posture</option><option value="Detection readiness">Detection readiness</option><option value="ESET PROTECT Advanced - 1yr (per device)">ESET PROTECT Advanced - 1yr (per device)</option><option value="Sophos Firewall - licence and subscription">Sophos Firewall - licence and subscription</option><option value="JumpCloud - licence">JumpCloud - licence</option><option value="Lansweeper - licence">Lansweeper - licence</option><option value="Segura PAM - licence">Segura PAM - licence</option><option value="vCISO Advisory (request a quote)">vCISO Advisory (request a quote)</option><option value="vCISO Program (request a quote)">vCISO Program (request a quote)</option><option value="vCISO Executive (request a quote)">vCISO Executive (request a quote)</option><option value="vCISO Fixed-Scope Engagement (request a quote)">vCISO Fixed-Scope Engagement (request a quote)</option><option value="Identity &amp; Access Risk Assessment add-on (request a quote)">Identity &amp; Access Risk Assessment add-on (request a quote)</option><option value="Partner Security Products (request a quote)">Partner Security Products (request a quote)</option><option value="Other / not sure">Other / not sure</option></select>
+      <div class="err" id="e_product"></div>
+    </div>
+    <div class="field" id="f_partner" hidden>
+      <label class="lbl" for="partner_product">Partner product</label>
+      <select id="partner_product" name="partner_product"><option value="">Select&hellip;</option><option value="Sophos">Sophos</option><option value="JumpCloud">JumpCloud</option><option value="Lansweeper">Lansweeper</option><option value="Segura">Segura</option><option value="ESET">ESET</option><option value="Not sure / more than one">Not sure / more than one</option></select>
+    </div>
+    <div class="field" id="f_term" hidden>
+      <label class="lbl" for="term">Licence term</label>
+      <select id="term" name="term"><option value="">Select&hellip;</option><option value="1 year">1 year</option><option value="3 years">3 years</option><option value="Not sure">Not sure</option></select>
+    </div>
+    <div class="field">
+      <label class="lbl" for="full_name">Your name <span class="req">*</span></label>
+      <input type="text" id="full_name" name="full_name" autocomplete="name" maxlength="100" required>
+      <div class="err" id="e_full_name"></div>
+    </div>
+    <div class="field">
+      <label class="lbl" for="email">Work email <span class="req">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="254" required>
+      <div class="err" id="e_email"></div>
+    </div>
+    <div class="field">
+      <label class="lbl" for="phone">Phone or WhatsApp</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="+254 7XX XXX XXX">
+      <div class="err" id="e_phone"></div>
+    </div>
+    <div class="field">
+      <label class="lbl" for="organisation">Organisation <span class="req">*</span></label>
+      <input type="text" id="organisation" name="organisation" autocomplete="organization" maxlength="150" required>
+      <div class="err" id="e_organisation"></div>
+    </div>
+    <div class="field">
+      <label class="lbl" for="org_type">Organisation type <span class="req">*</span></label>
+      <select id="org_type" name="org_type" required><option value="">Select&hellip;</option><option value="SACCO">SACCO</option><option value="SME">SME</option><option value="Fintech / PSP">Fintech / PSP</option><option value="Healthcare">Healthcare</option><option value="NGO">NGO</option><option value="School / University">School / University</option><option value="County / Government">County / Government</option><option value="Other">Other</option></select>
+      <div class="err" id="e_org_type"></div>
+    </div>
+    <div class="field">
+      <label class="lbl" for="staff_count">Number of staff</label>
+      <input type="number" id="staff_count" name="staff_count" min="0" max="100000" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label class="lbl" for="sites">Number of sites</label>
+      <input type="number" id="sites" name="sites" min="0" max="100000" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label class="lbl" for="devices">Approx. computers and servers</label>
+      <input type="number" id="devices" name="devices" min="0" max="100000" inputmode="numeric">
+    </div>
+    <div class="field full">
+      <label class="lbl" for="current_tools">Current security and IT tools</label>
+      <textarea id="current_tools" name="current_tools" maxlength="500" placeholder="Antivirus, firewall, identity, backup&hellip;"></textarea>
+      <div class="err" id="e_current_tools"></div>
+    </div>
+    <div class="field full">
+      <label class="lbl" for="additional_items">Other items you would like quoted</label>
+      <textarea id="additional_items" name="additional_items" maxlength="500"></textarea>
+      <div class="err" id="e_additional_items"></div>
+    </div>
+    <div class="field full">
+      <label class="lbl" for="notes">Anything else we should know</label>
+      <textarea id="notes" name="notes" maxlength="2000"></textarea>
+      <div class="err" id="e_notes"></div>
+    </div>
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="field full">
+      <label class="consent"><input type="checkbox" id="consent" name="consent" required><span>I agree RETACH may use these details to respond to my request. <a href="/privacy.html" target="_blank" rel="noopener">Privacy notice</a> <span class="req" aria-hidden="true">*</span></span></label>
+      <div class="err" id="e_consent"></div>
+    </div>
+    <div class="field full">
+      <div id="ts"></div>
+      <button type="submit" class="btn" id="submitBtn">Request a quote &rarr;</button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <noscript><p class="alt">This form needs JavaScript. To request a quote, email <a href="mailto:info@retach.tech?subject=Quote%20request">info@retach.tech</a>.</p></noscript>
+    </div>
+  </div>
+</form>
+<div class="done" id="done" hidden tabindex="-1">
+  <h2>Thanks. We have your request.</h2>
+  <p>We will use the details you gave to prepare your quotation.</p>
+  <p class="alt">Need to add something? Email <a href="mailto:info@retach.tech">info@retach.tech</a>.</p>
+</div>
+</div>
+</main>
+
+<footer>
+  &copy; 2026 RETACH Digital Ltd &middot; <a href="/">retach.tech</a> &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="mailto:privacy@retach.tech">privacy@retach.tech</a> &middot; The S.I.N.S. Framework&trade; for Digital Resilience
+</footer>
+
+<script src="/assets/theme-toggle.js" defer></script>
+<script>
+(function(){
+  var WORKER = 'https://retach-intake.paulnjaaga.workers.dev', SITEKEY = '0x4AAAAAAFIwX4yKZHaJ4f0s';
+  var f = document.getElementById('quoteForm'); if (!f) return;
+  var q = function(id){ return document.getElementById(id); };
+  var btn = q('submitBtn'), st = q('status'), ts = q('ts');
+  var ERR = 'Something went wrong on our side. Please try again in a minute, or email info@retach.tech with your request.';
+  var token = '', wid = null, loading = false, pending = false, busy = false;
+  var LICENCE = /licen[cs]e|ESET|Partner Security/i;
+
+  function say(m, bad){ st.textContent = m; st.className = 'status' + (bad ? ' err-msg' : ''); }
+  function fieldErr(id, msg){
+    var el = q(id), e = q('e_' + id); if (e) e.textContent = msg || '';
+    if (el) { if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid'); if (msg) el.setAttribute('aria-describedby', 'e_' + id); }
+  }
+  function syncConditional(){
+    var p = q('product').value, on = LICENCE.test(p);
+    q('f_partner').hidden = !on; q('f_term').hidden = !on;
+    if (!on) { q('partner_product').value = ''; q('term').value = ''; }
+  }
+  q('product').addEventListener('change', syncConditional);
+  (function prefill(){
+    var p = new URLSearchParams(location.search).get('product');
+    if (p) { var s = q('product'); for (var i = 0; i < s.options.length; i++) if (s.options[i].value === p) { s.value = p; break; } }
+    syncConditional();
+  })();
+
+  function resetTs(){ token = ''; try { if (window.turnstile && wid !== null) window.turnstile.reset(wid); } catch(e){} }
+  function loadTs(){
+    if (loading) return; loading = true;
+    var s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async = true; s.defer = true;
+    s.onload = function(){
+      wid = window.turnstile.render(ts, { sitekey: SITEKEY, action: 'quote', appearance: 'interaction-only',
+        callback: function(t){ token = t; if (pending) { pending = false; send(); } },
+        'expired-callback': function(){ token = ''; },
+        'error-callback': function(){ token = ''; if (pending) { fail(ERR); } } });
+    };
+    s.onerror = function(){ loading = false; if (pending) fail(ERR); };
+    document.head.appendChild(s);
+  }
+  f.addEventListener('focusin', loadTs);
+  f.addEventListener('pointerdown', loadTs);
+
+  function fail(msg){ busy = false; pending = false; btn.disabled = false; resetTs(); say(msg, true); }
+  var RE_EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]{2,}$/, RE_PHONE = /^\+?[0-9][0-9 ()\-]{5,29}$/, RE_MARK = /[<>]/;
+  function validate(){
+    var bad = null;
+    function need(id, cond, msg){ fieldErr(id, cond ? '' : msg); if (!cond && !bad) bad = id; }
+    need('product', !!q('product').value, 'Please choose a product or service.');
+    need('full_name', !!q('full_name').value.trim() && !RE_MARK.test(q('full_name').value), 'Please enter your name (no < or > characters).');
+    var em = q('email').value.trim().toLowerCase();
+    need('email', RE_EMAIL.test(em) && !/^[=+\-]/.test(em), 'Please enter a valid work email address.');
+    var ph = q('phone').value.trim();
+    need('phone', !ph || RE_PHONE.test(ph), 'Please use digits, spaces, brackets or hyphens only.');
+    need('organisation', !!q('organisation').value.trim() && !RE_MARK.test(q('organisation').value), 'Please enter your organisation (no < or > characters).');
+    need('org_type', !!q('org_type').value, 'Please choose an organisation type.');
+    ['current_tools','additional_items','notes'].forEach(function(id){ need(id, !RE_MARK.test(q(id).value), 'Please remove < and > characters.'); });
+    need('consent', q('consent').checked, 'Please tick the box to confirm you agree.');
+    if (bad) q(bad).focus();
+    return !bad;
+  }
+  function val(id){ var el = q(id); return el ? el.value.trim() : ''; }
+  function send(){
+    var body = { product: val('product'), partner_product: val('partner_product'), full_name: val('full_name'), email: val('email'), phone: val('phone'),
+      organisation: val('organisation'), org_type: val('org_type'), staff_count: val('staff_count'), sites: val('sites'), devices: val('devices'),
+      current_tools: val('current_tools'), term: val('term'), additional_items: val('additional_items'), notes: val('notes'),
+      consent: true, website: f.elements.website.value, turnstile_token: token };
+    fetch(WORKER + '/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { s: r.status, j: j }; }); })
+    .then(function(x){
+      if (x.s === 200 && x.j.ok) {
+        f.hidden = true; var d = q('done'); d.hidden = false; d.focus(); busy = false; return;
+      }
+      fail(x.s === 400 ? 'We could not verify that request. Please check your entries, reload the page and try again.' : ERR);
+    })
+    .catch(function(){ fail(ERR); });
+  }
+  f.addEventListener('submit', function(e){
+    e.preventDefault(); if (busy) return;
+    say(''); if (!validate()) return;
+    busy = true; btn.disabled = true; loadTs();
+    if (token) { say('Sending\u2026'); send(); } else { pending = true; say('Checking that you are human\u2026'); }
+  });
+})();
+</script>
+</body>
+</html>
