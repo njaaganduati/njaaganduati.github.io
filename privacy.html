@@ -87,9 +87,9 @@
 <header class="hero">
   <div class="eyebrow">Legal &middot; Data protection</div>
   <h1>Privacy Notice</h1>
-  <div class="meta"><span>Effective: 26 September 2026</span><span>Version 1.0</span><span>Kenya Data Protection Act, 2019</span></div>
+  <div class="meta"><span>Effective: 29 September 2026</span><span>Version 1.1</span><span>Kenya Data Protection Act, 2019</span></div>
   <p class="lead">This notice explains what personal data RETACH Digital Ltd collects through retach.tech and our online tools, why, who we share it with, and the rights you have.</p>
-  <div class="summary"><strong>In short:</strong> most of our free tools run entirely in your browser, so we never receive what you type into them. We collect personal data only when you ask us for something, such as a quote or a domain check. We set no cookies on retach.tech and use no tracking. Questions? Email <a href="mailto:privacy@retach.tech">privacy@retach.tech</a>.</div>
+  <div class="summary"><strong>In short:</strong> most of our free tools run entirely in your browser, so we never receive what you type into them. We collect personal data only when you ask us for something, such as a quote, a domain check or KDRI update emails. We set no cookies on retach.tech and use no tracking. Questions? Email <a href="mailto:privacy@retach.tech">privacy@retach.tech</a>.</div>
 </header>
 
 <main>
@@ -119,8 +119,9 @@
 <h2>2. What this notice covers</h2>
 <p>This notice covers personal data we collect when you:</p>
 <ul>
-<li>visit retach.tech and its pages, including our free tools (the S.I.N.S. Scanner, the CRQ Engine, the Identity &amp; Access findings viewer and the Pentest Kit);</li>
-<li>use our online service catalogue and request a quote at erp.retach.tech;</li>
+<li>visit retach.tech and its pages, including our free tools (the S.I.N.S. Scanner, the CRQ Engine, the Identity &amp; Access findings viewer and the Pentest Kit), and the Kenya Digital Risk Index at kdri.retach.ke;</li>
+<li>use our online service catalogue at erp.retach.tech, or request a quote (at retach.tech/quote.html or erp.retach.tech);</li>
+<li>sign up for KDRI update emails at kdri.retach.ke;</li>
 <li>email us, message us on WhatsApp, or follow a link to us from retach.io or retach.ke.</li>
 </ul>
 <p><strong>It does not cover client engagement data.</strong> When we deliver a paid service (for example a vCISO engagement, an assessment or managed security), we usually process data on the client's behalf, as a data processor. That processing is governed by the engagement contract and its data processing agreement, not by this notice.</p>
@@ -168,8 +169,18 @@
 </tr>
 <tr>
 <td>Quote request form</td>
-<td>Service or partner product of interest, your name, work email, organisation and organisation type; optionally phone/WhatsApp, staff, site and device counts, current security tools, licence term and any notes. You must tick a box agreeing we may contact you about the request.</td>
+<td>Service or partner product of interest, your name, work email, organisation and organisation type; optionally phone/WhatsApp, staff, site and device counts, current security tools, licence term and any notes. You must tick a box agreeing we may contact you about the request. We also record which wording you agreed to and where the form was submitted.</td>
 <td><strong>Yes.</strong> Stored in our business system and emailed to us</td>
+</tr>
+<tr>
+<td>KDRI update sign-up (kdri.retach.ke)</td>
+<td>Your email address. You must tick a box agreeing we may use it to notify you about KDRI updates. We also record which wording you agreed to and where the form was submitted.</td>
+<td><strong>Yes.</strong> Stored in our business system and emailed to us</td>
+</tr>
+<tr>
+<td>Web forms: bot check</td>
+<td>Cloudflare Turnstile checks that a person is filling in the form. It looks at technical signals such as your IP address and browser details.</td>
+<td><strong>Processed by Cloudflare.</strong> We receive only a pass or fail result</td>
 </tr>
 <tr>
 <td>Email or WhatsApp</td>
@@ -192,7 +203,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Running and securing the website: delivering pages, stopping abuse, fixing faults</td>
+<td>Running and securing the website: delivering pages, stopping abuse (including a bot check on web forms), fixing faults</td>
 <td>Technical data, IP address</td>
 <td>Legitimate interests: keeping a secure, working website</td>
 </tr>
@@ -217,9 +228,14 @@
 <td>Legitimate interests. We stop if you ask us to.</td>
 </tr>
 <tr>
+<td>Sending you the KDRI update emails you signed up for</td>
+<td>Email address</td>
+<td>Consent (DPA ss.30 and 32). You can withdraw it at any time.</td>
+</tr>
+<tr>
 <td>Marketing emails or newsletters</td>
 <td>Email address</td>
-<td>Consent only. We don't send these today; if we start, we'll ask first.</td>
+<td>Consent only. Apart from the KDRI updates you sign up for, we don't send these today; if we start, we'll ask first.</td>
 </tr>
 </tbody>
 </table></div>
@@ -251,8 +267,8 @@
 </tr>
 <tr>
 <td>Cloudflare</td>
-<td>Redirects retach.io and retach.ke to our site</td>
-<td>Technical data, IP address</td>
+<td>Redirects retach.io and retach.ke to our site; runs the bot check on our web forms (Turnstile); passes web form submissions to our business system (Workers); reports cookie-free page-view statistics for kdri.retach.ke (Web Analytics)</td>
+<td>Technical data, IP address; the contents of web forms while in transit to our business system (we do not log them at Cloudflare)</td>
 <td>Global network</td>
 </tr>
 <tr>
@@ -312,6 +328,10 @@
 <td>24 months from our last contact</td>
 </tr>
 <tr>
+<td>KDRI update sign-ups (email address)</td>
+<td>Until you unsubscribe or ask us to delete it (email <a href="mailto:privacy@retach.tech">privacy@retach.tech</a>)</td>
+</tr>
+<tr>
 <td>Records of clients (contracts, quotations, invoices, payments)</td>
 <td>At least 5 years, or longer where the law requires</td>
 </tr>
@@ -346,7 +366,9 @@
 </ul>
 <p>No system is completely secure, but we work to keep the risk low and proportionate.</p>
 <h2>9. Cookies and analytics</h2>
-<p><strong>retach.tech sets no cookies today, and uses no analytics or tracking.</strong> Our tool pages don't store data in your browser's local storage.</p>
+<p><strong>retach.tech sets no cookies today, and uses no analytics or tracking.</strong> Our tool pages don't store your entries in your browser's local storage. The only thing we save on your device is your light or dark theme choice, so the site remembers it.</p>
+<p><strong>Web forms.</strong> The quote form on retach.tech and the sign-up form on kdri.retach.ke use Cloudflare Turnstile to check that a person is filling them in. It loads only when you start filling in a form. In our testing it sets no cookies, but it keeps a small identifier in your browser's local storage, inside Cloudflare's own frame, which we cannot read.</p>
+<p><strong>Kenya Digital Risk Index (kdri.retach.ke)</strong> uses Cloudflare Web Analytics to count page views. It sets no cookies and does not follow you across sites.</p>
 <p><strong>Our quote and catalogue site (erp.retach.tech)</strong> uses strictly necessary cookies to keep your session working and your form secure. They expire when your session ends or soon after.</p>
 <p>If we ever add analytics, we'll update this notice first and ask for your consent before any analytics cookies are set.</p>
 <h2>10. Your rights</h2>
