@@ -433,6 +433,14 @@ div.tc div.tf.lk{color:#5e6b62}
         <div class="tr"><button class="tb on" data-g="academy" data-v="no" onclick="tog('academy',this)">No</button><button class="tb" data-g="academy" data-v="yes" onclick="tog('academy',this)">Yes</button></div>
         <label class="fl">Privileged Access Management (PAM) deployed?</label>
         <div class="tr"><button class="tb on" data-g="pam" data-v="no" onclick="tog('pam',this)">No</button><button class="tb" data-g="pam" data-v="yes" onclick="tog('pam',this)">Yes</button></div>
+        <div class="sdiv">AI Exposure</div>
+        <label class="fl">Visibility of unsanctioned (shadow) AI use?</label>
+        <div class="tr"><button class="tb on" data-g="ai_shadow" data-v="na" onclick="tog('ai_shadow',this)">Not assessed</button><button class="tb" data-g="ai_shadow" data-v="none" onclick="tog('ai_shadow',this)">No visibility</button><button class="tb" data-g="ai_shadow" data-v="visible" onclick="tog('ai_shadow',this)">Visible &amp; detected</button></div>
+        <label class="fl">AI governance policy?</label>
+        <div class="tr"><button class="tb on" data-g="ai_pol" data-v="na" onclick="tog('ai_pol',this)">Not assessed</button><button class="tb" data-g="ai_pol" data-v="none" onclick="tog('ai_pol',this)">None</button><button class="tb" data-g="ai_pol" data-v="enforced" onclick="tog('ai_pol',this)">Documented &amp; enforced</button></div>
+        <label class="fl">Access controls on AI tools?</label>
+        <div class="tr"><button class="tb on" data-g="ai_acc" data-v="na" onclick="tog('ai_acc',this)">Not assessed</button><button class="tb" data-g="ai_acc" data-v="none" onclick="tog('ai_acc',this)">None</button><button class="tb" data-g="ai_acc" data-v="enforced" onclick="tog('ai_acc',this)">Enforced</button></div>
+        <p style="font-size:.68rem;color:var(--muted);margin:.2rem 0 .6rem">Only shadow-AI visibility changes the estimate (data-breach severity, IBM 2025). Policy and access-control answers are recorded for your S.I.N.S. posture but carry no KES effect until a sourced coefficient exists.</p>
 
         <button class="cbtn" onclick="calc()">Calculate Risk Exposure →</button>
       </div>
@@ -574,7 +582,7 @@ div.tc div.tf.lk{color:#5e6b62}
           </div>
 
           <div class="tpane" id="tp-bm">
-            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Kenya sector benchmarks: Serianu 2024/25 · CA Kenya Annual Report · CBK Cybersecurity Guidelines · ODPC enforcement data · <a href="https://kdri.retach.ke" target="_blank" style="color:var(--gl)">Kenya Digital Risk Index</a> (4,675 OAG audit findings, 562 entities).</p>
+            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Kenya sector benchmarks: Serianu 2024/25 · CA Kenya Annual Report · CBK Cybersecurity Guidelines · ODPC enforcement data · <a href="https://kdri.retach.ke" target="_blank" style="color:var(--gl)">Kenya Digital Risk Index</a> (4,406 OAG audit findings, 562 entities).</p>
             <div id="bmo"></div>
           </div>
         </div>
@@ -631,7 +639,7 @@ const CTRLS=[
   {n:'Staff phishing simulation',                  rd:.12,ef:'Medium',cs:'KES 15–30K',    mt:'Reduces click rate avg 60% over 12 months'},
   {n:'ODPC registration & DPA policy',             rd:.08,ef:'Low',   cs:'KES 5–10K',     mt:'Eliminates KES 5M fine exposure'},
 ];
-const TS={mfa:'partial',bk:'no',odpc:'none',academy:'no',pam:'no'};
+const TS={mfa:'partial',bk:'no',odpc:'none',academy:'no',pam:'no',ai_shadow:'na',ai_pol:'na',ai_acc:'na'};
 
 function fk(v){if(v>=1e9)return'KES '+(v/1e9).toFixed(1)+'B';if(v>=1e6)return'KES '+(v/1e6).toFixed(1)+'M';if(v>=1e3)return'KES '+(v/1e3).toFixed(0)+'K';return'KES '+Math.round(v)}
 function fu(v){return'≈ USD '+(v/KR).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
@@ -647,7 +655,8 @@ function gi(){
     i:parseFloat(document.getElementById('ii').value),
     n:parseFloat(document.getElementById('in2').value),
     se:parseFloat(document.getElementById('isec2').value),
-    mfa:TS.mfa,bk:TS.bk==='yes',odpc:TS.odpc,academy:TS.academy==='yes',pam:TS.pam==='yes'
+    mfa:TS.mfa,bk:TS.bk==='yes',odpc:TS.odpc,academy:TS.academy==='yes',pam:TS.pam==='yes',
+    aiShadow:TS.ai_shadow,aiPol:TS.ai_pol,aiAcc:TS.ai_acc   // AI Exposure module (v1: aiShadow only affects EAL; not counted in credUnits)
   }
 }
 function sins(inp){return Math.round((inp.s+inp.i+inp.n+inp.se)/4)}
@@ -666,7 +675,11 @@ const CTRL={
   BACKUP_FINECARD:{v:.70,src:'Legacy control-maturity proxy — preserved for regulatory fine-card continuity only (never applied to EAL); see BACKUP_SEV for the sourced severity multiplier', geo:'n/a', tier:5, year:2025, conf:0.15},
   ODPC_SEV:   {v:.93, src:'IBM Cost of a Data Breach 2025 (containment-time-to-cost delta, programme-level response maturity)', geo:'global', tier:2, year:2025, conf:0.35},
   ODPC_FINE:  {v:.88, src:'RETACH policy assumption — full ODPC programme vs registration-only differentiates fine-mitigation likelihood; not externally sourced, pending regulator enforcement-pattern data', geo:'n/a', tier:5, year:2026, conf:0.20},
-  PAM_SEV:    {v:.69, src:'Ponemon 2026 Cost of Insider Risks Global Report (PAM avg savings $6.1M vs $19.5M total avg annual insider-risk cost, 354 orgs) — insider-risk cost ratio applied as severity reducer on the insider-threat scenario only; not a general breach-severity study', geo:'global', tier:2, year:2026, conf:0.35}
+  PAM_SEV:    {v:.69, src:'Ponemon 2026 Cost of Insider Risks Global Report (PAM avg savings $6.1M vs $19.5M total avg annual insider-risk cost, 354 orgs) — insider-risk cost ratio applied as severity reducer on the insider-threat scenario only; not a general breach-severity study', geo:'global', tier:2, year:2026, conf:0.35},
+  // ── AI Exposure module (v1, approved 2026-10-02) — severity-only, breach scenario only; frequency unchanged ──
+  AI_SHADOW_SEV:{v:1.04, src:'IBM Cost of a Data Breach 2025 (Fig.31: breach involving shadow AI USD 4.63M vs global average USD 4.44M = 1.043; cross-check Fig.27 +USD 200K = 1.045). Severity loader applied only when the org reports no shadow-AI visibility; the unpublished-base +USD 670K high-vs-low comparison is NOT used', geo:'global', tier:2, year:2025, conf:0.35},
+  AI_POL_SEV:   {v:1.00, src:'Attestation only — IBM CODB 2025 gives prevalence (63% lack AI governance policy), not a cost effect. Not applied to EAL', geo:'n/a', tier:5, year:2026, conf:0.00},
+  AI_ACC_SEV:   {v:1.00, src:'Attestation only — IBM CODB 2025 gives prevalence (97% of AI-breached orgs lacked AI access controls), not a cost effect. Not applied to EAL', geo:'n/a', tier:5, year:2026, conf:0.00}
 };
 function rm(inp){
   const ss=sins(inp);
@@ -715,7 +728,8 @@ function sc(inp){
     let rS=1.0;
     if(inp.bk&&(d.id==='ransom'||d.id==='dr'))rS*=CTRL.BACKUP_SEV.v;  // tested backup/RTO-RPO -> severity, availability scenarios only
     if(inp.odpc==='programme'&&d.id==='breach')rS*=CTRL.ODPC_SEV.v;   // ODPC programme -> severity, privacy scenario only
-    if(inp.pam&&d.id==='ins')rS*=CTRL.PAM_SEV.v;                       // PAM -> severity, insider-threat scenario only (Ponemon insider-risk sourcing)
+    if(inp.pam&&d.id==='ins')rS*=CTRL.PAM_SEV.v;
+    if(inp.aiShadow==='none'&&d.id==='breach')rS*=CTRL.AI_SHADOW_SEV.v;  // AI Exposure: no shadow-AI visibility -> breach severity loader (IBM 2025); 'na'/'visible' = 1.0                       // PAM -> severity, insider-threat scenario only (Ponemon insider-risk sourcing)
     const med=inp.rev*d.bI*s.iM*(1+Math.min(inp.stf,500)/600)*rS;  // Lognormal median severity
     const esev=med*k;                                      // mean severity = median * exp(sigma^2/2)
     const m2=med*med*Math.exp(2*sg*sg);                    // E[X^2] — for aggregate variance (compound Poisson)
