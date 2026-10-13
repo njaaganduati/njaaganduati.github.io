@@ -420,7 +420,7 @@ div.tc div.tf.lk{color:#5e6b62}
         <div class="sg"><div class="st"><span class="sn">S¹ — Systems (Identity & Access)</span><span class="sv" id="ls">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="is" oninput="ul('ls',this.value+' / 100');onIC()"></div>
         <div class="sg"><div class="st"><span class="sn">S² — Infrastructure (Backup & DR)</span><span class="sv" id="li">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="ii" oninput="ul('li',this.value+' / 100');onIC()"></div>
         <div class="sg"><div class="st"><span class="sn">S³ — Network (Perimeter & Segmentation)</span><span class="sv" id="ln">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="in2" oninput="ul('ln',this.value+' / 100');onIC()"></div>
-        <div class="sg"><div class="st"><span class="sn">S⁴ — Security (Governance & Policy)</span><span class="sv" id="lsec2">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="isec2" oninput="ul('lsec2',this.value+' / 100');onIC()"></div>
+        <div class="sg"><div class="st"><span class="sn">S⁴ — Security (incl. governance &amp; policy controls)</span><span class="sv" id="lsec2">50 / 100</span></div><input type="range" min="0" max="100" value="50" step="5" id="isec2" oninput="ul('lsec2',this.value+' / 100');onIC()"></div>
 
         <div class="sdiv">Risk Modifiers</div>
         <label class="fl">MFA Adoption</label>
@@ -592,7 +592,7 @@ div.tc div.tf.lk{color:#5e6b62}
         <h3>Ready to replace estimates with evidence?</h3>
         <p>The CRQ Engine gives you an estimated financial model from your own inputs. A RETACH Digital Resilience Assessment replaces those estimates with evidence from your own systems: verified findings, a scored executive report, a risk heatmap and a 30/60/90 roadmap. Need board-ready exposure figures in KES, with a before-and-after? Ask about Full CRQ, from KES 350,000 (≈ USD 2,700).</p>
         <a href="https://retach.tech/quote.html?product=Digital%20Resilience%20Assessment%20-%20Small%20(from)" target="_blank" class="ubtn">Request a Digital Resilience Assessment quote →</a>
-        <div class="uinc"><span class="ui">Evidence from your systems</span><span class="ui">Scored executive report</span><span class="ui">Risk heatmap</span><span class="ui">30/60/90 roadmap</span><span class="ui">5–10 business days</span><span class="ui">From KES 120,000</span><span class="ui">Valid to 31 March 2027</span></div>
+        <div class="uinc"><span class="ui">Evidence from your systems</span><span class="ui">Scored executive report</span><span class="ui">Risk heatmap</span><span class="ui">30/60/90 roadmap</span><span class="ui">Timeline agreed in your SOW</span><span class="ui">From KES 120,000</span><span class="ui">Valid to 31 March 2027</span></div>
       </div>
     </div>
   </div>
@@ -912,12 +912,12 @@ function rRM(inp,ss){
     ],
     d60:[
       nb?'<strong>Schedule a full backup restoration test this month.</strong> Name a backup owner. Ransomware recovery depends entirely on this. Sets a quarterly test calendar.':'Document your DR procedure step-by-step with named contacts. Conduct a tabletop exercise with your team.',
-      lw?'Conduct a formal risk assessment against your top 5 assets. ISO 27005 model — RETACH delivers this in a 2-day engagement.':'Update your Information Security Policy. Get written board sign-off. File a copy with the ODPC data register.',
+      lw?'Conduct a formal risk assessment against your top 5 assets. ISO 27005 model — RETACH delivers this as a scoped engagement, with the timeline agreed in your SOW.':'Update your Information Security Policy. Get written board sign-off. File a copy with the ODPC data register.',
       isCI?'<strong>CMCA s.18 compliance:</strong> Document OT/IT separation policy if operational technology is present. Define what constitutes "protected systems" in your environment. Confirm access control procedures for all operational systems.':no?'<strong>Register with the ODPC</strong>. Unregistered data processors face up to KES 5M in fines. Registration is 2–4 weeks and approx KES 5K.':'Review your ODPC data processing register. Document every third-party processor and all data flows.',
     ],
     d90:[
       'Segment your network: separate guest WiFi, payment terminals, and core business systems. Each segment limits breach blast radius.',
-      isCI?'<strong>Business Continuity Plan (BCP) for essential services:</strong> CI operators must demonstrate continuity planning for essential service delivery. A tested BCP directly reduces your RTO exposure and is a CMCA compliance requirement. RETACH delivers BCP/DRP in a structured 5-day engagement.':'Run your first phishing simulation. Track the click rate — your human risk KPI. Target: below 10% within 6 months.',
+      isCI?'<strong>Business Continuity Plan (BCP) for essential services:</strong> CI operators must demonstrate continuity planning for essential service delivery. A tested BCP directly reduces your RTO exposure and is a CMCA compliance requirement. RETACH delivers BCP/DRP as a structured engagement, with the timeline agreed in your SOW.':'Run your first phishing simulation. Track the click rate — your human risk KPI. Target: below 10% within 6 months.',
       isCI?`<strong>ODPC registration is mandatory regardless of sector:</strong> Even as a CI operator, DPA 2019 applies to all personal data you process. Register at odpc.go.ke. Combined DPA + CMCA non-compliance exposure is ${fk(s.rF_dpa+s.rF_cmca)} — both fines can run concurrently.`:'Establish a monthly access review: who has admin rights, which systems, why. Prevents 60% of insider threat scenarios.',
     ]
   };
@@ -1207,7 +1207,7 @@ const SINS_P={
   S:{ltr:'S',name:'Systems',layer:'Layer 1 · Foundation',c:'#116b4f'},
   I:{ltr:'I',name:'Infrastructure',layer:'Layer 2 · Operational',c:'#146B4E'},
   N:{ltr:'N',name:'Network',layer:'Layer 3 · Connectivity',c:'#4a6b7a'},
-  G:{ltr:'S',name:'Security & Governance',layer:'Layer 4 · Governance',c:'#9E1B23'}
+  G:{ltr:'S',name:'Security',layer:'Layer 4 · Protection',c:'#9E1B23'}
 };
 /* row: [kri, category, pillarKey, NIST CSF 2.0, ISO/IEC ref, green, amber, red, owner, cadence] */
 const KRI_BASE=[
