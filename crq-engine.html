@@ -1268,7 +1268,7 @@ function renderKRI(){
   /* ── Framing banner — S.I.N.S. atop established standards ── */
   var banner='<div class="kri-banner">'
     +'<div class="kri-banner-t">S.I.N.S. KRI Register™ · '+s.n+'</div>'
-    +'<div class="kri-banner-d">The operational core of a RETACH <strong>vCISO retainer</strong>. The <strong>S.I.N.S. Framework</strong> sits atop <strong>NIST CSF 2.0</strong> and <strong>ISO/IEC 27005</strong> — translating these global standards into a sector-specific, continuously-monitored control register. Every indicator below is mapped to its S.I.N.S. pillar and the underlying standard.</div>'
+    +'<div class="kri-banner-d">The operational core of a RETACH <strong>vCISO retainer</strong>. The <strong>S.I.N.S. Framework</strong> sits atop <strong>NIST CSF 2.0</strong> and <strong>ISO/IEC 27005</strong> — translating these global standards into a sector-specific, continuously-monitored control register. Every indicator is tagged to its S.I.N.S. pillar; detailed standards mapping is provided to your auditor on request.</div>'
     +'<div class="kri-legend">'+Object.keys(SINS_P).map(function(k){var p=SINS_P[k];return '<span class="kri-leg"><span class="kri-pill" style="background:'+p.c+'">'+p.ltr+'</span>'+p.name+'</span>';}).join('')+'</div>'
     +'</div>';
 
@@ -1293,16 +1293,15 @@ function renderKRI(){
       +'<td class="kr-n">'+(i+1)+'</td>'
       +'<td class="kr-kri" data-label="Key Risk Indicator"><strong>'+r[0]+'</strong><span class="kr-cat">'+r[1]+'</span></td>'
       +'<td data-label="S.I.N.S. Pillar"><span class="kri-pill" style="background:'+p.c+'" title="'+p.name+' — '+p.layer+'">'+p.ltr+'</span><span class="kr-pn">'+p.name+'</span></td>'
-      +'<td class="kr-std" data-label="Standard mapping"><span class="kr-nist">'+r[3]+'</span><span class="kr-iso">ISO '+r[4]+'</span></td>'
       +'<td class="kr-thr" data-label="Threshold · G / A / R"><span class="kr-g">'+r[5]+'</span><span class="kr-a">'+r[6]+'</span><span class="kr-r">'+r[7]+'</span></td>'
       +'<td class="kr-own" data-label="Suggested owner">'+r[8]+'</td>'
       +'<td class="kr-freq" data-label="Cadence">'+r[9]+'</td>'
       +'</tr>';
   }).join('');
-  var table='<div class="kri-subh">S.I.N.S. KRI Register · '+reg.length+' indicators<span class="kri-subh-note">mapped to NIST CSF 2.0 · ISO/IEC 27001:2022 · 27005</span></div>'
+  var table='<div class="kri-subh">S.I.N.S. KRI Register · '+reg.length+' indicators<span class="kri-subh-note">aligned with NIST CSF 2.0 and ISO/IEC 27005</span></div>'
     +'<div class="kri-thead-legend"><span><span class="kr-dot g"></span>Green target</span><span><span class="kr-dot a"></span>Amber — review</span><span><span class="kr-dot r"></span>Red — escalate</span></div>'
     +'<div class="kri-tbl-wrap"><table class="kri-tbl"><thead><tr>'
-    +'<th>#</th><th>Key Risk Indicator</th><th>S.I.N.S. Pillar</th><th>Standard mapping</th><th>Threshold · G / A / R</th><th>Suggested owner</th><th>Cadence</th>'
+    +'<th>#</th><th>Key Risk Indicator</th><th>S.I.N.S. Pillar</th><th>Threshold · G / A / R</th><th>Suggested owner</th><th>Cadence</th>'
     +'</tr></thead><tbody>'+trows+'</tbody></table></div>';
 
   /* ── Threat vectors ── */
