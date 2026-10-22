@@ -1035,6 +1035,13 @@
 
   .blog-read-more:hover { border-color: var(--green); }
 
+  .blog-latest { display: flex; align-items: center; gap: 16px; max-width: 1200px; margin: 0 auto 24px; padding: 14px 20px; border: 1px solid var(--gray-border); border-left: 4px solid var(--green); background: var(--green-bg, rgba(20,107,78,0.08)); text-decoration: none; color: var(--black); }
+  .blog-latest:hover { border-color: var(--green); }
+  .blog-latest-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); white-space: nowrap; }
+  .blog-latest-title { flex: 1; font-weight: 600; font-size: 15px; }
+  .blog-latest-go { font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); white-space: nowrap; }
+  @media (max-width: 700px) { .blog-latest { flex-wrap: wrap; gap: 6px; } }
+
   /* ─── CONTACT ─── */
   #contact {
     background: var(--black);
@@ -2116,9 +2123,16 @@ html[data-theme="light"] div.framework-positioning div.positioning-label{color:#
     <div>
       <div class="section-eyebrow">Insights &amp; Thinking</div>
       <h2>From the<br>Field</h2>
+      <a href="/insights/" class="blog-read-more">All insights →</a>
     </div>
     <a href="/sins-scanner.html" class="btn-primary">Get Your Free S.I.N.S. Score →</a>
   </div>
+
+  <a class="blog-latest" href="/insights/weekly-brief-2026-10-22.html">
+    <span class="blog-latest-tag">New · Weekly Brief</span>
+    <span class="blog-latest-title">A VPN flaw behind ransomware, the ODPC's record, and the 72-hour test</span>
+    <span class="blog-latest-go">Read →</span>
+  </a>
 
   <div class="blog-grid">
     <div class="blog-card featured">
