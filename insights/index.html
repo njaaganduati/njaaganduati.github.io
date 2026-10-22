@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights | RETACH</title>
+<meta name="description" content="Plain-language cyber and GRC briefings for Kenyan and East African organisations: a Weekly Brief on the past week's news, plus guides on S.I.N.S., data protection and security audits.">
+<meta name="author" content="RETACH">
+<meta property="og:title" content="Insights">
+<meta property="og:description" content="Plain-language cyber and GRC briefings for Kenyan and East African organisations: a Weekly Brief on the past week's news, plus guides on S.I.N.S., data protection and security audits.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://retach.tech/insights/">
+<meta property="og:image" content="https://retach.tech/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://retach.tech/insights/">
+<link rel="icon" href="/favicon.ico">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root { --green: #146B4E; --dark: #1a1a1a; --red: #9E1B23; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; }
+  [data-theme="dark"] {
+    --bg: #111315; --text: #e8ebe6; --muted: #9AA2AA; --border: rgba(255,255,255,0.12); --green: #2E9E6B;
+  }
+  [data-theme="dark"] .penalty-card,
+  [data-theme="dark"] .checklist li { background: #181B1E; }
+  [data-theme="dark"] .callout { background: rgba(46,158,107,0.12); }
+  [data-theme="dark"] .callout p { color: #7fd4ab; }
+  [data-theme="dark"] .warning { background: rgba(158,27,35,0.18); }
+  [data-theme="dark"] .warning p { color: #e08791; }
+  [data-theme="dark"] .article-body h2,
+  [data-theme="dark"] .article-body h3 { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#ccc;padding:6px 12px;line-height:1.4}
+  .theme-toggle:hover{border-color:#2E9E6B;color:#fff}
+  .theme-toggle:focus-visible{outline:2px solid #2E9E6B;outline-offset:2px}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; transition: background 0.2s, color 0.2s; }
+  a { color: var(--green); }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+ .nav-logo-combined { height: 36px; width: auto; display: block; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.6rem; }
+  .callout { background: #E8F2EC; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1A4A38; font-size: 0.95rem; }
+  .warning { background: #fdf0f2; border-left: 4px solid var(--red); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warning p { margin: 0; color: #7a1c2a; font-size: 0.95rem; }
+  .penalty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .penalty-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: #fff; }
+  .penalty-card .amount { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--red); margin-bottom: 0.3rem; }
+  .penalty-card .label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; font-weight: 600; }
+  .penalty-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.6rem; background: #fff; font-size: 0.95rem; }
+  .checklist li .check { width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .checklist li .item-text strong { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+  .checklist li .item-text span { color: var(--muted); font-size: 0.88rem; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } .penalty-grid { grid-template-columns: 1fr; } }
+
+  :root { --card: #ffffff; }
+  [data-theme="dark"] { --card: #181B1E; }
+  footer a { color: #2e9e6b; }
+  html[data-theme="dark"] a.cta-btn { background-color: #146b4e; }
+
+  .toc { list-style: none; padding: 0; margin: 0 0 2rem; counter-reset: t; }
+  .toc li { counter-increment: t; padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; margin: 0; }
+  .toc li::before { content: counter(t, decimal-leading-zero); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--green); margin-right: 0.8rem; }
+  .story-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 3rem 0 0 !important; }
+  .story-label + h2 { margin-top: 0.4rem; }
+  .nexus { border: 1px solid var(--border); border-top: 4px solid var(--green); border-radius: 8px; background: var(--card); padding: 1.25rem 1.5rem; margin: 2rem 0; }
+  .nexus-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+  .nexus-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--border); font-size: 0.95rem; }
+  .nexus-row:first-of-type { border-top: 0; }
+  .nexus-row .k { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.2rem; }
+  .nexus-row p { margin: 0; }
+  .nexus-cta { display: inline-block; margin-top: 0.6rem; font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--green); }
+  .sources { font-size: 0.9rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.5rem; }
+  .fine { font-size: 0.85rem; color: var(--muted); }
+  .cta-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-btn.secondary { background: transparent; border: 2px solid #fff; padding: calc(0.85rem - 2px) calc(2rem - 2px); }
+  @media (max-width: 600px) { .nexus-row { grid-template-columns: 1fr; gap: 0.2rem; } }
+
+  .hub-wrap { max-width: 1120px; margin: 0 auto; padding: 3rem 2rem 2rem; }
+  .hub-wrap h2.sec { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.5rem; margin: 3rem 0 1rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.45rem 0.9rem; border: 1px solid var(--border); border-radius: 999px; background: var(--card); color: var(--text); cursor: pointer; }
+  .chip:hover { border-color: var(--green); }
+  .chip[aria-pressed="true"] { background: #146B4E; border-color: #146B4E; color: #fff; }
+  .chip:focus-visible { outline: 2px solid #2E9E6B; outline-offset: 2px; }
+  .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .post-card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; text-decoration: none; color: var(--text); }
+  .post-card:hover { border-color: var(--green); }
+  .post-card[hidden] { display: none; }
+  .post-card .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.6rem; }
+  .post-card h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.15rem; line-height: 1.25; margin: 0 0 0.6rem; color: var(--text); }
+  .post-card p { font-size: 0.92rem; line-height: 1.6; color: var(--muted); margin: 0 0 1rem; flex: 1; }
+  .post-card .meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--muted); }
+  .post-card.featured { grid-column: 1 / -1; background: #1a1a1a; border-color: #1a1a1a; padding: 2rem; }
+  .post-card.featured .tag { color: #7fd4ab; }
+  .post-card.featured h3 { font-size: 1.8rem; color: #fff; }
+  .post-card.featured p { color: #c8c8c8; font-size: 1rem; }
+  .post-card.featured .meta { color: #aaa; }
+  .doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .door { display: block; border: 1px solid var(--border); border-top: 4px solid var(--green); border-radius: 8px; background: var(--card); padding: 1.4rem; text-decoration: none; color: var(--text); }
+  .door:hover { border-color: var(--green); }
+  .door strong { display: block; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .door span { display: block; font-size: 0.92rem; color: var(--muted); line-height: 1.55; margin-bottom: 0.8rem; }
+  .door em { font-style: normal; font-weight: 600; color: var(--green); font-size: 0.9rem; }
+  .follow { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.2rem 0 0; font-size: 0.95rem; }
+  .empty { display: none; color: var(--muted); padding: 1rem 0; }
+  @media (max-width: 860px) { .post-grid, .doors { grid-template-columns: 1fr; } .hub-wrap { padding: 2rem 1rem 1rem; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"RETACH Insights","url":"https://retach.tech/insights/","description":"Plain-language cyber and GRC briefings for Kenyan and East African organisations: a Weekly Brief on the past week's news, plus guides on S.I.N.S., data protection and security audits.","publisher":{"@type":"Organization","name":"RETACH","url":"https://retach.tech"}}</script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#ffffff" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#ffffff" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#ffffff" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#ffffff" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#ffffff" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#ffffff" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#ffffff" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/#framework">Framework</a>
+      <a href="/#services">Services</a>
+      <a href="/insights/">Insights</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Insights</span>
+    <h1>Cyber and GRC briefings for East African organisations</h1>
+    <div class="article-meta"><span>The Weekly Brief covers the past week's news, with actions you can take now.</span></div>
+  </div>
+</div>
+<div class="hub-wrap">
+  <div class="chips" role="group" aria-label="Filter articles by topic">
+    <button type="button" class="chip" aria-pressed="true" data-filter="all">All</button>
+    <button type="button" class="chip" aria-pressed="false" data-filter="Weekly Brief">Weekly Brief</button>
+    <button type="button" class="chip" aria-pressed="false" data-filter="GRC">GRC</button>
+    <button type="button" class="chip" aria-pressed="false" data-filter="Framework">Framework</button>
+    <button type="button" class="chip" aria-pressed="false" data-filter="SMEs">SMEs</button>
+  </div>
+  <div class="post-grid" id="posts">
+    <a class="post-card featured" href="/insights/weekly-brief-2026-10-22.html" data-cat="Weekly Brief"><div class="tag">Weekly Brief</div><h3>A VPN flaw behind ransomware, the ODPC's record, and the 72-hour test</h3><p>Three stories, what each means for Kenyan and East African organisations, and what to do about it this week.</p><div class="meta">22 October 2026 &middot; 6 min read</div></a>
+    <a class="post-card" href="/insights/sins-framework-introduction.html" data-cat="Framework"><div class="tag">Framework</div><h3>Introducing the S.I.N.S. Framework&trade;</h3><p>A practical approach to cybersecurity built on four pillars: Systems, Infrastructure, Network and Security.</p><div class="meta">March 2025 &middot; 5 min read</div></a>
+    <a class="post-card" href="/insights/sme-security-audit-failures.html" data-cat="SMEs"><div class="tag">SMEs</div><h3>Why most African SMEs fail their first security audit, and how to fix it</h3><p>The gap between what auditors expect and what organisations can implement with the resources they have.</p><div class="meta">April 2025 &middot; 8 min read</div></a>
+    <a class="post-card" href="/insights/kenya-dpa-compliance-guide.html" data-cat="GRC"><div class="tag">GRC</div><h3>Kenya's Data Protection Act: what your business must do now</h3><p>A practical checklist for treating the Data Protection Act as live law, not box-ticking.</p><div class="meta">February 2025 &middot; 6 min read</div></a>
+  </div>
+  <p class="empty" id="empty">No articles in this topic yet.</p>
+
+  <h2 class="sec">Start somewhere</h2>
+  <div class="doors">
+    <a class="door" href="/sins-scanner.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=hub"><strong>Free S.I.N.S. Score</strong><span>A quick, in-browser look at where your organisation stands across the four S.I.N.S. pillars.</span><em>Get your score &rarr;</em></a>
+    <a class="door" href="https://kdri.retach.ke/?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=hub"><strong>Kenya Digital Risk Index</strong><span>A public index of digital-related audit findings, built from Kenya's Office of the Auditor-General reports.</span><em>Explore the index &rarr;</em></a>
+    <a class="door" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=hub"><strong>Request a quote</strong><span>Health Scan, Digital Resilience Assessment, Virtual CISO and managed services, scoped to your organisation.</span><em>Request a quote &rarr;</em></a>
+  </div>
+
+  <h2 class="sec">Follow RETACH</h2>
+  <div class="follow">
+    <a href="https://linkedin.com/company/retach" rel="noopener">LinkedIn</a>
+    <a href="https://x.com/retach_tech" rel="noopener">X (@retach_tech)</a>
+    <a href="https://facebook.com/retachtech" rel="noopener">Facebook</a>
+  </div>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a> · <a href="/privacy.html">Privacy</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+<script src="/assets/theme-toggle.js" defer></script>
+<script>
+(function () {
+  var chips = document.querySelectorAll('.chip');
+  var cards = document.querySelectorAll('#posts .post-card');
+  var empty = document.getElementById('empty');
+  function apply(f) {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var on = f === 'all' || c.getAttribute('data-cat') === f;
+      c.hidden = !on;
+      if (on) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+    chips.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-filter') === f ? 'true' : 'false');
+    });
+  }
+  chips.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-filter')); });
+  });
+})();
+</script>
+</body>
+</html>

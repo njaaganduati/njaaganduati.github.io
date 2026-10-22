@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Brief: a VPN flaw behind ransomware, the ODPC&#39;s record, and the 72-hour test | RETACH</title>
+<meta name="description" content="Three stories for Kenyan and East African organisations: a VPN flaw used in ransomware attacks, what the ODPC's own enforcement figures show, and the 72-hour breach test, with actions for this week.">
+<meta name="author" content="RETACH">
+<meta property="og:title" content="Weekly Brief: a VPN flaw behind ransomware, the ODPC&#39;s record, and the 72-hour test">
+<meta property="og:description" content="Three stories for Kenyan and East African organisations: a VPN flaw used in ransomware attacks, what the ODPC's own enforcement figures show, and the 72-hour breach test, with actions for this week.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://retach.tech/insights/weekly-brief-2026-10-22">
+<meta property="og:image" content="https://retach.tech/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://retach.tech/insights/weekly-brief-2026-10-22">
+<link rel="icon" href="/favicon.ico">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root { --green: #146B4E; --dark: #1a1a1a; --red: #9E1B23; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; }
+  [data-theme="dark"] {
+    --bg: #111315; --text: #e8ebe6; --muted: #9AA2AA; --border: rgba(255,255,255,0.12); --green: #2E9E6B;
+  }
+  [data-theme="dark"] .penalty-card,
+  [data-theme="dark"] .checklist li { background: #181B1E; }
+  [data-theme="dark"] .callout { background: rgba(46,158,107,0.12); }
+  [data-theme="dark"] .callout p { color: #7fd4ab; }
+  [data-theme="dark"] .warning { background: rgba(158,27,35,0.18); }
+  [data-theme="dark"] .warning p { color: #e08791; }
+  [data-theme="dark"] .article-body h2,
+  [data-theme="dark"] .article-body h3 { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#ccc;padding:6px 12px;line-height:1.4}
+  .theme-toggle:hover{border-color:#2E9E6B;color:#fff}
+  .theme-toggle:focus-visible{outline:2px solid #2E9E6B;outline-offset:2px}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; transition: background 0.2s, color 0.2s; }
+  a { color: var(--green); }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+ .nav-logo-combined { height: 36px; width: auto; display: block; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.6rem; }
+  .callout { background: #E8F2EC; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1A4A38; font-size: 0.95rem; }
+  .warning { background: #fdf0f2; border-left: 4px solid var(--red); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warning p { margin: 0; color: #7a1c2a; font-size: 0.95rem; }
+  .penalty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .penalty-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: #fff; }
+  .penalty-card .amount { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--red); margin-bottom: 0.3rem; }
+  .penalty-card .label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; font-weight: 600; }
+  .penalty-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.6rem; background: #fff; font-size: 0.95rem; }
+  .checklist li .check { width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .checklist li .item-text strong { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+  .checklist li .item-text span { color: var(--muted); font-size: 0.88rem; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } .penalty-grid { grid-template-columns: 1fr; } }
+
+  :root { --card: #ffffff; }
+  [data-theme="dark"] { --card: #181B1E; }
+  footer a { color: #2e9e6b; }
+  html[data-theme="dark"] a.cta-btn { background-color: #146b4e; }
+
+  .toc { list-style: none; padding: 0; margin: 0 0 2rem; counter-reset: t; }
+  .toc li { counter-increment: t; padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; margin: 0; }
+  .toc li::before { content: counter(t, decimal-leading-zero); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--green); margin-right: 0.8rem; }
+  .story-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 3rem 0 0 !important; }
+  .story-label + h2 { margin-top: 0.4rem; }
+  .nexus { border: 1px solid var(--border); border-top: 4px solid var(--green); border-radius: 8px; background: var(--card); padding: 1.25rem 1.5rem; margin: 2rem 0; }
+  .nexus-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+  .nexus-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--border); font-size: 0.95rem; }
+  .nexus-row:first-of-type { border-top: 0; }
+  .nexus-row .k { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.2rem; }
+  .nexus-row p { margin: 0; }
+  .nexus-cta { display: inline-block; margin-top: 0.6rem; font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--green); }
+  .sources { font-size: 0.9rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.5rem; }
+  .fine { font-size: 0.85rem; color: var(--muted); }
+  .cta-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-btn.secondary { background: transparent; border: 2px solid #fff; padding: calc(0.85rem - 2px) calc(2rem - 2px); }
+  @media (max-width: 600px) { .nexus-row { grid-template-columns: 1fr; gap: 0.2rem; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Weekly Brief: a VPN flaw behind ransomware, the ODPC's record, and the 72-hour test","datePublished":"2026-10-22","dateModified":"2026-10-22","description":"Three stories for Kenyan and East African organisations: a VPN flaw used in ransomware attacks, what the ODPC's own enforcement figures show, and the 72-hour breach test, with actions for this week.","mainEntityOfPage":"https://retach.tech/insights/weekly-brief-2026-10-22","author":{"@type":"Organization","name":"RETACH","legalName":"RETACH DIGITAL LTD","alternateName":"RETACH Digital"},"publisher":{"@type":"Organization","name":"RETACH","url":"https://retach.tech"}}</script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#ffffff" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#ffffff" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#ffffff" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#ffffff" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#ffffff" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#ffffff" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#ffffff" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/#framework">Framework</a>
+      <a href="/#services">Services</a>
+      <a href="/insights/">Insights</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Weekly Brief &middot; Cyber &amp; GRC</span>
+    <h1>Weekly Brief: a VPN flaw behind ransomware, the ODPC's record, and the 72-hour test</h1>
+    <div class="article-meta">
+      <span><strong>Published:</strong> 22 October 2026</span>
+      <span><strong>Read time:</strong> 6 min</span>
+      <span><strong>Author:</strong> RETACH</span>
+    </div>
+  </div>
+</div>
+<div class="article-body">
+<p>Three stories that matter to organisations in Kenya and East Africa this week, what each means in practice, and what to do about it. Two are from the past week; the third puts the regulator's own enforcement figures in context. All sources are public and linked at the end.</p>
+<ol class="toc">
+  <li>A VPN flaw that gets ransomware crews past MFA</li>
+  <li>What the ODPC's own figures say about enforcement</li>
+  <li>The 72-hour test: what customers do when their data is breached</li>
+</ol>
+
+<p class="story-label">Network &middot; Remote access</p>
+<h2>A VPN flaw that gets ransomware crews past MFA</h2>
+<p>Palo Alto Networks' Unit 42 updated its threat brief on CVE-2026-0257 on 19 and 20 October. The flaw is an authentication bypass in the GlobalProtect portal and gateway components of PAN-OS, and it lets an unauthorised party start VPN sessions. It has been on CISA's Known Exploited Vulnerabilities list since May, so it is not new. What has changed is who is using it, and what they do once inside.</p>
+<p>Unit 42 says ransomware operators it tracks as Spikey Scorpius (Qilin) and Tarnished Scorpius (Inc) are exploiting it. In the cases it describes, attackers open a VPN session that bypasses MFA, scout the network with remote-management tools, then move sideways over RDP and SMB. In one investigation they reached a vCenter appliance, disabled security controls on ESXi hosts, and copied credentials offline from a domain controller's virtual disk. Some attackers also chained the flaw with an older Veeam vulnerability, CVE-2023-27532.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> The lesson is wider than one vendor. Any organisation with branches, depots or remote staff depends on a remote-access gateway, and a bypassed gateway makes MFA on the VPN irrelevant. In the cases Unit 42 describes, the damage came after entry: networks that let a VPN user reach virtualisation management, domain controllers and backup systems.</p></div>
+<div class="warning"><p><strong>Check the source, not this summary.</strong> Affected versions, the fix and workarounds are in Palo Alto Networks' own security advisory. Use that to decide what to patch.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Confirm your exposure</strong><span>Find out whether you run GlobalProtect, which version, and whether the vendor's fix or workaround is in place.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Test from outside</strong><span>Unit 42 recommends checking from an external browser whether management interfaces are reachable, and restricting access with Interface Management profiles.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Search your logs</strong><span>Look through GlobalProtect logs for the indicators Unit 42 lists. Treat any matching successful session as an incident, not a curiosity.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Cut the path after the gateway</strong><span>The VPN address pool should not have a route to hypervisor management, backup servers or domain controllers unless a rule says so on purpose.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Patch what attackers chain</strong><span>Backup software and virtualisation management appear in these attacks. Give them the same urgency as the gateway.</span></div></li>
+</ul>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>A remote-access gateway flaw is being used to start ransomware attacks.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>The Network and Systems layers of S.I.N.S.: what the gateway exposes, how far a VPN user can travel, and how well hypervisors and backups are isolated.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>A Health Scan finds the gaps, scores them and documents them, so the fix list is ordered by risk. Managed Security Services adds monitoring and incident response on a retainer.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-1&amp;utm_content=story-1">Start with a Health Scan &rarr;</a>
+</div>
+
+<p class="story-label">GRC &middot; Kenya &middot; Background</p>
+<h2>What the ODPC's own figures say about enforcement</h2>
+<p>Enforcement under the Data Protection Act keeps coming up in Kenyan commentary, and the figures usually quoted come from the regulator itself. In November 2024, marking five years since the Act took effect, the Office of the Data Protection Commissioner reported 7,223 registered data handlers, 138 impact assessments reviewed, 192 advisories, 58 audits and inspections, 68 enforcement notices and 11 penalty notices. These are the ODPC's cumulative figures to that date. We could not find a newer official tally, so treat them as a snapshot, not a current scorecard.</p>
+<p>Read plainly, there are several enforcement notices and audits for every penalty: 68 and 58 against 11. Under section 63 of the Data Protection Act, 2019, a penalty is capped at KES 5 million or 1% of the previous year's turnover, whichever is lower.</p>
+<div class="callout"><p><strong>RETACH's reading:</strong> audits and enforcement notices are, in practice, requests to show evidence. An organisation with a data map, a documented lawful basis for each activity, signed processor agreements, a tested breach procedure and training records is in a better position long before any fine is discussed.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Start an evidence file</strong><span>Collect the data map, lawful-basis record, privacy notice, processor contracts, incident procedure and training records in one place.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Check processor contracts</strong><span>Every vendor that handles personal data for you should be under a written data processing agreement.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Confirm your registration position</strong><span>Whether you must register with the ODPC depends on size, sector and the type of data you process. Confirm where you stand rather than assuming.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Name an owner</strong><span>Someone senior should own data protection compliance and report on it to leadership.</span></div></li>
+</ul>
+<p>For a fuller checklist, see our guide to <a href="/insights/kenya-dpa-compliance-guide.html">Kenya's Data Protection Act</a>.</p>
+<p class="fine">General information, not legal advice. For decisions about your own obligations, consult a qualified advocate.</p>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>The regulator audits, issues enforcement notices and imposes penalties, and notices far outnumber fines.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>Whether you can show, on paper, that you handle personal data lawfully and could answer a notice or an audit.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>Governance, Risk &amp; Compliance work maps your current data processing against the Data Protection Act and produces a prioritised remediation plan. A Virtual CISO can own the programme if you have no one in-house.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-1&amp;utm_content=story-2">Ask about a DPA gap assessment &rarr;</a>
+</div>
+
+<p class="story-label">Incident readiness &middot; Kenya</p>
+<h2>The 72-hour test: what customers do when their data is breached</h2>
+<p>TransUnion's Consumer Pulse Study, reported by The Star on 21 October, asked Kenyans who had been told their account details were stolen what they did next. The reactions were fast and personal: 57% changed the password on the affected account, 54% changed passwords elsewhere, and 46% checked for unauthorised activity. About a quarter (25%) contacted the business that was breached, and 14% filed a police report. The report does not state the sample size or method, so treat the figures as indicative.</p>
+<p>For the business, the number that matters is not on that list. Under the Data Protection Act, 2019, a breach likely to put people at risk must be reported to the ODPC within 72 hours of becoming aware of it. In practice, customers can react before an organisation has agreed who is allowed to speak.</p>
+<h3>Run a 72-hour drill</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Decide who decides</strong><span>Name the person who judges whether an incident is a reportable breach, and a deputy.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Pre-write the messages</strong><span>Keep a draft ODPC notification and a draft customer message ready to edit, not to create.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Know where the logs are</strong><span>Record where logs live and who can retrieve them out of hours.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Brief customer support</strong><span>In the survey, about a quarter of notified customers contacted the business. Agree what support will say.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Include your vendors</strong><span>Tell key suppliers how to report a suspected incident to you, and how fast.</span></div></li>
+</ul>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>Breach victims act within hours. The legal clock is 72 hours.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>Decision rights, contacts, log locations and message drafts that exist only in people's heads.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>Managed Security Services covers monitoring and incident response. Governance, Risk &amp; Compliance can write and test the breach procedure. A Virtual CISO can run the drill with your leadership.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-1&amp;utm_content=story-3">Talk to RETACH about incident readiness &rarr;</a>
+</div>
+
+<h2>How RETACH works on this</h2>
+<p>RETACH works in a loop: Assess, Quantify, Remediate, then repeat. We call it the AQR Cycle. A Risk Delta is the change in an organisation's measured risk position before and after a S.I.N.S. Intervention&trade;. It is how a board can see that the fixes above made a difference, rather than taking it on trust.</p>
+
+<div class="cta-block">
+  <h3>See where your organisation stands</h3>
+  <p>Start with a free S.I.N.S. Score, or ask for a quote for a Health Scan.</p>
+  <div class="cta-row">
+    <a href="/sins-scanner.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-1" class="cta-btn">Free S.I.N.S. Score &rarr;</a>
+    <a href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-1&amp;utm_content=footer" class="cta-btn secondary">Request a Quote &rarr;</a>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul class="sources">
+  <li>Palo Alto Networks Unit 42, <a href="https://unit42.paloaltonetworks.com/active-exploitation-of-pan-os-cve-2026-0257/" rel="noopener">Active Exploitation of PAN-OS CVE-2026-0257</a> (updated 20 October 2026).</li>
+  <li>Office of the Data Protection Commissioner, <a href="https://www.odpc.go.ke/kenya-marks-5-years-since-the-implementation-of-the-data-protection-act/" rel="noopener">Kenya Marks 5 Years since the Implementation of the Data Protection Act</a> (20 November 2024).</li>
+  <li><a href="https://www.odpc.go.ke/wp-content/uploads/2024/02/TheDataProtectionAct__No24of2019.pdf" rel="noopener">The Data Protection Act, No. 24 of 2019</a> (sections 43 and 63).</li>
+  <li>The Star, <a href="https://www.the-star.co.ke/news/infographics/2026-10-21-most-frequent-actions-data-breach-victims-took" rel="noopener">Most frequent actions data breach victims took</a> (21 October 2026), reporting TransUnion's Consumer Pulse Study.</li>
+</ul>
+<p class="fine">RETACH summarises these sources in its own words. Figures belong to the publishers and have not been independently verified by RETACH.</p>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a> · <a href="/privacy.html">Privacy</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+<script src="/assets/theme-toggle.js" defer></script>
+
+</body>
+</html>
