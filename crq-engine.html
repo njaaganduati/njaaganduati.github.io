@@ -554,19 +554,18 @@ div.tc div.tf.lk{color:#5e6b62}
             <div class="hibp-gate" id="hibp-gate-card">
               <div class="hibp-gate-head">
                 <span class="hibp-gate-icon">🔐</span>
-                <span class="hibp-gate-title">Credential &amp; Dark Web Exposure</span>
+                <span class="hibp-gate-title">Credential Exposure</span>
               </div>
               <div class="hibp-blur" id="hibp-blur-num">██ accounts</div>
-              <div class="hibp-sub">Employee credentials from your domain may be circulating in breach databases and criminal marketplaces. <strong>RETACH checks HIBP, DeHashed, and dark web sources as part of every paid assessment.</strong></div>
+              <div class="hibp-sub">Employee credentials from your domain may be circulating in public breach databases. <strong>Breached-credential checks for your domain are included in every Health Scan.</strong></div>
               <div class="hibp-items">
-                <div class="hibp-item">Exact count of breached employee accounts</div>
+                <div class="hibp-item">Breached employee accounts for your domain</div>
                 <div class="hibp-item">Breach source, date, and data types exposed</div>
-                <div class="hibp-item">Named dark web marketplace mentions</div>
-                <div class="hibp-item">Ransomware actor targeting intel for your sector</div>
+                <div class="hibp-item">Public ransomware listings for your sector</div>
               </div>
               <div class="hibp-cta">
                 <a href="https://retach.tech/quote.html?product=S.I.N.S.%20Health%20Scan%20-%20Small" target="_blank" class="hibp-cta-btn">Unlock in Health Scan →</a>
-                <div class="hibp-cta-note">Included in every Health Scan from KES 45,000<br>Powered by HIBP · DeHashed · RETACH threat intelligence</div>
+                <div class="hibp-cta-note">Included in every Health Scan from KES 45,000<br>Breached-credential checks for your domain</div>
               </div>
             </div>
           </div>
@@ -986,7 +985,7 @@ async function runOS(){
     R.ssl=parseSSL(data.ssl);upd('oc-ssl',R.ssl);
 
     // HIBP placeholder
-    R.hibp={st:'warn',lb:'HIBP: verify at haveibeenpwned.com',ext:'Domain owner verification required — RETACH runs live in paid assessment'};
+    R.hibp={st:'warn',lb:'HIBP: verify at haveibeenpwned.com',ext:'Domain owner verification required — included in every Health Scan'};
     upd('oc-hibp',R.hibp);
 
     // Shodan
@@ -1030,7 +1029,7 @@ function shell(d){
     {id:'hibp', lb:'Domain breach data',           det:'Checks known credential exposure'},
     {id:'sh',   lb:'Open ports & services',        det:'Shodan InternetDB via api.retach.tech'},
   ];
-  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div style="font-size:.62rem;color:var(--muted);margin-top:.25rem;line-height:1.5">Lower is better. This score reflects how exposed you are to opportunistic scanning — it nudges how <em>often</em> an incident is likely, not how badly it would hurt if one happened.</div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.tech):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Dark web, HIBP, and deep Shodan scans are run by RETACH consultants in the paid assessment.</div>`;
+  return`<p style="font-size:.7rem;color:var(--muted);margin-bottom:.65rem">Scanning <strong style="color:var(--text)">${d}</strong> via RETACH OSINT API…</p><div class="oresult">${cks.map(c=>`<div class="orow" id="orow-${c.id}"><div><div class="ok2">${c.lb}</div><div class="od">${c.det}</div></div><div id="oc-${c.id}"><span class="otag tc-l">Checking…</span></div></div>`).join('')}</div><div class="oscore-bar"><div id="osf" style="height:100%;border-radius:3px;background:var(--border);width:0%;transition:width .8s,background .4s"></div></div><div style="display:flex;justify-content:space-between;margin-top:.3rem;font-family:var(--mono);font-size:.58rem;color:var(--muted)"><span>Attack Surface Score</span><span id="osv">—</span></div><div style="font-size:.62rem;color:var(--muted);margin-top:.25rem;line-height:1.5">Lower is better. This score reflects how exposed you are to opportunistic scanning — it nudges how <em>often</em> an incident is likely, not how badly it would hurt if one happened.</div><div class="onote"><strong style="color:var(--text)">Powered by RETACH OSINT API (api.retach.tech):</strong> Server-side DNS, SSL, and Shodan lookups — no browser CORS limitations. Breached-credential checks for your domain are included in every Health Scan.</div>`;
 }
 
 function upd(id,r){
@@ -1179,7 +1178,7 @@ async function loadRWIntel(){
         <div class="rw-lock-icon">🔒</div>
         <div class="rw-lock-text">
           <strong>Is your organisation on this list?</strong><br>
-          RETACH runs a full name-match and sector attribution check — including dark web forums and private threat intel feeds — as part of every Health Scan.
+          RETACH runs a name-match and sector check against public ransomware listings as part of every Health Scan.
         </div>
         <a href="https://retach.tech/quote.html?product=S.I.N.S.%20Health%20Scan%20-%20Small" target="_blank" class="rw-lock-btn">Check My Org →</a>
       </div>
@@ -1193,7 +1192,7 @@ async function loadRWIntel(){
     rwLoadedRegion=region;
 
   }catch(err){
-    loading.innerHTML=`<div style="padding:.75rem;background:rgba(201,145,46,.06);border:1px solid rgba(201,145,46,.2);border-radius:6px;font-size:.7rem;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Threat intel temporarily unavailable.</strong><br>ransomware.live API may be unreachable. RETACH runs a manual threat intel sweep in every paid assessment regardless of API availability.</div>`;
+    loading.innerHTML=`<div style="padding:.75rem;background:rgba(201,145,46,.06);border:1px solid rgba(201,145,46,.2);border-radius:6px;font-size:.7rem;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Threat intel temporarily unavailable.</strong><br>ransomware.live API may be unreachable. Please try again in a few minutes.</div>`;
     loading.style.animation='none';
     loading.style.opacity='1';
   }

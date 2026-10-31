@@ -593,9 +593,9 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
 <div class="hero">
   <div class="hero-label">Free Assessment · No Login Required</div>
   <h1>Your <em>S.I.N.S.</em><br>Security Score</h1>
-  <p class="hero-sub">Answer 20 questions across the four pillars of the S.I.N.S. Framework™. Get an instant score, a prioritised finding list, and a clear next step — in under 5 minutes.</p>
+  <p class="hero-sub">Answer 25 questions across the four pillars of the S.I.N.S. Framework™. Get an instant score, a prioritised finding list, and a clear next step — in under 5 minutes.</p>
   <div class="hero-meta">
-    <span><span class="dot"></span> 20 questions</span>
+    <span><span class="dot"></span> 25 questions</span>
     <span><span class="dot"></span> 4 pillars</span>
     <span><span class="dot"></span> Instant results</span>
     <span><span class="dot"></span> Kenyan context</span>
@@ -676,6 +676,24 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
         </div>
       </div>
 
+      <div class="question-item" data-q="s6">
+        <div class="question-text">Can <strong>only approved software</strong> run on your laptops and servers, with everything else blocked?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s6','yes',this)">Blocked by policy</button>
+          <button class="opt" onclick="answer('s6','partial',this)">Some devices or monitor-only</button>
+          <button class="opt" onclick="answer('s6','no',this)">Staff can install anything</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="s7">
+        <div class="question-text">Are you <strong>alerted</strong> when an admin account signs in unusually or a new admin account is created?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('s7','yes',this)">Alerts go to a named person</button>
+          <button class="opt" onclick="answer('s7','partial',this)">Logs exist, nobody reviews</button>
+          <button class="opt" onclick="answer('s7','no',this)">No alerts or logs</button>
+        </div>
+      </div>
+
     </div>
     <div class="card-footer">
       <span class="q-counter">Pillar 1 of 4 · Systems</span>
@@ -737,6 +755,15 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
           <button class="opt" onclick="answer('i5','yes',this)">Yes, plan is in place</button>
           <button class="opt" onclick="answer('i5','partial',this)">Partial capability only</button>
           <button class="opt" onclick="answer('i5','no',this)">Operations would stop</button>
+        </div>
+      </div>
+
+      <div class="question-item" data-q="i6">
+        <div class="question-text">Is at least one backup copy <strong>offline or immutable</strong>, so ransomware or a rogue admin can't delete it?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('i6','yes',this)">Offline or immutable copy</button>
+          <button class="opt" onclick="answer('i6','partial',this)">Same network only</button>
+          <button class="opt" onclick="answer('i6','no',this)">No or unsure</button>
         </div>
       </div>
 
@@ -804,6 +831,15 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
         </div>
       </div>
 
+      <div class="question-item" data-q="n6">
+        <div class="question-text">Have you set <strong>tripwires</strong>: decoy accounts, files or credentials that alert you when anyone touches them?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('n6','yes',this)">Deployed and tested</button>
+          <button class="opt" onclick="answer('n6','partial',this)">Planned or untested</button>
+          <button class="opt" onclick="answer('n6','no',this)">No</button>
+        </div>
+      </div>
+
     </div>
     <div class="card-footer">
       <button class="btn btn-ghost" onclick="prevSection(2)">← Back</button>
@@ -868,6 +904,15 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
         </div>
       </div>
 
+      <div class="question-item" data-q="sec6">
+        <div class="question-text">Does someone <strong>watch and act on security alerts after hours and on weekends</strong>, in-house or managed?</div>
+        <div class="options">
+          <button class="opt" onclick="answer('sec6','yes',this)">24/7 coverage</button>
+          <button class="opt" onclick="answer('sec6','partial',this)">Office hours only</button>
+          <button class="opt" onclick="answer('sec6','no',this)">Nobody watches</button>
+        </div>
+      </div>
+
     </div>
     <div class="card-footer">
       <button class="btn btn-ghost" onclick="prevSection(3)">← Back</button>
@@ -910,8 +955,8 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
     <div class="findings-card" id="findings-card"></div>
     <div class="results-cta">
       <h2>Your next step is clear.</h2>
-      <p id="cta-copy">A full S.I.N.S. Health Scan maps every gap found above to a prioritised remediation plan — with fixed timelines and costs. No surprises.</p>
-      <div class="cta-price">Health Scan from <strong>KES 45,000</strong> <span style="opacity:.7;font-weight:400">(≈ USD 350)</span> · Up to 25 staff, 1 site · Delivered in 5 business days · Valid to 31 March 2027</div>
+      <p id="cta-copy">A S.I.N.S. Health Scan confirms these answers with external checks, scores each pillar and gives you your top 10 fixes, ordered by effort.</p>
+      <div class="cta-price">Health Scan from <strong>KES 45,000</strong> <span style="opacity:.7;font-weight:400">(≈ USD 350)</span> · Up to 25 staff, 1 site · Introductory price KES 35,000 for our first five clients, to 31 March 2027</div>
       <a href="/#contact" class="btn-cta-large">Book Your Health Scan →</a>
       <div class="cta-sub">Or email us directly: <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a></div>
       <div class="cta-sub" style="margin-top:.75rem;opacity:.8">Your answers were scored in your browser. Nothing you entered was sent to RETACH. <a href="/privacy.html">Privacy notice</a></div>
@@ -931,11 +976,13 @@ const answers = {};
 const sections = ['s','i','n','sec'];
 const sectionNames = ['Systems','Infrastructure','Network','Security'];
 const questions = {
-  s:   ['s1','s2','s3','s4','s5'],
-  i:   ['i1','i2','i3','i4','i5'],
-  n:   ['n1','n2','n3','n4','n5'],
-  sec: ['sec1','sec2','sec3','sec4','sec5'],
+  s:   ['s1','s2','s3','s4','s5','s6','s7'],
+  i:   ['i1','i2','i3','i4','i5','i6'],
+  n:   ['n1','n2','n3','n4','n5','n6'],
+  sec: ['sec1','sec2','sec3','sec4','sec5','sec6'],
 };
+// Detection & Response Check: cross-pillar sub-score, not a fifth pillar
+const detectQs = ['s4','s6','s7','i2','i6','n4','n6','sec2','sec6'];
 let currentSection = 0;
 
 // scoring: yes=10, partial=5, no=0
@@ -1012,12 +1059,14 @@ function buildResults(name, org, type) {
   const pillarScores = {};
   sections.forEach(sec => {
     const total = questions[sec].reduce((s,q) => s + score(answers[q] || 'no'), 0);
-    pillarScores[sec] = total; // 0-50 → map to 0-100
+    pillarScores[sec] = total / (questions[sec].length * 10) * 100; // 0-100, independent of question count
   });
 
   const overall = Math.round(
-    Object.values(pillarScores).reduce((a,b) => a+b, 0) / 2
-  ); // 0–100
+    sections.reduce((a,sec) => a + questions[sec].reduce((t,q) => t + score(answers[q] || 'no'), 0), 0)
+    / (sections.reduce((n,sec) => n + questions[sec].length, 0) * 10) * 100
+  ); // 0–100, weighted by question
+  const drScore = Math.round(detectQs.reduce((t,q) => t + score(answers[q] || 'no'), 0) / (detectQs.length * 10) * 100);
 
   // ring animation
   const circumference = 2 * Math.PI * 70; // ≈ 439.8
@@ -1045,11 +1094,11 @@ function buildResults(name, org, type) {
   if (overall >= 75) {
     verdict = 'Good Foundation';
     summary = `${name ? name + ', your' : 'Your'} organisation has meaningful security controls in place. The gaps that remain are likely in governance documentation and evidence — the areas auditors focus on most. A targeted Health Scan will surface and close them.`;
-    ctaCopy = `Your score shows real security investment. A Health Scan will identify the remaining gaps that could undermine an audit or regulatory review — and fix them before they become findings.`;
+    ctaCopy = `Your score shows real security investment. A Health Scan will identify the remaining gaps that could undermine an audit or regulatory review — so you can close them before they become findings.`;
   } else if (overall >= 45) {
     verdict = 'Significant Gaps';
     summary = `${name ? name + ', your' : 'Your'} organisation has some controls in place but significant gaps across one or more pillars. These represent real operational and compliance risk — especially under SASRA, Kenya DPA, or audit scrutiny.`;
-    ctaCopy = `Your score reveals gaps that are actively exploitable and audit-reportable. A Health Scan produces a prioritised remediation plan with fixed costs and timelines — so you know exactly what to fix and in what order.`;
+    ctaCopy = `Your score reveals gaps that are actively exploitable and audit-reportable. A Health Scan gives you a prioritised fix list, ordered by risk and effort, so you know what to fix first.`;
   } else {
     verdict = 'High Risk Exposure';
     summary = `${name ? name + ', your' : 'Your'} organisation has limited security controls across multiple pillars. In Kenya's current regulatory environment — with DPA enforcement active and SASRA scrutiny increasing — this level of exposure creates both operational and legal risk.`;
@@ -1064,16 +1113,16 @@ function buildResults(name, org, type) {
   // pillar bars
   const pillarLabels = {s:'Systems',i:'Infrastructure',n:'Network',sec:'Security'};
   const pillarDesc   = {
-    s:   ['No asset inventory','No MFA enforced','Stale account access','Endpoint protection gaps','Patch management issues'],
-    i:   ['No documented backup procedure','Backup never tested / no RTO','No DR plan','Infrastructure not hardened','Poor cloud posture'],
-    n:   ['Firewall not configured','No network segmentation','No secure remote access','No traffic monitoring','No device access control'],
-    sec: ['No security policy','No incident response plan','Not ODPC registered','No risk assessment','No staff security training'],
+    s:   ['No asset inventory','No MFA enforced','Stale account access','Endpoint protection gaps','Patch management issues','Unapproved software can run','No alerts on admin account activity'],
+    i:   ['No documented backup procedure','Backup never tested / no RTO','No DR plan','Infrastructure not hardened','Poor cloud posture','No offline or immutable backup copy'],
+    n:   ['Firewall not configured','No network segmentation','No secure remote access','No traffic monitoring','No device access control','No tripwires or decoys'],
+    sec: ['No security policy','No incident response plan','Not ODPC registered','No risk assessment','No staff security training','No after-hours alert coverage'],
   };
 
   const pillarGrid = document.getElementById('pillar-scores');
   pillarGrid.innerHTML = '';
   sections.forEach(sec => {
-    const pct = Math.round(pillarScores[sec] * 2); // 0-100
+    const pct = Math.round(pillarScores[sec]); // 0-100
     const barColor = pct >= 70 ? '#146B4E' : pct >= 40 ? '#C9912E' : '#9E1B23';
     pillarGrid.innerHTML += `
       <div class="pillar-score-card">
@@ -1122,6 +1171,7 @@ function buildResults(name, org, type) {
     });
   }
 
+  findingsHTML = `<div class="findings-header">Detection &amp; Response Check <span class="tag ${drScore>=70?'tag-low':drScore>=40?'tag-medium':'tag-critical'}">${drScore}/100</span></div><div class="finding-row"><div class="finding-icon">🛡️</div><div class="finding-text"><strong>Can you detect an attack and recover from it?</strong>This sub-score uses 9 of your answers across all four pillars. It tests whether controls would catch and contain an incident, not just whether you own them. A Digital Resilience Assessment tests this against evidence from your own systems.</div></div>` + findingsHTML;
   document.getElementById('findings-card').innerHTML = findingsHTML;
 }
 </script>
