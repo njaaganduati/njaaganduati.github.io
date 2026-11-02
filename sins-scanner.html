@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S.I.N.S. Security Scanner™ | RETACH Digital</title>
-<meta name="description" content="Free 5-minute security posture assessment for Kenyan SMEs and SACCOs. Get your S.I.N.S. score across Systems, Infrastructure, Network and Security.">
+<meta name="description" content="Free security posture scanner and S.I.N.S. Fit Check for Kenyan SMEs and SACCOs. Get your S.I.N.S. score, or see which Managed IT level fits your organisation.">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -578,6 +578,26 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
 .btn-primary:disabled{background:#dde5df!important;color:#8a9a8c!important;border:1px solid var(--border)!important}
 .btn-ghost{color:var(--muted)!important;border:1px solid var(--border)!important}
 .btn-ghost:hover{color:var(--text)!important;border-color:var(--green)!important}
+
+/* ── S.I.N.S. Fit Check ── */
+.mode-switch{position:relative;z-index:1;display:flex;justify-content:center;gap:.5rem;padding:1.2rem 1rem 0;flex-wrap:wrap}
+.mode-btn{font-family:var(--body);font-weight:600;font-size:.9rem;padding:.6rem 1.3rem;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--muted);cursor:pointer}
+.mode-btn.on{background:var(--green);border-color:var(--green);color:#fff}
+.fc-note{font-size:.8rem;color:var(--muted);line-height:1.55;padding:0 2rem 1.2rem}
+.fc-result{display:none;margin-top:1.5rem;animation:fadeUp .4s ease forwards}
+.fc-result.active{display:block}
+.fc-tier{background:#0b1f17;border:1px solid #0c4a36;border-radius:16px;padding:2rem 1.5rem;text-align:center;color:#eaf3ee}
+.fc-tier .fc-k{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#9fb6a8}
+.fc-tier .fc-v{font-family:var(--cond);font-size:2.4rem;font-weight:800;color:#fff;margin:.3rem 0}
+.fc-tier .fc-p{font-size:.95rem;color:#bfe3d0}
+.fc-facts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.fc-fact{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem}
+.fc-fact .fc-k{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+.fc-fact .fc-t{font-size:.9rem;color:var(--text);line-height:1.5;margin-top:.35rem}
+.fc-why{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fc-why strong{color:var(--text)}
+.fc-why li{margin-left:1.1rem}
+@media (max-width:600px){.fc-facts{grid-template-columns:1fr}.fc-note{padding:0 1.4rem 1rem}}
 </style>
 </head>
 <body>
@@ -589,8 +609,13 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
   <a href="/" class="nav-back">← Back to site</a>
 </nav>
 
+<div class="mode-switch" role="tablist">
+  <button class="mode-btn on" id="mode-scan" onclick="setMode('scan')">Security Scanner</button>
+  <button class="mode-btn" id="mode-fit" onclick="setMode('fit')">S.I.N.S. Fit Check</button>
+</div>
+
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="scan-hero">
   <div class="hero-label">Free Assessment · No Login Required</div>
   <h1>Your <em>S.I.N.S.</em><br>Security Score</h1>
   <p class="hero-sub">Answer 25 questions across the four pillars of the S.I.N.S. Framework™. Get an instant score, a prioritised finding list, and a clear next step — in under 5 minutes.</p>
@@ -603,7 +628,7 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
 </div>
 
 <!-- PROGRESS -->
-<div class="progress-wrap">
+<div class="progress-wrap" id="scan-progress">
   <div class="progress-track">
     <div class="progress-fill" id="progress-fill" style="width:0%"></div>
   </div>
@@ -617,7 +642,7 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
 </div>
 
 <!-- SCANNER -->
-<div class="scanner-wrap">
+<div class="scanner-wrap" id="scan-wrap">
 
   <!-- SECTION 0: Systems -->
   <div class="section-card active" id="section-0">
@@ -965,6 +990,38 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
   </div>
 </div>
 
+
+<!-- FIT CHECK -->
+<div id="fit-hero" class="hero" style="display:none">
+  <div class="hero-label">Free · No Login Required</div>
+  <h1>S.I.N.S. <em>Fit Check</em></h1>
+  <p class="hero-sub">Eight questions about your size, systems and obligations. See which Managed IT level fits your organisation and what the next step is. It takes about two minutes.</p>
+  <div class="hero-meta">
+    <span><span class="dot"></span> 8 questions</span>
+    <span><span class="dot"></span> Indicative result</span>
+    <span><span class="dot"></span> Runs in your browser</span>
+  </div>
+</div>
+<div class="scanner-wrap" id="fit-wrap" style="display:none">
+  <div class="section-card active" id="fit-card">
+    <div class="section-header">
+      <div class="section-letter">F</div>
+      <div class="section-title-wrap">
+        <div class="section-pillar">Exposure and complexity</div>
+        <div class="section-title">Your organisation at a glance</div>
+        <div class="section-desc">Answer for your organisation as it is today. There are no right or wrong answers.</div>
+      </div>
+    </div>
+    <div class="questions-list" id="fit-questions"></div>
+    <div class="fc-note">This is an indicative fit based only on your answers. It is not a quote, and RETACH does not check or store anything you enter. The Health Scan or an assessment confirms your level.</div>
+    <div class="card-footer">
+      <span class="q-counter" id="fit-count">0 of 8 answered</span>
+      <button class="btn btn-primary" id="fit-go" onclick="fitShow()" disabled>Show my fit →</button>
+    </div>
+  </div>
+  <div class="fc-result" id="fit-result"></div>
+</div>
+
 <!-- FOOTER -->
 <div class="site-footer">
   © 2026 RETACH Digital Ltd · <a href="/">retach.tech</a> · The S.I.N.S. Framework™ for Digital Resilience
@@ -1174,6 +1231,85 @@ function buildResults(name, org, type) {
   findingsHTML = `<div class="findings-header">Detection &amp; Response Check <span class="tag ${drScore>=70?'tag-low':drScore>=40?'tag-medium':'tag-critical'}">${drScore}/100</span></div><div class="finding-row"><div class="finding-icon">🛡️</div><div class="finding-text"><strong>Can you detect an attack and recover from it?</strong>This sub-score uses 9 of your answers across all four pillars. It tests whether controls would catch and contain an incident, not just whether you own them. A Digital Resilience Assessment tests this against evidence from your own systems.</div></div>` + findingsHTML;
   document.getElementById('findings-card').innerHTML = findingsHTML;
 }
+
+// ─── S.I.N.S. FIT CHECK (indicative, in-browser, nothing sent) ───
+const FIT_Q = [
+  ['T1','How many people use your IT (staff, contractors, interns)?',['Up to 25','26 to 100','Over 100']],
+  ['T2','How many sites do you operate from?',['1','2 to 3','4 or more']],
+  ['T3','Where do your core systems run?',['Cloud or SaaS only','Cloud plus a few on-site servers','Mostly on-site servers, custom hosting or OT']],
+  ['T4','How many business applications do you rely on, and are they connected to each other?',['Standard apps, none connected','A few apps, some connected','Several line-of-business apps with integrations or custom code']],
+  ['T5','What personal or sensitive data do you hold?',['Staff data and a small client list','Thousands of client records, or financial data','Large-scale data, or health, children’s or biometric data']],
+  ['T6','Which regulators oversee you?',['None','One sector regulator, or the ODPC only','Two or more regulators, or licence conditions on IT or cyber']],
+  ['T7','When must IT be available?',['Weekdays, business hours','Extended hours or some weekends','24 hours, every day']],
+  ['T8','If IT stopped for a full working day, what happens?',['Staff work manually','Serious problems within the day','Revenue or a regulated service stops at once']]
+];
+const fit = {};
+const TIERS = ['Essential','Standard','Premium'];
+function fitBuild(){
+  const box = document.getElementById('fit-questions');
+  box.innerHTML = FIT_Q.map(q => '<div class="question-item"><div class="question-text"><strong>'+q[0]+'</strong> '+q[1]+'</div><div class="options">'+
+    q[2].map((o,i)=>'<button class="opt" onclick="fitAnswer(\''+q[0]+'\','+i+',this)">'+o+'</button>').join('')+'</div></div>').join('');
+}
+function fitAnswer(id,val,btn){
+  fit[id]=val;
+  btn.closest('.options').querySelectorAll('.opt').forEach(b=>b.className='opt');
+  btn.classList.add('selected-yes');
+  const n = FIT_Q.filter(q=>fit[q[0]]!==undefined).length;
+  document.getElementById('fit-count').textContent = n+' of 8 answered';
+  document.getElementById('fit-go').disabled = n<8;
+}
+function fitCompute(a){
+  const total = FIT_Q.reduce((t,q)=>t+a[q[0]],0);              // 0 to 16
+  let tier = total<=5 ? 0 : total<=9 ? 1 : 2;                  // score band
+  const why = [];
+  tier = Math.max(tier, a.T1, a.T2);                           // size and site limits: Essential up to 25 users and 1 site; Standard up to 100 users and 3 sites
+  if(a.T1===1) why.push('You have 26 to 100 users. Essential covers up to 25.');
+  if(a.T1===2) why.push('You have over 100 users, which is beyond the Standard limit of 100.');
+  if(a.T2===1) why.push('You operate from 2 to 3 sites. Essential covers 1 site; Standard covers up to 3.');
+  if(a.T2===2) why.push('You operate from 4 or more sites, which is beyond the Standard limit of 3.');
+  if(a.T7===1) why.push('Extended-hours or weekend cover is quoted separately at any level.');
+  if(a.T7===2){ tier = 2; why.push('24-hour support is only available on Premium (hours agreed with you).'); }
+  if(total>=6) why.push('Your answers on systems, data, regulation and impact add complexity (score '+total+' of 16).');
+  if(!why.length) why.push('Your size, sites and availability needs sit within the Essential limits.');
+  const band = (a.T1===0 && a.T2===0) ? 'Small' : (a.T1<=1 && a.T2<=1) ? 'Standard' : 'Larger';
+  return {total, tier, why, band};
+}
+function fitShow(){
+  const r = fitCompute(fit);
+  const price = ['From KES 50,000 a month','From KES 80,000 a month','By quotation'][r.tier];
+  const support = [
+    'L1 support: service desk, user accounts, monitoring and alerts, supplier coordination. No configuration changes.',
+    'L1 and L2 support: adds configuration changes, multi-factor authentication, patching and vendor management.',
+    'L1, L2 and L3 support: adds engineering and security and compliance services, scoped by quotation.'][r.tier];
+  const dra = {Small:'Small band (up to 25 staff, 1 site): from KES 150,000',Standard:'Standard band (26 to 100 staff, up to 3 sites): from KES 225,000',Larger:'Larger organisations: by quotation'}[r.band];
+  const prod = ['Managed IT - Essential (from)','Managed IT - Standard (from)','Managed IT - Premium (request a quote)'][r.tier];
+  const href = '/quote.html?product='+encodeURIComponent(prod);
+  document.getElementById('fit-result').innerHTML =
+    '<div class="fc-tier"><div class="fc-k">Your indicated Managed IT level</div><div class="fc-v">'+TIERS[r.tier]+'</div><div class="fc-p">'+price+'</div></div>'+
+    '<div class="fc-facts">'+
+      '<div class="fc-fact"><div class="fc-k">What it covers</div><div class="fc-t">'+support+'</div></div>'+
+      '<div class="fc-fact"><div class="fc-k">Health Scan</div><div class="fc-t">Included in every Managed IT level. It confirms your answers and shows where to start.</div></div>'+
+      '<div class="fc-fact"><div class="fc-k">Digital Resilience Assessment</div><div class="fc-t">'+(r.tier===2?'Offered as part of Premium and scoped in your quotation, together with any other services we agree. ':'Optional and billed separately. ')+dra+'.</div></div>'+
+      '<div class="fc-fact"><div class="fc-k">Next step</div><div class="fc-t">Request a quote for '+TIERS[r.tier]+'. We confirm your level and price after the assessment.</div></div>'+
+    '</div>'+
+    '<div class="fc-why"><strong>Why this level</strong><ul>'+r.why.map(w=>'<li>'+w+'</li>').join('')+'</ul></div>'+
+    '<div style="text-align:center;margin:1.2rem 0"><a class="btn-cta-large" href="'+href+'">Request a quote →</a>'+
+    '<div class="cta-sub">Or email <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a> · <a href="/privacy.html">Privacy notice</a></div></div>';
+  document.getElementById('fit-result').classList.add('active');
+  document.getElementById('fit-go').disabled = true;
+  document.getElementById('fit-result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function setMode(m){
+  const fitOn = m==='fit';
+  ['scan-hero','scan-progress','scan-wrap'].forEach(id=>{const e=document.getElementById(id); if(e) e.style.display = fitOn?'none':'';});
+  ['fit-hero','fit-wrap'].forEach(id=>{const e=document.getElementById(id); if(e) e.style.display = fitOn?'':'none';});
+  document.getElementById('mode-scan').classList.toggle('on',!fitOn);
+  document.getElementById('mode-fit').classList.toggle('on',fitOn);
+  if(fitOn && !document.getElementById('fit-questions').children.length) fitBuild();
+  try{ history.replaceState(null,'',fitOn?'#fit-check':location.pathname); }catch(e){}
+  window.scrollTo({top:0});
+}
+if(location.hash==='#fit-check') setMode('fit');
 </script>
 </body>
 </html>
