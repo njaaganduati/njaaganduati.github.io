@@ -1289,7 +1289,7 @@ function fitShow(){
     '<div class="fc-facts">'+
       '<div class="fc-fact"><div class="fc-k">What it covers</div><div class="fc-t">'+support+'</div></div>'+
       '<div class="fc-fact"><div class="fc-k">Health Scan</div><div class="fc-t">Included in every Managed IT level. It confirms your answers and shows where to start.</div></div>'+
-      '<div class="fc-fact"><div class="fc-k">Digital Resilience Assessment</div><div class="fc-t">'+(r.tier===2?'Offered as part of Premium and scoped in your quotation, together with any other services we agree. ':'Optional and billed separately. ')+dra+'.</div></div>'+
+      '<div class="fc-fact"><div class="fc-k">Digital Resilience Assessment</div><div class="fc-t">'+(r.tier===2?'Included in Premium and priced within your quotation, together with any other services we agree.':'Optional and billed separately. '+dra+'.')+'</div></div>'+
       '<div class="fc-fact"><div class="fc-k">Next step</div><div class="fc-t">Request a quote for '+TIERS[r.tier]+'. We confirm your level and price after the assessment.</div></div>'+
     '</div>'+
     '<div class="fc-why"><strong>Why this level</strong><ul>'+r.why.map(w=>'<li>'+w+'</li>').join('')+'</ul></div>'+
