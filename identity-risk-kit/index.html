@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Identity Risk Kit</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#146B4E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<link rel="stylesheet" href="fonts.css">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>
+/* Layout: brand bar, sticky five-step guide, single working column of steps, S.I.N.S. signature footer. RETACH brand: Deep Charcoal, Deep Emerald, Steel Gray, Deep Crimson (sparingly). */
+:root{
+  --bg:#F4F6F5; --surface:#FFFFFF; --ink:#111315; --muted:#4A4F55; --line:#D7DEDA; --emerald:#146B4E;
+  --green:#146B4E; --green-deep:#0E4D38; --green-soft:#E3F0EA;
+  --amber:#8A5D12; --amber-soft:#F7EEDC; --crimson:#9E1B23; --crimson-soft:#F6E3E4;
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1311; --surface:#141C19; --ink:#E7EDEA; --muted:#94A39C; --line:#26332E;
+  --green:#3DBA8A; --green-deep:#2E9E6B; --green-soft:#16302A;
+  --amber:#D9A949; --amber-soft:#2E2617; --crimson:#E0555F; --crimson-soft:#331A1D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1311; --surface:#141C19; --ink:#E7EDEA; --muted:#94A39C; --line:#26332E;
+  --green:#3DBA8A; --green-deep:#2E9E6B; --green-soft:#16302A;
+  --amber:#D9A949; --amber-soft:#2E2617; --crimson:#E0555F; --crimson-soft:#331A1D; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:22px}
+.wrap>*,.wrap section>*{min-width:0}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:1.6rem}
+h2{font-size:1.1rem}
+.eyebrow{font:500 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.muted{color:var(--muted)}
+.note{font-size:.82rem;color:var(--muted);margin:0}
+header{display:grid;gap:8px}
+.proto{display:flex;gap:8px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber);color:var(--ink);
+  border-radius:6px;padding:10px 12px;font-size:.84rem}
+.proto b{color:var(--amber)}
+section{display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label{display:grid;gap:4px;font-size:.78rem;color:var(--muted);font-weight:500}
+select,input[type=number]{font:inherit;font-size:.92rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:7px 8px;width:100%}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.files{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.file{display:grid;gap:6px;border:1px dashed var(--line);border-radius:6px;padding:12px}
+.file .tag{font:500 .72rem var(--mono);color:var(--green)}
+.file .name{font-weight:600;font-size:.9rem;overflow-wrap:anywhere}
+.btn{font:500 .82rem var(--body);border:1px solid var(--green);color:var(--green);background:transparent;border-radius:5px;padding:6px 10px;cursor:pointer;justify-self:start}
+.btn:hover{background:var(--green-soft)}
+.err{color:var(--crimson);font-size:.8rem;margin:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.kpi .k{font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font:700 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.kpi .s{font-size:.78rem;color:var(--muted)}
+.kpi.delta .v{color:var(--green)}
+.kpi.delta.up .v{color:var(--crimson)}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.86rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 .7rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.sev{display:inline-block;font:500 .7rem var(--mono);padding:2px 7px;border-radius:999px;white-space:nowrap}
+.sev.Critical{background:var(--crimson-soft);color:var(--crimson)}
+.sev.High{background:var(--amber-soft);color:var(--amber)}
+.sev.Medium,.sev.Low,.sev.Info{background:var(--green-soft);color:var(--green-deep)}
+.title{font-weight:500}
+.cid{font:400 .72rem var(--mono);color:var(--muted)}
+.bar{height:5px;background:var(--line);border-radius:3px;margin-top:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--crimson)}
+.st{font:500 .72rem var(--mono);white-space:nowrap}
+.st.fixed{color:var(--green)} .st.open{color:var(--amber)} .st.new{color:var(--crimson)}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--emerald);cursor:pointer}
+.proj{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;font-size:.9rem}
+.proj b{font-family:var(--display);font-size:1.15rem;font-variant-numeric:tabular-nums}
+details{font-size:.84rem;color:var(--muted)}
+details summary{cursor:pointer;color:var(--ink);font-weight:500}
+details ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
+code{font-family:var(--mono);font-size:.82em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.logo{display:block;height:30px;width:auto;color:var(--ink)}
+.logo *{fill:currentColor}
+.brandbar .prod{font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;margin:0;list-style:none;display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--line);padding-inline:0}
+.steps a{display:flex;gap:7px;align-items:center;white-space:nowrap;font:500 .8rem var(--body);color:var(--ink);text-decoration:none;padding:5px 11px 5px 5px;border-radius:999px;border:1px solid var(--line);background:var(--surface);min-height:32px}
+.steps a:hover{border-color:var(--green)}
+.steps a:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.steps .n{font:600 .7rem var(--mono);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--ink)}
+.steps a.done .n{background:var(--emerald);color:#fff}
+.steps a.warn .n{background:var(--amber-soft);color:var(--amber);box-shadow:inset 0 0 0 1px var(--amber)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+section[id]{scroll-margin-top:72px}
+h2 .n{font:600 .78rem var(--mono);color:var(--green);margin-right:8px}
+.sig{display:grid;gap:10px;justify-items:center;padding-top:10px}
+.sig .logo{height:34px}
+.sig-band{width:100%;background:var(--emerald);color:#fff;text-align:center;font:500 .74rem var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:9px 12px;border-radius:6px}
+.sig .note{text-align:center}
+@media (max-width:640px){
+  #rankTable{min-width:0}
+  #rankTable thead{display:none}
+  #rankTable tr{display:grid;grid-template-columns:34px 1fr 1fr 1fr;gap:6px 10px;padding:12px;border-bottom:1px solid var(--line)}
+  #rankTable tr:last-child{border-bottom:0}
+  #rankTable td{border:0;padding:0}
+  #rankTable td:nth-child(1){grid-row:span 3}
+  #rankTable td:nth-child(2),#rankTable td:nth-child(3){grid-column:2/5}
+  #rankTable td.num{text-align:left;display:grid;gap:2px}
+  #rankTable td.num::before{content:attr(data-label);font:500 .64rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  #rankTable td input.cost{width:100%}
+}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{font:500 .8rem var(--body);background:var(--surface);color:var(--muted);border:0;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--emerald);color:#fff}
+.seg button{min-height:34px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.toolbar label{display:flex;gap:8px;align-items:center;font-size:.8rem}
+.toolbar input{width:110px}
+td input.cost{width:104px;text-align:right;font-family:var(--mono);font-size:.82rem;padding:5px 6px}
+.ret{font-weight:600}
+.hash{font:400 .74rem var(--mono);overflow-wrap:anywhere}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.86rem}
+.checks li{display:flex;gap:8px;align-items:baseline}
+.ck{font:500 .68rem var(--mono);padding:2px 7px;border-radius:999px;white-space:nowrap}
+.ck.pass{background:var(--green-soft);color:var(--green-deep)}
+.ck.warn{background:var(--amber-soft);color:var(--amber)}
+.ck.fail{background:var(--crimson-soft);color:var(--crimson)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn.solid{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.btn.solid:hover{background:#0E4D38}
+.btn{min-height:34px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.status{font-size:.8rem;color:var(--muted)}
+.paperwrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:#E9EDEB;padding:16px}
+</style>
+<style id="brcss"></style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar">
+    <svg class="logo" id="logoSrc" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RETACH"><g><g><g><path fill="currentColor" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="currentColor" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="currentColor" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="currentColor" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="currentColor" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="currentColor" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="currentColor" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg>
+    <span class="prod">Delivery tool · Prototype</span>
+    <button class="btn" id="install" type="button" hidden>Install app</button>
+  </div>
+  <header>
+    <div class="eyebrow">Identity &amp; Access Risk Assessment</div>
+    <h1>Identity Risk Kit</h1>
+    <p class="note">Load a scan file, see which fixes cut the most annual loss exposure per shilling spent, seal each scan as evidence for the Measurement Ledger, and produce a one-page board summary.</p>
+    <div class="proto"><span><b>Prototype.</b> Loaded with an anonymised, illustrative sample. KES figures use the live CRQ Engine method. Fix projections use the audit modules' own pillar scoring rule. Default fix effort is an internal assumption (tier-5) until each fix is quoted.</span></div>
+  <p class="note" id="pwa-note" role="status"></p>
+    <p class="note" id="ios-hint" hidden>To install on iPhone or iPad: tap Share, then Add to Home Screen.</p>
+  </header>
+
+  <nav aria-label="Steps"><ol class="steps" id="steps"></ol></nav>
+
+  <section class="panel" id="profile" aria-labelledby="h-org">
+    <h2 id="h-org"><span class="n">1</span>Organisation profile</h2>
+    <div class="inputs">
+      <label for="sec">Sector
+        <select id="sec"></select></label>
+      <label for="rev">Annual revenue (KES M)
+        <input id="rev" type="number" min="1" step="1" value="300"></label>
+      <label for="stf">Staff
+        <input id="stf" type="number" min="1" step="1" value="60"></label>
+      <label for="mfa">MFA
+        <select id="mfa"><option value="none">None</option><option value="partial">Partial</option><option value="full">Full</option></select></label>
+      <label for="bk">Tested backups
+        <select id="bk"><option value="no">No</option><option value="yes">Yes</option></select></label>
+    </div>
+    <p class="note" id="sectnote"></p>
+  </section>
+
+  <section class="panel" id="scans" aria-labelledby="h-files">
+    <h2 id="h-files"><span class="n">2</span>Scan files</h2>
+    <div class="files">
+      <div class="file">
+        <span class="tag">B0 · Baseline</span>
+        <span class="name" id="n-b0"></span>
+        <span class="hash" id="hs-b0"></span>
+        <label class="btn" for="f-b0" style="display:inline-block">Load combined_findings.json</label>
+        <input id="f-b0" type="file" accept=".json,application/json" hidden>
+        <p class="err" id="e-b0" hidden></p>
+      </div>
+      <div class="file">
+        <span class="tag">C1 · Re-scan</span>
+        <span class="name" id="n-c1"></span>
+        <span class="hash" id="hs-c1"></span>
+        <label class="btn" for="f-c1" style="display:inline-block">Load combined_findings.json</label>
+        <input id="f-c1" type="file" accept=".json,application/json" hidden>
+        <p class="err" id="e-c1" hidden></p>
+      </div>
+    </div>
+    <button class="btn" id="reset" type="button">Reload sample</button>
+    <p class="note">Files are read and fingerprinted in your browser only. Nothing is uploaded.</p>
+  </section>
+
+  <section aria-labelledby="h-sum">
+    <h2 id="h-sum">Annual loss exposure</h2>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section id="plan" aria-labelledby="h-rank">
+    <h2 id="h-rank"><span class="n">3</span>Fix plan (B0)</h2>
+    <p class="note">KES at stake is the drop in expected annual loss if that one finding were fixed. Return is KES of annual exposure removed per KES of fix cost. Edit any fix cost; tick findings to build a plan. Each finding is one check, so its fix cost covers closing the whole check across every affected object.</p>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Rank findings by">
+        <button type="button" id="s-ret" aria-pressed="true">Best return</button>
+        <button type="button" id="s-kes" aria-pressed="false">Most KES at stake</button>
+      </div>
+      <label for="rate">Hourly rate (KES)<input id="rate" type="number" min="0" step="100" value="3500"></label>
+    </div>
+    <div class="panel proj" id="proj" aria-live="polite"></div>
+    <div class="tablewrap"><table id="rankTable">
+      <thead><tr><th>Fix</th><th>Finding</th><th>Severity</th><th class="num">KES at stake / yr</th><th class="num">Fix cost (KES)</th><th class="num" title="KES of yearly exposure removed per KES of fix cost">Return</th></tr></thead>
+      <tbody id="rank"></tbody>
+    </table></div>
+  </section>
+
+  <section aria-labelledby="h-cmp">
+    <h2 id="h-cmp">B0 → C1 comparison</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Finding</th><th>Severity</th><th>B0</th><th>C1</th></tr></thead>
+      <tbody id="cmp"></tbody>
+    </table></div>
+  </section>
+
+  <section id="evidence" aria-labelledby="h-led">
+    <h2 id="h-led"><span class="n">4</span>Evidence and Measurement Ledger</h2>
+    <p class="note">Each scan is fingerprinted (SHA-256) when loaded. Record the fingerprint in the Measurement Ledger at B0 and C1 so the comparison can be traced back to the exact files.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Checkpoint</th><th>Scan generated</th><th>Loaded</th><th>File SHA-256</th><th class="num">S.I.N.S.</th><th class="num">Open C/H/M/L</th><th class="num">Expected annual loss</th></tr></thead>
+      <tbody id="ledger"></tbody>
+    </table></div>
+    <div class="panel"><ul class="checks" id="checks" aria-live="polite"></ul></div>
+    <div class="actions">
+      <button class="btn solid" id="dl-csv" type="button">Download ledger rows (CSV)</button>
+      <button class="btn" id="cp-csv" type="button">Copy ledger rows</button>
+      <span class="status" id="st-csv" role="status"></span>
+    </div>
+  </section>
+
+  <section id="board-step" aria-labelledby="h-board">
+    <h2 id="h-board"><span class="n">5</span>Board summary</h2>
+    <p class="note">One page for the board or regulator. It is marked DRAFT while any check above is not passed.</p>
+    <div class="actions">
+      <button class="btn solid" id="dl-board" type="button">Download board summary (HTML)</button>
+      <span class="status" id="st-board" role="status"></span>
+    </div>
+    <div class="paperwrap"><div id="board"></div></div>
+  </section>
+
+  <details class="panel">
+    <summary>How the numbers are built</summary>
+    <ul>
+      <li>Pillar scores from the scan file map to S.I.N.S. sub-scores exactly as the live ad-audit bridge does: Systems = mean of Identity, Credentials and Delegation; Infrastructure = Infrastructure; Network = Detection (proxy); Security = mean of Persistence and GPO Governance.</li>
+      <li>Expected annual loss uses the live CRQ Engine method: Poisson frequency (λ<sub>KE</sub> 0.462 × sector factor × scenario weight × posture and MFA modifier), Lognormal severity, credibility-weighted against the sector band.</li>
+      <li>Fixing a finding is scored with the audit modules' own pillar rule: each open finding costs its pillar Critical 25, High 15, Medium 8 or Low 3 points, raised by 10%, 25% or 50% when it affects 5, 10 or 20+ objects; the pillar score is 100 less those points, never below 0. The projection recomputes the pillar from the findings left open.</li>
+      <li>Default fix cost (internal, tier-5): effort of Critical 8 h, High 4 h, Medium 2 h, Low 1 h at the hourly rate shown. Replace with the scoped quote for each fix; licence or hardware costs go in the same field.</li>
+      <li>Return = annual exposure removed ÷ one-off fix cost. Payback = fix cost ÷ monthly exposure removed. Both are projections, not measured results.</li>
+      <li>B0 → C1 uses each file's own pillar scores, so the measured change reflects the re-scan, not the assumption.</li>
+      <li>Sectors other than SACCO use placeholder benchmark data and are not for client reports.</li>
+      <li>The built-in sample's pillar scores are calculated from its own findings with the module rule, so its projected and measured figures can be compared like for like. Real scan files keep the pillar scores the modules wrote.</li>
+    </ul>
+  </details>
+
+  <footer class="sig">
+    <svg class="logo" id="symSrc" viewBox="607 1560 755 695" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+    <div class="sig-band">Systems . Infrastructure . Network . Security</div>
+    <p class="note">RETACH DIGITAL LTD ("RETACH") · retach.tech · S.I.N.S. Framework for Digital Resilience</p>
+  </footer>
+</div>
+<script>
+// ── Engine constants copied from live crq-engine.html (2026-11-09) ──
+const LAMBDA_KE=0.462;
+const SECTS={
+  sacco:{n:'SACCO (DT)',bF:1.8,iM:1.4,bch:[5,18],conf:0.70,safe:true},
+  saccondt:{n:'SACCO (NDT)',bF:1.4,iM:1.2,bch:[4.5,9.2],conf:0.28},
+  fintech:{n:'Fintech/PSP',bF:2.4,iM:1.8,bch:[9.1,22.0],conf:0.28},
+  sme:{n:'SME',bF:1.2,iM:1.0,bch:[2.8,7.5],conf:0.15},
+  health:{n:'Healthcare',bF:1.5,iM:1.3,bch:[4.1,9.8],conf:0.15},
+  govt:{n:'County Govt',bF:1.3,iM:1.1,bch:[3.5,8.2],conf:0.21},
+  ngo:{n:'NGO/INGO',bF:0.9,iM:0.8,bch:[1.8,4.5],conf:0.15},
+  school:{n:'School/Uni',bF:1.0,iM:0.9,bch:[2.2,5.8],conf:0.17}
+};
+const SCS=[
+  {id:'phish',bL:.85,bI:.04},{id:'ransom',bL:.37,bI:.18},{id:'fraud',bL:.60,bI:.06},
+  {id:'breach',bL:.69,bI:.12},{id:'dr',bL:.44,bI:.22},{id:'ins',bL:.30,bI:.09}];
+const SUM_BL=SCS.reduce((a,d)=>a+d.bL,0);
+const MFA={full:.62,partial:.82,none:1}, BACKUP_SEV=.60, CRED_K=7;
+// Pillar scoring rule copied from the audit modules' Measure-SINSPillarScore
+// (IdentityAudit.psm1, CredentialAudit.psm1, AuditPolicyChecks.psm1, v1.0.0):
+// score = max(0, 100 − Σ [int](weight × amplifier)), Info excluded.
+const SEV_WEIGHT={Critical:25,High:15,Medium:8,Low:3,Info:0};
+const ampOf=n=>n>=20?1.5:n>=10?1.25:n>=5?1.1:1.0;
+// PowerShell [int] cast rounds half to even
+const psInt=x=>{const f=Math.floor(x),d=x-f;return d>0.5?f+1:d<0.5?f:(f%2===0?f:f+1)};
+const penOf=f=>f.Severity==='Info'?0:psInt((SEV_WEIGHT[f.Severity]||0)*ampOf(+f.AffectedCount||0));
+const SEV_ORDER={Critical:0,High:1,Medium:2,Low:3,Info:4};
+
+function sinsFromPillars(ps){
+  const g=k=>typeof ps[k]==='number'?ps[k]:50;
+  return {s:Math.round((g('S1')+g('S2')+g('S3'))/3), i:g('I'), n:g('S5'), se:Math.round((g('S4')+g('GPO'))/2)};
+}
+function eal(ps,org){
+  const sub=sinsFromPillars(ps), sec=SECTS[org.sec];
+  const ss=Math.round((sub.s+sub.i+sub.n+sub.se)/4);
+  let rF=MFA[org.mfa]*(1.85-ss/100*1.70); rF=Math.max(0.15,rF);
+  const sg=org.sec==='fintech'?0.95:org.sec==='govt'?0.65:0.80, k=Math.exp(sg*sg/2);
+  let own=0;
+  SCS.forEach(d=>{
+    const lam=LAMBDA_KE*sec.bF*(d.bL/SUM_BL)*rF;
+    let rS=1; if(org.bk&&(d.id==='ransom'||d.id==='dr'))rS*=BACKUP_SEV;
+    const med=org.rev*d.bI*sec.iM*(1+Math.min(org.stf,500)/600)*rS;
+    own+=lam*med*k;
+  });
+  // Bühlmann credibility, same units as engine with no OSINT: 4 sub-scores + 4 attestations×0.5 + staff 0.5
+  const n=4+2+0.5, Z=n/(n+CRED_K);
+  const prior=Math.sqrt(sec.bch[0]*sec.bch[1])*1e6;
+  const denom=Z+(1-Z)*sec.conf, wOwn=Z/denom, wSec=((1-Z)*sec.conf)/denom;
+  return {head:wOwn*own+wSec*prior, ss};
+}
+function keyOf(f){const m=(f.CheckId||'').match(/^(S[1-5]|GPO|I)-/);return m?m[1]:null}
+// Projected pillar scores after fixing `fixed`, recomputed from the remaining
+// findings with the module rule and anchored to the file's own pillar score.
+function liftScores(ps,fixed,all){
+  const out={...ps}, ids=new Set(fixed.map(f=>f.CheckId)), P={}, Pf={};
+  (all||fixed).forEach(f=>{const k=keyOf(f);if(!k)return;const p=penOf(f);
+    P[k]=(P[k]||0)+p; if(ids.has(f.CheckId))Pf[k]=(Pf[k]||0)+p});
+  Object.keys(Pf).forEach(k=>{if(typeof out[k]!=='number')return;
+    const before=Math.max(0,100-P[k]), after=Math.max(0,100-(P[k]-Pf[k]));
+    out[k]=Math.min(100,out[k]+after-before)});
+  return out;
+}
+const fk=v=>v>=1e9?'KES '+(v/1e9).toFixed(1)+'B':v>=1e6?'KES '+(v/1e6).toFixed(2)+'M':v>=1e3?'KES '+(v/1e3).toFixed(0)+'K':'KES '+Math.round(v);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// ── Sample data (anonymised, illustrative) ──
+const F=(CheckId,Severity,Title,Pillar,AffectedCount)=>({CheckId,Severity,Title,Pillar,AffectedCount});
+// Sample pillar scores are derived from the sample findings with the module rule,
+// so the plan projection and the C1 re-scan stay consistent.
+const scoresFrom=fs=>{const P={S1:0,S2:0,S3:0,I:0,S4:0,GPO:0,S5:0};
+  fs.forEach(f=>{const k=keyOf(f);if(k in P)P[k]+=penOf(f)});
+  return Object.fromEntries(Object.entries(P).map(([k,p])=>[k,Math.max(0,100-p)]))};
+const B0_FINDINGS=[
+    F('S2-CRED-004','Critical','Plaintext credentials found in user-readable file shares','Credentials',12),
+    F('S2-CRED-002','High','Passwords embedded in logon scripts','Credentials',3),
+    F('S1-IDN-003','High','Enabled privileged accounts unused for over 90 days','Identity',7),
+    F('S1-IDN-007','Medium','Kerberoastable service accounts with old passwords','Identity',4),
+    F('S3-DLG-002','Critical','Domain Users can reset passwords in the admin OU','Delegation',1),
+    F('S3-DLG-005','High','Unconstrained delegation on non-DC servers','Delegation',2),
+    F('S4-PER-004','Critical','Certificate template lets requesters supply any subject (AD CS)','Persistence',1),
+    F('S4-PER-001','Medium','AdminSDHolder permissions modified','Persistence',1),
+    F('GPO-GOV-003','High','Non-admin group can edit a domain-wide GPO','GPO Governance',1),
+    F('GPO-GOV-006','Medium','Broken or orphaned GPO links','GPO Governance',6),
+    F('I-INF-002','High','Print Spooler running on domain controllers','Infrastructure',2),
+    F('I-INF-005','Medium','SMBv1 enabled on two servers','Infrastructure',2),
+    F('S5-AUD-003','High','Advanced audit policy not applied to domain controllers','Detection',2),
+    F('S5-AUD-006','Medium','Security log below 1 GB on domain controllers','Detection',2)];
+const SAMPLE_B0={schema:'sins-ad-audit-v1',clientOrg:'Sample DT-SACCO (anonymised)',engagementName:'SAMPLE-B0',generatedAt:'2026-11-01T09:00:00Z',
+  pillarScores:scoresFrom(B0_FINDINGS),findings:B0_FINDINGS};
+const FIXED=['S2-CRED-004','S3-DLG-002','S4-PER-004','GPO-GOV-003','I-INF-002','S5-AUD-003'];
+const C1_FINDINGS=[...B0_FINDINGS.filter(f=>!FIXED.includes(f.CheckId)),
+    F('S1-IDN-009','Low','Two new accounts set to never expire passwords','Identity',2)];
+const SAMPLE_C1={schema:'sins-ad-audit-v1',clientOrg:'Sample DT-SACCO (anonymised)',engagementName:'SAMPLE-C1',generatedAt:'2026-12-01T09:00:00Z',
+  pillarScores:scoresFrom(C1_FINDINGS),findings:C1_FINDINGS};
+
+// ── Fix cost (prototype assumption, tier-5) ──
+const HOURS={Critical:8,High:4,Medium:2,Low:1,Info:0};
+const G={b0:null,c1:null,meta:{b0:{},c1:{}},plan:new Set(),cost:{},sort:'ret'};
+const $=id=>document.getElementById(id);
+function org(){return{sec:$('sec').value,rev:(parseFloat($('rev').value)||0)*1e6,
+  stf:parseFloat($('stf').value)||0,mfa:$('mfa').value,bk:$('bk').value==='yes'}}
+const rate=()=>Math.max(0,parseFloat($('rate').value)||0);
+const costOf=f=>G.cost[f.CheckId]!=null?G.cost[f.CheckId]:(HOURS[f.Severity]||0)*rate();
+const kes=v=>'KES '+Math.round(v).toLocaleString('en-KE');
+const ratio=v=>isFinite(v)?v.toFixed(1)+' : 1':'—';
+const dt=s=>{const d=new Date(s);return isNaN(d)?'—':d.toISOString().slice(0,16).replace('T',' ')+' UTC'};
+const counts=fs=>{const c={Critical:0,High:0,Medium:0,Low:0};(fs||[]).forEach(f=>{if(c[f.Severity]!=null)c[f.Severity]++});return c};
+
+async function sha256(text){
+  try{const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
+    return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return null}
+}
+
+// ── Core computation shared by screen, ledger and board summary ──
+function compute(){
+  const o=org(), sec=SECTS[o.sec], b0=G.b0, c1=G.c1;
+  const e0=eal(b0.pillarScores||{},o);
+  const fs=(b0.findings||[]).filter(f=>f.Severity!=='Info');
+  const all=b0.findings||[];
+  const rows=fs.map(f=>{const at=e0.head-eal(liftScores(b0.pillarScores||{},[f],all),o).head, c=costOf(f);
+    return {f,at,cost:c,ret:c>0?at/c:Infinity}});
+  rows.sort(G.sort==='ret'?(a,b)=>b.ret-a.ret||b.at-a.at:(a,b)=>b.at-a.at||(SEV_ORDER[a.f.Severity]-SEV_ORDER[b.f.Severity]));
+  const planned=rows.filter(r=>G.plan.has(r.f.CheckId));
+  const ep=eal(liftScores(b0.pillarScores||{},planned.map(r=>r.f),all),o);
+  const planCost=planned.reduce((a,r)=>a+r.cost,0), planCut=e0.head-ep.head;
+  const e1=c1?eal(c1.pillarScores||{},o):null;
+  return {o,sec,b0,c1,e0,e1,rows,planned,ep,planCost,planCut};
+}
+
+function checks(R){
+  const out=[], m0=G.meta.b0, m1=G.meta.c1;
+  out.push(R.sec.safe?['pass','Sector uses the calibrated SACCO band (SASRA/SSFIU sources).']
+    :['fail','Sector uses placeholder benchmark data. Not for client reports.']);
+  out.push(m0.hash?['pass','B0 file fingerprinted.']:['warn','B0 fingerprint not available in this browser.']);
+  if(R.c1){
+    out.push(m1.hash?['pass','C1 file fingerprinted.']:['warn','C1 fingerprint not available in this browser.']);
+    out.push(m0.hash&&m1.hash&&m0.hash===m1.hash?['fail','B0 and C1 are the same file.']:['pass','B0 and C1 are different files.']);
+    out.push((R.b0.clientOrg||'')===(R.c1.clientOrg||'')?['pass','Both scans name the same organisation.']:['fail','The scans name different organisations.']);
+    const t0=new Date(R.b0.generatedAt), t1=new Date(R.c1.generatedAt);
+    out.push(!isNaN(t0)&&!isNaN(t1)&&t1>t0?['pass','C1 was generated after B0.']:['fail','C1 is not dated after B0. Check the scan timestamps.']);
+  } else out.push(['warn','No C1 re-scan loaded. Only the baseline can be reported.']);
+  out.push(['warn','Fix costs use default effort (tier-5) until each fix is quoted.']);
+  return out;
+}
+
+function render(){
+  const fid=document.activeElement&&document.activeElement.id;
+  renderInner();
+  if(fid){const el=document.getElementById(fid); if(el&&el!==document.activeElement)el.focus({preventScroll:true})}
+}
+function renderInner(){
+  const R=compute(), {o,sec,b0,c1,e0,e1}=R;
+  $('sectnote').textContent=sec.safe?'SACCO uses the calibrated sector band (SASRA/SSFIU sources).':'This sector uses placeholder benchmark data. Figures are indicative only and not for client reports.';
+  ['b0','c1'].forEach(w=>{const d=G[w], m=G.meta[w];
+    $('n-'+w).textContent=d?(d.clientOrg||'')+' · '+(d.engagementName||'')+' · '+(d.generatedAt||'').slice(0,10):(w==='b0'?'No file':'No re-scan loaded');
+    $('hs-'+w).textContent=d?(m.hash?'SHA-256 '+m.hash.slice(0,16)+'…':'Fingerprinting…'):'';
+    $('hs-'+w).title=m.hash||'';});
+
+  // KPIs
+  let k=`<div class="kpi"><span class="k">B0 baseline</span><span class="v">${fk(e0.head)}</span><span class="s">Expected annual loss · S.I.N.S. ${e0.ss}/100</span></div>`;
+  if(c1){const d=e1.head-e0.head, pct=e0.head?d/e0.head*100:0;
+    k+=`<div class="kpi"><span class="k">C1 re-scan</span><span class="v">${fk(e1.head)}</span><span class="s">Expected annual loss · S.I.N.S. ${e1.ss}/100</span></div>`;
+    k+=`<div class="kpi delta${d>0?' up':''}"><span class="k">Measured change B0 → C1</span><span class="v">${d<=0?'−':'+'}${fk(Math.abs(d))}</span><span class="s">${pct.toFixed(1)}% · from two fingerprinted scans</span></div>`;}
+  $('kpis').innerHTML=k;
+
+  // Plan summary
+  const n=R.planned.length, pay=R.planCut>0?R.planCost/(R.planCut/12):Infinity;
+  $('proj').innerHTML=n
+    ?`<span>${n} fix${n>1?'es':''} ticked</span><span>Projected exposure <b>${fk(R.ep.head)}</b></span><span>Cost <b>${fk(R.planCost)}</b></span><span>Return <b>${ratio(R.planCost>0?R.planCut/R.planCost:Infinity)}</b></span><span class="muted">Removes ${fk(R.planCut)} a year · payback ${isFinite(pay)?pay.toFixed(1)+' months':'—'} · a projection, not a measured result</span>`
+    :`<span class="muted">No fixes ticked. Tick findings below to build a plan and see its cost, return and payback.</span>`;
+
+  // Ranked table
+  const top=Math.max(1,...R.rows.map(r=>r.at));
+  $('rank').innerHTML=R.rows.map(({f,at,cost,ret})=>`<tr>
+    <td><input type="checkbox" id="p-${esc(f.CheckId)}" data-id="${esc(f.CheckId)}" ${G.plan.has(f.CheckId)?'checked':''} aria-label="Plan fix for ${esc(f.Title)}"></td>
+    <td><div class="title">${esc(f.Title)}</div><div class="cid">${esc(f.CheckId)} · ${esc(f.Pillar)}</div><div class="bar"><i style="width:${Math.round(at/top*100)}%"></i></div></td>
+    <td><span class="sev ${esc(f.Severity)}">${esc(f.Severity)}</span></td>
+    <td class="num" data-label="At stake / yr">${fk(at)}</td>
+    <td class="num" data-label="Fix cost (KES)"><input class="cost" type="number" min="0" step="500" id="c-${esc(f.CheckId)}" data-id="${esc(f.CheckId)}" value="${Math.round(cost)}" aria-label="Fix cost for ${esc(f.Title)}"></td>
+    <td class="num ret" data-label="Return">${ratio(ret)}</td></tr>`).join('')||'<tr><td colspan="6" class="muted">No findings in this file.</td></tr>';
+  document.querySelectorAll('#rank input[type=checkbox]').forEach(cb=>cb.addEventListener('change',e=>{
+    const id=e.target.dataset.id; e.target.checked?G.plan.add(id):G.plan.delete(id); render();}));
+  document.querySelectorAll('#rank input.cost').forEach(inp=>inp.addEventListener('change',e=>{
+    const v=parseFloat(e.target.value); if(isNaN(v)||v<0)delete G.cost[e.target.dataset.id]; else G.cost[e.target.dataset.id]=v; render();}));
+
+  // Comparison
+  const cmp=$('cmp');
+  if(!c1)cmp.innerHTML='<tr><td colspan="4" class="muted">Load a C1 re-scan to compare.</td></tr>';
+  else{
+    const ids0=new Map((b0.findings||[]).map(f=>[f.CheckId,f])), ids1=new Map((c1.findings||[]).map(f=>[f.CheckId,f]));
+    const rows=[];
+    ids0.forEach((f,id)=>rows.push({f,b:'Open',c:ids1.has(id)?'Open':'Fixed',cls:ids1.has(id)?'open':'fixed'}));
+    ids1.forEach((f,id)=>{if(!ids0.has(id))rows.push({f,b:'—',c:'New',cls:'new'})});
+    const ord={fixed:0,new:1,open:2};
+    rows.sort((a,b)=>ord[a.cls]-ord[b.cls]||SEV_ORDER[a.f.Severity]-SEV_ORDER[b.f.Severity]);
+    cmp.innerHTML=rows.map(r=>`<tr><td><div class="title">${esc(r.f.Title)}</div><div class="cid">${esc(r.f.CheckId)}</div></td>
+      <td><span class="sev ${esc(r.f.Severity)}">${esc(r.f.Severity)}</span></td>
+      <td class="st">${r.b}</td><td class="st ${r.cls}">${r.c}</td></tr>`).join('');
+  }
+
+  // Ledger
+  const led=[['B0',b0,e0,G.meta.b0]]; if(c1)led.push(['C1',c1,e1,G.meta.c1]);
+  $('ledger').innerHTML=led.map(([cp,d,e,m])=>{const c=counts(d.findings);
+    return `<tr><td class="st">${cp}</td><td class="st">${dt(d.generatedAt)}</td><td class="st">${m.loadedAt?dt(m.loadedAt):'—'}</td>
+    <td class="hash" title="${esc(m.hash||'')}">${m.hash?esc(m.hash.slice(0,24))+'…':'—'}</td><td class="num">${e.ss}</td>
+    <td class="num">${c.Critical}/${c.High}/${c.Medium}/${c.Low}</td><td class="num">${fk(e.head)}</td></tr>`}).join('');
+  const ck=checks(R);
+  $('checks').innerHTML=ck.map(([s,t])=>`<li><span class="ck ${s}">${s==='pass'?'Pass':s==='warn'?'Check':'Fail'}</span><span>${esc(t)}</span></li>`).join('');
+
+  // Board
+  $('board').innerHTML=boardBody(R,ck);
+
+  // Step guide: state shown by shape and text, not colour alone
+  const bad=ck.some(([s])=>s==='fail'), draft=ck.some(([s])=>s!=='pass');
+  const st=[['profile','Profile',sec.safe?'done':'warn',sec.safe?'calibrated sector':'placeholder sector'],
+    ['scans','Scans',c1?'done':'warn',c1?'B0 and C1 loaded':'C1 missing'],
+    ['plan','Fix plan',R.planned.length?'done':'',R.planned.length?R.planned.length+(R.planned.length===1?' fix':' fixes')+' chosen':'no fixes chosen'],
+    ['evidence','Evidence',bad?'warn':'done',bad?'check failed':'checks passed'],
+    ['board-step','Board summary',draft?'warn':'done',draft?'draft':'ready']];
+  $('steps').innerHTML=st.map(([id,l,c,t],i)=>`<li><a href="#${id}" class="${c}"><span class="n" aria-hidden="true">${c==='done'?'✓':c==='warn'?'!':i+1}</span>${l}<span class="sr">, step ${i+1}, ${t}</span></a></li>`).join('');
+}
+
+// ── Measurement Ledger CSV ──
+function ledgerCSV(){
+  const R=compute(), o=R.o;
+  const head=['checkpoint','client_org','engagement','scan_generated_at','file_loaded_at','file_name','file_sha256','schema',
+    'sins_score','systems','infrastructure','network_proxy_detection','security','open_critical','open_high','open_medium','open_low',
+    'eal_kes','sector','revenue_kes','staff','mfa','tested_backups','engine_method'];
+  const q=v=>{const s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
+  const line=(cp,d,e,m)=>{const s=sinsFromPillars(d.pillarScores||{}), c=counts(d.findings);
+    return [cp,d.clientOrg,d.engagementName,d.generatedAt,m.loadedAt,m.fileName,m.hash,d.schema,e.ss,s.s,s.i,s.n,s.se,
+      c.Critical,c.High,c.Medium,c.Low,Math.round(e.head),SECTS[o.sec].n,o.rev,o.stf,o.mfa,o.bk?'yes':'no',
+      'CRQ Engine Poisson-Lognormal; lambda_KE 0.462; credibility-weighted'].map(q).join(',')};
+  const rows=[head.join(','),line('B0',R.b0,R.e0,G.meta.b0)];
+  if(R.c1)rows.push(line('C1',R.c1,R.e1,G.meta.c1));
+  return rows.join('\n')+'\n';
+}
+const fname=ext=>{const e=(G.b0&&G.b0.engagementName)||'engagement';return 'RETACH-'+e.replace(/[^A-Za-z0-9-]+/g,'-')+'-'+ext};
+
+// ── Logo (single source: the official combined lockup in the header) ──
+const LOGO_INNER=document.getElementById('logoSrc').innerHTML;
+document.getElementById('symSrc').innerHTML=LOGO_INNER;
+function svgLogo(kind,cls){const vb=kind==='symbol'?'607 1560 755 695':'440 1550 4050 650';
+  return `<svg${cls?` class="${cls}"`:''} viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${LOGO_INNER}</svg>`}
+
+// ── Board summary (one page, shared by preview and download) ──
+const BR_CSS=`.br{position:relative;overflow:hidden;font:13px/1.5 "IBM Plex Sans",Arial,sans-serif;color:#111315;background:#fff;max-width:760px;min-width:560px;margin:0 auto;padding:32px 36px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.br *{box-sizing:border-box}.br h1,.br h2{font-family:"Space Grotesk",Arial,sans-serif;margin:0;line-height:1.2}
+.br h1{font-size:20px}.br h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#146B4E;margin:18px 0 8px}
+.br .top{display:flex;justify-content:space-between;gap:16px;border-bottom:3px solid #146B4E;padding-bottom:10px}
+.br .brand svg{display:block;height:26px;width:auto;color:#111315;margin-bottom:8px}.br svg *{fill:currentColor}
+.br .wm{position:absolute;right:-40px;top:90px;height:300px;width:auto;color:#146B4E;opacity:.05;pointer-events:none}
+.br>*:not(.wm){position:relative}
+.br .meta{font-size:11px;color:#4A4F55;text-align:right}
+.br .draft{margin-top:10px;background:#F7EEDC;border:1px solid #A8741C;color:#6B4A10;padding:6px 10px;font-size:11px;border-radius:4px}
+.br .figs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.br .fig{border:1px solid #D9E1DD;border-radius:6px;padding:10px 12px}
+.br .fig .l{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:#56615C}
+.br .fig .v{font:700 19px "Space Grotesk",Arial,sans-serif;font-variant-numeric:tabular-nums;margin-top:2px}
+.br .fig .s{font-size:11px;color:#56615C}.br .good{color:#146B4E}.br .bad{color:#9E1B23}
+.br table{width:100%;border-collapse:collapse;font-size:12px}
+.br table th{font:600 10px "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.05em;color:#111315;background:#EEF1F0;text-align:left;border:0;border-bottom:2px solid #146B4E;padding:7px 8px}
+.br table td{color:#111315;background:#fff;padding:7px 8px;border:0;border-bottom:1px solid #E3E8E6;vertical-align:middle;font-family:"IBM Plex Sans",Arial,sans-serif}
+.br table tr:last-child td{border-bottom:1px solid #D7DEDA}
+.br .sv{display:inline-block;font:600 9.5px "IBM Plex Mono",monospace;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.br .sv.Critical{background:#F6E3E4;color:#9E1B23}.br .sv.High{background:#F7EEDC;color:#8A5D12}.br .sv.Medium,.br .sv.Low{background:#E3F0EA;color:#0E4D38}.br td.n,.br th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.br p{margin:4px 0}.br .small{font-size:10.5px;color:#56615C}.br .mono{font-family:"IBM Plex Mono",monospace;font-size:10px;overflow-wrap:anywhere}
+.br .foot{margin-top:18px;border-top:1px solid #D9E1DD;padding-top:8px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;font-size:10px;color:#4A4F55}
+.br .foot span:last-child{text-align:right}.br .foot svg{height:20px;width:auto;color:#111315}
+.br .band{margin-top:6px;background:#146B4E;color:#fff;text-align:center;font:500 9.5px "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;padding:6px}`;
+
+function boardBody(R,ck){
+  const {b0,c1,e0,e1,sec}=R, draft=ck.some(([s])=>s!=='pass');
+  const reasons=ck.filter(([s])=>s!=='pass').map(([,t])=>t);
+  let figs=`<div class="fig"><div class="l">Baseline (B0)</div><div class="v">${fk(e0.head)}</div><div class="s">Expected annual loss · current residual</div></div>`;
+  if(c1){const d=e1.head-e0.head;
+    figs+=`<div class="fig"><div class="l">Re-scan (C1)</div><div class="v">${fk(e1.head)}</div><div class="s">Expected annual loss after fixes</div></div>
+    <div class="fig"><div class="l">Measured change</div><div class="v ${d<=0?'good':'bad'}">${d<=0?'−':'+'}${fk(Math.abs(d))}</div><div class="s">${(e0.head?d/e0.head*100:0).toFixed(1)}% between two fingerprinted scans</div></div>`;
+  } else {
+    figs+=`<div class="fig"><div class="l">Target (plan)</div><div class="v">${R.planned.length?fk(R.ep.head):'—'}</div><div class="s">Post-remediation target residual</div></div>
+    <div class="fig"><div class="l">Plan cost</div><div class="v">${R.planned.length?fk(R.planCost):'—'}</div><div class="s">One-off fix cost, projected</div></div>`;
+  }
+  const top=[...R.rows].sort((a,b)=>b.ret-a.ret).slice(0,5);
+  const fixed=c1?(b0.findings||[]).filter(f=>!(c1.findings||[]).some(g=>g.CheckId===f.CheckId)).length:null;
+  const added=c1?(c1.findings||[]).filter(f=>!(b0.findings||[]).some(g=>g.CheckId===f.CheckId)).length:null;
+  return `<div class="br">
+  ${svgLogo('symbol','wm')}
+  <div class="top"><div><div class="brand">${svgLogo('lockup')}</div><h1>Identity &amp; Access Risk: Board Summary</h1></div>
+    <div class="meta">${esc(b0.clientOrg||'')}<br>${esc(b0.engagementName||'')}${c1?' → '+esc(c1.engagementName||''):''}<br>Prepared ${new Date().toISOString().slice(0,10)}</div></div>
+  ${draft?`<div class="draft"><b>DRAFT. Not for circulation.</b> ${reasons.map(esc).join(' ')}</div>`:''}
+  <h2>Annual loss exposure</h2><div class="figs">${figs}</div>
+  ${c1?`<p class="small">${fixed} finding${fixed===1?'':'s'} closed and ${added} new between B0 and C1. S.I.N.S. score ${e0.ss} → ${e1.ss} out of 100.</p>`:''}
+  <h2>Best-value fixes still open at B0</h2>
+  <table><thead><tr><th>Finding</th><th>Severity</th><th class="n">Exposure removed / yr</th><th class="n">Fix cost</th><th class="n">Return</th></tr></thead><tbody>
+  ${top.map(r=>`<tr><td>${esc(r.f.Title)}</td><td><span class="sv ${esc(r.f.Severity)}">${esc(r.f.Severity)}</span></td><td class="n">${fk(r.at)}</td><td class="n">${fk(r.cost)}</td><td class="n">${ratio(r.ret)}</td></tr>`).join('')}
+  </tbody></table>
+  ${R.planned.length?`<p class="small">Selected plan: ${R.planned.length} fix${R.planned.length===1?'':'es'}, cost ${fk(R.planCost)}, projected to remove ${fk(R.planCut)} of annual exposure (return ${ratio(R.planCost>0?R.planCut/R.planCost:Infinity)}).</p>`:''}
+  <h2>What the board is asked to do</h2>
+  <p>Approve the fixes with the best return first, and a re-scan at the next checkpoint to measure the change.</p>
+  <h2>Evidence and method</h2>
+  <p class="small">B0 scan ${dt(b0.generatedAt)} · SHA-256 <span class="mono">${esc(G.meta.b0.hash||'not available')}</span></p>
+  ${c1?`<p class="small">C1 scan ${dt(c1.generatedAt)} · SHA-256 <span class="mono">${esc(G.meta.c1.hash||'not available')}</span></p>`:''}
+  <p class="small">Expected annual loss is calculated with the RETACH CRQ Engine (Poisson frequency, Lognormal severity, credibility-weighted against the ${esc(sec.n)} sector band). Figures move from baseline (current residual) to post-remediation (target residual). Measured change compares two scans; plan figures are projections. The method is aligned with NIST CSF 2.0 and ISO/IEC 27005. No figure in this summary was produced by AI.</p>
+  <div class="foot"><span>RETACH DIGITAL LTD ("RETACH") · retach.tech</span>${svgLogo('symbol')}<span>S.I.N.S. Framework for Digital Resilience</span></div>
+  <div class="band">Systems . Infrastructure . Network . Security</div>
+</div>`;
+}
+function boardDoc(){
+  const R=compute();
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RETACH Board Summary ${esc((G.b0&&G.b0.engagementName)||'')}</title>
+<style>body{margin:0;background:#E9EDEB;padding:24px}@media print{body{background:#fff;padding:0}.br{box-shadow:none;max-width:none}}@page{size:A4;margin:14mm}${BR_CSS}</style></head><body>${boardBody(R,checks(R))}</body></html>`;
+}
+
+// ── Board summary fonts: embedded in the saved file so it renders on-brand anywhere, offline ──
+const BOARD_FONTS=[['Space Grotesk',700,'space-grotesk-latin-700-normal.woff2'],['IBM Plex Sans',400,'ibm-plex-sans-latin-400-normal.woff2'],
+  ['IBM Plex Sans',500,'ibm-plex-sans-latin-500-normal.woff2'],['IBM Plex Sans',600,'ibm-plex-sans-latin-600-normal.woff2'],
+  ['IBM Plex Mono',500,'ibm-plex-mono-latin-500-normal.woff2'],['IBM Plex Mono',600,'ibm-plex-mono-latin-600-normal.woff2']];
+const toDataURL=b=>new Promise((ok,no)=>{const fr=new FileReader();fr.onload=()=>ok(fr.result);fr.onerror=no;fr.readAsDataURL(b)});
+async function boardFontCSS(){
+  try{
+    const parts=await Promise.all(BOARD_FONTS.map(async([fam,w,file])=>{
+      const r=await fetch(file); if(!r.ok)throw new Error(file);
+      const url=await toDataURL(new Blob([await r.arrayBuffer()],{type:'font/woff2'}));
+      return '@font-face{font-family:"'+fam+'";font-weight:'+w+';font-style:normal;src:url('+url+') format("woff2")}'}));
+    return parts.join('');
+  }catch(e){return ''}
+}
+// ── Downloads (saved by the browser, nothing is uploaded) ──
+function save(filename,data,st){
+  try{
+    const blob=new Blob([data],{type:/\.csv$/i.test(filename)?'text/csv;charset=utf-8':'text/html;charset=utf-8'});
+    const url=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),5000);
+    st.textContent='Saved '+filename+' to your downloads.';
+  }catch(e){st.textContent='Could not save the file. Try the copy option instead.'}
+}
+$('dl-csv').addEventListener('click',()=>save(fname('Measurement-Ledger.csv'),ledgerCSV(),$('st-csv')));
+$('dl-board').addEventListener('click',async()=>{const st=$('st-board');st.textContent='Preparing…';
+  const fc=await boardFontCSS(); save(fname('Board-Summary.html'),boardDoc().replace('<style>body{margin:0','<style>'+fc+'body{margin:0'),st);
+  if(!fc)st.textContent+=' Brand fonts were not available, so it uses Arial.'});
+$('cp-csv').addEventListener('click',()=>{const t=ledgerCSV();
+  navigator.clipboard.writeText(t).then(()=>$('st-csv').textContent='Ledger rows copied.',()=>$('st-csv').textContent='Copy is blocked here. Use the download instead.')});
+
+// ── Loading ──
+async function setScan(which,d,text,fileName){
+  G[which]=d; G.meta[which]={fileName,loadedAt:new Date().toISOString(),hash:null};
+  if(which==='b0')G.plan.clear(); render();
+  const h=await sha256(text); if(G[which]===d){G.meta[which].hash=h; render();}
+}
+function loadFile(which,file){
+  const err=$('e-'+which), rd=new FileReader();
+  rd.onload=()=>{
+    let d; try{d=JSON.parse(rd.result)}catch(e){err.textContent='This file is not valid JSON. Export it again from Invoke-ADSecurityAudit.ps1.';err.hidden=false;return}
+    if(d.schema!=='sins-ad-audit-v1'){err.textContent='Unexpected schema "'+(d.schema||'none')+'". Load a file from the S.I.N.S. Report Engine (sins-ad-audit-v1).';err.hidden=false;return}
+    if(which==='c1'&&!G.b0){err.textContent='Load the B0 baseline first.';err.hidden=false;return}
+    err.hidden=true; setScan(which,d,rd.result,file.name);
+  };
+  rd.readAsText(file);
+}
+function loadSample(){G.cost={};setScan('b0',SAMPLE_B0,JSON.stringify(SAMPLE_B0),'sample (built-in)');setScan('c1',SAMPLE_C1,JSON.stringify(SAMPLE_C1),'sample (built-in)')}
+$('f-b0').addEventListener('change',e=>e.target.files[0]&&loadFile('b0',e.target.files[0]));
+$('f-c1').addEventListener('change',e=>e.target.files[0]&&loadFile('c1',e.target.files[0]));
+$('reset').addEventListener('click',loadSample);
+function setSort(s){G.sort=s;$('s-ret').setAttribute('aria-pressed',s==='ret');$('s-kes').setAttribute('aria-pressed',s==='kes');render()}
+$('s-ret').addEventListener('click',()=>setSort('ret'));$('s-kes').addEventListener('click',()=>setSort('kes'));
+['sec','rev','stf','mfa','bk','rate'].forEach(id=>$(id).addEventListener('input',render));
+$('sec').innerHTML=Object.entries(SECTS).map(([k,s])=>`<option value="${k}">${s.n}</option>`).join('');
+$('brcss').textContent=BR_CSS;
+loadSample();
+
+// ── Installable web app ──
+let installEvt=null;
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;if(!isStandalone())$('install').hidden=false});
+$('install').addEventListener('click',async()=>{
+  if(!installEvt)return; installEvt.prompt();
+  try{await installEvt.userChoice}catch(e){} installEvt=null; $('install').hidden=true});
+addEventListener('appinstalled',()=>{installEvt=null;$('install').hidden=true});
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!isStandalone())$('ios-hint').hidden=false;
+if('serviceWorker' in navigator){
+  const hadController=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadController)$('pwa-note').textContent='A new version is ready. Reload this page to use it.'});
+  addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').then(()=>navigator.serviceWorker.ready)
+    .then(()=>{if(!$('pwa-note').textContent)$('pwa-note').textContent='Ready to work offline.'}).catch(()=>{})});
+}
+</script>
+
+</body></html>

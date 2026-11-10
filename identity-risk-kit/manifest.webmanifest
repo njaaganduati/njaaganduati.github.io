@@ -1,0 +1,37 @@
+{
+  "id": "/identity-risk-kit/",
+  "name": "RETACH Identity Risk Kit",
+  "short_name": "Risk Kit",
+  "description": "Rank identity and access fixes by annual loss exposure removed per shilling spent. Works offline; scan files stay in the browser.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "lang": "en",
+  "background_color": "#F4F6F5",
+  "theme_color": "#146B4E",
+  "categories": [
+    "business",
+    "security"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
