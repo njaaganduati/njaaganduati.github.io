@@ -1,0 +1,241 @@
+{
+  "schema": "risk-insights/1",
+  "updated": "2026-11-10",
+  "engine_ref": {
+    "file": "crq-engine.html",
+    "sha256": "17a3110cb4b1a409652b237d19c74294ebebd7dd233d94538975e11b4067ece6"
+  },
+  "matrix": {
+    "scenarios": [
+      {
+        "id": "phish",
+        "name": "Phishing & account compromise",
+        "pillar": "Systems"
+      },
+      {
+        "id": "fraud",
+        "name": "Payment fraud & M-Pesa abuse",
+        "pillar": "Systems"
+      },
+      {
+        "id": "ins",
+        "name": "Insider threat / privilege abuse",
+        "pillar": "Systems"
+      },
+      {
+        "id": "ransom",
+        "name": "Ransomware & operational downtime",
+        "pillar": "Infrastructure"
+      },
+      {
+        "id": "dr",
+        "name": "Business continuity failure",
+        "pillar": "Infrastructure"
+      },
+      {
+        "id": "breach",
+        "name": "Data breach & ODPC liability",
+        "pillar": "Security"
+      }
+    ],
+    "rows": [
+      {
+        "intervention": "Multi-factor authentication (full)",
+        "pillar": "Systems",
+        "scenarios": [
+          "phish",
+          "fraud",
+          "ins",
+          "ransom",
+          "dr",
+          "breach"
+        ],
+        "note": null,
+        "lever": "F",
+        "value": 0.62,
+        "ctrl_key": "MFA_FULL",
+        "src": "Verizon 2025 DBIR (compromised credentials ~22% of initial-vector breaches); corroborated by arXiv:2305.00945 MFA-efficacy study (different denominator — blocked-login-attempts, not breach frequency — additive evidence, not a swap-in)",
+        "src_short": "Verizon 2025 DBIR; corroborated by arXiv:2305.00945",
+        "geo": "global",
+        "tier": 2,
+        "year": 2025,
+        "conf": 0.35,
+        "label": "Modelled"
+      },
+      {
+        "intervention": "Multi-factor authentication (partial)",
+        "pillar": "Systems",
+        "scenarios": [
+          "phish",
+          "fraud",
+          "ins",
+          "ransom",
+          "dr",
+          "breach"
+        ],
+        "note": "Derived (RETACH midpoint)",
+        "lever": "F",
+        "value": 0.82,
+        "ctrl_key": "MFA_PARTIAL",
+        "src": "Verizon 2025 DBIR (credentials ~22% of initial-vector breaches) — partial-adoption discount is a RETACH-derived midpoint between full-MFA and no-MFA, not independently sourced",
+        "src_short": "RETACH midpoint between full MFA and none; not independently sourced",
+        "geo": "global",
+        "tier": 2,
+        "year": 2025,
+        "conf": 0.25,
+        "label": "Modelled"
+      },
+      {
+        "intervention": "Security awareness training",
+        "pillar": "Systems",
+        "scenarios": [
+          "phish",
+          "fraud",
+          "ins",
+          "ransom",
+          "dr",
+          "breach"
+        ],
+        "note": null,
+        "lever": "F",
+        "value": 0.95,
+        "ctrl_key": "TRAINING",
+        "src": "Verizon 2025 DBIR (phishing ~16% initial vector) x KnowBe4 Phishing Industry Benchmarking (proof-of-program effect)",
+        "src_short": "Verizon 2025 DBIR x KnowBe4 Phishing Industry Benchmarking",
+        "geo": "global",
+        "tier": 2,
+        "year": 2025,
+        "conf": 0.35,
+        "label": "Modelled"
+      },
+      {
+        "intervention": "Tested backup & DR procedure",
+        "pillar": "Infrastructure",
+        "scenarios": [
+          "ransom",
+          "dr"
+        ],
+        "note": null,
+        "lever": "S",
+        "value": 0.6,
+        "ctrl_key": "BACKUP_SEV",
+        "src": "Sophos State of Ransomware 2025 (intact vs compromised backups — ~8x recovery-cost differential)",
+        "src_short": "Sophos State of Ransomware 2025",
+        "geo": "global",
+        "tier": 3,
+        "year": 2025,
+        "conf": 0.3,
+        "label": "Modelled"
+      },
+      {
+        "intervention": "ODPC compliance programme",
+        "pillar": "Security",
+        "scenarios": [
+          "breach"
+        ],
+        "note": null,
+        "lever": "S",
+        "value": 0.93,
+        "ctrl_key": "ODPC_SEV",
+        "src": "IBM Cost of a Data Breach 2025 (containment-time-to-cost delta, programme-level response maturity)",
+        "src_short": "IBM Cost of a Data Breach 2025",
+        "geo": "global",
+        "tier": 2,
+        "year": 2025,
+        "conf": 0.35,
+        "label": "Modelled"
+      },
+      {
+        "intervention": "Privileged access management",
+        "pillar": "Systems",
+        "scenarios": [
+          "ins"
+        ],
+        "note": null,
+        "lever": "S",
+        "value": 0.69,
+        "ctrl_key": "PAM_SEV",
+        "src": "Ponemon 2026 Cost of Insider Risks Global Report (PAM avg savings $6.1M vs $19.5M total avg annual insider-risk cost, 354 orgs) — insider-risk cost ratio applied as severity reducer on the insider-threat scenario only; not a general breach-severity study",
+        "src_short": "Ponemon 2026 Cost of Insider Risks Global Report",
+        "geo": "global",
+        "tier": 2,
+        "year": 2026,
+        "conf": 0.35,
+        "label": "Modelled"
+      },
+      {
+        "intervention": "Shadow-AI visibility",
+        "pillar": "Security",
+        "scenarios": [
+          "breach"
+        ],
+        "note": "Removes a severity loader (x1.04) when visibility is in place",
+        "lever": "S",
+        "value": 1.04,
+        "ctrl_key": "AI_SHADOW_SEV",
+        "src": "IBM Cost of a Data Breach 2025 (Fig.31: breach involving shadow AI USD 4.63M vs global average USD 4.44M = 1.043; cross-check Fig.27 +USD 200K = 1.045). Severity loader applied only when the org reports no shadow-AI visibility; the unpublished-base +USD 670K high-vs-low comparison is NOT used",
+        "src_short": "IBM Cost of a Data Breach 2025 (Fig. 31)",
+        "geo": "global",
+        "tier": 2,
+        "year": 2025,
+        "conf": 0.35,
+        "label": "Modelled"
+      }
+    ],
+    "direction_only": {
+      "label": "Direction only, no sourced coefficient",
+      "interventions": [
+        "Email authentication (SPF, DKIM, DMARC)",
+        "Endpoint protection and detection",
+        "Firewall and network segmentation",
+        "Identity management",
+        "IT asset inventory",
+        "Network documentation",
+        "Patching and server hardening",
+        "Detection readiness",
+        "Network deployment and maintenance",
+        "CCTV",
+        "Structured cabling"
+      ],
+      "pillar": "Systems, Infrastructure, Network"
+    }
+  },
+  "items": [
+    {
+      "id": "RI-2026-001",
+      "reviewed": "2026-11-10",
+      "signal": {
+        "headline": "Four VPN and firewall flaws joined CISA's exploited-vulnerabilities list between 29 October and 6 November",
+        "source": "CISA Known Exploited Vulnerabilities catalogue (CC0)",
+        "source_date": "2026-11-06",
+        "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+        "summary": "Between 29 October and 6 November 2026, CISA added flaws in Cisco's firewall software, Ivanti Connect Secure (two) and SonicWall's SSL VPN to its catalogue of vulnerabilities known to be exploited. The Cisco flaw can crash the device. The two Ivanti flaws can be chained: a file upload and a privilege escalation by an authenticated user. The SonicWall flaw can let a user with valid credentials for another sign-in method bypass SAML controls, including SAML-enforced MFA. CISA lists ransomware-campaign use as unknown for all four."
+      },
+      "pillar": "Network",
+      "scenario": "ransom",
+      "mapping_note": "CISA lists ransomware use as unknown for these four. RETACH maps them to ransomware because a remote-access flaw has been used that way before (Unit 42 on CVE-2026-0257, covered in the 22 October Weekly Brief). The mapping is editorial.",
+      "intervention": {
+        "name": "Patch and exposure management for internet-facing remote-access and firewall devices",
+        "what": "Keep a list of every VPN gateway and firewall that faces the internet, check each against the CISA catalogue, apply the vendor's fix or mitigation using CISA's due date as a benchmark, and restrict who can reach management interfaces.",
+        "product": null,
+        "reseller_disclosure": false
+      },
+      "expected_effect": {
+        "direction": "Expected direction: fewer known-exploited flaws left open on internet-facing devices, so fewer intrusions through that route.",
+        "ctrl_key": null,
+        "lever": null,
+        "value": null,
+        "src": null,
+        "geo": null,
+        "tier": null,
+        "year": null,
+        "conf": null,
+        "label": "Direction only, no sourced coefficient"
+      },
+      "measured_risk_delta": {
+        "status": "Not yet measured"
+      },
+      "published": "2026-11-10"
+    }
+  ]
+}

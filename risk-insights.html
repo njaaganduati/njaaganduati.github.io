@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>RETACH Risk Insights | RETACH</title>
+<meta name="description" content="A dated feed that links one public risk signal to a S.I.N.S. pillar, a CRQ scenario and a S.I.N.S. Intervention, with the modelled effect and its source. Measured Risk Delta shows Not yet measured until real evidence exists.">
+<meta name="author" content="RETACH">
+<meta property="og:title" content="RETACH Risk Insights">
+<meta property="og:description" content="One public risk signal at a time, linked to a S.I.N.S. pillar, a scenario, an intervention and a sourced modelled effect.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://retach.tech/risk-insights.html">
+<meta property="og:image" content="https://retach.tech/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://retach.tech/og-image.png">
+<link rel="canonical" href="https://retach.tech/risk-insights.html">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/identity-risk-kit/fonts.css">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root { --green: #146B4E; --dark: #1a1a1a; --red: #9E1B23; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; --card: #ffffff; --soft: #eef3ef; --grey: #ecebe7; }
+  [data-theme="dark"] { --bg: #111315; --text: #e8ebe6; --muted: #9AA2AA; --border: rgba(255,255,255,0.12); --green: #2E9E6B; --card: #181B1E; --soft: rgba(46,158,107,0.12); --grey: #1d2023; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; transition: background 0.2s, color 0.2s; }
+  a { color: var(--green); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#ccc;padding:6px 10px}
+  .theme-toggle:hover{border-color:#2E9E6B;color:#fff}
+  .theme-toggle:focus-visible{outline:2px solid #2E9E6B;outline-offset:2px}
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo-combined { height: 36px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .hero h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; color: #fff; }
+  .hero p { color: #cfd3d6; max-width: 720px; }
+  .hero .def { border-left: 4px solid var(--green); padding-left: 1rem; margin-top: 1.4rem; color: #fff; font-size: 0.98rem; }
+  main { padding: 2.5rem 2rem 4rem; }
+  h2.sec { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.7rem; font-weight: 700; margin: 2.8rem 0 0.8rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .lead { color: var(--muted); max-width: 760px; margin-bottom: 1rem; }
+  .note { background: var(--soft); border-left: 4px solid var(--green); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; font-size: 0.95rem; margin: 1.2rem 0; }
+  .parts { list-style: none; counter-reset: p; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.8rem; margin: 1.2rem 0; }
+  .parts li { counter-increment: p; border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 0.8rem 1rem; font-size: 0.9rem; }
+  .parts li::before { content: counter(p, decimal-leading-zero); font-family: 'IBM Plex Mono', monospace; color: var(--green); font-size: 0.78rem; display: block; }
+  .parts li strong { display: block; }
+  .item { border: 1px solid var(--border); border-top: 4px solid var(--green); border-radius: 8px; background: var(--card); padding: 1.4rem 1.6rem; margin: 1.6rem 0; }
+  .item .meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); }
+  .item h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.35rem; line-height: 1.3; margin: 0.3rem 0 0.8rem; }
+  .row { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding: 0.8rem 0; border-top: 1px solid var(--border); font-size: 0.97rem; }
+  .row .k { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.2rem; }
+  .row p { margin: 0 0 0.5rem; }
+  .row p:last-child { margin-bottom: 0; }
+  .chip { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.5rem; margin-right: 0.4rem; color: var(--muted); background: var(--grey); }
+  .chip.mod { border-color: var(--green); color: var(--green); background: transparent; }
+  .small { font-size: 0.88rem; color: var(--muted); }
+  details { margin-top: 0.4rem; font-size: 0.88rem; color: var(--muted); }
+  summary { cursor: pointer; color: var(--green); }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 0.9rem; margin-top: 0.4rem; font-size: 0.88rem; color: var(--muted); }
+  .btn { display: inline-block; background: var(--green); color: #fff; padding: 0.6rem 1.3rem; border-radius: 6px; font-weight: 600; font-size: 0.92rem; text-decoration: none; }
+  html[data-theme="dark"] a.btn { background-color: #146b4e; }
+  .empty { border: 1px dashed var(--border); border-radius: 8px; padding: 1.4rem; color: var(--muted); background: var(--card); }
+  .scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--card); }
+  .scroll:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  table { border-collapse: collapse; width: 100%; min-width: 860px; font-size: 0.88rem; line-height: 1.45; }
+  caption { text-align: left; padding: 0.8rem 1rem; color: var(--muted); font-size: 0.85rem; }
+  th, td { padding: 0.6rem 0.7rem; border-top: 1px solid var(--border); text-align: left; vertical-align: top; }
+  thead th { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--grey); }
+  th.grp { text-align: center; border-left: 1px solid var(--border); }
+  td.c { text-align: center; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+  td.c.on { background: var(--soft); color: var(--green); font-weight: 600; }
+  td.c.off { color: var(--muted); }
+  tr.dir td { background: var(--grey); color: var(--muted); }
+  .rl small { display: block; color: var(--muted); }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 3rem; }
+  footer a { color: #2e9e6b; }
+  @media (max-width: 700px) { .nav-links { display: none; } .row { grid-template-columns: 1fr; gap: 0.2rem; } main { padding: 2rem 1rem 3rem; } .hero { padding: 3rem 1rem 2rem; } }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"RETACH Risk Insights","url":"https://retach.tech/risk-insights.html","description":"A dated feed linking public risk signals to S.I.N.S. pillars, CRQ scenarios and S.I.N.S. Interventions, with the modelled effect and its source.","publisher":{"@type":"Organization","name":"RETACH","url":"https://retach.tech"}}</script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#ffffff" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#ffffff" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#ffffff" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#ffffff" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#ffffff" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#ffffff" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#ffffff" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/#framework">Framework</a>
+      <a href="/#services">Services</a>
+      <a href="/insights/">Insights</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">Risk Insights</span>
+    <h1>RETACH Risk Insights</h1>
+    <p>One public risk signal at a time, linked to a S.I.N.S. pillar, a risk scenario and an intervention, with the modelled effect and where it comes from. Published with the Tuesday Weekly Brief.</p>
+    <p class="def">A Risk Delta is the change in an organisation's measured risk position before and after a S.I.N.S. Intervention™.</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="note"><strong>Modelled, not measured.</strong> Effects shown here are modelled from published studies, not results RETACH has observed at a client. Measured Risk Delta reads "Not yet measured" until a real engagement produces a before-and-after result, and then only anonymised and with the client's written consent. No money figures appear on this page.</div>
+
+    <h2 class="sec">How to read an item</h2>
+    <ol class="parts">
+      <li><strong>Signal</strong>A public source, with its date and link.</li>
+      <li><strong>Pillar and scenario</strong>Where it lands in S.I.N.S. and the risk model. RETACH's editorial mapping.</li>
+      <li><strong>Intervention</strong>The S.I.N.S. Intervention™ that answers it.</li>
+      <li><strong>Expected effect</strong>Direction, plus the published coefficient where one exists.</li>
+      <li><strong>Measured Risk Delta</strong>Real before-and-after evidence, or "Not yet measured".</li>
+    </ol>
+
+    <h2 class="sec">Latest items</h2>
+    <div id="items" aria-live="polite"></div>
+
+    <h2 class="sec">Intervention matrix</h2>
+    <p class="lead">Which interventions have a sourced effect, on which risk scenario. A dash means the model has no sourced effect for that pair. Empty cells are deliberate: RETACH shows only what a source supports.</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Intervention matrix, scrolls sideways on small screens">
+      <table id="matrix"></table>
+    </div>
+    <p class="small" id="matrix-note" style="margin-top:0.8rem"></p>
+
+    <h2 class="sec">About the numbers</h2>
+    <p class="lead">Coefficients come from the same table that drives the <a href="/crq-engine.html">CRQ Engine</a>, and each carries its source, geography, evidence tier and confidence. The method is aligned with NIST CSF 2.0 and ISO/IEC 27005. The pillar and scenario for each item is an editorial judgement by RETACH, which is why it is labelled. Research is cited, never reproduced. RETACH resells some security products. Research cited here is not an endorsement of any product. This is general information, not legal advice.</p>
+  </div>
+</main>
+<footer>
+  <p>© 2026 RETACH DIGITAL LTD · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a> · <a href="/privacy.html">Privacy</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+<script src="/assets/theme-toggle.js" defer></script>
+<script>
+(function(){
+  var DATA_URL = '/risk-insights.json';
+  var SC = {phish:'Phishing & account compromise', ransom:'Ransomware & operational downtime', fraud:'Payment fraud & M-Pesa abuse', breach:'Data breach & ODPC liability', dr:'Business continuity failure', ins:'Insider threat / privilege abuse'};
+  var LEVER = {F:'Frequency', S:'Severity'};
+  function el(tag, attrs, kids){
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) { if (k === 'text') n.textContent = attrs[k]; else n.setAttribute(k, attrs[k]); }
+    (kids || []).forEach(function(c){ if (c != null) n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function fmtDate(s){
+    if (!s) return '';
+    var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(s); if (!m) return s;
+    var mo = ['January','February','March','April','May','June','July','August','September','October','November','December'][+m[2]-1];
+    return (m[3] ? (+m[3]) + ' ' : '') + mo + ' ' + m[1];
+  }
+  function val(v){ return '×' + Number(v).toFixed(2); }
+  function safeUrl(u){ return /^https:\/\//.test(u) ? u : null; }
+  function row(k, kids){ return el('div', {'class':'row'}, [el('div', {'class':'k', text:k}), el('div', null, kids)]); }
+
+  function effect(ee){
+    var kids = [];
+    if (ee.ctrl_key && ee.value != null) {
+      kids.push(el('p', null, [el('span', {'class':'chip mod', text:'Modelled'}), ee.direction]));
+      kids.push(el('p', null, [(LEVER[ee.lever] || '') + ' lever · multiplier ' + val(ee.value) + ' · ' + (ee.src_short || '')]));
+      kids.push(el('p', {'class':'small', text:'Geography: ' + ee.geo + ' · evidence tier ' + ee.tier + ' · year ' + ee.year + ' · confidence ' + Number(ee.conf).toFixed(2)}));
+      kids.push(el('details', null, [el('summary', {text:'Source detail'}), el('p', {text: ee.src})]));
+    } else {
+      kids.push(el('p', null, [el('span', {'class':'chip', text:'Direction only'}), 'Direction only, no sourced coefficient. ' + ee.direction]));
+    }
+    return kids;
+  }
+
+  function measured(m){
+    var st = (m && m.status) || 'Not yet measured';
+    if (st === 'Not yet measured') return el('p', {text: st});
+    return el('p', null, [el('span', {'class':'chip mod', text:'Measured'}), st]);
+  }
+
+  function renderItems(items){
+    var box = document.getElementById('items');
+    box.textContent = '';
+    var shown = items.filter(function(i){ return i && i.reviewed; })
+      .sort(function(a,b){ return (b.published || '').localeCompare(a.published || '') || b.id.localeCompare(a.id); });
+    if (!shown.length) {
+      box.appendChild(el('div', {'class':'empty', text:'The first items are in review. Each one is approved by RETACH before it appears here. Check back after the next Weekly Brief.'}));
+      return;
+    }
+    shown.forEach(function(it){
+      var s = it.signal, u = safeUrl(s.url);
+      var src = [u ? el('a', {href:u, rel:'noopener noreferrer'}, [s.source]) : s.source, ' · ' + fmtDate(s.source_date)];
+      var quote = '/quote.html?utm_source=risk-insights&utm_medium=web&utm_campaign=risk-insights&utm_content=' + encodeURIComponent(it.id);
+      var card = el('article', {'class':'item', id: it.id}, [
+        el('div', {'class':'meta', text: it.id + ' · ' + fmtDate(it.published)}),
+        el('h3', {text: s.headline}),
+        row('1 · Signal', [el('p', {text: s.summary}), el('p', {'class':'small'}, ['Source: '].concat(src))]),
+        row('2 · Pillar and scenario', [
+          el('p', null, [el('span', {'class':'chip', text:'RETACH mapping (editorial)'}), 'S.I.N.S. pillar: ' + it.pillar + ' · Scenario: ' + (SC[it.scenario] || it.scenario)]),
+          el('p', {'class':'small', text: it.mapping_note || ''})]),
+        row('3 · S.I.N.S. Intervention™', [el('p', null, [el('strong', {text: it.intervention.name})]), el('p', {text: it.intervention.what || ''})].concat(
+          it.intervention.reseller_disclosure ? [el('p', {'class':'small', text:'RETACH resells some of the products named in Risk Insights. The intervention comes first; product choice is the client\'s.'})] : [])),
+        row('4 · Expected effect', effect(it.expected_effect)),
+        row('5 · Measured Risk Delta', [measured(it.measured_risk_delta)]),
+        el('div', {'class':'foot'}, [el('span', {text:'Reviewed by RETACH on ' + fmtDate(it.reviewed)}), el('a', {'class':'btn', href: quote}, ['Request a Quote'])])
+      ]);
+      box.appendChild(card);
+    });
+  }
+
+  function renderMatrix(m){
+    var t = document.getElementById('matrix'); t.textContent = '';
+    var sc = m.scenarios, pillars = [];
+    sc.forEach(function(s){ var last = pillars[pillars.length-1]; if (last && last.p === s.pillar) last.n++; else pillars.push({p:s.pillar, n:1}); });
+    t.appendChild(el('caption', {text:'Cells show the lever (F = how often, S = how costly) and the modelled multiplier. Every cell is labelled Modelled.'}));
+    var h1 = el('tr', null, [el('th', {rowspan:'2', scope:'col', text:'Intervention'})]);
+    pillars.forEach(function(g){ h1.appendChild(el('th', {'class':'grp', colspan:String(g.n), scope:'colgroup', text:g.p})); });
+    h1.appendChild(el('th', {rowspan:'2', scope:'col', text:'Source · geography · tier · confidence'}));
+    h1.appendChild(el('th', {rowspan:'2', scope:'col', text:'Measured Risk Delta'}));
+    var h2 = el('tr'); sc.forEach(function(s){ h2.appendChild(el('th', {scope:'col', text:s.name})); });
+    t.appendChild(el('thead', null, [h1, h2]));
+    var tb = el('tbody');
+    var maxTier = 0, maxConf = 0, geos = {};
+    m.rows.forEach(function(r){
+      maxTier = Math.max(maxTier, r.tier); maxConf = Math.max(maxConf, r.conf); geos[r.geo] = 1;
+      var tr = el('tr', null, [el('th', {scope:'row', 'class':'rl'}, [r.intervention, el('small', {text: r.pillar + (r.note ? ' · ' + r.note : '')})])]);
+      sc.forEach(function(s){
+        var on = r.scenarios.indexOf(s.id) >= 0;
+        tr.appendChild(el('td', {'class':'c ' + (on ? 'on' : 'off'), text: on ? r.lever + ' ' + val(r.value) : '—'}));
+      });
+      tr.appendChild(el('td', {text: r.src_short + ' · ' + r.geo + ' · tier ' + r.tier + ' · ' + Number(r.conf).toFixed(2)}));
+      tr.appendChild(el('td', {text:'Not yet measured'}));
+      tb.appendChild(tr);
+    });
+    var d = m.direction_only;
+    tb.appendChild(el('tr', {'class':'dir'}, [
+      el('th', {scope:'row', 'class':'rl'}, [d.label, el('small', {text: d.pillar})]),
+      el('td', {colspan:String(sc.length + 1), text: d.interventions.join(' · ')}),
+      el('td', {text:'Not yet measured'})]));
+    t.appendChild(tb);
+    document.getElementById('matrix-note').textContent =
+      'All sourced coefficients are ' + Object.keys(geos).join('/') + ' studies, evidence tier at most ' + maxTier + ', confidence at most ' + maxConf.toFixed(2) + '. Internal assumptions (tier 5) are never shown as sourced. They are priors, not RETACH results. Source studies are cited, never reproduced.';
+  }
+
+  fetch(DATA_URL, {credentials:'omit'}).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){ renderItems(d.items || []); renderMatrix(d.matrix); })
+    .catch(function(){ document.getElementById('items').textContent = 'The feed could not be loaded. Please try again later.'; });
+})();
+</script>
+</body>
+</html>
