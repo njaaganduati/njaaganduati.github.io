@@ -968,10 +968,10 @@ function renderCRQBridge() {
   // Use AD pillar scores to build CRQ deep link
   // AD pillar scores map: S1+S2+S3 → Systems (S¹), I → Infrastructure (S²), GPO → Security (S⁴)
   const ps = d.pillarScores || {};
-  const sysScore  = Math.round(((ps.S1||50)+(ps.S2||50)+(ps.S3||50))/3);
-  const infraScore = ps.I || 50;
-  const netScore   = ps.S5 || 50; // patch/endpoint as proxy for network posture
-  const secScore   = Math.round(((ps.S4||50)+(ps.GPO||50))/2);
+  const sysScore  = Math.round(((ps.S1??50)+(ps.S2??50)+(ps.S3??50))/3);
+  const infraScore = ps.I ?? 50;
+  const netScore   = ps.S5 ?? 50; // Detection (S5) as proxy for network posture
+  const secScore   = Math.round(((ps.S4??50)+(ps.GPO??50))/2);
 
   document.getElementById('crq-s1').textContent = sysScore;
   document.getElementById('crq-s1').className = 'crq-bm-val ' + (sysScore>=70?'ok':sysScore>=45?'warn':'crit');
