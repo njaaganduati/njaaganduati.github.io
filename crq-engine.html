@@ -439,7 +439,7 @@ div.tc div.tf.lk{color:#5e6b62}
         <div class="tr"><button class="tb on" data-g="bk" data-v="no" onclick="tog('bk',this)">No</button><button class="tb" data-g="bk" data-v="yes" onclick="tog('bk',this)">Yes</button></div>
         <label class="fl">ODPC Compliance Status</label>
         <div class="tr"><button class="tb on" data-g="odpc" data-v="none" onclick="tog('odpc',this)">None</button><button class="tb" data-g="odpc" data-v="registered" onclick="tog('odpc',this)">Registered</button><button class="tb" data-g="odpc" data-v="programme" onclick="tog('odpc',this)">Programme</button></div>
-        <label class="fl">Security Awareness Training (RETACH Academy)?</label>
+        <label class="fl">Security awareness training in place?</label>
         <div class="tr"><button class="tb on" data-g="academy" data-v="no" onclick="tog('academy',this)">No</button><button class="tb" data-g="academy" data-v="yes" onclick="tog('academy',this)">Yes</button></div>
         <label class="fl">Privileged Access Management (PAM) deployed?</label>
         <div class="tr"><button class="tb on" data-g="pam" data-v="no" onclick="tog('pam',this)">No</button><button class="tb" data-g="pam" data-v="yes" onclick="tog('pam',this)">Yes</button></div>
@@ -476,7 +476,7 @@ div.tc div.tf.lk{color:#5e6b62}
             <div class="tf lk">Live OSINT scan</div>
             <div class="tf lk">Regulatory fine exposure</div>
             <div class="tf lk">Kenya sector benchmark</div>
-            <div class="tf lk">Control ROI ranking</div>
+            <div class="tf lk">Control impact ranking</div>
             <div class="tf lk">30/60/90-day roadmap</div>
           </div>
           <div class="tc prem">
@@ -491,7 +491,7 @@ div.tc div.tf.lk{color:#5e6b62}
             <div class="tf y">Live OSINT scan</div>
             <div class="tf y">Regulatory fine exposure</div>
             <div class="tf y">Kenya sector benchmark</div>
-            <div class="tf y">Control ROI ranking</div>
+            <div class="tf y">Control impact ranking</div>
             <div class="tf y">30/60/90-day roadmap</div>
           </div>
         </div>
@@ -648,7 +648,7 @@ const CTRLP=[
   {n:'Multi-Factor Authentication (MFA)',lever:'Frequency',scn:'All six scenarios',k:'MFA_FULL',kp:'MFA_PARTIAL',short:'Verizon 2025 DBIR; corroborated by arXiv:2305.00945',cs:'KES 0–15K/yr',on:{mfa:'full'},has:i=>i.mfa==='full'},
   {n:'Tested backup & DR procedure',lever:'Severity',scn:ctlScn(['ransom','dr']),k:'BACKUP_SEV',short:'Sophos State of Ransomware 2025',cs:'KES 20–50K setup',on:{bk:true},has:i=>i.bk},
   {n:'Privileged access management (PAM)',lever:'Severity',scn:ctlScn(['ins']),k:'PAM_SEV',short:'Ponemon 2026 Cost of Insider Risks Global Report',cs:'KES 40–90K/yr',on:{pam:true},has:i=>i.pam},
-  {n:'Security awareness training (RETACH Academy)',lever:'Frequency',scn:'All six scenarios',k:'ACADEMY',short:'Verizon 2025 DBIR x KnowBe4 Phishing Industry Benchmarking',cs:'',on:{academy:true},has:i=>i.academy},
+  {n:'Security awareness training',lever:'Frequency',scn:'All six scenarios',k:'ACADEMY',short:'Verizon 2025 DBIR x KnowBe4 Phishing Industry Benchmarking',cs:'',on:{academy:true},has:i=>i.academy},
   {n:'ODPC compliance programme',lever:'Severity',scn:ctlScn(['breach']),k:'ODPC_SEV',short:'IBM Cost of a Data Breach 2025',cs:'',on:{odpc:'programme'},has:i=>i.odpc==='programme'},
   {n:'Shadow-AI visibility',lever:'Severity',scn:ctlScn(['breach']),k:'AI_SHADOW_SEV',short:'IBM Cost of a Data Breach 2025 (Fig. 31)',cs:'',on:{aiShadow:'visible'},has:i=>i.aiShadow!=='none',hasTxt:i=>i.aiShadow==='visible'?'In place — already in your figure':'Not assessed — no effect in your figure'}
 ];
@@ -705,7 +705,7 @@ function rm(inp){
   let rF=1.0;
   rF*=inp.mfa==='full'?CTRL.MFA_FULL.v:inp.mfa==='partial'?CTRL.MFA_PARTIAL.v:1.0;   // MFA -> frequency
   rF*=(1.85-ss/100*1.70);                                  // SINS posture -> frequency
-  rF*=inp.academy?CTRL.ACADEMY.v:1.0;                       // RETACH Academy -> frequency
+  rF*=inp.academy?CTRL.ACADEMY.v:1.0;                       // security awareness training -> frequency
   rF=Math.max(0.15,rF);
   // ── Control-maturity proxy (Regulatory Fine card discount ONLY; never applied to EAL) ──
   // reproduces the legacy combined modifier so the separate fine card is byte-unchanged
@@ -939,7 +939,7 @@ function rRM(inp,ss){
 
   const items={
     d30:[
-      nm?'<strong>Enable MFA immediately</strong> — admin, email, banking accounts first. Single highest-ROI control: reduces phishing EAL by 28%.':'Audit all admin and service accounts. Remove inactive accounts. Document every privilege with justification.',
+      nm?'<strong>Enable MFA immediately</strong> — admin, email, banking accounts first. Sourced estimate: full MFA cuts expected attack frequency by 38% (Verizon 2025 DBIR); the Controls tab shows the effect on your figure.':'Audit all admin and service accounts. Remove inactive accounts. Document every privilege with justification.',
       'Run email security check: verify SPF record is published, DKIM signing is active, DMARC is at enforcement (p=reject). Use MX Toolbox for a free check.',
       isCI?'<strong>Critical Infrastructure obligation:</strong> Confirm your organisation is registered / acknowledged with NC4 (National Computer and Cyberspace Centre) for incident reporting. CMCA 2018/2024 requires CI operators to report cyber incidents. Non-reporting is an offence.':'Identify your 3 most critical systems. Confirm each has a tested backup and you know your recovery time objective.',
     ],
@@ -951,7 +951,7 @@ function rRM(inp,ss){
     d90:[
       'Segment your network: separate guest WiFi, payment terminals, and core business systems. Each segment limits breach blast radius.',
       isCI?'<strong>Business Continuity Plan (BCP) for essential services:</strong> CI operators must demonstrate continuity planning for essential service delivery. A tested BCP directly reduces your RTO exposure and is a CMCA compliance requirement. RETACH delivers BCP/DRP as a structured engagement, with the timeline agreed in your SOW.':'Run your first phishing simulation. Track the click rate — your human risk KPI. Target: below 10% within 6 months.',
-      isCI?`<strong>ODPC registration is mandatory regardless of sector:</strong> Even as a CI operator, DPA 2019 applies to all personal data you process. Register at odpc.go.ke. Combined DPA + CMCA non-compliance exposure is ${fk(s.rF_dpa+s.rF_cmca)} — both fines can run concurrently.`:'Establish a monthly access review: who has admin rights, which systems, why. Prevents 60% of insider threat scenarios.',
+      isCI?`<strong>ODPC registration is mandatory regardless of sector:</strong> Even as a CI operator, DPA 2019 applies to all personal data you process. Register at odpc.go.ke. Combined DPA + CMCA non-compliance exposure is ${fk(s.rF_dpa+s.rF_cmca)} — both fines can run concurrently.`:'Establish a monthly access review: who has admin rights, which systems, why. Keeps privileged access limited to the people who need it.',
     ]
   };
   const ls=['Day 0–30','Day 31–60','Day 61–90'],cs=['p30','p60','p90'],ks=['d30','d60','d90'];
