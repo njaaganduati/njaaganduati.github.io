@@ -138,6 +138,16 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .cn{font-size:.8rem;color:var(--text);flex:1}
 .cm{font-size:.65rem;color:var(--muted);margin-top:.08rem}
 .cred{font-family:var(--mono);font-size:.7rem;font-weight:600;color:var(--gl);white-space:nowrap}
+.cm b{color:var(--text);font-weight:600}
+.cl{font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:.2rem;line-height:1.5}
+.cdir{font-family:var(--mono);font-size:.58rem;color:var(--muted);line-height:1.5}
+.ce{text-align:right;flex-shrink:0}
+@media(max-width:600px){.cr{flex-direction:column;align-items:flex-start;gap:.35rem}.ce{text-align:left}}
+.csrc{margin-top:.3rem;font-size:.6rem;color:var(--muted)}
+.csrc summary{cursor:pointer;color:var(--gl);font-family:var(--mono);font-size:.58rem}
+.csrc p{margin:.25rem 0 0;line-height:1.5}
+.cgrp{margin:.9rem 0 .2rem;padding-top:.6rem;border-top:1px dashed var(--border);font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.cr.dim{opacity:.62}
 
 .rm-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}
 @media(max-width:600px){.rm-cols{grid-template-columns:minmax(0,1fr)}}
@@ -571,7 +581,7 @@ div.tc div.tf.lk{color:#5e6b62}
           </div>
 
           <div class="tpane" id="tp-ct">
-            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Ranked by EAL reduction. Implement top-to-bottom for maximum risk ROI per KES spent.</p>
+            <p style="font-size:.7rem;color:var(--muted);margin-bottom:.7rem">Effects are read from the engine's sourced coefficients and computed by re-running the model with each control switched on, against your current inputs (bottom-up EAL, before credibility weighting). Ranked by modelled EAL reduction. Controls with no sourced coefficient are shown as direction only, with no KES figure.</p>
             <div id="ctl"></div>
           </div>
 
@@ -628,15 +638,24 @@ const SCS=[
   {id:'dr',    n:'Business continuity failure',      p:'S² Infrastructure',bL:.44,bI:.22},
   {id:'ins',   n:'Insider threat / privilege abuse', p:'S¹ Systems',       bL:.30,bI:.09},
 ];
-const CTRLS=[
-  {n:'Multi-Factor Authentication (MFA)',         rd:.28,ef:'Low',   cs:'KES 0–15K/yr',  mt:'Applies to all account-based scenarios'},
-  {n:'Tested backup & DR procedure',              rd:.32,ef:'Low',   cs:'KES 20–50K setup',mt:'Directly cuts ransomware & DR EAL'},
-  {n:'Email security — SPF/DKIM/DMARC',           rd:.18,ef:'Low',   cs:'KES 0–5K',      mt:'Reduces phishing likelihood 60–80%'},
-  {n:'Endpoint detection & response (EDR)',        rd:.16,ef:'Medium',cs:'KES 3–8K/seat/yr',mt:'Detects ransomware pre-execution'},
-  {n:'Privileged access management (PAM)',         rd:.31,ef:'Medium',cs:'KES 40–90K/yr',   mt:'Cuts insider-threat severity ~31% (Ponemon 2026 Cost of Insider Risks)'},
-  {n:'Network segmentation',                       rd:.14,ef:'Medium',cs:'KES 30–80K',    mt:'Limits blast radius of any breach'},
-  {n:'Staff phishing simulation',                  rd:.12,ef:'Medium',cs:'KES 15–30K',    mt:'Reduces click rate avg 60% over 12 months'},
-  {n:'ODPC registration & DPA policy',             rd:.08,ef:'Low',   cs:'KES 5–10K',     mt:'Eliminates KES 5M fine exposure'},
+// ── Controls panel — display only, never feeds EAL ─────────────────────────
+// Every effect is read from CTRL (tagged, sourced) and computed by re-running sc() with the control
+// switched on against the user's inputs. Controls with no sourced coefficient are shown as direction
+// only, with no KES figure. Tier-5 entries (BACKUP_FINECARD, ODPC_FINE, AI_POL_SEV, AI_ACC_SEV) are never shown as sourced.
+const ctlEsc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ctlScn=ids=>ids.map(id=>SCS.find(d=>d.id===id).n).join('; ');
+const CTRLP=[
+  {n:'Multi-Factor Authentication (MFA)',lever:'Frequency',scn:'All six scenarios',k:'MFA_FULL',kp:'MFA_PARTIAL',short:'Verizon 2025 DBIR; corroborated by arXiv:2305.00945',cs:'KES 0–15K/yr',on:{mfa:'full'},has:i=>i.mfa==='full'},
+  {n:'Tested backup & DR procedure',lever:'Severity',scn:ctlScn(['ransom','dr']),k:'BACKUP_SEV',short:'Sophos State of Ransomware 2025',cs:'KES 20–50K setup',on:{bk:true},has:i=>i.bk},
+  {n:'Privileged access management (PAM)',lever:'Severity',scn:ctlScn(['ins']),k:'PAM_SEV',short:'Ponemon 2026 Cost of Insider Risks Global Report',cs:'KES 40–90K/yr',on:{pam:true},has:i=>i.pam},
+  {n:'Security awareness training (RETACH Academy)',lever:'Frequency',scn:'All six scenarios',k:'ACADEMY',short:'Verizon 2025 DBIR x KnowBe4 Phishing Industry Benchmarking',cs:'',on:{academy:true},has:i=>i.academy},
+  {n:'ODPC compliance programme',lever:'Severity',scn:ctlScn(['breach']),k:'ODPC_SEV',short:'IBM Cost of a Data Breach 2025',cs:'',on:{odpc:'programme'},has:i=>i.odpc==='programme'},
+  {n:'Shadow-AI visibility',lever:'Severity',scn:ctlScn(['breach']),k:'AI_SHADOW_SEV',short:'IBM Cost of a Data Breach 2025 (Fig. 31)',cs:'',on:{aiShadow:'visible'},has:i=>i.aiShadow!=='none',hasTxt:i=>i.aiShadow==='visible'?'In place — already in your figure':'Not assessed — no effect in your figure'}
+];
+const CTRLD=[
+  {n:'Email security — SPF/DKIM/DMARC',mt:'Expected direction: lowers the likelihood of phishing and sender spoofing',cs:'KES 0–5K'},
+  {n:'Endpoint detection & response (EDR)',mt:'Expected direction: earlier detection of ransomware activity',cs:'KES 3–8K/seat/yr'},
+  {n:'Network segmentation',mt:'Expected direction: limits how far a breach can spread',cs:'KES 30–80K'}
 ];
 const TS={mfa:'partial',bk:'no',odpc:'none',academy:'no',pam:'no',ai_shadow:'na',ai_pol:'na',ai_acc:'na'};
 
@@ -851,7 +870,7 @@ function calc(){
 
   rHM(scs,eal);
   rSC(scs,eal);
-  rCT(eal);
+  rCT(eal,inp);
   rRM(inp,ss);
   rBM(eal,s,cred);
   renderKRI();
@@ -890,12 +909,27 @@ function rSC(scs,eal){
   }).join('');
 }
 
-function rCT(eal){
-  document.getElementById('ctl').innerHTML=CTRLS.map(c=>{
-    const sv=Math.round(eal*c.rd);
-    const bw=Math.round(c.rd*100*2.8);
-    return`<div class="cr"><div><div class="cn">${c.n}</div><div class="cm">${c.mt}</div><div style="height:3px;background:var(--border);border-radius:2px;margin-top:5px;width:${Math.min(100,bw)}%;max-width:180px"><div style="height:3px;background:var(--gl);border-radius:2px;width:100%"></div></div></div><div style="text-align:right;flex-shrink:0"><div class="cred">-${Math.round(c.rd*100)}% EAL</div><div style="font-family:var(--mono);font-size:.58rem;color:var(--gl);margin-top:2px">saves ${fk(sv)}/yr</div><div style="font-family:var(--mono);font-size:.58rem;color:var(--amber)">${c.cs}</div></div></div>`;
+function ctlSum(inp){return sc(inp).reduce((a,d)=>a+d.eal,0)}
+function ctlCoef(key,lever){
+  const x=CTRL[key],pct=Math.round(Math.abs(1-x.v)*100);
+  const what=x.v<1?(lever==='Frequency'?pct+'% fewer expected events':pct+'% smaller losses'):pct+'% larger losses without visibility';
+  return '×'+x.v.toFixed(2)+' → '+what+' · '+x.geo+' · tier '+x.tier+' · confidence '+x.conf.toFixed(2);
+}
+function rCT(eal,inp){
+  const base=ctlSum(inp);   // same bottom-up EAL the engine shows; recomputed so every delta is like-for-like
+  const rows=CTRLP.map(c=>{const has=c.has(inp);return{c,has,save:has?0:base-ctlSum({...inp,...c.on})}})
+    .sort((a,b)=>(a.has-b.has)||(b.save-a.save));
+  const cost=cs=>cs?`<div class="cl" style="color:var(--amber)">${cs} · RETACH estimate</div>`:'';
+  const sourced=rows.map(({c,has,save})=>{
+    const x=CTRL[c.k];
+    const mfa=c.kp?`<div class="cl">Partial adoption: ×${CTRL[c.kp].v.toFixed(2)} · Derived (RETACH midpoint) · confidence ${CTRL[c.kp].conf.toFixed(2)}</div>`:'';
+    const eff=has?`<div class="cdir">${c.hasTxt?c.hasTxt(inp):'In place — already in your figure'}</div>`
+      :save>0?`<div class="cred">−${fk(save)}/yr</div><div class="cl">−${Math.round(save/base*100)}% of bottom-up EAL, vs your inputs</div>`
+      :`<div class="cdir">No change at your current inputs</div>`;
+    return`<div class="cr"><div><div class="cn">${c.n}</div><div class="cm">Lever: <b>${c.lever}</b> · Applies to: ${c.scn}</div><div class="cl">${ctlCoef(c.k,c.lever)}</div>${mfa}<details class="csrc"><summary>Source: ${c.short}</summary><p>${ctlEsc(x.src)} (${x.year})</p></details></div><div class="ce">${eff}${cost(c.cs)}</div></div>`;
   }).join('');
+  const dir=CTRLD.map(c=>`<div class="cr dim"><div><div class="cn">${c.n}</div><div class="cm">${c.mt}</div></div><div class="ce"><div class="cdir">Direction only</div>${cost(c.cs)}</div></div>`).join('');
+  document.getElementById('ctl').innerHTML=sourced+`<div class="cgrp">Direction only, no sourced coefficient</div>`+dir;
 }
 
 function rRM(inp,ss){
