@@ -1561,6 +1561,240 @@ html[data-theme="dark"] span.blog-category{background-color:#146b4e}
 html[data-theme="dark"] div.framework-positioning div.positioning-label{color:#7a7b7e}
 html[data-theme="light"] div.framework-positioning div.positioning-label{color:#808182}
 /* ── end WCAG AA overrides [A] ── */
+
+/* ===== AQR Cycle (staged 2026-11-12) — scoped to .aqr ===== */
+/* ==========================================================================
+   RETACH — AQR Cycle (Assess → Quantify → Remediate)
+   Self-contained component; everything is scoped to .aqr
+   Node layout + ring proportions follow the RETACH Symbol Only mark:
+   three hollow ring nodes (two top, one bottom), hole ≈ 56% of outer radius.
+   ========================================================================== */
+
+.aqr {
+  /* ── BRAND COLOURS (RETACH Brand Guide — change here only) ─────────────── */
+  --aqr-charcoal: #111315;   /* Deep Charcoal — base                    */
+  --aqr-emerald:  #146B4E;   /* Deep Emerald  — PRIMARY: active only    */
+  --aqr-steel:    #4A4F55;   /* Steel Gray    — diagram structure       */
+  --aqr-crimson:  #9E1B23;   /* Deep Crimson  — the one CTA (sparingly) */
+  --aqr-white:    #FFFFFF;
+  --aqr-muted:    #9AA2AA;   /* existing retach.tech --muted token      */
+
+  /* ── LOOP DURATION (all timings derive from this one value) ─────────────── */
+  --aqr-loop: 7s;
+
+  /* ── FONTS ──────────────────────────────────────────────────────────────── */
+  --aqr-head: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --aqr-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ── THEME: DARK (default — matches retach.tech) ────────────────────────── */
+  --aqr-bg:        var(--aqr-charcoal);  /* BACKGROUND COLOUR */
+  --aqr-text:      var(--aqr-white);
+  --aqr-soft:      var(--aqr-muted);     /* descriptions, inactive labels */
+  --aqr-ring:      rgba(154,162,170,.35);/* connector circle (muted, faint) */
+  --aqr-node:      var(--aqr-steel);     /* inactive ring nodes (labels carry meaning) */
+  --aqr-core:      var(--aqr-white);     /* "lit" core of active node     */
+  --aqr-rule:      rgba(255,255,255,.14);
+
+  max-width: none;
+  margin: 0;
+  padding: clamp(2.5rem, 6vw, 4.5rem) max(clamp(1rem, 4vw, 2rem), calc((100% - 1040px) / 2));
+  background: var(--aqr-bg);
+  color: var(--aqr-text);
+  font-family: var(--aqr-body);
+  text-align: center;
+}
+
+/* THEME: LIGHT — use class="aqr aqr--light" on light sections / light mode */
+.aqr--light {
+  --aqr-bg:   var(--aqr-white);
+  --aqr-text: var(--aqr-charcoal);
+  --aqr-soft: var(--aqr-steel);
+  --aqr-ring: rgba(74,79,85,.45);
+  --aqr-node: var(--aqr-steel);
+  --aqr-core: var(--aqr-emerald);
+  --aqr-rule: rgba(74,79,85,.25);
+}
+
+/* ── Heading ───────────────────────────────────────────────────────────── */
+.aqr-title {
+  margin: 0;
+  color: inherit;   /* site h2 sets uppercase (kept) and a dark colour (overridden) */
+  font: 700 clamp(1.75rem, 4vw, 2.5rem)/1.1 var(--aqr-head);
+  letter-spacing: -.01em;
+}
+
+/* ── Diagram ───────────────────────────────────────────────────────────── */
+.aqr-svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
+  text-rendering: geometricPrecision;
+  overflow: visible;
+}
+.aqr-ring   { fill: none; stroke: var(--aqr-ring); stroke-width: 2; }
+.aqr-arrow  { fill: var(--aqr-soft); }
+.aqr-trail  { fill: none; stroke: var(--aqr-emerald); stroke-width: 6; stroke-linecap: round; }
+.aqr-marker { fill: var(--aqr-emerald); stroke: var(--aqr-core); stroke-width: 2.5; }
+
+/* Ring nodes — hole is filled with the background so the marker tucks inside */
+.aqr-node .base { fill: var(--aqr-bg); stroke: var(--aqr-node); stroke-width: 19.4; }
+.aqr-node .lit  { fill: var(--aqr-bg); stroke: var(--aqr-emerald); stroke-width: 19.4; }
+.aqr-node .core { fill: var(--aqr-core); }
+.aqr-label {
+  font: 600 24px/1 var(--aqr-head);
+  letter-spacing: .08em;
+  fill: var(--aqr-text);
+}
+.aqr-centre {
+  font: 500 27px/1 var(--aqr-head);
+  fill: var(--aqr-text);
+  text-anchor: middle;
+}
+.aqr-centre tspan + tspan { fill: var(--aqr-soft); }
+
+.aqr-on, .aqr-warn { opacity: 0; }   /* overlays — hidden in static state */
+/* Crimson 'exposure open' edge: dashed crimson segments interspersed with background,
+   sits on the OUTER band of the ring (r 34.3 ± 9.7). Brand: crimson = attention, used sparingly. */
+.aqr-node .warn-gap  { fill: none; stroke: var(--aqr-bg);      stroke-width: 9.7; }
+.aqr-node .warn-dash { fill: none; stroke: var(--aqr-crimson); stroke-width: 9.7; stroke-dasharray: 13.5 7; }
+.aqr-orbit { transform-origin: 300px 280px; }
+
+/* ── Stage cards (links to real offers) ───────────────────────────────── */
+.aqr-stages {
+  list-style: none;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  text-align: left;
+}
+@media (min-width: 760px) {
+  .aqr-stages { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
+.aqr-stages li {
+  position: relative;
+  padding-top: 1.125rem;
+  border-top: 2px solid var(--aqr-rule);
+}
+.aqr-stages li::before {          /* emerald bar tracks the active stage */
+  content: "";
+  position: absolute;
+  top: -2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--aqr-emerald);
+  opacity: 0;
+}
+.aqr-stages h3 {
+  margin: 0;
+  font: 600 1rem/1.3 var(--aqr-head);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.aqr-stages p {
+  margin: .5rem 0 .875rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--aqr-soft);
+}
+.aqr-stages a {
+  font: 500 .9375rem/1.4 var(--aqr-body);
+  color: var(--aqr-text);
+  text-decoration: underline;
+  text-decoration-color: var(--aqr-emerald);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.aqr-stages a:hover { text-decoration-color: currentColor; }
+
+.aqr-close {
+  max-width: 44rem;
+  margin: clamp(2rem, 5vw, 3rem) auto 0;
+  font: 500 clamp(1.0625rem, 2.2vw, 1.25rem)/1.45 var(--aqr-head);
+}
+
+/* ── The one CTA — Deep Crimson (brand rule: CTAs, sparingly) ─────────── */
+.aqr-cta {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: .8rem 1.5rem;
+  border-radius: 6px;
+  background: var(--aqr-crimson);
+  color: var(--aqr-white);
+  font: 600 1rem/1 var(--aqr-body);
+  text-decoration: none;
+}
+.aqr-cta:hover { background: #861720; }
+
+.aqr a:focus-visible, .aqr-toggle:focus-visible ~ .aqr-pause {
+  outline: 2px solid var(--aqr-text);
+  outline-offset: 3px;
+}
+
+/* ── Pause control (CSS-only, WCAG 2.2.2) ─────────────────────────────── */
+.aqr-toggle {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.aqr-pause {
+  display: table;
+  margin: 1.5rem auto 0;
+  padding: .5rem .75rem;
+  font-size: .875rem;
+  color: var(--aqr-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.aqr-pause .play { display: none; }
+.aqr-toggle:checked ~ .aqr-pause .pause { display: none; }
+.aqr-toggle:checked ~ .aqr-pause .play  { display: inline; }
+
+/* ==========================================================================
+   ANIMATION — only when the visitor has NOT asked for reduced motion.
+   One 7 s clock: marker reaches ASSESS at 0, QUANTIFY at 1/3, REMEDIATE at 2/3
+   and rests ~0.7 s inside each ring. Transform + opacity only.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .aqr-orbit { animation: aqr-orbit var(--aqr-loop) infinite; }
+  @keyframes aqr-orbit {
+    0%      { transform: rotate(0deg); }
+    10%     { transform: rotate(0deg);   animation-timing-function: cubic-bezier(.45,.05,.3,1); }
+    33.333% { transform: rotate(120deg); }
+    43.333% { transform: rotate(120deg); animation-timing-function: cubic-bezier(.45,.05,.3,1); }
+    66.667% { transform: rotate(240deg); }
+    76.667% { transform: rotate(240deg); animation-timing-function: cubic-bezier(.45,.05,.3,1); }
+    100%    { transform: rotate(360deg); }
+  }
+
+  .aqr-on, .aqr-warn, .aqr-stages li::before { animation: aqr-lit var(--aqr-loop) ease-in-out infinite; }
+  .aqr-warn { animation-name: aqr-warn; }
+  @keyframes aqr-warn {          /* crimson while the marker approaches (arrival = 20 %), gone as emerald lands */
+    0%        { opacity: 0; }
+    6%, 16%   { opacity: 1; }
+    20%, 100% { opacity: 0; }
+  }
+  @keyframes aqr-lit {           /* arrival lands at 20 % of this keyframe */
+    0%, 14%   { opacity: 0; }
+    20%, 30%  { opacity: 1; }
+    38%, 100% { opacity: 0; }
+  }
+  .aqr-s1, .aqr-stages .aqr-s1::before { animation-delay: calc(var(--aqr-loop) * -0.2); }
+  .aqr-s2, .aqr-stages .aqr-s2::before { animation-delay: calc(var(--aqr-loop) * -0.8667); }
+  .aqr-s3, .aqr-stages .aqr-s3::before { animation-delay: calc(var(--aqr-loop) * -0.5333); }
+
+  .aqr-toggle:checked ~ .aqr-svg *,
+  .aqr-toggle:checked ~ .aqr-stages li::before { animation-play-state: paused; }
+}
+
+/* REDUCED MOTION — static, fully labelled cycle; no marker, all nodes equal */
+@media (prefers-reduced-motion: reduce) {
+  .aqr-orbit, .aqr-on, .aqr-warn, .aqr-stages li::before { animation: none !important; }
+  .aqr-orbit, .aqr-pause { display: none; }
+  .aqr-on, .aqr-warn, .aqr-stages li::before { opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -1848,12 +2082,96 @@ html[data-theme="light"] div.framework-positioning div.positioning-label{color:#
 </section>
 
 
+<!-- AQR CYCLE (staged 2026-11-12; inserted above HOW IT WORKS, nothing removed) -->
+<section class="aqr" aria-labelledby="aqr-h">
+
+  <h2 class="aqr-title" id="aqr-h">AQR Cycle</h2>
+
+  <!-- Pause control: this checkbox must stay BEFORE the SVG, stage list and label -->
+  <input class="aqr-toggle" type="checkbox" id="aqr-pause-toggle">
+
+  <svg class="aqr-svg" viewBox="0 80 600 480" role="img" aria-labelledby="aqr-t aqr-d" focusable="false">
+    <title id="aqr-t">The AQR Cycle</title>
+    <desc id="aqr-d">A clockwise cycle of three stages: Assess, then Quantify, then Remediate, then back to Assess. Centre: Digital resilience, measured every cycle.</desc>
+
+    <!-- Connector circle: centre (300,280), radius 180 -->
+    <circle class="aqr-ring" cx="300" cy="280" r="180"/>
+
+    <!-- Static clockwise arrows (direction readable without motion) -->
+    <g class="aqr-arrow" aria-hidden="true">
+      <path transform="translate(300 280) rotate(270)" d="M173 -7 L187 -7 L180 8 Z"/>
+      <path transform="translate(300 280) rotate(30)"  d="M173 -7 L187 -7 L180 8 Z"/>
+      <path transform="translate(300 280) rotate(150)" d="M173 -7 L187 -7 L180 8 Z"/>
+    </g>
+
+    <!-- Centre statement -->
+    <text class="aqr-centre" x="300" y="287">
+      <tspan x="300" dy="-16">Digital resilience,</tspan>
+      <tspan x="300" dy="36">measured every cycle.</tspan>
+    </text>
+
+    <!-- Moving indicator + connector highlight (rotates as one group) -->
+    <g class="aqr-orbit" aria-hidden="true">
+      <path class="aqr-trail" d="M126.13 326.59 A180 180 0 0 1 144.12 190"/>
+      <circle class="aqr-marker" cx="144.12" cy="190" r="8"/>
+    </g>
+
+    <!-- 1 · ASSESS — top-left (symbol node position) -->
+    <g class="aqr-node" transform="translate(144.12 190)">
+      <circle class="base" r="34.3"/>
+      <g class="aqr-warn aqr-s1"><circle class="warn-gap" r="39.15"/><circle class="warn-dash" r="39.15"/></g>
+      <g class="aqr-on aqr-s1"><circle class="lit" r="34.3"/><circle class="core" r="9"/></g>
+    </g>
+    <text class="aqr-label" x="182" y="122" text-anchor="end">ASSESS</text>
+
+    <!-- 2 · QUANTIFY — top-right -->
+    <g class="aqr-node" transform="translate(455.88 190)">
+      <circle class="base" r="34.3"/>
+      <g class="aqr-warn aqr-s2"><circle class="warn-gap" r="39.15"/><circle class="warn-dash" r="39.15"/></g>
+      <g class="aqr-on aqr-s2"><circle class="lit" r="34.3"/><circle class="core" r="9"/></g>
+    </g>
+    <text class="aqr-label" x="418" y="122" text-anchor="start">QUANTIFY</text>
+
+    <!-- 3 · REMEDIATE — bottom -->
+    <g class="aqr-node" transform="translate(300 460)">
+      <circle class="base" r="34.3"/>
+      <g class="aqr-warn aqr-s3"><circle class="warn-gap" r="39.15"/><circle class="warn-dash" r="39.15"/></g>
+      <g class="aqr-on aqr-s3"><circle class="lit" r="34.3"/><circle class="core" r="9"/></g>
+    </g>
+    <text class="aqr-label" x="300" y="540" text-anchor="middle">REMEDIATE</text>
+  </svg>
+
+  <!-- STAGE LABELS + SUPPORTING COPY + LINKS (edit here; also edit the SVG labels above) -->
+  <ol class="aqr-stages" role="list">
+    <li class="aqr-s1">
+      <h3>Assess</h3>
+      <p>Identify exposure and control gaps.</p>
+      <a href="https://retach.tech/sins-scanner.html">Get your free S.I.N.S. score →</a>
+    </li>
+    <li class="aqr-s2">
+      <h3>Quantify</h3>
+      <p>Translate risk into business impact.</p>
+      <a href="https://crq.retach.io">Run the CRQ Engine →</a>
+    </li>
+    <li class="aqr-s3">
+      <h3>Remediate</h3>
+      <p>Prioritise action and reduce residual risk.</p>
+      <a href="https://retach.tech/#services">Explore our six service areas →</a>
+    </li>
+  </ol>
+
+  <p class="aqr-close">A disciplined cycle that turns cyber exposure into informed decisions and measurable risk reduction.</p>
+  <a class="aqr-cta" href="https://retach.tech/quote.html">Book Consultation</a>
+  <label class="aqr-pause" for="aqr-pause-toggle"><span class="pause">Pause animation</span><span class="play">Play animation</span></label>
+
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="hiw-section">
   <div class="hiw-inner">
     <div class="hiw-header">
       <div class="hiw-eyebrow">The S.I.N.S. Process</div>
-      <h2 class="hiw-title">Assess. Quantify.<br>Remediate.</h2>
+      <h2 class="hiw-title">How an engagement<br>runs.</h2>
       <p class="hiw-subtitle">A structured five-step journey &mdash; from your first score to a measured Risk Delta.</p>
     </div>
     <div class="hiw-steps">
