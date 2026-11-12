@@ -1795,6 +1795,104 @@ html[data-theme="light"] div.framework-positioning div.positioning-label{color:#
   .aqr-orbit, .aqr-pause { display: none; }
   .aqr-on, .aqr-warn, .aqr-stages li::before { opacity: 0; }
 }
+/* ==========================================================================
+   HIW TILE ANIMATION ("How an engagement runs") — 2026-11-12
+   Same AQR sequence: steel rest -> dashed crimson on approach -> emerald lit
+   with white dot -> fade to steel. One 10 s clock, 2 s per step.
+   Transform + opacity only. No JS. CSS-only pause (WCAG 2.2.2).
+   ========================================================================== */
+.hiw-anim { --hiw-loop: 10s; }
+.hiw-anim .hiw-pause { color: #9AA2AA; }
+.hiw-anim .step-num::before,
+.hiw-anim .step-num::after {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none;
+  z-index: -1; opacity: 0;
+}
+.hiw-anim .step-num::before {            /* approach: dashed crimson outer edge */
+  inset: -7px; border: 2px dashed #9E1B23;
+}
+.hiw-anim .step-num::after {             /* arrival: emerald ring + white dot */
+  inset: -2px; border: 2px solid #146B4E;
+  background: radial-gradient(circle at 50% 2px, #FFFFFF 0 3px, transparent 3.5px), rgba(20,107,78,.18);
+  box-shadow: 0 0 18px rgba(20,107,78,.45);
+}
+.hiw-anim .hiw-steps::after {            /* emerald connector fill, left to right */
+  content: ""; position: absolute; top: 28px; left: 10%; right: 10%; height: 2px;
+  margin-top: -0.5px; background: #146B4E; transform: scaleX(0); transform-origin: left center;
+  opacity: 0; pointer-events: none;
+}
+
+/* ── Dark-band blend: AQR Cycle -> How an engagement runs -> Methodology (2026-11-12)
+   One light source across the band; steel -> emerald seam replaces the grey divider.
+   Background images only (static, <=10 % alpha, text contrast unchanged).
+   Crimson stays reserved for motion states and the Book Consultation button. ── */
+.aqr {
+  background-image:
+    radial-gradient(55% 40% at 50% 34%, rgba(20,107,78,.10), transparent 70%),
+    radial-gradient(45% 22% at 50% 100%, rgba(20,107,78,.07), transparent 75%);
+}
+.hiw-anim {
+  position: relative;
+  border-top: 0;
+  background-image:
+    radial-gradient(45% 26% at 50% 0%, rgba(20,107,78,.08), transparent 75%),
+    radial-gradient(70% 34% at 50% 42%, rgba(74,79,85,.10), transparent 70%),
+    linear-gradient(to bottom, transparent 72%, #0b0e0b);
+}
+.hiw-anim::before {                      /* handoff seam */
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: min(720px, 86%); height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, #4A4F55 25%, #146B4E 50%, #4A4F55 75%, transparent);
+}
+@media (max-width: 768px) { .hiw-anim .hiw-steps::after { display: none; } }  /* stacked: no connector */
+@media (prefers-reduced-motion: no-preference) {
+  .hiw-anim .step-num { border-color: #4A4F55; }
+  .hiw-anim .hiw-step:hover .step-num { border-color: #146B4E; }
+  .hiw-anim .hiw-steps::after { opacity: 1; animation: hiw-line var(--hiw-loop) ease-in-out infinite; }
+  @keyframes hiw-line {                  /* reaches step i at (i-1) x 20 % */
+    0%   { transform: scaleX(0);    opacity: 1; }
+    20%  { transform: scaleX(.25); }
+    40%  { transform: scaleX(.5); }
+    60%  { transform: scaleX(.75); }
+    80%  { transform: scaleX(1); }
+    90%  { transform: scaleX(1);    opacity: 1; }
+    100% { transform: scaleX(1);    opacity: 0; }
+  }
+  .hiw-anim .step-num::before { animation: hiw-warn var(--hiw-loop) linear infinite; }
+  .hiw-anim .step-num::after  { animation: hiw-lit  var(--hiw-loop) ease-in-out infinite; }
+  .hiw-anim .step-title       { animation: hiw-title var(--hiw-loop) ease-in-out infinite; }
+  @keyframes hiw-warn {                  /* arrival = 6 % of this keyframe */
+    0%        { opacity: 0; }
+    1%, 5%    { opacity: 1; }
+    6.5%, 100%{ opacity: 0; }
+  }
+  @keyframes hiw-lit {
+    0%, 5%    { opacity: 0; }
+    7%, 17%   { opacity: 1; }
+    22%, 100% { opacity: 0; }
+  }
+  @keyframes hiw-title {
+    0%, 5%    { opacity: .75; }
+    7%, 17%   { opacity: 1; }
+    22%, 100% { opacity: .75; }
+  }
+  /* delay = ((i-1) x 0.2 - 0.06) loops, kept negative; pseudo-elements need their own selectors */
+  .hiw-anim .hiw-step:nth-child(1) .step-num::before, .hiw-anim .hiw-step:nth-child(1) .step-num::after, .hiw-anim .hiw-step:nth-child(1) .step-title { animation-delay: calc(var(--hiw-loop) * -0.06); }
+  .hiw-anim .hiw-step:nth-child(2) .step-num::before, .hiw-anim .hiw-step:nth-child(2) .step-num::after, .hiw-anim .hiw-step:nth-child(2) .step-title { animation-delay: calc(var(--hiw-loop) * -0.86); }
+  .hiw-anim .hiw-step:nth-child(3) .step-num::before, .hiw-anim .hiw-step:nth-child(3) .step-num::after, .hiw-anim .hiw-step:nth-child(3) .step-title { animation-delay: calc(var(--hiw-loop) * -0.66); }
+  .hiw-anim .hiw-step:nth-child(4) .step-num::before, .hiw-anim .hiw-step:nth-child(4) .step-num::after, .hiw-anim .hiw-step:nth-child(4) .step-title { animation-delay: calc(var(--hiw-loop) * -0.46); }
+  .hiw-anim .hiw-step:nth-child(5) .step-num::before, .hiw-anim .hiw-step:nth-child(5) .step-num::after, .hiw-anim .hiw-step:nth-child(5) .step-title { animation-delay: calc(var(--hiw-loop) * -0.26); }
+
+  .hiw-toggle:checked ~ .hiw-steps::after,
+  .hiw-toggle:checked ~ .hiw-steps .step-num::before,
+  .hiw-toggle:checked ~ .hiw-steps .step-num::after,
+  .hiw-toggle:checked ~ .hiw-steps .step-title { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hiw-anim .hiw-steps::after, .hiw-anim .step-num::before, .hiw-anim .step-num::after, .hiw-anim .step-title { animation: none !important; }
+  .hiw-anim .hiw-steps::after, .hiw-anim .step-num::before, .hiw-anim .step-num::after { opacity: 0; }
+  .hiw-anim .step-title { opacity: 1; }
+}
 </style>
 </head>
 <body>
@@ -2167,8 +2265,9 @@ html[data-theme="light"] div.framework-positioning div.positioning-label{color:#
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="hiw-section">
+<section class="hiw-section hiw-anim">
   <div class="hiw-inner">
+    <input class="aqr-toggle hiw-toggle" type="checkbox" id="hiw-pause-toggle">
     <div class="hiw-header">
       <div class="hiw-eyebrow">The S.I.N.S. Process</div>
       <h2 class="hiw-title">How an engagement<br>runs.</h2>
@@ -2182,6 +2281,7 @@ html[data-theme="light"] div.framework-positioning div.positioning-label{color:#
       <div class="hiw-step"><div class="step-num">05</div><div><div class="step-title">Run</div><div class="step-desc">Managed IT, Managed Security or a virtual CISO between assessments, so the next assessment shows a measured Risk Delta.</div></div></div>
     </div>
     <div class="hiw-cta"><a href="https://retach.tech/sins-scanner.html">Start with your free S.I.N.S. score &rarr; scanner.retach.io</a></div>
+    <label class="aqr-pause hiw-pause" for="hiw-pause-toggle"><span class="pause">Pause animation</span><span class="play">Play animation</span></label>
   </div>
 </section>
 
