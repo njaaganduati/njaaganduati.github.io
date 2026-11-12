@@ -1844,6 +1844,46 @@ html[data-theme="light"] div.framework-positioning div.positioning-label{color:#
   width: min(720px, 86%); height: 1px; pointer-events: none;
   background: linear-gradient(90deg, transparent, #4A4F55 25%, #146B4E 50%, #4A4F55 75%, transparent);
 }
+/* Fit Check link: brand emerald, underline kept (decision 18, 2026-11-12) */
+.hiw-step .step-desc a { color:#45B781; text-decoration:underline; text-decoration-color:rgba(69,183,129,.5); text-underline-offset:3px; }
+.hiw-step .step-desc a:hover { text-decoration-color:#45B781; }
+.hiw-step .step-desc a:focus-visible { outline:2px solid #45B781; outline-offset:2px; border-radius:2px; }
+
+/* ── Methodology on light paper (decision 18, 2026-11-12). Light theme only: the dark theme keeps the original dark band.
+   Prefixed with an ID so the WCAG override rules above (e.g. div.meth-step-num) cannot win. ── */
+html:not([data-theme="dark"]) #methodology.meth-section { background:#FAFAF8; border-top:0; }
+html:not([data-theme="dark"]) #methodology div.hiw-eyebrow { color:#146B4E; }
+html:not([data-theme="dark"]) #methodology .hiw-title, html:not([data-theme="dark"]) #methodology .meth-step-title { color:#111315; }
+html:not([data-theme="dark"]) #methodology .hiw-subtitle { color:#4A4F55; }
+html:not([data-theme="dark"]) #methodology .meth-step-text { color:#3E4449; }
+html:not([data-theme="dark"]) #methodology div.meth-step-num { color:#146B4E; background:#FFFFFF; border-color:rgba(20,107,78,.45); }
+html:not([data-theme="dark"]) #methodology .meth-step:hover div.meth-step-num { border-color:#146B4E; background:rgba(20,107,78,.08); }
+html:not([data-theme="dark"]) #methodology .meth-formula { color:#0F5A41; background:rgba(20,107,78,.06); border-color:rgba(20,107,78,.25); }
+html:not([data-theme="dark"]) #methodology .meth-cta a { color:#146B4E !important; border-bottom-color:rgba(20,107,78,.4) !important; }
+html:not([data-theme="dark"]) #methodology .meth-cta a:hover { border-bottom-color:#146B4E !important; }
+html:not([data-theme="dark"]) #methodology .meth-cta > div { color:#4A4F55 !important; }   /* beats inline style on the muted line */
+html:not([data-theme="dark"]) .hiw-anim {        /* paper follows: drop the fade to #0b0e0b, keep the rest of the blend */
+  background-image:
+    radial-gradient(45% 26% at 50% 0%, rgba(20,107,78,.08), transparent 75%),
+    radial-gradient(70% 34% at 50% 42%, rgba(74,79,85,.10), transparent 70%);
+}
+/* Optional progressive enhancement: connector fills emerald as each step scrolls in.
+   Needs scroll-driven animations; absent or reduced motion = the static gradient line only. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html:not([data-theme="dark"]) #methodology .meth-step:not(:last-child)::after {
+      content:''; position:absolute; left:27px; top:60px; bottom:0; width:1.5px; background:#146B4E;
+      pointer-events:none; transform:scaleY(0); transform-origin:top center;
+      animation:meth-fill linear both; animation-timeline:view(); animation-range:entry 25% cover 55%;
+    }
+    @keyframes meth-fill { to { transform:scaleY(1); } }
+  }
+}
+@media (max-width:768px) and (prefers-reduced-motion:no-preference) {
+  @supports (animation-timeline: view()) {
+    html:not([data-theme="dark"]) #methodology .meth-step:not(:last-child)::after { left:21px; top:48px; }
+  }
+}
 @media (max-width: 768px) { .hiw-anim .hiw-steps::after { display: none; } }  /* stacked: no connector */
 @media (prefers-reduced-motion: no-preference) {
   .hiw-anim .step-num { border-color: #4A4F55; }
