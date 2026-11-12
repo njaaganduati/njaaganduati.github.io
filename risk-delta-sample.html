@@ -176,6 +176,183 @@ table.rd .after{color:var(--gl);font-weight:600}
   table.rd td::before{font-weight:400}
   table.rd td:first-child:empty,table.rd td:first-child:has(.iv:empty){display:none}
 }
+/* ===== AQR timeline, dark variant (component staged 2026-11-12, hash c3b3f6f8…) — scoped to .aqr-tl ===== */
+/* ==========================================================================
+   AQR TIMELINE — horizontal variant of the retach.tech AQR Cycle.
+   For proposal and sample-report pages. HTML/CSS only, no JavaScript.
+   Two themes: .aqr-tl--paper (light, print-friendly) and .aqr-tl--dark.
+   Sequence per stage (same as the homepage cycle): steel at rest ->
+   dashed crimson on approach -> solid emerald + white dot on arrival -> steel.
+   Transform + opacity only. Pause control (WCAG 2.2.2). Reduced motion and
+   print: static, all stages equally visible.
+   ========================================================================== */
+.aqr-tl {
+  /* Brand tokens */
+  --tl-charcoal: #111315;
+  --tl-emerald:  #146B4E;
+  --tl-steel:    #4A4F55;
+  --tl-crimson:  #9E1B23;
+  --tl-white:    #FFFFFF;
+  --tl-loop:     7.5s;                 /* one value drives every timing */
+  --tl-head: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --tl-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Theme: paper (default) */
+  --tl-bg:    #FAFAF8;
+  --tl-text:  #111315;
+  --tl-soft:  #4A4F55;                 /* 8:1 on paper */
+  --tl-track: rgba(17,19,21,.16);
+  --tl-node:  #9AA2AA;
+  --tl-node-bg: #FFFFFF;
+  --tl-link:  #146B4E;                 /* 6.4:1 on paper */
+  --tl-rule:  rgba(17,19,21,.12);
+
+  position: relative;
+  background: var(--tl-bg);
+  color: var(--tl-text);
+  font: 400 1rem/1.55 var(--tl-body);
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.aqr-tl--dark {
+  --tl-bg:    #111315;
+  --tl-text:  #FFFFFF;
+  --tl-soft:  #9AA2AA;
+  --tl-track: rgba(154,162,170,.28);
+  --tl-node:  #4A4F55;
+  --tl-node-bg: #181B1E;
+  --tl-link:  #45B781;
+  --tl-rule:  rgba(255,255,255,.12);
+  background-image: radial-gradient(60% 70% at 50% 40%, rgba(20,107,78,.10), transparent 70%);
+}
+.aqr-tl-inner { max-width: 960px; margin: 0 auto; }
+.aqr-tl h2 {
+  margin: 0; font: 700 clamp(1.5rem, 3vw, 2rem)/1.1 var(--tl-head);
+  letter-spacing: .02em; text-transform: uppercase; text-align: center;
+}
+.aqr-tl-lede {
+  margin: .5rem 0 2.25rem; text-align: center; color: var(--tl-soft);
+  font: 500 clamp(1rem, 2vw, 1.15rem)/1.4 var(--tl-head);
+}
+
+/* ── Track + nodes ───────────────────────────────────────────────────── */
+.aqr-tl-stages {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); position: relative;
+}
+.aqr-tl-stages::before,                    /* base track */
+.aqr-tl-stages::after {                    /* emerald fill */
+  content: ""; position: absolute; top: 27px; left: calc(100% / 6); right: calc(100% / 6);
+  height: 2px; background: var(--tl-track); pointer-events: none;
+}
+.aqr-tl-stages::after { background: var(--tl-emerald); transform: scaleX(0); transform-origin: left center; opacity: 0; }
+
+.aqr-tl-stage { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 1rem; }
+.aqr-tl-node {
+  position: relative; z-index: 1; width: 56px; height: 56px; border-radius: 50%;
+  background: var(--tl-node-bg); border: 6px solid var(--tl-node); box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+.aqr-tl-node::before, .aqr-tl-node::after {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none; opacity: 0;
+}
+.aqr-tl-node::before { inset: -13px; border: 2px dashed var(--tl-crimson); }       /* approach */
+.aqr-tl-node::after  {                                                              /* arrival  */
+  inset: -6px; border: 6px solid var(--tl-emerald); box-sizing: border-box;
+  background: radial-gradient(circle, var(--tl-white) 0 5px, transparent 5.5px), var(--tl-node-bg);
+  box-shadow: 0 0 18px rgba(20,107,78,.35);
+}
+.aqr-tl-stage h3 {
+  margin: 0 0 .35rem; font: 700 1rem/1.2 var(--tl-head); letter-spacing: .08em; text-transform: uppercase;
+}
+.aqr-tl-stage p { margin: 0 0 .75rem; color: var(--tl-soft); font-size: .95rem; }
+.aqr-tl-stage a {
+  color: var(--tl-link); font-weight: 600; font-size: .9rem; text-decoration: underline;
+  text-underline-offset: 3px; text-decoration-color: currentColor;
+}
+.aqr-tl a:focus-visible, .aqr-tl-toggle:focus-visible ~ .aqr-tl-pause { outline: 2px solid var(--tl-text); outline-offset: 3px; }
+
+/* ── Return path: makes the loop readable without motion ────────────── */
+.aqr-tl-return {
+  display: block; width: calc(100% * 2 / 3); margin: .75rem auto 0; height: 34px; overflow: visible;
+  color: var(--tl-soft);
+}
+.aqr-tl-return path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-dasharray: 4 5; vector-effect: non-scaling-stroke; }
+.aqr-tl-return-label {
+  display: block; text-align: center; margin-top: .25rem; color: var(--tl-soft);
+  font: 500 .8rem/1.2 var(--tl-body); letter-spacing: .06em; text-transform: uppercase;
+}
+.aqr-tl-close {
+  margin: 1.75rem auto 0; max-width: 640px; text-align: center; padding-top: 1.25rem;
+  border-top: 1px solid var(--tl-rule); font: 500 1rem/1.5 var(--tl-head);
+}
+
+/* ── Pause control (CSS-only) ────────────────────────────────────────── */
+.aqr-tl-toggle { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.aqr-tl-pause { display: table; margin: 1rem auto 0; padding: .4rem .7rem; font-size: .85rem; color: var(--tl-soft); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.aqr-tl-pause .play { display: none; }
+.aqr-tl-toggle:checked ~ .aqr-tl-pause .pause { display: none; }
+.aqr-tl-toggle:checked ~ .aqr-tl-pause .play  { display: inline; }
+
+/* ── Narrow screens: vertical timeline ───────────────────────────────── */
+@media (max-width: 560px) {
+  .aqr-tl-stages { grid-template-columns: 1fr; gap: 1.5rem; }
+  .aqr-tl-stages::before, .aqr-tl-stages::after { display: none; }
+  .aqr-tl-stage { position: relative; }
+  .aqr-tl-stage:not(:last-child)::before {   /* track segment: node to next node */
+    content: ""; position: absolute; left: 27px; top: 56px; bottom: -1.5rem; width: 2px; background: var(--tl-track);
+  }
+  .aqr-tl-stage { flex-direction: row; align-items: flex-start; text-align: left; gap: 1rem; padding: 0; }
+  .aqr-tl-node { flex-shrink: 0; margin-bottom: 0; }
+  .aqr-tl-return { display: none; }
+  .aqr-tl-return-label { text-align: left; padding-left: 72px; margin-top: 1rem; }
+}
+
+/* ── Animation (only when motion is welcome, on screen) ──────────────── */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .aqr-tl-stages::after { opacity: 1; animation: aqr-tl-line var(--tl-loop) ease-in-out infinite; }
+  @keyframes aqr-tl-line {               /* reaches stage i at (i-1)/3 */
+    0%      { transform: scaleX(0); opacity: 1; }
+    33.333% { transform: scaleX(.5); }
+    66.667% { transform: scaleX(1); }
+    88%     { transform: scaleX(1); opacity: 1; }
+    100%    { transform: scaleX(1); opacity: 0; }
+  }
+  .aqr-tl-node::before { animation: aqr-tl-warn var(--tl-loop) linear infinite; }
+  .aqr-tl-node::after  { animation: aqr-tl-lit  var(--tl-loop) ease-in-out infinite; }
+  @keyframes aqr-tl-warn {               /* arrival = 6 % of this keyframe */
+    0%         { opacity: 0; }
+    1%, 5%     { opacity: 1; }
+    6.5%, 100% { opacity: 0; }
+  }
+  @keyframes aqr-tl-lit {
+    0%, 5%     { opacity: 0; }
+    7%, 26%    { opacity: 1; }
+    31%, 100%  { opacity: 0; }
+  }
+  /* delay = ((i-1)/3 - 0.06) loops, kept negative; pseudo-elements need own selectors */
+  .aqr-tl-stage:nth-child(1) .aqr-tl-node::before, .aqr-tl-stage:nth-child(1) .aqr-tl-node::after { animation-delay: calc(var(--tl-loop) * -0.06); }
+  .aqr-tl-stage:nth-child(2) .aqr-tl-node::before, .aqr-tl-stage:nth-child(2) .aqr-tl-node::after { animation-delay: calc(var(--tl-loop) * -0.7267); }
+  .aqr-tl-stage:nth-child(3) .aqr-tl-node::before, .aqr-tl-stage:nth-child(3) .aqr-tl-node::after { animation-delay: calc(var(--tl-loop) * -0.3933); }
+
+  .aqr-tl-toggle:checked ~ .aqr-tl-stages::after,
+  .aqr-tl-toggle:checked ~ .aqr-tl-stages .aqr-tl-node::before,
+  .aqr-tl-toggle:checked ~ .aqr-tl-stages .aqr-tl-node::after { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) { .aqr-tl-pause { display: none; } }
+
+/* ── Print: static, paper colours, every stage shown as emerald ──────── */
+@media print {
+  .aqr-tl, .aqr-tl--dark {
+    --tl-bg: #FFFFFF; --tl-text: #111315; --tl-soft: #4A4F55; --tl-track: rgba(17,19,21,.25);
+    --tl-node: #146B4E; --tl-node-bg: #FFFFFF; --tl-link: #146B4E; --tl-rule: rgba(17,19,21,.2);
+    background-image: none; break-inside: avoid; padding: 1rem 0;
+  }
+  .aqr-tl-pause, .aqr-tl-toggle, .demo-note { display: none !important; }
+  .aqr-tl-stage a::after { content: attr(href); display: block; margin-top: .15rem; font-weight: 400; font-size: .72rem; color: #4A4F55; }
+}
+.aqr-tl--rd { margin-top: 2.5rem; z-index: 1; }
+/* ===== end AQR timeline ===== */
 </style>
 </head>
 <body>
@@ -200,6 +377,33 @@ table.rd .after{color:var(--gl);font-weight:600}
 </div>
 
 <div class="rd-def"><blockquote>A Risk Delta is the change in an organisation's measured risk position before and after a S.I.N.S. Intervention™.</blockquote></div>
+
+<!-- AQR Cycle timeline: a Risk Delta is measured between cycles -->
+<section class="aqr-tl aqr-tl--dark aqr-tl--rd" aria-labelledby="aqr-tl-h-rd">
+  <div class="aqr-tl-inner">
+    <input class="aqr-tl-toggle" type="checkbox" id="aqr-tl-pause-rd">
+    <h2 id="aqr-tl-h-rd">AQR Cycle</h2>
+    <p class="aqr-tl-lede">Digital resilience, measured every cycle.</p>
+    <ol class="aqr-tl-stages">
+      <li class="aqr-tl-stage"><span class="aqr-tl-node" aria-hidden="true"></span><div>
+        <h3>Assess</h3><p>Identify exposure and control gaps.</p>
+        <a href="https://retach.tech/sins-scanner.html">Get your free S.I.N.S. score</a></div></li>
+      <li class="aqr-tl-stage"><span class="aqr-tl-node" aria-hidden="true"></span><div>
+        <h3>Quantify</h3><p>Translate risk into business impact.</p>
+        <a href="https://crq.retach.io">Run the CRQ Engine</a></div></li>
+      <li class="aqr-tl-stage"><span class="aqr-tl-node" aria-hidden="true"></span><div>
+        <h3>Remediate</h3><p>Prioritise action and reduce residual risk.</p>
+        <a href="https://retach.tech/#services">Explore our six service areas</a></div></li>
+    </ol>
+    <svg class="aqr-tl-return" viewBox="0 0 600 34" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M600 0 C600 30 590 30 560 30 L40 30 C10 30 0 30 0 0"/>
+      <path d="M-6 10 L0 0 L6 10" style="stroke-dasharray:none"/>
+    </svg>
+    <span class="aqr-tl-return-label">Then the cycle repeats — Assess again</span>
+    <p class="aqr-tl-close">A disciplined cycle that turns cyber exposure into informed decisions and measurable risk reduction.</p>
+    <label class="aqr-tl-pause" for="aqr-tl-pause-rd"><span class="pause">Pause animation</span><span class="play">Play animation</span></label>
+  </div>
+</section>
 
 <div class="rd-wrap">
 
