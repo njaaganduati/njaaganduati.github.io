@@ -597,7 +597,14 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
 .fc-why{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
 .fc-why strong{color:var(--text)}
 .fc-why li{margin-left:1.1rem}
-@media (max-width:600px){.fc-facts{grid-template-columns:1fr}.fc-note{padding:0 1.4rem 1rem}}
+.fc-opt-head{margin:0 2rem;padding:1.1rem 0 .4rem;border-top:1px solid var(--border)}
+.fc-opt-head .fc-k{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+.fc-opt-head .fc-t{font-size:.88rem;color:var(--muted);line-height:1.5;margin-top:.3rem}
+.fc-out{background:#fff;border:1px solid var(--border);border-left:4px solid var(--green);border-radius:12px;padding:1.1rem 1.3rem;font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.fc-out strong{color:var(--text)}
+.fc-out li{margin-left:1.1rem}
+.fc-out .fc-v2{font-family:var(--cond);font-size:1.4rem;font-weight:800;color:var(--text);margin:.2rem 0 .4rem}
+@media (max-width:600px){.fc-facts{grid-template-columns:1fr}.fc-note{padding:0 1.4rem 1rem}.fc-opt-head{margin:0 1.4rem}}
 </style>
 </head>
 <body>
@@ -995,7 +1002,7 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
 <div id="fit-hero" class="hero" style="display:none">
   <div class="hero-label">Free · No Login Required</div>
   <h1>S.I.N.S. <em>Fit Check</em></h1>
-  <p class="hero-sub">Eight questions about your size, systems and obligations. See which Managed IT level fits your organisation and what the next step is. It takes about two minutes.</p>
+  <p class="hero-sub">Eight questions about your size, systems and obligations. See which Managed IT level fits your organisation and what the next step is. It takes about two minutes. Five optional questions show how ready you are for a cloud outage.</p>
   <div class="hero-meta">
     <span><span class="dot"></span> 8 questions</span>
     <span><span class="dot"></span> Indicative result</span>
@@ -1013,6 +1020,8 @@ footer,.scanner-footer{border-top:1px solid var(--border);color:var(--muted)}
       </div>
     </div>
     <div class="questions-list" id="fit-questions"></div>
+    <div class="fc-opt-head"><div class="fc-k">Optional &middot; Cloud outage readiness</div><div class="fc-t">If email, chat and shared files went down for a working day, could you keep going? These answers do not change your Managed IT level.</div></div>
+    <div class="questions-list" id="fit-outage"></div>
     <div class="fc-note">This is an indicative fit based only on your answers. It is not a quote, and RETACH does not check or store anything you enter. The Health Scan or an assessment confirms your level.</div>
     <div class="card-footer">
       <span class="q-counter" id="fit-count">0 of 8 answered</span>
@@ -1244,6 +1253,43 @@ const FIT_Q = [
   ['T8','If IT stopped for a full working day, what happens?',['Staff work manually','Serious problems within the day','Revenue or a regulated service stops at once']]
 ];
 const fit = {};
+// Optional cloud outage readiness (does not affect tier). Options ordered best to worst; score = 2 - index.
+const OUT_Q = [
+  ['C1','If email and chat are down, can you reach every staff member within 15 minutes?',['Yes, and we have tested it','Yes, but never tested','No or not sure'],'Keep a staff contact list outside email and chat, and test it.'],
+  ['C2','Is one person named to declare an incident and speak to customers?',['Yes, it is written down','Informally','No'],'Name who declares an incident and who speaks to customers, and agree what they may say.'],
+  ['C3','Can staff open the files they need for today\u2019s work without internet?',['Yes','Some of them','No'],'Turn on offline sync for the folders each team cannot work without.'],
+  ['C4','Is there an emergency administrator account that works if normal sign-in fails?',['Yes, and we have tested it','Yes, but never tested','No or don\u2019t know'],'Set up an emergency administrator account, store its credentials offline and test it.'],
+  ['C5','Is your email and file data backed up outside your provider, and have you tested a restore?',['Yes, restore tested','Backed up, never restored','No or don\u2019t know'],'Back up your email and files outside your provider and test a restore.']
+];
+const out = {};
+function outBuild(){
+  const box = document.getElementById('fit-outage');
+  box.innerHTML = OUT_Q.map(q => '<div class="question-item"><div class="question-text"><strong>'+q[0]+'</strong> '+q[1]+'</div><div class="options">'+
+    q[2].map((o,i)=>'<button class="opt" onclick="outAnswer(\''+q[0]+'\','+i+',this)">'+o+'</button>').join('')+'</div></div>').join('');
+}
+function outAnswer(id,i,btn){
+  out[id]=2-i;
+  btn.closest('.options').querySelectorAll('.opt').forEach(b=>b.className='opt');
+  btn.classList.add('selected-yes');
+  const box = document.querySelector('#fit-result .fc-out');
+  if(box) box.outerHTML = outHTML();
+}
+function outCompute(a){
+  const ans = OUT_Q.filter(q=>a[q[0]]!==undefined);
+  if(ans.length<OUT_Q.length) return null;
+  const total = OUT_Q.reduce((t,q)=>t+a[q[0]],0);              // 0 to 10
+  const zeros = OUT_Q.filter(q=>a[q[0]]===0).length;
+  const level = (total>=8 && zeros===0) ? 'Ready' : (total<=4 ? 'Not ready' : 'Partly ready');
+  const gaps = OUT_Q.filter(q=>a[q[0]]<2).sort((x,y)=>a[x[0]]-a[y[0]]).map(q=>q[3]);
+  return {total, level, gaps};
+}
+function outHTML(){
+  const r = outCompute(out);
+  if(!r) return '<div class="fc-out"><strong>Cloud outage readiness</strong><br>Answer all five optional questions above to see how ready you are for a cloud outage.</div>';
+  return '<div class="fc-out"><strong>Cloud outage readiness (indicative)</strong><div class="fc-v2">'+r.level+'</div>'+
+    (r.gaps.length?'<strong>Fix first</strong><ul>'+r.gaps.map(g=>'<li>'+g+'</li>').join('')+'</ul>':'Your answers suggest you could keep working through an outage. ')+
+    'A Digital Resilience Assessment tests this with your team, including a short exercise built around an outage.</div>';
+}
 const TIERS = ['Essential','Standard','Premium'];
 function fitBuild(){
   const box = document.getElementById('fit-questions');
@@ -1293,6 +1339,7 @@ function fitShow(){
       '<div class="fc-fact"><div class="fc-k">Next step</div><div class="fc-t">Request a quote for '+TIERS[r.tier]+'. We confirm your level and price after the assessment.</div></div>'+
     '</div>'+
     '<div class="fc-why"><strong>Why this level</strong><ul>'+r.why.map(w=>'<li>'+w+'</li>').join('')+'</ul></div>'+
+    outHTML()+
     '<div style="text-align:center;margin:1.2rem 0"><a class="btn-cta-large" href="'+href+'">Request a quote →</a>'+
     '<div class="cta-sub">Or email <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="https://wa.me/254767206043">WhatsApp</a> · <a href="/privacy.html">Privacy notice</a></div></div>';
   document.getElementById('fit-result').classList.add('active');
@@ -1305,7 +1352,7 @@ function setMode(m){
   ['fit-hero','fit-wrap'].forEach(id=>{const e=document.getElementById(id); if(e) e.style.display = fitOn?'':'none';});
   document.getElementById('mode-scan').classList.toggle('on',!fitOn);
   document.getElementById('mode-fit').classList.toggle('on',fitOn);
-  if(fitOn && !document.getElementById('fit-questions').children.length) fitBuild();
+  if(fitOn && !document.getElementById('fit-questions').children.length){ fitBuild(); outBuild(); }
   try{ history.replaceState(null,'',fitOn?'#fit-check':location.pathname); }catch(e){}
   window.scrollTo({top:0});
 }
