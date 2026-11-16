@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Brief: the ODPC changes hands, Maersk&#39;s inherited-system breach, and four exploited flaws | RETACH</title>
+<meta name="description" content="Three stories for Kenyan and East African organisations: the Data Protection Commissioner handover, a Maersk breach that began in an inherited system, and four software flaws under active exploitation, with actions for this week.">
+<meta name="author" content="RETACH">
+<meta property="og:title" content="Weekly Brief: the ODPC changes hands, Maersk&#39;s inherited-system breach, and four exploited flaws">
+<meta property="og:description" content="Three stories for Kenyan and East African organisations: the Data Protection Commissioner handover, a Maersk breach that began in an inherited system, and four software flaws under active exploitation, with actions for this week.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://retach.tech/insights/weekly-brief-2026-11-17.html">
+<meta property="og:image" content="https://retach.tech/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://retach.tech/insights/weekly-brief-2026-11-17.html">
+<link rel="icon" href="/favicon.ico">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root { --green: #146B4E; --dark: #1a1a1a; --red: #9E1B23; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; }
+  [data-theme="dark"] {
+    --bg: #111315; --text: #e8ebe6; --muted: #9AA2AA; --border: rgba(255,255,255,0.12); --green: #2E9E6B;
+  }
+  [data-theme="dark"] .penalty-card,
+  [data-theme="dark"] .checklist li { background: #181B1E; }
+  [data-theme="dark"] .callout { background: rgba(46,158,107,0.12); }
+  [data-theme="dark"] .callout p { color: #7fd4ab; }
+  [data-theme="dark"] .warning { background: rgba(158,27,35,0.18); }
+  [data-theme="dark"] .warning p { color: #e08791; }
+  [data-theme="dark"] .article-body h2,
+  [data-theme="dark"] .article-body h3 { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#ccc;padding:6px 12px;line-height:1.4}
+  .theme-toggle:hover{border-color:#2E9E6B;color:#fff}
+  .theme-toggle:focus-visible{outline:2px solid #2E9E6B;outline-offset:2px}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; transition: background 0.2s, color 0.2s; }
+  a { color: var(--green); }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+ .nav-logo-combined { height: 36px; width: auto; display: block; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.6rem; }
+  .callout { background: #E8F2EC; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1A4A38; font-size: 0.95rem; }
+  .warning { background: #fdf0f2; border-left: 4px solid var(--red); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warning p { margin: 0; color: #7a1c2a; font-size: 0.95rem; }
+  .penalty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .penalty-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: #fff; }
+  .penalty-card .amount { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--red); margin-bottom: 0.3rem; }
+  .penalty-card .label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; font-weight: 600; }
+  .penalty-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.6rem; background: #fff; font-size: 0.95rem; }
+  .checklist li .check { width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .checklist li .item-text strong { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+  .checklist li .item-text span { color: var(--muted); font-size: 0.88rem; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } .penalty-grid { grid-template-columns: 1fr; } }
+
+  :root { --card: #ffffff; }
+  [data-theme="dark"] { --card: #181B1E; }
+  footer a { color: #2e9e6b; }
+  html[data-theme="dark"] a.cta-btn { background-color: #146b4e; }
+
+  .toc { list-style: none; padding: 0; margin: 0 0 2rem; counter-reset: t; }
+  .toc li { counter-increment: t; padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; margin: 0; }
+  .toc li::before { content: counter(t, decimal-leading-zero); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--green); margin-right: 0.8rem; }
+  .story-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 3rem 0 0 !important; }
+  .story-label + h2 { margin-top: 0.4rem; }
+  .nexus { border: 1px solid var(--border); border-top: 4px solid var(--green); border-radius: 8px; background: var(--card); padding: 1.25rem 1.5rem; margin: 2rem 0; }
+  .nexus-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+  .nexus-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--border); font-size: 0.95rem; }
+  .nexus-row:first-of-type { border-top: 0; }
+  .nexus-row .k { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.2rem; }
+  .nexus-row p { margin: 0; }
+  .nexus-cta { display: inline-block; margin-top: 0.6rem; font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--green); }
+  .sources { font-size: 0.9rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.5rem; }
+  .fine { font-size: 0.85rem; color: var(--muted); }
+  .cta-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-btn.secondary { background: transparent; border: 2px solid #fff; padding: calc(0.85rem - 2px) calc(2rem - 2px); }
+  @media (max-width: 600px) { .nexus-row { grid-template-columns: 1fr; gap: 0.2rem; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Weekly Brief: the ODPC changes hands, Maersk's inherited-system breach, and four exploited flaws","datePublished":"2026-11-17","dateModified":"2026-11-17","description":"Three stories for Kenyan and East African organisations: the Data Protection Commissioner handover, a Maersk breach that began in an inherited system, and four software flaws under active exploitation, with actions for this week.","mainEntityOfPage":"https://retach.tech/insights/weekly-brief-2026-11-17","author":{"@type":"Organization","name":"RETACH","legalName":"RETACH DIGITAL LTD","alternateName":"RETACH Digital"},"publisher":{"@type":"Organization","name":"RETACH","url":"https://retach.tech"}}</script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#ffffff" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#ffffff" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#ffffff" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#ffffff" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#ffffff" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#ffffff" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#ffffff" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/#framework">Framework</a>
+      <a href="/#services">Services</a>
+      <a href="/insights/">Insights</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Weekly Brief &middot; Cyber &amp; GRC</span>
+    <h1>Weekly Brief: the ODPC changes hands, Maersk&#39;s inherited-system breach, and four exploited flaws</h1>
+    <div class="article-meta">
+      <span><strong>Published:</strong> 17 November 2026</span>
+      <span><strong>Read time:</strong> 8 min</span>
+      <span><strong>Author:</strong> RETACH</span>
+    </div>
+  </div>
+</div>
+<div class="article-body">
+<p>Three stories that matter to organisations in Kenya and East Africa this week, what each means in practice, and what to do about it: the handover at the Office of the Data Protection Commissioner, a breach at a shipping giant that began in an inherited system, and four software flaws that attackers are already using. All sources are public and linked at the end. Each figure carries the date it was first published.</p>
+<ol class="toc">
+  <li>The ODPC changes hands: what stays the same for your organisation</li>
+  <li>Maersk's breach began in a system it inherited</li>
+  <li>Four exploited flaws, and the software your IT team may not know about</li>
+</ol>
+
+<p class="story-label">GRC &middot; Kenya &middot; Regulator</p>
+<h2>The ODPC changes hands: what stays the same for your organisation</h2>
+<p>Techweez reported on 9 November 2026 that President William Ruto had nominated Lydia Sitienei Chelagat as Data Commissioner. It says she previously served as Director of Legal Services and Corporation Secretary at the Communications Authority. She would succeed Immaculate Kassait, whose single six-year term began in November 2020 and cannot be renewed. KBC reported on 13 November that Ms Kassait was due to leave office on 16 November. Kenya Today reported on 14 November, citing a notice from the Clerk of the National Assembly, that the committee on Communication, Information and Innovation will vet the nominee on 25 November, and that written statements on oath from the public are due by 5 pm on 24 November.</p>
+<p>The law does not change with the person. Techweez describes the office's powers as enforcement notices and penalties of up to KES 5 million or 1% of annual turnover, whichever is lower. A decision from earlier this year shows what the regulator expects when a complaint arrives. In a decision dated 14 April, reported by TechCabal (the article carries no publication date), the ODPC found that LOLC Microfinance Bank had published a former employee's data without consent or a lawful basis. It then recommended prosecuting the bank's directors for obstruction, because the bank did not answer the regulator's notice. TechCabal reports that the offence carries a fine of up to KES 5 million, up to two years in prison, or both, and that the bank could appeal to the High Court. The report does not say whether prosecutors have acted.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> RETACH's reading: a change of commissioner is not a change of rules, and none of these sources says the office's priorities will shift. The practical risk is administrative. A notice from the regulator that nobody owns, or nobody answers, can turn a small complaint into a larger problem.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Name an owner for ODPC correspondence</strong><span>Use a shared mailbox, a named owner and a deputy. Log every notice and every reply.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Check what you publish</strong><span>Names, photos and notices about staff, former staff or customers need a lawful basis. Confirm you have one and can show it.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Keep an evidence file</strong><span>Data map, lawful-basis record, privacy notice, processor contracts, incident procedure and training records in one place.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Brief your directors</strong><span>In the LOLC case the recommendation was aimed at directors. They should know that ignoring a regulator's notice is itself a risk.</span></div></li>
+</ul>
+<p class="fine">General information, not legal advice. For decisions about your own obligations, consult a qualified advocate.</p>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>The regulator's leadership is changing. Its complaint and enforcement powers are not.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>Whether you can answer an ODPC notice with evidence, and whether anyone would see it in time.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>Governance, Risk &amp; Compliance work reviews how you handle personal data against the Data Protection Act, 2019 and produces a prioritised remediation plan. A Virtual CISO can own the programme if you have no one in-house.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-4&amp;utm_content=story-1">Ask about a DPA gap assessment &rarr;</a>
+</div>
+
+<p class="story-label">Logistics &middot; Critical infrastructure &middot; Global</p>
+<h2>Maersk's breach began in a system it inherited</h2>
+<p>On 11 November 2026 A.P. Moller &ndash; Maersk said it had identified unauthorised access and data extraction from a local legacy system that came with a previous acquisition. The company says its findings so far strongly suggest no sensitive data has been disclosed. It says the incident is isolated to that system, that it has found no sign of impact on other Maersk systems or on customer and partner systems connected through APIs and EDI, and that it does not expect disruption to customers. Its investigation is continuing.</p>
+<p>SecurityWeek reported on 12 November that a group calling itself WhiteArmor listed Maersk on its leak site on 7 November and demands USD 5 million. The group claims about 100 GB of data from a platform associated with LF Logistics, a Hong Kong company Maersk acquired in 2022. SecurityWeek notes that the group's claims have not been independently verified. Maersk has not confirmed the group's involvement, what type of data was taken, when the intrusion happened or how the attackers got in, and Maersk's statement does not name the acquired business.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> RETACH's reading: the lesson is not about one company. Any organisation that has merged, taken over a function or kept an old system running "for now" has the same blind spot: a system outside the main security programme, still holding real data. County bodies, SACCOs and growing SMEs all inherit systems this way.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>List what you inherited</strong><span>Systems that came from a merger, a takeover, a finished project or a departed supplier. Record the owner, the data held and whether it faces the internet.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Bring them under normal controls</strong><span>Same logging, patching and access rules as the main estate, or a dated plan to retire them.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Check who can reach them</strong><span>Shared admin accounts, remote access and third-party links are the usual routes in.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Prepare for extortion claims</strong><span>Decide in advance who verifies a leak-site claim, who speaks for the organisation and who tells customers. Treat the group's own figures as unconfirmed.</span></div></li>
+</ul>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>A large operator disclosed a breach in an inherited system while an extortion group makes unverified claims.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>Systems outside your main security programme: inherited, legacy or run by a third party, and the data on them.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>A Health Scan finds the gaps, scores them and documents them, so forgotten systems are ranked with the rest. Managed Security Services adds security monitoring and incident response on a retainer.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-4&amp;utm_content=story-2">Start with a Health Scan &rarr;</a>
+</div>
+
+<p class="story-label">Practical &middot; Patching &middot; Global</p>
+<h2>Four exploited flaws, and the software your IT team may not know about</h2>
+<p>On 9 November 2026 CISA added four vulnerabilities to its Known Exploited Vulnerabilities (KEV) catalogue, citing evidence of active exploitation: GPUStack, SignalWire FreeSWITCH, OpenSSH and IBM Aspera Faspex. The 12 November deadline applies to US federal civilian agencies, though CISA encourages all organisations to prioritise KEV entries. CISA does not say who is exploiting the flaws or how many organisations are affected.</p>
+<p>The vendors' own notices give the detail. GPUStack, an AI model-serving tool, is fixed in version 2.2.0. Its advisory of 31 July 2026 reports exploitation against a 2.1.1 deployment and warns that attackers can create persistent admin API keys, so upgrading alone does not remove their access. FreeSWITCH, a phone-system platform, is affected up to 1.11.2 and fixed in 1.11.3, according to an advisory of 28 October 2026 that also reports exploitation. IBM's bulletin of 7 November 2026 covers Aspera Faspex 5.0.0 to 5.0.19, fixed in 5.0.19 PL1, with no workaround. OpenSSH 10.6p2, released on 5 November 2026, includes a fix for a password-authentication bypass that affects some Linux systems built and run without PAM, using musl libc. OpenSSH says the root cause lies outside sshd.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> RETACH's reading: three of the four are products that a single team can install without IT being involved: an AI model server, a phone platform and a file-transfer server. A KEV listing settles which flaws matter. It cannot tell you what you run. That is the part only you can check.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Find the products</strong><span>Search your asset list and network for GPUStack, FreeSWITCH, Aspera Faspex and Linux servers running OpenSSH. Ask data, telephony and project teams what they have installed.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Compare versions</strong><span>GPUStack 2.2.0, FreeSWITCH 1.11.3, Faspex 5.0.19 PL1 and OpenSSH 10.6p2 are the fixed versions named above. Follow each vendor's instructions.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Review access after patching</strong><span>For GPUStack and Faspex, check admin accounts and API keys. Revoke any you do not recognise.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Check your Linux builds</strong><span>Not every OpenSSH install is affected. Confirm whether any servers use musl libc without PAM; Alpine Linux is one example, according to eSecurity Planet.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Make KEV a weekly habit</strong><span>Check new entries against your internet-facing software every week, not once a quarter.</span></div></li>
+</ul>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>Attackers are using flaws in everyday software that often sits outside the IT asset list.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>The Network and Systems layers of S.I.N.S.: what you run, what is reachable from outside, and how quickly fixes land.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>The free S.I.N.S. Score gives a first read on your exposure. A Health Scan finds, scores and documents the gaps. Managed Security Services covers ongoing monitoring.</p></div>
+  <a class="nexus-cta" href="/sins-scanner.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-4&amp;utm_content=story-3">Get your free S.I.N.S. Score &rarr;</a>
+</div>
+
+<h2>How RETACH works on this</h2>
+<p>RETACH works in a loop: Assess, Quantify, Remediate, then repeat. We call it the AQR Cycle, and it is aligned with NIST CSF 2.0 and ISO/IEC 27005. A Risk Delta is the change in an organisation's measured risk position before and after a S.I.N.S. Intervention&trade;. It is how a board can see that the fixes above made a difference, rather than taking it on trust.</p>
+
+<div class="cta-block">
+  <h3>See where your organisation stands</h3>
+  <p>Start with a free S.I.N.S. Score, or ask for a quote for a Health Scan.</p>
+  <div class="cta-row">
+    <a href="/sins-scanner.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-4" class="cta-btn">Free S.I.N.S. Score &rarr;</a>
+    <a href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-4&amp;utm_content=footer" class="cta-btn secondary">Request a Quote &rarr;</a>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul class="sources">
+  <li>Techweez, <a href="https://techweez.com/2026/11/09/chelagat-nominated-data-commissioner/" rel="noopener">Lydia Chelagat Nominated as Kenya's Data Commissioner to Succeed Immaculate Kassait</a> (9 November 2026).</li>
+  <li>KBC Digital, <a href="https://www.kbc.co.ke/kassait-calls-for-reforms-central-data-pool-as-she-exits-data-protection-office/" rel="noopener">Kassait calls for reforms, central data pool as she exits data protection office</a> (13 November 2026).</li>
+  <li>Kenya Today, <a href="https://kenya-today.com/report-parliament-schedules-november-25-hearing-for-data-commissioner-nominee-lydia-sitienei-chelagat-27320/" rel="noopener">Parliament schedules November 25 hearing for Data Commissioner nominee</a> (14 November 2026), reporting a notice from the Clerk of the National Assembly.</li>
+  <li>TechCabal, <a href="https://techcabal.com/?p=186008" rel="noopener">Kenya's LOLC Microfinance Bank directors risk prosecution in data enforcement case</a>, reporting an ODPC decision of 14 April (year not stated in the article; the complaint was filed in January 2026).</li>
+  <li>A.P. Moller &ndash; Maersk, <a href="https://www.maersk.com/news/articles/2026/11/11/it-security-incident" rel="noopener">IT security incident</a> (11 November 2026).</li>
+  <li>SecurityWeek, <a href="https://www.securityweek.com/maersk-confirms-data-theft-amid-5-million-extortion-attempt/" rel="noopener">Maersk Confirms Data Theft Amid $5 Million Extortion Attempt</a> (12 November 2026).</li>
+  <li>CISA, <a href="https://content.govdelivery.com/accounts/USDHSCISA/bulletins/4323900" rel="noopener">CISA Adds Four Known Exploited Vulnerabilities to Catalog</a> (9 November 2026).</li>
+  <li>GPUStack, <a href="https://github.com/gpustack/gpustack/security/advisories/GHSA-gj9m-f8ph-pmhr" rel="noopener">security advisory GHSA-gj9m-f8ph-pmhr</a> (31 July 2026).</li>
+  <li>SignalWire, <a href="https://github.com/SignalWire/freeswitch/security/advisories/GHSA-mg63-h38w-8p9p" rel="noopener">FreeSWITCH advisory GHSA-mg63-h38w-8p9p</a> (28 October 2026).</li>
+  <li>IBM, <a href="https://www.ibm.com/support/pages/security-bulletin-ibm-aspera-faspex-has-addressed-vulnerability-could-allow-authorization-bypass" rel="noopener">Security Bulletin: IBM Aspera Faspex</a> (7 November 2026).</li>
+  <li>OpenSSH, <a href="https://www.openssh.com/releasenotes.html" rel="noopener">Release notes, OpenSSH 10.6p2</a> (5 November 2026).</li>
+  <li>eSecurity Planet, <a href="https://www.esecurityplanet.com/vulnerabilities/news-cisa-kev-gpustack-freeswitch-openssh-ibm-november-2026/" rel="noopener">CISA Adds Four Exploited Flaws to KEV, Sets Nov. 12 Patch Deadline</a> (10 November 2026).</li>
+</ul>
+<p class="fine">RETACH summarises these sources in its own words. Figures belong to the publishers and have not been independently verified by RETACH.</p>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a> · <a href="/privacy.html">Privacy</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+<script src="/assets/theme-toggle.js" defer></script>
+
+</body>
+</html>
