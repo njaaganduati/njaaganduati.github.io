@@ -239,7 +239,7 @@ footer{border-top:1px solid var(--border)}
 .rw-card-title{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#E0555F;display:flex;align-items:center;gap:.4rem}
 .rw-card-title::before{content:'⚠';font-size:.7rem}
 .rw-badge{font-family:var(--mono);font-size:.54rem;letter-spacing:.06em;padding:.15rem .5rem;border-radius:3px;font-weight:600;background:rgba(158,27,35,.25);color:#E0555F;border:1px solid rgba(158,27,35,.3)}
-.rw-stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-bottom:.6rem}
+.rw-stat-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-bottom:.6rem}
 @media(max-width:420px){.rw-stat-row{grid-template-columns:minmax(0,1fr)}}
 .rw-stat{background:rgba(0,0,0,.2);border-radius:6px;padding:.5rem .65rem;text-align:center}
 .rw-stat-n{font-family:var(--cond);font-size:1.35rem;font-weight:800;color:#E0555F;line-height:1}
@@ -1145,10 +1145,6 @@ async function loadRWIntel(){
         <div class="rw-stat">
           <div class="rw-stat-n">${total}</div>
           <div class="rw-stat-l">Disclosed victims<br>${rLabel} (tracked sample)</div>
-        </div>
-        <div class="rw-stat">
-          <div class="rw-stat-n">${last90n}</div>
-          <div class="rw-stat-l">Incidents in<br>last 90 days</div>
         </div>
         <div class="rw-stat">
           <div class="rw-stat-n">${sectorMatch||'—'}</div>
