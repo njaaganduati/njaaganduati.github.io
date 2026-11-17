@@ -1124,62 +1124,30 @@ async function loadRWIntel(){
   const sectorLabel=SECT_LABELS[sector]||'';
 
   try{
-    let victims=[];
-    const countries=RW_COUNTRIES[region]||['KEN'];
-
-    if(region==='global'){
-      // Use recent victims feed, filter by sector keyword
-      const r=await fetch(API+'/api/osint/ransomware/region/global',{signal:AbortSignal.timeout(12000)});
-      const data=await r.json();
-      victims=(data.victims||[]).filter(v=>{
-        const desc=(v.description||v.activity||'').toLowerCase();
-        return!sectorLabel||desc.includes(sectorLabel)||desc.includes('financial')||desc.includes('bank');
-      }).slice(0,15);
-    } else {
-      // Fetch each country and merge
-      const r=await fetch(API+'/api/osint/ransomware/region/'+region+(sectorLabel?'?sector='+sectorLabel:''),{signal:AbortSignal.timeout(12000)});
-      const data=await r.json();
-      victims=(data.victims||[]);
-    }
-
-    // Sort by date descending
-    victims.sort((a,b)=>new Date(b.attackdate||b.published||b.date||0)-new Date(a.attackdate||a.published||a.date||0));
-
-    // Count by sector for stats
-    const total=victims.length;
-    const last90=victims.filter(v=>{
-      const d=new Date(v.attackdate||v.published||v.date||0);
-      return(Date.now()-d.getTime())<90*86400000;
-    });
-    const groups=[...new Set(victims.slice(0,20).map(v=>v.group||v.threat_actor||'Unknown'))];
-    const topGroup=groups[0]||'Unknown';
-
-    // Build sector-matched count
-    const sectorMatch=sectorLabel?victims.filter(v=>{
-      const desc=(v.description||v.sector||v.title||'').toLowerCase();
-      return desc.includes(sectorLabel);
-    }).length:0;
-
-    // Region label
     const regionLabels={kenya:'Kenya',eastafrica:'East Africa',global:'Global'};
     const rLabel=regionLabels[region]||'Kenya';
-
-    // Build public victim list (show last 5, max — public data only)
-    const showList=victims.slice(0,5);
+    const resp=await fetch(API+'/api/osint/ransomware/region/'+region+(sectorLabel?'?sector='+encodeURIComponent(sectorLabel):''),{signal:AbortSignal.timeout(12000)});
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    const data=await resp.json();
+    const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const total=Number(data.total)||0;
+    const last90n=Number(data.last90)||0;
+    const sectorMatch=Number(data.sector_match)||0;
+    const groups=Array.isArray(data.top_groups)?data.top_groups:[];
 
     const html=`
     <div class="rw-card">
       <div class="rw-card-head">
         <div class="rw-card-title">Live Ransomware Threat Intelligence — ${rLabel}</div>
-        <span class="rw-badge">ransomware.live · Live data</span>
+        <span class="rw-badge">Source: Ransomware.live</span>
       </div>
       <div class="rw-stat-row">
         <div class="rw-stat">
           <div class="rw-stat-n">${total}</div>
-          <div class="rw-stat-l">Confirmed victims<br>${rLabel} (all time)</div>
+          <div class="rw-stat-l">Disclosed victims<br>${rLabel} (tracked sample)</div>
         </div>
         <div class="rw-stat">
-          <div class="rw-stat-n">${last90.length}</div>
+          <div class="rw-stat-n">${last90n}</div>
           <div class="rw-stat-l">Incidents in<br>last 90 days</div>
         </div>
         <div class="rw-stat">
@@ -1191,33 +1159,18 @@ async function loadRWIntel(){
         Most active threat actors in region
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem">
-        ${groups.slice(0,5).map((g,i)=>`<span style="font-family:var(--mono);font-size:.58rem;padding:.15rem .5rem;border-radius:3px;background:rgba(158,27,35,${0.35-i*0.04});color:#E0555F;border:1px solid rgba(158,27,35,.25)">${g}</span>`).join('')}
+        ${groups.slice(0,5).map((g,i)=>`<span style="font-family:var(--mono);font-size:.58rem;padding:.15rem .5rem;border-radius:3px;background:rgba(158,27,35,${0.35-i*0.04});color:#E0555F;border:1px solid rgba(158,27,35,.25)">${esc(g.group)} · ${esc(g.count)}</span>`).join('')}
       </div>
-      ${showList.length?`
-      <div style="font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">Recent confirmed victims (public record)</div>
-      <div>
-        ${showList.map(v=>{
-          const name=v.victim||v.name||'Undisclosed';
-          const grp=v.group||v.threat_actor||'Unknown';
-          const date=v.attackdate||v.published||v.date||'';
-          const dateStr=date?new Date(date).toLocaleDateString('en-KE',{month:'short',year:'numeric'}):'';
-          return`<div class="rw-victim-row">
-            <div class="rw-vname">${name}</div>
-            ${dateStr?`<div class="rw-vdate">${dateStr}</div>`:''}
-            <div class="rw-vgroup">${grp}</div>
-          </div>`;
-        }).join('')}
-      </div>`:''}
       <div class="rw-lock-row">
         <div class="rw-lock-icon">🔒</div>
         <div class="rw-lock-text">
-          <strong>Is your organisation on this list?</strong><br>
+          <strong>Is your organisation named in a public listing?</strong><br>
           RETACH runs a name-match and sector check against public ransomware listings as part of every Health Scan.
         </div>
         <a href="https://retach.tech/quote.html?product=S.I.N.S.%20Health%20Scan%20-%20Small" target="_blank" class="rw-lock-btn">Check My Org →</a>
       </div>
     </div>
-    <p style="font-family:var(--mono);font-size:.54rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Source: ransomware.live public database · Data reflects publicly disclosed victims only · Actual incident counts are higher · Updated every 6 hours · <a href="https://ransomware.live" target="_blank" style="color:var(--gl)">ransomware.live</a></p>`;
+    <p style="font-family:var(--mono);font-size:.54rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Source: Ransomware.live · Counts only, from publicly disclosed claims; actual incident counts are higher · Provided as-is, so verify independently before relying on it · Refreshed every 6 hours · <a href="https://www.ransomware.live" target="_blank" rel="noopener" style="color:var(--gl)">ransomware.live</a></p>`;
 
     wrap.innerHTML=html;
     wrap.style.display='block';
