@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Brief: the ODPC&#39;s compensation question, Equinor&#39;s IT attack, and an old NAS flaw | RETACH</title>
+<meta name="description" content="Three stories for Kenyan and East African organisations: the ODPC closes the BRS case and a court questions its compensation power, Equinor's IT attack, and an old NAS flaw now used for ransomware, with actions for this week.">
+<meta name="author" content="RETACH">
+<meta property="og:title" content="Weekly Brief: the ODPC&#39;s compensation question, Equinor&#39;s IT attack, and an old NAS flaw">
+<meta property="og:description" content="Three stories for Kenyan and East African organisations: the ODPC closes the BRS case and a court questions its compensation power, Equinor's IT attack, and an old NAS flaw now used for ransomware, with actions for this week.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://retach.tech/insights/weekly-brief-2026-11-24.html">
+<meta property="og:image" content="https://retach.tech/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://retach.tech/insights/weekly-brief-2026-11-24.html">
+<link rel="icon" href="/favicon.ico">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('retach-theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch(e) { document.documentElement.setAttribute('data-theme', 'light'); }
+})();
+</script>
+<style>
+  :root { --green: #146B4E; --dark: #1a1a1a; --red: #9E1B23; --bg: #f9f9f7; --border: #e0ddd6; --text: #2c2c2a; --muted: #5f5e5a; }
+  [data-theme="dark"] {
+    --bg: #111315; --text: #e8ebe6; --muted: #9AA2AA; --border: rgba(255,255,255,0.12); --green: #2E9E6B;
+  }
+  [data-theme="dark"] .penalty-card,
+  [data-theme="dark"] .checklist li { background: #181B1E; }
+  [data-theme="dark"] .callout { background: rgba(46,158,107,0.12); }
+  [data-theme="dark"] .callout p { color: #7fd4ab; }
+  [data-theme="dark"] .warning { background: rgba(158,27,35,0.18); }
+  [data-theme="dark"] .warning p { color: #e08791; }
+  [data-theme="dark"] .article-body h2,
+  [data-theme="dark"] .article-body h3 { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .theme-toggle{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:#ccc;padding:6px 12px;line-height:1.4}
+  .theme-toggle:hover{border-color:#2E9E6B;color:#fff}
+  .theme-toggle:focus-visible{outline:2px solid #2E9E6B;outline-offset:2px}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 17px; transition: background 0.2s, color 0.2s; }
+  a { color: var(--green); }
+  nav { background: var(--dark); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; }
+ .nav-logo-combined { height: 36px; width: auto; display: block; }
+  .nav-brand span { color: var(--green); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: #ccc; font-size: 0.9rem; text-transform: uppercase; text-decoration: none; }
+  .article-hero { background: var(--dark); color: #fff; padding: 4rem 2rem 3rem; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-tag { display: inline-block; background: var(--red); color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 4px; margin-bottom: 1.2rem; }
+  .article-hero h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.2rem; color: #fff; }
+  .article-meta { color: #aaa; font-size: 0.9rem; border-top: 1px solid #333; padding-top: 1rem; margin-top: 1.5rem; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .article-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body h2 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); margin: 2.5rem 0 1rem; border-left: 4px solid var(--red); padding-left: 1rem; }
+  .article-body h3 { font-size: 1.15rem; font-weight: 600; color: var(--dark); margin: 2rem 0 0.75rem; }
+  .article-body ul { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+  .article-body li { margin-bottom: 0.6rem; }
+  .callout { background: #E8F2EC; border-left: 4px solid var(--green); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { margin: 0; color: #1A4A38; font-size: 0.95rem; }
+  .warning { background: #fdf0f2; border-left: 4px solid var(--red); padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warning p { margin: 0; color: #7a1c2a; font-size: 0.95rem; }
+  .penalty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .penalty-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; background: #fff; }
+  .penalty-card .amount { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--red); margin-bottom: 0.3rem; }
+  .penalty-card .label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; font-weight: 600; }
+  .penalty-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.6rem; background: #fff; font-size: 0.95rem; }
+  .checklist li .check { width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .checklist li .item-text strong { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+  .checklist li .item-text span { color: var(--muted); font-size: 0.88rem; }
+  .cta-block { background: var(--dark); color: #fff; padding: 2.5rem 2rem; border-radius: 12px; margin: 3rem 0 0; text-align: center; }
+  .cta-block h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .cta-block p { color: #bbb; margin-bottom: 1.5rem; }
+  .cta-btn { display: inline-block; background: var(--green); color: #fff; padding: 0.85rem 2rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  footer { background: var(--dark); color: #888; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 4rem; }
+  footer a { color: var(--green); }
+  @media (max-width: 600px) { .nav-links { display: none; } .penalty-grid { grid-template-columns: 1fr; } }
+
+  :root { --card: #ffffff; }
+  [data-theme="dark"] { --card: #181B1E; }
+  footer a { color: #2e9e6b; }
+  html[data-theme="dark"] a.cta-btn { background-color: #146b4e; }
+
+  .toc { list-style: none; padding: 0; margin: 0 0 2rem; counter-reset: t; }
+  .toc li { counter-increment: t; padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; margin: 0; }
+  .toc li::before { content: counter(t, decimal-leading-zero); font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--green); margin-right: 0.8rem; }
+  .story-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 3rem 0 0 !important; }
+  .story-label + h2 { margin-top: 0.4rem; }
+  .nexus { border: 1px solid var(--border); border-top: 4px solid var(--green); border-radius: 8px; background: var(--card); padding: 1.25rem 1.5rem; margin: 2rem 0; }
+  .nexus-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+  .nexus-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; padding: 0.65rem 0; border-top: 1px solid var(--border); font-size: 0.95rem; }
+  .nexus-row:first-of-type { border-top: 0; }
+  .nexus-row .k { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.2rem; }
+  .nexus-row p { margin: 0; }
+  .nexus-cta { display: inline-block; margin-top: 0.6rem; font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--green); }
+  .sources { font-size: 0.9rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.5rem; }
+  .fine { font-size: 0.85rem; color: var(--muted); }
+  .cta-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-btn.secondary { background: transparent; border: 2px solid #fff; padding: calc(0.85rem - 2px) calc(2rem - 2px); }
+  @media (max-width: 600px) { .nexus-row { grid-template-columns: 1fr; gap: 0.2rem; } }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Weekly Brief: the ODPC's compensation question, Equinor's IT attack, and an old NAS flaw","datePublished":"2026-11-24","dateModified":"2026-11-24","description":"Three stories for Kenyan and East African organisations: the ODPC closes the BRS case and a court questions its compensation power, Equinor's IT attack, and an old NAS flaw now used for ransomware, with actions for this week.","mainEntityOfPage":"https://retach.tech/insights/weekly-brief-2026-11-24","author":{"@type":"Organization","name":"RETACH","legalName":"RETACH DIGITAL LTD","alternateName":"RETACH Digital"},"publisher":{"@type":"Organization","name":"RETACH","url":"https://retach.tech"}}</script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand"><svg class="nav-logo-combined" viewBox="440 1550 4050 650" xmlns="http://www.w3.org/2000/svg"><g><g><g><path fill="#ffffff" d="M1831.498,1956.831c19.826-6.666,36.442-16.984,49.578-30.811c20.396-21.375,30.739-49.559,30.739-83.785c0-38.77-12.545-70.205-37.293-93.426c-24.468-22.965-57.979-34.594-99.594-34.594h-296.484v379.416l94.169-57.183v-70.053h151.379l95.626,133.62h111.176L1831.498,1956.831z M1805.854,1869.165c-8.008,6.396-21.37,9.635-39.715,9.635h-193.525v-76.99h188.162c48.824,0,55.406,20.436,55.406,40.441C1816.182,1850.266,1815.11,1861.756,1805.854,1869.165z"/></g><g><polygon fill="#ffffff" points="2119.549,1801.81 2119.549,1856.541 2328.943,1856.541 2328.943,1944.13 2119.549,1944.13 2119.549,2012.42 2411.004,2012.42 2411.004,2100.011 2024.267,2100.011 2024.267,1714.22 2411.004,1714.22 2411.004,1801.81"/></g><g><polygon fill="#ffffff" points="2938.045,1713.772 2938.045,1801.366 2768.61,1801.366 2768.61,2099.57 2674.129,2099.57 2674.129,1801.366 2504.701,1801.366 2504.701,1713.772"/></g><g><path fill="#ffffff" d="M3188.534,1712.363h-95.137l-205.767,385.798h104.46l40.721-78.427h216.295l40.719,78.427h104.47L3188.534,1712.363z M3080.033,1932.14l61.383-114.4l60.637,114.4H3080.033z"/></g><g><path fill="#ffffff" d="M3807.403,1956.316l81.596,44.787l-14.213,16.443c-27.104,31.369-58.354,54.416-92.891,68.498c-34.058,13.896-75.007,20.936-121.702,20.936c-66.148,0-122.148-16.84-166.43-50.049c-51.653-38.857-77.835-90.501-77.835-153.498c0-62.051,26.522-113.373,78.817-152.547c44.601-33.516,100.273-50.523,165.447-50.523c93.887,0,167.105,32.93,217.615,97.883l14.951,19.227l-87.225,30.959l-7.985-8.428c-15.958-16.822-35.395-29.631-57.785-38.064c-22.911-8.633-49.683-13.016-79.571-13.016c-44.378,0-80.74,11.213-108.089,33.312c-26.624,21.521-39.569,48.076-39.569,81.197c0,34.396,12.768,61.332,39.015,82.354c27.031,21.654,64.73,32.631,112.056,32.631c28.85,0,54.816-4.432,77.177-13.166c21.942-8.582,41.165-21.625,57.151-38.771L3807.403,1956.316z"/></g><g><polygon fill="#ffffff" points="4421.714,1714.363 4421.714,2100.161 4327.551,2100.161 4327.551,1944.281 4080.075,1944.281 4080.075,2100.161 3985.905,2100.161 3985.905,1714.363 4080.075,1714.363 4080.075,1856.687 4327.551,1856.687 4327.551,1714.363"/></g></g><path fill="#ffffff" d="M1278.62,1598.367c-22.715,0-42.663,11.988-53.966,30.044H757.357l-4.127,3.975c-5.398-30.053-31.45-52.847-62.776-52.847c-35.233,0-63.798,28.839-63.798,64.412c0,30.574,21.095,56.172,49.389,62.768l-3.359,3.238v465.217l332.137-236.097v-196.711l-58.279-52.513h117.367v472.608h-26.897l-36.503-36.751c1.317-5.147,2.016-10.552,2.016-16.114c0-35.573-28.566-64.413-63.803-64.413c-35.233,0-63.797,28.84-63.797,64.413c0,35.581,28.564,64.423,63.797,64.423c5.686,0,11.197-0.752,16.443-2.163l56.175,63.361h188.686v-539.26h23.898c11.159,18.72,31.479,31.241,54.695,31.241c35.236,0,63.802-28.842,63.802-64.418C1342.422,1627.208,1313.856,1598.367,1278.62,1598.367z M689.403,1678.109c-19.447,0-35.208-15.918-35.208-35.551s15.761-35.551,35.208-35.551c19.446,0,35.212,15.918,35.212,35.551S708.85,1678.109,689.403,1678.109z M884.045,1931.405l-145.671,106.89v-328.596l13.012-13.01l132.659,118.402V1931.405z M937.673,2143.755c-19.445,0-35.208-15.919-35.208-35.548c0-19.636,15.762-35.555,35.208-35.555s35.213,15.919,35.213,35.555C972.886,2127.836,957.118,2143.755,937.673,2143.755z M1277.572,1696.938c-19.449,0-35.208-15.918-35.208-35.549c0-19.635,15.759-35.552,35.208-35.552c19.444,0,35.21,15.917,35.21,35.552C1312.782,1681.021,1297.016,1696.938,1277.572,1696.938z"/></g></svg></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/#framework">Framework</a>
+      <a href="/#services">Services</a>
+      <a href="/insights/">Insights</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark and light theme"><span data-theme-label>Dark</span></button>
+  </div>
+</nav>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <span class="article-tag">Weekly Brief &middot; Cyber &amp; GRC</span>
+    <h1>Weekly Brief: the ODPC's compensation question, Equinor's IT attack, and an old NAS flaw</h1>
+    <div class="article-meta">
+      <span><strong>Published:</strong> 24 November 2026</span>
+      <span><strong>Read time:</strong> 7 min</span>
+      <span><strong>Author:</strong> RETACH</span>
+    </div>
+  </div>
+</div>
+<div class="article-body">
+<p>Three stories for organisations in Kenya and East Africa this week, what each means in practice, and what to do about it. One tests how data protection enforcement works. One shows what happens when an energy company's business systems are attacked. One is a reminder that old flaws keep working. All sources are public and linked at the end.</p>
+<ol class="toc">
+  <li>The ODPC closes the BRS case, and a court questions its compensation power</li>
+  <li>Equinor's IT attack: production ran, but business systems did not</li>
+  <li>A flaw patched in 2024 is now being used against NAS devices</li>
+</ol>
+
+<p class="story-label">GRC &middot; Kenya &middot; Data protection</p>
+<h2>The ODPC closes the BRS case, and a court questions its compensation power</h2>
+<p>On 17 November, TechTrendsKE reported that the Office of the Data Protection Commissioner (ODPC) had closed its investigation into the exposure of Business Registration Services (BRS) records without issuing a penalty notice. The outgoing Data Commissioner, Immaculate Kassait, said the office opened the case on its own initiative and issued an enforcement notice. It did not move on to a penalty notice because BRS carried out what the enforcement notice required. She also said no affected person had asked for compensation. The "more than two million businesses" scale in coverage dates from the 2025 incident, and we found no ODPC statement giving it.</p>
+<p>Separately, Business Daily and TechTrendsKE reported on 15 November that Justice Francis Andayi of the High Court set aside a KSh 1.25 million compensation award the ODPC had made against a Nairobi healthcare business, in a complaint about a CCTV camera in an examination room. According to those reports, the judge said section 65 of the Data Protection Act gives a person a right to compensation but does not expressly give the Commissioner the job of deciding it, and he raised fair-hearing concerns. The reports do not say the ruling struck down the regulation or cancelled earlier awards.</p>
+<p>On 9 November the President nominated Lydia Sitienei Chelagat, the Communications Authority's director of legal services, to succeed Ms Kassait. We read press reports, not the judgment, and they do not give its date.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> In the BRS case the sequence was an enforcement notice first, with a penalty notice only if it is not carried out, so acting on a notice is the part an organisation controls. What the court questioned is who decides compensation, not whether section 65 gives a right to it.</p></div>
+<div class="callout"><p><strong>RETACH's reading:</strong> the ruling is not a reason to treat data protection as lower risk. A dated record of what you changed after an incident or notice is something you can build now.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Run any regulator notice as a project</strong><span>Name an owner and a deadline, and list each corrective step the notice requires.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Keep dated proof of every fix</strong><span>Configuration changes, access reviews and test results, saved in one place.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Take advice before leaning on the ruling</strong><span>It concerns one case. If you have a compensation order, ask your advocate whether and how to challenge it.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Map registry-style personal data</strong><span>Addresses, phone numbers, ownership details: where you hold them, and who and what can query them.</span></div></li>
+</ul>
+<p class="fine">General information, not legal advice. For decisions about your own obligations, consult a qualified advocate.</p>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>ODPC enforcement turns on whether you fix what it tells you, and the compensation route is being tested in court.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>Whether you could show, with dated evidence, that you corrected what a regulator or a breach exposed.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>Governance, Risk &amp; Compliance work maps your current data processing against the Data Protection Act, 2019 and produces a prioritised remediation plan with an evidence trail. A Virtual CISO can own the programme if you have no one in-house.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-5&amp;utm_content=story-1">Ask about a DPA gap assessment &rarr;</a>
+</div>
+
+<p class="story-label">Critical infrastructure &middot; Energy</p>
+<h2>Equinor's IT attack: production ran, but business systems did not</h2>
+<p>Equinor, the Norwegian energy company, said on 17 November that it had detected an ongoing cyber-attack on some IT systems. Its latest update, on 20 November, says the attack has been stopped, production ran as normal, and there is no indication that data was stolen or altered. The company has reported the incident to the police and said earlier that the attack did not appear to target Equinor specifically. Its statement does not say how the attackers got in or which systems were hit.</p>
+<p>Separately, NIST published an initial public draft of SP 800-82 Revision 4, its guide to operational technology (OT) security, on 21 September, with comments open until 30 November. NIST says the draft is organised around its Cybersecurity Framework 2.0 and adds more on asset management, network monitoring and zero trust architecture. It is a draft, not final guidance. An FBI and CISA fact sheet of 23 September urges operators to limit what third-party integrators can reach.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> Energy operators, and anyone with plant or field systems, rely on corporate IT for scheduling, maintenance, supplier orders and email, even where control systems sit apart.</p></div>
+<div class="callout"><p><strong>RETACH's reading:</strong> Equinor's statement shows a company can lose some business systems and still keep production running. Whether you can depends on how well IT is separated from operations and whether you have rehearsed without it. The statement does not say how Equinor managed it.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>List the systems operations lean on</strong><span>Scheduling, maintenance, email, supplier portals. For each, write what happens if it is down for two days.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Map where IT meets operations</strong><span>Which links exist, who can cross them, and whether crossings are logged.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Review integrator and vendor access</strong><span>The FBI and CISA fact sheet recommends monitored, on-demand remote access and the minimum rights needed.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Rehearse a manual fallback</strong><span>Agree how teams communicate and record work if email and corporate systems are unavailable.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>If you run OT, read the NIST draft</strong><span>Comments close on 30 November.</span></div></li>
+</ul>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>A major energy company's IT systems were attacked while production carried on.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>The Network and Systems layers of S.I.N.S.: what connects business IT to operations, who can cross, and how ready you are to work without corporate systems.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>A Digital Resilience Assessment is one way to start on what keeps running when IT does not. Managed Security Services covers threat monitoring and incident response on a retainer.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-5&amp;utm_content=story-2">Ask about a Digital Resilience Assessment &rarr;</a>
+</div>
+
+<p class="story-label">Practical &middot; Patching &middot; Small organisations</p>
+<h2>A flaw patched in 2024 is now being used against NAS devices</h2>
+<p>On 29 October, Synology said attackers are exploiting a vulnerability patched in December 2024 against devices running outdated DiskStation Manager (DSM) software, with the aim of encrypting data and demanding a ransom. The statement did not name the flaw. The Hacker News reported on 3 November that it matches Synology advisory SA-24:20 (5 November 2024), which rates CVE-2024-10441 critical (CVSS 9.8), allows remote code execution and lists no mitigation other than updating. The Hacker News reported on 19 November that CISA added the flaw to its Known Exploited Vulnerabilities catalogue on 18 November. We could not load CISA's own page, so that date rests on the press report.</p>
+<p>The same CISA update, per The Hacker News, included CVE-2026-90436 in Apache Axis 1.x. Rapid7 says Apache disclosed it on 6 November, that Axis 1.x is end-of-life with no fixed release planned, and that it detected exploitation against Atlassian Confluence Data Center on 13 November where a non-default Remote API setting was enabled. One flaw has had a fix for two years; the other will not get one. Synology gives no number of affected devices.</p>
+<div class="callout"><p><strong>Why it matters here:</strong> The Communications Authority's National KE-CIRT report for April to June 2026, published in July 2026, lists weak configurations, delayed patching, insecure cloud setups and inadequate authentication among the common causes of successful cyber incidents in Kenya. It also advises organisations to keep offline backups.</p></div>
+<div class="callout"><p><strong>RETACH's reading:</strong> a NAS often holds a small organisation's file shares and its backups, so one unpatched box can put both at risk.</p></div>
+<h3>What to do this week</h3>
+<ul class="checklist">
+  <li><div class="check"></div><div class="item-text"><strong>Find every NAS, firewall and appliance</strong><span>Record the model, software version and who is responsible for updates.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Check DSM against the advisory</strong><span>Update to the fixed build or later, and turn on automatic updates, which Synology recommends.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>Hold a backup the NAS cannot reach</strong><span>At least one copy offline or otherwise out of reach of the NAS's credentials.</span></div></li>
+  <li><div class="check"></div><div class="item-text"><strong>List unsupported software</strong><span>For each item, decide to replace, isolate or accept the risk in writing. If you run Confluence Data Center, check the Remote API setting.</span></div></li>
+</ul>
+<div class="nexus">
+  <div class="nexus-label">News &rarr; risk &rarr; action</div>
+  <div class="nexus-row"><div class="k">The signal</div><p>Attackers are using flaws that were patched long ago, or that will never be patched.</p></div>
+  <div class="nexus-row"><div class="k">Your exposure</div><p>The Systems layer of S.I.N.S.: which devices you run, their patch status, end-of-life software, and whether your backups survive an attack on the same network.</p></div>
+  <div class="nexus-row"><div class="k">How RETACH helps</div><p>A Health Scan finds, scores and documents the gaps, so the fix list is ordered by risk. SME Security is built for smaller organisations, and Managed Security Services adds monitoring and incident response on a retainer.</p></div>
+  <a class="nexus-cta" href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-5&amp;utm_content=story-3">Start with a Health Scan &rarr;</a>
+</div>
+
+<h2>How RETACH works on this</h2>
+<p>RETACH works in a loop: Assess, Quantify, Remediate, then repeat. We call it the AQR Cycle. A Risk Delta is the change in an organisation's measured risk position before and after a S.I.N.S. Intervention&trade;. It is how a board can see that the fixes above made a difference, rather than taking it on trust.</p>
+
+<div class="cta-block">
+  <h3>See where your organisation stands</h3>
+  <p>Start with a free S.I.N.S. Score, or ask for a quote for a Health Scan.</p>
+  <div class="cta-row">
+    <a href="/sins-scanner.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-5" class="cta-btn">Free S.I.N.S. Score &rarr;</a>
+    <a href="/quote.html?utm_source=insights&amp;utm_medium=web&amp;utm_campaign=weekly-brief-5&amp;utm_content=footer" class="cta-btn secondary">Request a Quote &rarr;</a>
+  </div>
+</div>
+
+<h2>Sources</h2>
+<ul class="sources">
+  <li>TechTrendsKE, <a href="https://techtrendske.co.ke/2026/11/17/brs-data-breach-odpc-investigation/" rel="noopener">BRS data breach: ODPC closes investigation without penalty</a> (17 November 2026).</li>
+  <li>Business Daily, <a href="https://www.businessdailyafrica.com/bd/economy/court-questions-legality-of-odpc-s-power-to-award-damages-5671248" rel="noopener">Court questions legality of ODPC's power to award damages</a> (15 November 2026).</li>
+  <li>TechTrendsKE, <a href="https://techtrendske.co.ke/2026/11/15/odpc-compensation-powers/" rel="noopener">Court casts doubt on ODPC's power to order businesses to compensate privacy victims</a> (15 November 2026).</li>
+  <li>The Standard, <a href="https://www.standardmedia.co.ke/national/article/2001561920/ruto-nominates-lydia-chelagat-as-new-data-commissioner" rel="noopener">Ruto nominates Lydia Chelagat as new Data Commissioner</a> (9 November 2026).</li>
+  <li>Equinor, <a href="https://www.equinor.com/news/20261711-equinor-detected-cyber-attack" rel="noopener">Cyber-attack stopped</a> (17 to 20 November 2026).</li>
+  <li>NIST, <a href="https://csrc.nist.gov/pubs/sp/800/82/r4/ipd" rel="noopener">SP 800-82 Rev. 4 initial public draft, Guide to OT Security</a> (21 September 2026).</li>
+  <li>FBI and CISA, <a href="https://www.ic3.gov/CSA/2026/260923.pdf" rel="noopener">Considerations for Critical Infrastructure Operators Working With Third-Party ICS Integrators</a> (23 September 2026).</li>
+  <li>Synology, <a href="https://www.synology.com/en-global/security/advisory/Synology_SA_24_20" rel="noopener">Synology-SA-24:20 DSM (Pwn2Own 2024)</a> (published 5 November 2024), and its statement of 29 October 2026 on <a href="https://www.synology.com/en-global/company/news/article/C3RB3R/Synology%20urges%20users%20to%20update%20DSM%20following%20ransomware%20attacks%20on%20outdated%20DSM%20versions" rel="noopener">ransomware attacks on outdated DSM versions</a>.</li>
+  <li>The Hacker News, <a href="https://thehackernews.com/2026/11/synology-nas-devices-targeted-in.html" rel="noopener">Synology NAS Devices Targeted in Ransomware Attacks</a> (3 November 2026) and <a href="https://thehackernews.com/2026/11/cisa-warns-of-4-exploited-flaws-linked.html" rel="noopener">CISA Warns of 4 Exploited Flaws</a> (19 November 2026).</li>
+  <li>Rapid7, <a href="https://www.rapid7.com/blog/post/etr-rapid7-detected-exploitation-of-cve-2026-90436-against-atlassian-confluence-data-center-n-able-n-central-also-exploited/" rel="noopener">Exploitation of CVE-2026-90436 against Atlassian Confluence Data Center</a> (16 November 2026, updated 19 November).</li>
+  <li>Communications Authority of Kenya, <a href="https://www.ca.go.ke/sites/default/files/2026-07/Cyber%20Security%20Report%20Q4%202025-2026_1.pdf" rel="noopener">National KE-CIRT/CC Cybersecurity Report, April to June 2026</a> (July 2026).</li>
+</ul>
+<p class="fine">RETACH summarises these sources in its own words. Figures belong to the publishers and have not been independently verified by RETACH.</p>
+</div>
+<footer>
+  <p>© 2026 RETACH Digital Ltd · Nairobi, Kenya · <a href="mailto:info@retach.tech">info@retach.tech</a> · <a href="/">retach.tech</a> · <a href="/privacy.html">Privacy</a></p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">The S.I.N.S. Framework™ for Digital Resilience</p>
+</footer>
+<script src="/assets/theme-toggle.js" defer></script>
+
+</body>
+</html>
